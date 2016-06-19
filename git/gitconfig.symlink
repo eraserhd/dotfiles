@@ -1,0 +1,6 @@
+[user]
+	name = Jason Felice
+	email = jason.m.felice@gmail.com
+[alias]
+	ci = commit
+	st = status
