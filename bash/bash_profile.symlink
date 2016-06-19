@@ -1,0 +1,7 @@
+
+export PS1='[\u@\h \W]$ '
+
+if [ "$(uname -s)" == "Darwin" ]
+then
+  export CLICOLOR=1
+fi
