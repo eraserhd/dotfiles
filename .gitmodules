@@ -1,3 +1,6 @@
 [submodule "vim/vim.symlink/bundle/vim-clojure-static"]
 	path = vim/vim.symlink/bundle/vim-clojure-static
 	url = git@github.com:guns/vim-clojure-static.git
+[submodule "vim/vim.symlink/bundle/vim-fireplace"]
+	path = vim/vim.symlink/bundle/vim-fireplace
+	url = git@github.com:tpope/vim-fireplace.git
