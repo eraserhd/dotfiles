@@ -1,14 +1,11 @@
 set-option -g prefix C-a
-#bind-key a send-prefix
 bind-key C-a last-window
 set-option -g default-command "reattach-to-user-namespace -l bash"
 
 ##### Basic Usage #####
 
-# First things first:  Remap the prefix key to reduce conflicts with Emacs!
-unbind C-b
-
 # By default, we'll use C-a as the prefix key.
+unbind C-b
 set -g prefix 'C-a'; bind 'C-a' send-prefix
 bind 'a' send-prefix
 
