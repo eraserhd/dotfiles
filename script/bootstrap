@@ -116,5 +116,10 @@ install_dotfiles () {
 
 install_dotfiles
 
+if [ "$(uname -s)" == "Darwin" ]
+then
+  brew bundle
+fi
+
 echo ''
 echo '  All installed!'
