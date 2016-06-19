@@ -4,3 +4,5 @@
 [alias]
 	ci = commit
 	st = status
+[core]
+	excludesfile = /Users/jfelice/.gitignore_global
