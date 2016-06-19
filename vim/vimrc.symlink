@@ -1,7 +1,9 @@
 
-set background=dark
+execute pathogen#infect()
 syntax on
+filetype plugin indent on
 
+set background=dark
 set nocompatible
 
 " Get swap files out of the way
