@@ -1,5 +1,9 @@
 
 set background=dark
 syntax on
+
 set nocompatible
+
+" Get swap files out of the way
+set directory=/private/tmp//,/tmp//
 
