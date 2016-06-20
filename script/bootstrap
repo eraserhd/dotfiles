@@ -123,7 +123,7 @@ fi
 
 for installer in */install.sh
 do
-	$installer
+  $installer
 done
 
 echo ''
