@@ -121,5 +121,10 @@ then
   brew bundle
 fi
 
+for installer in */install.sh
+do
+	$installer
+done
+
 echo ''
 echo '  All installed!'
