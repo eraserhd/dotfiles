@@ -4,6 +4,7 @@ tap 'homebrew/bundle'
 
 brew 'bash-completion'
 brew 'git'
+brew 'irssi'
 brew 'leiningen'
 brew 'reattach-to-user-namespace'
 brew 'tmate'
