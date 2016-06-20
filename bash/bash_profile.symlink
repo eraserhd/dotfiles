@@ -6,3 +6,8 @@ if [ "$(uname -s)" == "Darwin" ]
 then
   export CLICOLOR=1
 fi
+
+if [ -f "$(brew --prefix)/etc/bash_completion" ]
+then
+  . "$(brew --prefix)/etc/bash_completion"
+fi
