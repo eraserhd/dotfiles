@@ -10,4 +10,5 @@ brew 'wget'
 
 cask '1password'
 cask 'java'
+cask 'skype'
 cask 'slack'
