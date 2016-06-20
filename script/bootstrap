@@ -116,6 +116,9 @@ install_dotfiles () {
 
 install_dotfiles
 
+mkdir -p ~/bin
+install -m 755 bin/* ~/bin/
+
 if [ "$(uname -s)" == "Darwin" ]
 then
   brew bundle
