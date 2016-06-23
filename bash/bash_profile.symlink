@@ -1,7 +1,11 @@
 
+export EDITOR=/usr/local/bin/nvim
 export HOMEBREW_GITHUB_API_TOKEN='5f81b078e6bd7b7acddcb2a1b47f4cd125aa5680'
 export PS1='[\u@\h \W]$ '
 export PATH=~/bin:"$PATH"
+
+alias vi=/usr/local/bin/nvim
+alias vim=/usr/local/bin/nvim
 
 if [ "$(uname -s)" == "Darwin" ]
 then

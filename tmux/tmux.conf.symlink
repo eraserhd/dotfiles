@@ -69,7 +69,7 @@ bind m command-prompt -p "move window to:"  "move-window -t '%%'"
 
 ##### Colors #####
 # Ensure we're using 256 colors
-#set -g default-terminal "screen-256color"
+set -g default-terminal "screen-256color"
 
 # Status bar
 set -g status-fg white
