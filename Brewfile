@@ -14,6 +14,7 @@ brew 'tmux'
 brew 'wget'
 
 cask '1password'
+cask 'evernote'
 cask 'java'
 cask 'skype'
 cask 'slack'
