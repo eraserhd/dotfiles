@@ -7,3 +7,6 @@
 [submodule "neovim/config/nvim.symlink/bundle/vim-surround"]
 	path = neovim/config/nvim.symlink/bundle/vim-surround
 	url = git@github.com:tpope/vim-surround.git
+[submodule "ctrlp"]
+	path = neovim/config/nvim.symlink/bundle/ctrlp.vim
+	url = git@github.com:ctrlpvim/ctrlp.vim.git
