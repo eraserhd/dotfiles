@@ -4,9 +4,6 @@
 [submodule "vim/vim.symlink/bundle/vim-fireplace"]
 	path = neovim/config/nvim.symlink/bundle/vim-fireplace
 	url = git@github.com:tpope/vim-fireplace.git
-[submodule "neovim/config/nvim.symlink/bundle/ctrlp.vim"]
-	path = neovim/config/nvim.symlink/bundle/ctrlp.vim
-	url = git@github.com:kien/ctrlp.vim
 [submodule "neovim/config/nvim.symlink/bundle/vim-surround"]
 	path = neovim/config/nvim.symlink/bundle/vim-surround
 	url = git@github.com:tpope/vim-surround.git
