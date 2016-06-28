@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rsync -a --progress ~/Library/Application\ Support/1Password\ 4/Backups/ jfelice@maitria.com:/home/jfelice/backups/1Password
+ssh jfelice@maitria.com /bin/sh -c '"( cd /srv/eraserhead.net-wiki && git add -A && git commit -m "backup" && tar czf /home/jfelice/backups/wiki.tar.gz . )"'
+scp jfelice@maitria.com:/home/jfelice/backups/wiki.tar.gz ~/Documents/wiki.tar.gz
