@@ -6,6 +6,7 @@ filetype plugin indent on
 set background=dark
 set nocompatible
 set number
+set autoread
 
 " Get swap files out of the way
 set directory=/private/tmp//,/tmp//
