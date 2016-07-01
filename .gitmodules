@@ -10,3 +10,6 @@
 [submodule "ctrlp"]
 	path = neovim/config/nvim.symlink/bundle/ctrlp.vim
 	url = git@github.com:ctrlpvim/ctrlp.vim.git
+[submodule "neovim/config/nvim.symlink/bundle/vim-fugitive"]
+	path = neovim/config/nvim.symlink/bundle/vim-fugitive
+	url = git@github.com:tpope/vim-fugitive.git
