@@ -8,7 +8,6 @@ cask 'evernote'
 cask 'java'
 cask 'skype'
 cask 'slack'
-cask 'twitterrific'
 cask 'xquartz'
 
 brew 'python'
