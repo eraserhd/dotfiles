@@ -14,6 +14,7 @@ cask 'xquartz'
 
 brew 'python'
 
+brew 'awscli'
 brew 'bash-completion'
 brew 'git'
 brew 'irssi'
