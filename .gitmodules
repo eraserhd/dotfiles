@@ -13,3 +13,9 @@
 [submodule "neovim/config/nvim.symlink/bundle/vim-fugitive"]
 	path = neovim/config/nvim.symlink/bundle/vim-fugitive
 	url = git@github.com:tpope/vim-fugitive.git
+[submodule "neovim/config/nvim.symlink/bundle/vim-sexp"]
+	path = neovim/config/nvim.symlink/bundle/vim-sexp
+	url = git@github.com:guns/vim-sexp.git
+[submodule "neovim/config/nvim.symlink/bundle/vim-sexp-mappings-for-regular-people"]
+	path = neovim/config/nvim.symlink/bundle/vim-sexp-mappings-for-regular-people
+	url = git@github.com:tpope/vim-sexp-mappings-for-regular-people.git
