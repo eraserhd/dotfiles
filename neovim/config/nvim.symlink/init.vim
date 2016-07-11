@@ -20,3 +20,8 @@ tnoremap <Esc> <C-\><C-n>
 let mapleader = ","
 let localmapleader = ","
 nmap <Leader>gc :silent !git add -A<CR>:Gcommit<CR>
+
+augroup Scheme
+  autocmd!
+  autocmd FileType scheme hi Error NONE|set sts=2 sw=2 lisp
+augroup end
