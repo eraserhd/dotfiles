@@ -8,6 +8,7 @@ set nocompatible
 set number
 set autoread
 set noincsearch
+set colorcolumn=78
 
 " Get swap files out of the way
 set directory=/private/tmp//,/tmp//
