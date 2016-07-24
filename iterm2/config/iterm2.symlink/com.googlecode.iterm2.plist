@@ -10,10 +10,12 @@
 	<integer>1</integer>
 	<key>Default Bookmark Guid</key>
 	<string>046A7AC3-C504-425C-969A-FC25459F3617</string>
+	<key>HideScrollbar</key>
+	<true/>
 	<key>HideTab</key>
 	<true/>
 	<key>LoadPrefsFromCustomFolder</key>
-	<true/>
+	<string>1</string>
 	<key>NSNavLastRootDirectory</key>
 	<string>~/src/dotfiles/iterm2/config/iterm2.symlink</string>
 	<key>NSNavPanelExpandedSizeForOpenMode</key>
@@ -49,9 +51,9 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame Preferences</key>
-	<string>269 162 606 456 0 0 1280 777 </string>
+	<string>269 220 606 456 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>129 315 585 377 0 0 1280 777 </string>
+	<string>0 48 1279 729 0 0 1280 777 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -693,6 +695,8 @@
 	</dict>
 	<key>PrefsCustomFolder</key>
 	<string>/Users/jfelice/.config/iterm2</string>
+	<key>PromptOnQuit</key>
+	<false/>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedAlternateAppNameKey</key>
