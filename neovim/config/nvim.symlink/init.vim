@@ -24,5 +24,5 @@ nmap <Leader>gc :silent !git add -A<CR>:Gcommit<CR>
 
 augroup Scheme
   autocmd!
-  autocmd FileType scheme hi Error NONE|set sts=2 sw=2 lisp
+  autocmd FileType scheme hi Error NONE|set sts=2 sw=2 et lisp
 augroup end
