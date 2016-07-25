@@ -13,7 +13,11 @@ if ! command -v __git_ps1 >/dev/null
 then
   __git_ps1() { :; }
 fi
-export PS1='[\u@\h \W$(__git_ps1 "(%s)")]$ '
+
+p_bold=$(tput bold)
+p_blue=$(tput setaf 4)
+p_reset=$(tput sgr0)
+export PS1="$p_bold"'['"$p_reset"'\u'"$p_bold"'@'"$p_reset"'\h \W$(__git_ps1 "('"$p_blue"'%s'"$p_reset"')")'"$p_bold"']$ '"$p_reset"
 
 alias vi=/usr/local/bin/nvim
 alias vim=/usr/local/bin/nvim
