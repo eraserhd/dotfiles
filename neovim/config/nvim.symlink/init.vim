@@ -10,6 +10,9 @@ set autoread
 set noincsearch
 set colorcolumn=78
 
+" Files I never want to see in CtrlP
+set wildignore=*/.git/*,*.pyc,*.class,*.jar,*.war
+
 " Get swap files out of the way
 set directory=/private/tmp//,/tmp//
 
