@@ -18,14 +18,22 @@ set directory=/private/tmp//,/tmp//
 
 " Terminal config
 let g:terminal_scrollback_buffer_size = 10000
-tnoremap <Esc> <C-\><C-n>
+tnoremap <Esc> <C-\><C-n><C-w>p
 
 " Local commands
 let mapleader = ","
 let localmapleader = ","
 nmap <Leader>gc :silent !git add -A<CR>:Gcommit<CR>
+nmap <Leader>t :call eraserhd#goto_nearest_terminal()<CR>
+nmap <Leader><Leader> :call eraserhd#repeat_last_terminal_command()<CR>
 
+" File types
 augroup Scheme
   autocmd!
   autocmd FileType scheme hi Error NONE|set sts=2 sw=2 et lisp
+augroup end
+
+augroup JavaScript
+  autocmd!
+  autocmd FileType javascript,json set sts=2 sw=2 ai et
 augroup end
