@@ -14,12 +14,7 @@ then
   __git_ps1() { :; }
 fi
 
-bld=$(tput bold)
-grn=$(tput setaf 2)
-yel=$(tput setaf 3)
-cyn=$(tput setaf 6)
-rst=$(tput sgr0)
-export PS1="${bld}[${rst}\\u@\\h \\W\$(__git_ps1 '(${cyn}%s${rst})'${bld})]\$${rst} "
+export PS1='[\u@\h \W$(__git_ps1 "(%s)")]$ '
 
 alias vi=/usr/local/bin/nvim
 alias vim=/usr/local/bin/nvim
