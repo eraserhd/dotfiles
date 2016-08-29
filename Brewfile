@@ -1,5 +1,8 @@
 cask_args appdir: '/Applications'
 
+tap 'caskroom/fonts'
+cask 'font-fira-code'
+
 tap 'homebrew/bundle'
 tap 'neovim/neovim'
 
