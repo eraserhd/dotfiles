@@ -8,7 +8,6 @@ set nocompatible
 set number
 set autoread
 set noincsearch
-set colorcolumn=78
 
 " Files I never want to see in CtrlP
 set wildignore=*/.git/*,*.pyc,*.class,*.jar,*.war
