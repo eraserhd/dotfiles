@@ -20,7 +20,6 @@ function! eraserhd#goto_nearest_terminal()
     return
   endif
   execute l:terminal_win . "wincmd w"
-  startinsert
 endfunction
 
 function! eraserhd#repeat_last_terminal_command()

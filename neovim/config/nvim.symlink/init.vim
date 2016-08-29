@@ -22,7 +22,8 @@ nmap <Leader>gc :silent !git add -A<CR>:Gcommit<CR>
 
 " Terminal config
 let g:terminal_scrollback_buffer_size = 10000
-nmap <Leader>t :call eraserhd#goto_nearest_terminal()<CR>
+nmap <Leader>T :call eraserhd#goto_nearest_terminal()<CR>
+nmap <Leader>t :call eraserhd#goto_nearest_terminal()\|startinsert<CR>
 nmap <Leader><Leader> :call eraserhd#repeat_last_terminal_command()<CR>
 tnoremap <Esc> <C-\><C-n><C-w>p
 
