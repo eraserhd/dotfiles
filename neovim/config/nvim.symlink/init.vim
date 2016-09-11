@@ -10,7 +10,7 @@ set autoread
 set noincsearch
 
 " Files I never want to see in CtrlP
-set wildignore=*/.git/*,*.pyc,*.class,*.jar,*.war
+set wildignore=*/.git/*,*.pyc,*.class,*.jar,*.war,out/**
 
 " Get swap files out of the way
 set directory=/private/tmp//,/tmp//
