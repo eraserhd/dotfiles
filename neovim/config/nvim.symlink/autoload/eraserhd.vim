@@ -27,15 +27,11 @@ function! eraserhd#repeat_last_terminal_command()
   let l:start_winnr = winnr()
   let l:terminal_win = eraserhd#nearest_terminal()
   if l:terminal_win == -1
-    echoe<C-\>rrrr "No terminal found!"
+    echoe "No terminal found!"
     return
   endif
   execute l:terminal_win . "wincmd w"
   call feedkeys("i\<Up>\<CR>\<Esc>")
-endfunction
-
-function! eraserhd#return_on_escape()
-  let t:return_on_escape = 1
 endfunction
 
 function! eraserhd#leave_insert()
