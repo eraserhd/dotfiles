@@ -24,3 +24,4 @@ then
   export CLICOLOR=1
 fi
 
+export ELI_ENV=corp-tech-jfelice
