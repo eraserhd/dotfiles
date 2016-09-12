@@ -1,6 +1,6 @@
 
 " Find a terminal on the same tab page
-function! eraserhd#nearest_terminal()
+function! eraserhd#repl_winnr()
   let l:terminal_buffer = -1
   for i in tabpagebuflist()
     if getbufvar(i, "&buftype") == "terminal"
@@ -13,8 +13,17 @@ function! eraserhd#nearest_terminal()
   return bufwinnr(l:terminal_buffer)
 endfunction
 
-function! eraserhd#goto_nearest_terminal()
-  let l:terminal_win = eraserhd#nearest_terminal()
+function! eraserhd#todo_winnr()
+  for i in tabpagebuflist()
+    if bufname(i) == ".git/TODO"
+      return bufwinnr(i)
+    endif
+  endfor
+endfunction
+
+function! eraserhd#goto_repl()
+  call eraserhd#configure()
+  let l:terminal_win = eraserhd#repl_winnr()
   if l:terminal_win == -1
     echoerr "No terminal found!"
     return
@@ -22,10 +31,10 @@ function! eraserhd#goto_nearest_terminal()
   execute l:terminal_win . "wincmd w"
 endfunction
 
-function! eraserhd#repeat_last_terminal_command()
+function! eraserhd#repeat_last_repl_command()
   let t:return_on_escape = 1
   let l:start_winnr = winnr()
-  let l:terminal_win = eraserhd#nearest_terminal()
+  let l:terminal_win = eraserhd#repl_winnr()
   if l:terminal_win == -1
     echoe "No terminal found!"
     return
@@ -45,28 +54,31 @@ function! eraserhd#leave_insert()
   execute winnr("#") . "wincmd w" 
 endfunction
 
-function! eraserhd#existing_TODO()
-  for i in tabpagebuflist()
-    if bufname(i) == ".git/TODO"
-      return bufwinnr(i)
-    endif
-  endfor
-endfunction
-
-function! eraserhd#open_TODO()
-  let l:current_win = winnr()
-  wincmd b
-  split .git/TODO
-  wincmd k
-  10wincmd _
-  set winfixheight
-endfunction
-
-function! eraserhd#goto_TODO()
-  let l:todo = eraserhd#existing_TODO()
+function! eraserhd#goto_todo()
+  call eraserhd#configure()
+  let l:todo = eraserhd#todo_winnr()
   if !empty(l:todo)
     execute l:todo . "wincmd w"
     return
   endif
-  call eraserhd#open_TODO()
+endfunction
+
+function! eraserhd#configure()
+  if exists("t:eraserhd_configured")
+    return
+  endif
+  let t:eraserhd_configured = 1
+  let l:original_window = winnr()
+  below vsplit term://bash\ -l
+  wincmd L
+  split .git/TODO
+  10wincmd _
+  set winfixheight
+  execute l:original_window . "wincmd w"
+  if filereadable("project.clj")
+    call eraserhd#goto_repl()
+    let t:return_on_escape = 1
+    startinsert
+    call feedkeys("lein repl\<CR>\<Esc>")
+  endif
 endfunction
