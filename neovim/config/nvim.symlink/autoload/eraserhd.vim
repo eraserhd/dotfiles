@@ -63,8 +63,18 @@ function! eraserhd#goto_todo()
   endif
 endfunction
 
+function! eraserhd#goto(what)
+  if a:what == "repl"
+    return eraserhd#goto_repl()
+  elseif a:what == "todo"
+    return eraserhd#goto_todo()
+  else
+    echoe "Don't know how to go to '" . a:what . "'"
+  endif
+endfunction
+
 function! eraserhd#configure()
-  if exists("t:eraserhd_configured")
+  if exists("t:eraserhd_configured") && t:eraserhd_configured
     return
   endif
   let t:eraserhd_configured = 1
