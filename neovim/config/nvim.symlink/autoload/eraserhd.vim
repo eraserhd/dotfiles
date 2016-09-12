@@ -44,3 +44,18 @@ function! eraserhd#leave_insert()
   let t:return_on_escape = 0
   execute winnr("#") . "wincmd w" 
 endfunction
+
+function! eraserhd#TODO_window()
+  for i in tabpagebuflist()
+    if bufname(i) == ".git/TODO"
+      return bufwinnr(i)
+    endif
+  endfor
+endfunction
+
+function! eraserhd#goto_TODO()
+  let l:todo = eraserhd#TODO_window()
+  if !empty(l:todo)
+    execute l:todo . "wincmd w"
+  endif
+endfunction

@@ -24,6 +24,7 @@ nmap <Leader>gc :silent !git add -A<CR>:Gcommit<CR>
 let g:terminal_scrollback_buffer_size = 10000
 nmap <Leader>R :call eraserhd#goto_nearest_terminal()<CR>
 nmap <Leader>r :call eraserhd#goto_nearest_terminal()\|let t:return_on_escape = 1\|startinsert<CR>
+nmap <Leader>t :call eraserhd#goto_TODO()<CR>
 nmap <Leader><Leader> :call eraserhd#repeat_last_terminal_command()<CR>
 tnoremap <Esc> <C-\><C-n>:call eraserhd#leave_insert()<CR>
 
@@ -36,4 +37,9 @@ augroup end
 augroup JavaScript
   autocmd!
   autocmd FileType javascript,json set sts=2 sw=2 ai et
+augroup end
+
+augroup VimL
+  autocmd!
+  autocmd FileType vim set sts=2 sw=2 ai et
 augroup end
