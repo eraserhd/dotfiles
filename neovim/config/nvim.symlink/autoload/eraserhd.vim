@@ -63,11 +63,15 @@ function! eraserhd#goto_todo()
   endif
 endfunction
 
-function! eraserhd#goto(what)
+function! eraserhd#goto(what, ...)
   if a:what == "repl"
-    return eraserhd#goto_repl()
+    call eraserhd#goto_repl()
+    if a:1 == "insert"
+      let t:return_on_escape = 1
+      startinsert
+    endif
   elseif a:what == "todo"
-    return eraserhd#goto_todo()
+    call eraserhd#goto_todo()
   else
     echoe "Don't know how to go to '" . a:what . "'"
   endif
