@@ -45,7 +45,7 @@ function! eraserhd#leave_insert()
   execute winnr("#") . "wincmd w" 
 endfunction
 
-function! eraserhd#TODO_window()
+function! eraserhd#existing_TODO()
   for i in tabpagebuflist()
     if bufname(i) == ".git/TODO"
       return bufwinnr(i)
@@ -53,9 +53,20 @@ function! eraserhd#TODO_window()
   endfor
 endfunction
 
+function! eraserhd#open_TODO()
+  let l:current_win = winnr()
+  wincmd b
+  split .git/TODO
+  wincmd k
+  10wincmd _
+  set winfixheight
+endfunction
+
 function! eraserhd#goto_TODO()
-  let l:todo = eraserhd#TODO_window()
+  let l:todo = eraserhd#existing_TODO()
   if !empty(l:todo)
     execute l:todo . "wincmd w"
+    return
   endif
+  call eraserhd#open_TODO()
 endfunction
