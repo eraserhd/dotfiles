@@ -1,12 +1,14 @@
 
-export EDITOR=/usr/local/bin/nvim
-export HOMEBREW_GITHUB_API_TOKEN='5f81b078e6bd7b7acddcb2a1b47f4cd125aa5680'
 export PATH=~/bin:"$PATH"
 
-brew_prefix=$(brew --prefix)
-if [ -f "${brew_prefix}/etc/bash_completion" ]
+if command -v brew >/dev/null
 then
-  . "${brew_prefix}/etc/bash_completion"
+  export HOMEBREW_GITHUB_API_TOKEN='5f81b078e6bd7b7acddcb2a1b47f4cd125aa5680'
+  brew_prefix=$(brew --prefix)
+  if [ -f "${brew_prefix}/etc/bash_completion" ]
+  then
+    . "${brew_prefix}/etc/bash_completion"
+  fi
 fi
 
 if ! command -v __git_ps1 >/dev/null
@@ -16,8 +18,17 @@ fi
 
 export PS1='[\u@\h \W$(__git_ps1 "(%s)")]$ '
 
-alias vi=/usr/local/bin/nvim
-alias vim=/usr/local/bin/nvim
+for editor in nvim vim vi
+do
+  if command -v "$editor" >/dev/null
+  then
+    editor_path=$(command -v "$editor")
+    alias vi=$editor_path
+    alias vim=$editor_path
+    export EDITOR=$editor_path
+    break
+  fi
+done
 
 if [ "$(uname -s)" == "Darwin" ]
 then
