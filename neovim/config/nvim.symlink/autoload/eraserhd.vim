@@ -66,7 +66,7 @@ endfunction
 function! eraserhd#goto(what, ...)
   if a:what == "repl"
     call eraserhd#goto_repl()
-    if a:1 == "insert"
+    if a:0 >= 1 && a:1 == "insert"
       let t:return_on_escape = 1
       startinsert
     endif
