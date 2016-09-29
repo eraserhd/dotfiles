@@ -20,6 +20,10 @@ brew 'python'
 
 brew 'awscli'
 brew 'bash-completion'
+brew 'docker-machine'
+brew 'docker-machine-driver-xhyve'
+brew 'docker'
+brew 'docker-compose'
 brew 'git'
 brew 'git-test'
 brew 'graphviz'
@@ -33,5 +37,6 @@ brew 'sassc'
 brew 'tmate'
 brew 'tmux'
 brew 'wget'
+brew 'xhyve', args: ['HEAD']
 
 brew './scheme/chezscheme.rb'
