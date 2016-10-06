@@ -1,0 +1,41 @@
+(require 'package)
+
+(setq packages '(evil))
+(setq package-archives '(("melpa" . "http://melpa.org/packages/")))
+
+(package-initialize)
+
+;; Install packages we want
+(unless package-archive-contents
+  (package-refresh-contents))
+(dolist (package packages)
+  (unless (package-installed-p package)
+    (package-install package)))
+
+(require 'evil)
+(evil-mode 1)
+
+(when (eq system-type 'darwin)
+  (defun homebrew-prefix (pkg file)
+    (let ((prefix (replace-regexp-in-string
+		    "\n$"
+		    ""
+		    (shell-command-to-string (format "brew --prefix %s" pkg)))))
+      (format "%s/%s" prefix file)))
+
+  (load-file (homebrew-prefix
+	       "proof-general"
+	       "share/emacs/site-lisp/proof-general/generic/proof-site.el")))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages (quote (evil))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
