@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Stop tracking remote branches which are
+git fetch || exit $?
+for remote in $(git remote)
+do
+  git remote prune "$remote" || exit $?
+done
+
+# Remove local branches which have already been merged
+git for-each-ref --format '%(refname)' --merged origin/master 'refs/heads/*' | \
+while read refname
+do
+  branchname=${refname#refs/heads/}
+  if [[ "$branchname" != "master" ]]
+  then
+    git branch -d "$branchname"
+  fi
+done
