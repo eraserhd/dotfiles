@@ -16,6 +16,7 @@ cask 'mactex'
 cask 'screenhero'
 cask 'skype'
 cask 'slack'
+cask 'sublime-text'
 cask 'xquartz'
 
 brew 'python'
