@@ -31,7 +31,7 @@ brew 'graphviz'
 brew 'irssi'
 brew 'leiningen'
 brew 'maven'
-brew 'neovim'
+brew 'neovim', args: ['HEAD']
 brew 'nodejs'
 brew 'proof-general'
 brew 'reattach-to-user-namespace'
@@ -40,5 +40,6 @@ brew 'tmate'
 brew 'tmux'
 brew 'wget'
 brew 'xhyve', args: ['HEAD']
+brew 'z'
 
 brew './scheme/chezscheme.rb'
