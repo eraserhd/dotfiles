@@ -35,6 +35,7 @@ brew 'neovim', args: ['HEAD']
 brew 'nodejs'
 brew 'proof-general'
 brew 'reattach-to-user-namespace'
+brew 'rlwrap'
 brew 'sassc'
 brew 'tmate'
 brew 'tmux'
