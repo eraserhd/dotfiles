@@ -19,3 +19,6 @@
 [submodule "neovim/config/nvim.symlink/bundle/node-host"]
 	path = neovim/config/nvim.symlink/bundle/node-host
 	url = git@github.com:neovim/node-host
+[submodule "neovim/config/nvim.symlink/bundle/clj-refactor.nvim"]
+	path = neovim/config/nvim.symlink/bundle/clj-refactor.nvim
+	url = git@github.com:clojure-vim/clj-refactor.nvim.git
