@@ -85,7 +85,8 @@ function! eraserhd#configure()
   let l:original_window = winnr()
   below vsplit term://bash\ -l
   wincmd L
-  split .git/TODO
+  let l:git_dir = substitute(system("git rev-parse --git-dir"), "\n", "", 0)
+  execute "split " . l:git_dir . "/TODO"
   10wincmd _
   set winfixheight
   execute l:original_window . "wincmd w"
