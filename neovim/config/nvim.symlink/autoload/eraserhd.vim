@@ -15,7 +15,7 @@ endfunction
 
 function! eraserhd#todo_winnr()
   for i in tabpagebuflist()
-    if bufname(i) == ".git/TODO"
+    if bufname(i) =~ "/TODO$"
       return bufwinnr(i)
     endif
   endfor
