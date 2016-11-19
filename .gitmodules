@@ -22,3 +22,6 @@
 [submodule "neovim/config/nvim.symlink/bundle/clj-refactor.nvim"]
 	path = neovim/config/nvim.symlink/bundle/clj-refactor.nvim
 	url = git@github.com:clojure-vim/clj-refactor.nvim.git
+[submodule "neovim/config/nvim.symlink/bundle/idris-vim"]
+	path = neovim/config/nvim.symlink/bundle/idris-vim
+	url = git@github.com:Idris-hackers/idris-vim.git
