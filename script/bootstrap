@@ -132,5 +132,10 @@ do
   $installer
 done
 
+if ! [[ -d /Applications/Write.app ]]
+then
+	printf 'Install Write.app (from e-mail - from Paddle!)\n' >&2
+fi
+
 echo ''
 echo '  All installed!'
