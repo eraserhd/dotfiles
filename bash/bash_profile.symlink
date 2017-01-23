@@ -6,11 +6,10 @@ source_if_exists() {
   fi
 }
 
-export PATH=~/bin:"$PATH"
+export PATH=~/bin:~/.cabal/bin:"$PATH"
 
 if command -v brew >/dev/null
 then
-  export HOMEBREW_GITHUB_API_TOKEN='5f81b078e6bd7b7acddcb2a1b47f4cd125aa5680'
   brew_prefix=$(brew --prefix)
   source_if_exists "${brew_prefix}/etc/bash_completion"
   source_if_exists "${brew_prefix}/etc/profile.d/z.sh"
@@ -42,3 +41,7 @@ fi
 
 export ELI_ENV=corp-tech-jfelice
 export NEOVIM_JS_DEBUG=/tmp/nvimdebug.log
+export VAULT_ADDR=https://vault.prod.2u.com:8200/
+export VAULT_CACERT=$HOME/src/ops-terraform/consul-classic/ansible/creds/vault-ca.pem
+
+[[ -f ~/bin/private.sh ]] && source ~/bin/private.sh
