@@ -29,14 +29,19 @@ nmap <Leader><Leader> :call eraserhd#repeat_last_repl_command()<CR>
 tnoremap <Esc> <C-\><C-n>:call eraserhd#leave_insert()<CR>
 
 " File types
-augroup Scheme
+augroup Haskell
   autocmd!
-  autocmd FileType scheme hi Error NONE|set sts=2 sw=2 et lisp
+  autocmd FileType haskell set sts=2 sw=2 ai et
 augroup end
 
 augroup JavaScript
   autocmd!
   autocmd FileType javascript,json set sts=2 sw=2 ai et
+augroup end
+
+augroup Scheme
+  autocmd!
+  autocmd FileType scheme hi Error NONE|set sts=2 sw=2 et lisp
 augroup end
 
 augroup VimL
