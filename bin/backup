@@ -2,9 +2,13 @@
 
 set -e
 
-rsync -a --progress ~/Library/Application\ Support/1Password\ 4/Backups/ jfelice@maitria.com:/home/jfelice/backups/1Password
+cd ~/src/dotfiles
+
+backup_path=~/Library/Application\ Support/1Password\ 4/Backups
+last_1p_backup=`ls -1t "$backup_path/" |head -n 1`
+cp "$backup_path/$last_1p_backup" ./1password/backup.zip
+git commit -m "1Password backup" 1password/backup.zip || true
 
 # Mirror dotfiles elsewhere
-cd ~/src/dotfiles
 git push origin master
 git push jfelice@maitria.com:/srv/git/dotfiles.git master

@@ -1,1 +1,2 @@
 bin/private.sh filter=git-crypt diff=git-crypt
+1password/backup.zip filter=git-crypt diff=git-crypt
