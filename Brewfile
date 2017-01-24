@@ -15,6 +15,7 @@ cask 'mactex'
 cask 'screenhero'
 cask 'skype'
 cask 'slack'
+cask 'spotify'
 cask 'sublime-text'
 cask 'xquartz'
 
