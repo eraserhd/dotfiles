@@ -1,3 +1,10 @@
 #!/bin/bash
 
+set -e
+
 rsync -a --progress ~/Library/Application\ Support/1Password\ 4/Backups/ jfelice@maitria.com:/home/jfelice/backups/1Password
+
+# Mirror dotfiles elsewhere
+cd ~/src/dotfiles
+git push origin master
+git push jfelice@maitria.com:/srv/git/dotfiles.git master
