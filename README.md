@@ -9,3 +9,7 @@ The organization and a lot of scripts were stolen from https://github.com/holman
 * Better Snap Tool
 * Ulysses
 * Wunderlist
+
+### Miscellaneous
+
+* Restore 1Password from backup (in 1password/)
