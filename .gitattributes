@@ -1,3 +1,4 @@
 bin/private.sh filter=git-crypt diff=git-crypt
 1password/backup.zip filter=git-crypt diff=git-crypt
+aws/boto.symlink filter=git-crypt diff=git-crypt
 aws/aws/credentials.symlink filter=git-crypt diff=git-crypt
