@@ -7,6 +7,7 @@ tap 'homebrew/bundle'
 tap 'neovim/neovim'
 
 cask '1password'
+cask 'anki'
 cask 'docker'
 cask 'emacs'
 cask 'evernote'
