@@ -1,7 +1,7 @@
 " node plugins
 call remote#host#RegisterPlugin('node', '/Users/jfelice/src/dotfiles/neovim/config/nvim.symlink/bundle/nvim-parinfer.js/rplugin/node/nvim-parinfer.js', [
-      \ {'sync': v:true, 'name': 'ParinferIndent', 'type': 'function', 'opts': {'eval': '[getpos(''.''), bufnr(''.''), getline(1,line(''$'')), g:parinfer_mode, g:parinfer_preview_cursor_scope, v:operator, -strlen(@-)]'}},
       \ {'sync': v:true, 'name': 'ParinferShift', 'type': 'function', 'opts': {'eval': '[getline(1,line(''$''))]'}},
+      \ {'sync': v:true, 'name': 'ParinferProcessEvent', 'type': 'function', 'opts': {}},
      \ ])
 call remote#host#RegisterPlugin('node', '/Users/jfelice/src/dotfiles/neovim/config/nvim.symlink/bundle/clj-refactor.nvim/rplugin/node/clj-refactor.js', [
       \ {'sync': v:false, 'name': 'CAddDeclaration', 'type': 'command', 'opts': {'nargs': 0, 'eval': 'getpos(''.'')'}},
