@@ -8,6 +8,7 @@ set nocompatible
 set number
 set autoread
 set noincsearch
+set list " Show me tabs and space at end-of-line
 
 " Files I never want to see in CtrlP
 set wildignore=*/.git/*,*.pyc,*.class,*.jar,*.war,out/**
