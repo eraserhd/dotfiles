@@ -40,6 +40,9 @@ then
   export CLICOLOR=1
 fi
 
+export IRCNICK=eraserhd
+export IRCSERVER=irc.freenode.net
+
 export ELI_ENV=corp-tech-jfelice
 export NEOVIM_JS_DEBUG=/tmp/nvimdebug.log
 export VAULT_ADDR=https://vault.prod.2u.com:8200/
