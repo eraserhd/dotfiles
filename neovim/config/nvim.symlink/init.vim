@@ -49,3 +49,8 @@ augroup VimL
   autocmd!
   autocmd FileType vim set sts=2 sw=2 ai et
 augroup end
+
+augroup Terraform
+  autocmd!
+  autocmd FileType terraform set sts=2 sw=2 ai et
+augroup end
