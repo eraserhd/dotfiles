@@ -1,5 +1,7 @@
 cask_args appdir: '/Applications'
 
+cask 'zoomus'
+
 tap 'caskroom/fonts'
 cask 'font-fira-code'
 
