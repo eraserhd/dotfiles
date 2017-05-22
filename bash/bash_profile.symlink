@@ -41,7 +41,7 @@ then
 fi
 
 export IRCNICK=eraserhd
-export IRCSERVER=irc.freenode.net
+export IRCSERVER=eraserhead.net
 
 export ELI_ENV=corp-tech-jfelice
 export NEOVIM_JS_DEBUG=/tmp/nvimdebug.log

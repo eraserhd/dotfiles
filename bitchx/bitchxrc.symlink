@@ -1,1 +1,2 @@
 /ignore * join part quit
+/set auto_reconnect on
