@@ -28,3 +28,6 @@
 [submodule "neovim/config/nvim.symlink/bundle/vim-terraform"]
 	path = neovim/config/nvim.symlink/bundle/vim-terraform
 	url = git@github.com:hashivim/vim-terraform.git
+[submodule "neovim/config/nvim.symlink/bundle/agda-vim"]
+	path = neovim/config/nvim.symlink/bundle/agda-vim
+	url = git@github.com:derekelkins/agda-vim.git
