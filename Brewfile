@@ -10,6 +10,7 @@ tap 'neovim/neovim'
 
 cask '1password'
 cask 'anki'
+cask 'discord'
 cask 'docker'
 cask 'emacs'
 cask 'evernote'
@@ -25,6 +26,7 @@ cask 'xquartz'
 
 brew 'python'
 
+brew 'agda'
 brew 'awscli'
 brew 'bash-completion'
 brew 'bitchx'
