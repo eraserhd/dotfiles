@@ -3,12 +3,13 @@ execute pathogen#infect()
 syntax on
 filetype plugin indent on
 
-set background=dark
-set nocompatible
-set number
 set autoread
-set noincsearch
+set background=dark
 set list " Show me tabs and space at end-of-line
+set nocompatible
+set noincsearch
+set number
+set switchbuf=usetab
 
 " Files I never want to see in CtrlP
 set wildignore=*/.git/*,*.pyc,*.class,*.jar,*.war,out/**
@@ -30,6 +31,8 @@ nmap <Leader><Leader> :call eraserhd#repeat_last_repl_command()<CR>
 tnoremap <Esc> <C-\><C-n>:call eraserhd#leave_insert()<CR>
 
 " File types
+
+let g:haddock_browser = "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 augroup Haskell
   autocmd!
   autocmd FileType haskell set sts=2 sw=2 ai et

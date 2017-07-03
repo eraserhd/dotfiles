@@ -31,3 +31,6 @@
 [submodule "neovim/config/nvim.symlink/bundle/agda-vim"]
 	path = neovim/config/nvim.symlink/bundle/agda-vim
 	url = git@github.com:derekelkins/agda-vim.git
+[submodule "neovim/config/nvim.symlink/bundle/haskellmode-vim"]
+	path = neovim/config/nvim.symlink/bundle/haskellmode-vim
+	url = git@github.com:lukerandall/haskellmode-vim.git
