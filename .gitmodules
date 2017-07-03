@@ -31,3 +31,6 @@
 [submodule "neovim/config/nvim.symlink/bundle/agda-vim"]
 	path = neovim/config/nvim.symlink/bundle/agda-vim
 	url = git@github.com:derekelkins/agda-vim.git
+[submodule "neovim/config/nvim.symlink/bundle/tabular"]
+	path = neovim/config/nvim.symlink/bundle/tabular
+	url = git@github.com:godlygeek/tabular.git
