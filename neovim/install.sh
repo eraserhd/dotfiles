@@ -12,3 +12,12 @@ pip install neovim
 #/usr/local/bin/nvim --cmd 'au VimEnter * UpdateRemotePlugins' --cmd 'au VimEnter * q'
 mkdir -p ~/.local/share/nvim
 cp ./neovim/rplugin.vim ~/.local/share/nvim/
+
+cabal install happy
+cabal install ghc-mod
+
+# Not sure this works
+nvim -E -s <<EOF
+VimProcInstall
+q
+EOF

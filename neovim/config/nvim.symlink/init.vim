@@ -37,9 +37,17 @@ vmap <Leader>a :exe ":Tabularize /" . nr2char(getchar())<CR>
 " File types
 
 let g:haddock_browser = "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
+function HaskellBuffer()
+  " Same as Idris
+  nmap <buffer> <Bslash>t :GhcModType<CR>
+  nmap <buffer> <Bslash>r :GhcModCheck<CR>
+  nmap <buffer> <Bslash>c :GhcModSplitFunCase<CR>
+  nmap <buffer> <Bslash>d :GhcModSigCodegen<CR>
+endfunction
 augroup Haskell
   autocmd!
   autocmd FileType haskell set sts=2 sw=2 ai et
+  autocmd FileType haskell call HaskellBuffer()
 augroup end
 
 augroup JavaScript

@@ -34,3 +34,9 @@
 [submodule "neovim/config/nvim.symlink/bundle/tabular"]
 	path = neovim/config/nvim.symlink/bundle/tabular
 	url = git@github.com:godlygeek/tabular.git
+[submodule "neovim/config/nvim.symlink/bundle/ghcmod-vim"]
+	path = neovim/config/nvim.symlink/bundle/ghcmod-vim
+	url = git@github.com:eagletmt/ghcmod-vim.git
+[submodule "neovim/config/nvim.symlink/bundle/vimproc.vim"]
+	path = neovim/config/nvim.symlink/bundle/vimproc.vim
+	url = git@github.com:Shougo/vimproc.vim.git
