@@ -30,10 +30,6 @@ nmap <Leader>t :call eraserhd#goto("todo")<CR>
 nmap <Leader><Leader> :call eraserhd#repeat_last_repl_command()<CR>
 tnoremap <Esc> <C-\><C-n>:call eraserhd#leave_insert()<CR>
 
-" tabular
-nmap <Leader>a :exe ":Tabularize /" . nr2char(getchar())<CR>
-vmap <Leader>a :exe ":Tabularize /" . nr2char(getchar())<CR>
-
 " File types
 
 let g:haddock_browser = "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
