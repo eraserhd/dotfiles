@@ -40,3 +40,6 @@
 [submodule "neovim/config/nvim.symlink/bundle/vimproc.vim"]
 	path = neovim/config/nvim.symlink/bundle/vimproc.vim
 	url = git@github.com:Shougo/vimproc.vim.git
+[submodule "neovim/config/nvim.symlink/bundle/vim-repeat"]
+	path = neovim/config/nvim.symlink/bundle/vim-repeat
+	url = git@github.com:tpope/vim-repeat.git
