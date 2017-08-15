@@ -7,7 +7,7 @@ source_if_exists() {
 }
 
 export GOPATH=~/src/go
-export PATH=~/bin:$GOPATH/bin:~/.cabal/bin:"$PATH"
+export PATH=~/.local/bin:$GOPATH/bin:~/.cabal/bin:"$PATH"
 
 if command -v brew >/dev/null
 then
@@ -49,3 +49,4 @@ export VAULT_ADDR=https://vault.prod.2u.com:8200/
 export VAULT_CACERT=$HOME/src/ops-terraform/consul-classic/ansible/creds/vault-ca.pem
 
 [[ -f ~/bin/private.sh ]] && source ~/bin/private.sh
+

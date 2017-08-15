@@ -122,10 +122,10 @@ git submodule update
 
 install_dotfiles
 
-mkdir -p ~/bin
+mkdir -p ~/.local/bin
 for bin_script in "$(pwd)/bin"/*
 do
-  ln -sf "$bin_script" ~/bin/
+  ln -sf "$bin_script" ~/.local/bin/
 done
 
 if [ "$(uname -s)" == "Darwin" ]
