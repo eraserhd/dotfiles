@@ -48,5 +48,5 @@ export NEOVIM_JS_DEBUG=/tmp/nvimdebug.log
 export VAULT_ADDR=https://vault.prod.2u.com:8200/
 export VAULT_CACERT=$HOME/src/ops-terraform/consul-classic/ansible/creds/vault-ca.pem
 
-[[ -f ~/bin/private.sh ]] && source ~/bin/private.sh
+[[ -f ~/.local/bin/private.sh ]] && source ~/.local/bin/private.sh
 
