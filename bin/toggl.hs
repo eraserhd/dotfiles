@@ -75,10 +75,29 @@ completeScript = L8.pack $
   "  end repeat\n" ++
   "end tell"
 
-completeThingsTask :: IO ()
-completeThingsTask =
+ankiScript :: L8.ByteString
+ankiScript = L8.pack $
+  "tell application \"Anki\"\n" ++
+  "  activate\n" ++
+  "end tell\n" ++
+  "tell application \"System Events\"\n" ++
+  "  keystroke \"y\"\n" ++
+  "  delay 3\n" ++
+  "  tell process \"Anki\"\n" ++
+  "    tell menu bar 1\n" ++
+  "      tell menu \"Tools\"\n" ++
+  "        click menu item \"Check Media...\"\n" ++
+  "      end tell\n" ++
+  "    end tell\n" ++
+  "  end tell\n" ++
+  "  delay 3\n" ++
+  "  keystroke \"y\"\n" ++
+  "end tell\n"
+
+runAppleScript :: L8.ByteString -> IO ()
+runAppleScript script =
   runProcess_ $
-    setStdin (byteStringInput completeScript) $
+    setStdin (byteStringInput script) $
     proc "osascript" ["-"]
 
 
@@ -90,4 +109,5 @@ main = do now <- getCurrentTime
           response <- httpNoBody request
           when (getResponseStatusCode response /= 200) $
             error "Non-200 response from Toggl"
-          completeThingsTask
+          runAppleScript completeScript
+          runAppleScript ankiScript
