@@ -64,6 +64,16 @@ makeRequest body token = do
     setRequestBodyJSON body $
     req
 
+addTimeToToggl :: IO ()
+addTimeToToggl = do
+  now <- getCurrentTime
+  tz <- getTimeZone now
+  token <- getEnv "TOGGL_API_TOKEN"
+  request <- makeRequest (CreateTimeEntry { time_entry = timeEntryForToday tz now }) token
+  response <- httpNoBody request
+  when (getResponseStatusCode response /= 200) $
+    error "Non-200 response from Toggl"
+
 completeScript :: L8.ByteString
 completeScript = L8.pack $
   "tell application \"Things3\"\n" ++
@@ -102,12 +112,6 @@ runAppleScript script =
 
 
 main :: IO ()
-main = do now <- getCurrentTime
-          tz <- getTimeZone now
-          token <- getEnv "TOGGL_API_TOKEN"
-          request <- makeRequest (CreateTimeEntry { time_entry = timeEntryForToday tz now }) token
-          response <- httpNoBody request
-          when (getResponseStatusCode response /= 200) $
-            error "Non-200 response from Toggl"
+main = do addTimeToToggl
           runAppleScript completeScript
           runAppleScript ankiScript
