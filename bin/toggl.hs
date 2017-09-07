@@ -6,6 +6,7 @@
 import Control.Monad (when)
 import Data.Aeson
 import Data.Time
+import Data.Time.Calendar.WeekDate (toWeekDate)
 import GHC.Generics
 import Network.HTTP.Simple
 import System.Environment (getEnv)
@@ -39,10 +40,16 @@ instance ToJSON CreateTimeEntry where
 instance FromJSON TimeEntry
 instance FromJSON CreateTimeEntry
 
+today :: TimeZone -> UTCTime -> Day
+today tz now = localDay $ utcToLocalTime tz now
+
 hourToday :: TimeZone -> UTCTime -> Int -> UTCTime
 hourToday tz now hour =
-  let today = localDay (utcToLocalTime tz now) in
-  localTimeToUTC tz (LocalTime today (TimeOfDay 9 0 0))
+  localTimeToUTC tz $ LocalTime (today tz now) (TimeOfDay 9 0 0)
+
+isWeekDay :: TimeZone -> UTCTime -> Bool
+isWeekDay tz now = let (_, _, dayOfWeek) = toWeekDate (today tz now) in
+                   dayOfWeek < 6
 
 timeEntryForToday :: TimeZone -> UTCTime -> TimeEntry
 timeEntryForToday tz now =
@@ -68,11 +75,12 @@ addTimeToToggl :: IO ()
 addTimeToToggl = do
   now <- getCurrentTime
   tz <- getTimeZone now
-  token <- getEnv "TOGGL_API_TOKEN"
-  request <- makeRequest (CreateTimeEntry { time_entry = timeEntryForToday tz now }) token
-  response <- httpNoBody request
-  when (getResponseStatusCode response /= 200) $
-    error "Non-200 response from Toggl"
+  when (isWeekDay tz now) $ do
+    token <- getEnv "TOGGL_API_TOKEN"
+    request <- makeRequest (CreateTimeEntry { time_entry = timeEntryForToday tz now }) token
+    response <- httpNoBody request
+    when (getResponseStatusCode response /= 200) $
+      error "Non-200 response from Toggl"
 
 completeScript :: L8.ByteString
 completeScript = L8.pack $
