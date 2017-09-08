@@ -1,3 +1,0 @@
-/ignore * join part quit
-/set auto_reconnect on
-/fset format_public [$0] %b<%n$1%b>%n $3-
