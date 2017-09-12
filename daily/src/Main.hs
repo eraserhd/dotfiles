@@ -8,6 +8,7 @@ import Data.Time.Calendar.WeekDate (toWeekDate)
 import GHC.Generics
 import Network.HTTP.Simple
 import System.Environment (getEnv)
+import System.IO (hPutStr, hFlush, stdout)
 import System.Process.Typed (runProcess_, proc, setStdin, byteStringInput)
 import qualified Data.ByteString.Lazy.Char8 as L8
 import qualified Data.ByteString.Char8 as B
@@ -116,8 +117,15 @@ runAppleScript script =
     setStdin (byteStringInput script) $
     proc "osascript" ["-"]
 
+indicate :: String -> IO a -> IO a
+indicate msg  action = do
+  hPutStr stdout (msg ++ "... ")
+  hFlush stdout
+  result <- action
+  putStrLn "ok"
+  return result
 
 main :: IO ()
-main = do addTimeToToggl
-          runAppleScript completeScript
-          runAppleScript ankiScript
+main = do indicate "Adding time to Toggl" addTimeToToggl
+          indicate "Checking off Toggl task" $ runAppleScript completeScript
+          indicate "Syncing Anki" $ runAppleScript ankiScript
