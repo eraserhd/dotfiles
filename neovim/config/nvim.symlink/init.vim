@@ -34,8 +34,10 @@ tnoremap <Esc> <C-\><C-n>:call eraserhd#leave_insert()<CR>
 let g:haddock_browser = "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 function HaskellBuffer()
   " Same as Idris
-  nmap <buffer> <Bslash>t :GhcModType<CR>
-  nmap <buffer> <Bslash>r :GhcModCheck<CR>
+  nmap <buffer> <Bslash>t :InteroGenericType<CR>
+  nmap <buffer> <Bslash>r :InteroLoadCurrentFile<CR>
+
+  " Can Intero do these?
   nmap <buffer> <Bslash>c :GhcModSplitFunCase<CR>
   nmap <buffer> <Bslash>d :GhcModSigCodegen<CR>
 endfunction

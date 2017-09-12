@@ -43,3 +43,6 @@
 [submodule "neovim/config/nvim.symlink/bundle/vim-repeat"]
 	path = neovim/config/nvim.symlink/bundle/vim-repeat
 	url = git@github.com:tpope/vim-repeat.git
+[submodule "neovim/config/nvim.symlink/bundle/intero-neovim"]
+	path = neovim/config/nvim.symlink/bundle/intero-neovim
+	url = git@github.com:parsonsmatt/intero-neovim.git
