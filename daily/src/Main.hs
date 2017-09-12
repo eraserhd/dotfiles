@@ -1,5 +1,3 @@
-#!/usr/bin/env stack
--- stack --resolver lts-9.1 --install-ghc runghc --package aeson --package bytestring --package http-conduit --package time --package typed-process
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE OverloadedStrings #-}
 
