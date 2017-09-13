@@ -9,7 +9,7 @@ import GHC.Generics
 import Network.HTTP.Simple
 import System.Environment (getEnv)
 import System.IO (hPutStr, hFlush, stdout)
-import System.Process.Typed (runProcess_, proc, setStdin, byteStringInput)
+import System.Process.Typed (runProcess_, proc)
 import qualified Data.ByteString.Char8 as B
 
 centralParkProject :: Integer
