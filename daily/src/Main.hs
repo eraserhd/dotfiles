@@ -10,7 +10,6 @@ import Network.HTTP.Simple
 import System.Environment (getEnv)
 import System.IO (hPutStr, hFlush, stdout)
 import System.Process.Typed (runProcess_, proc, setStdin, byteStringInput)
-import qualified Data.ByteString.Lazy.Char8 as L8
 import qualified Data.ByteString.Char8 as B
 
 centralParkProject :: Integer
@@ -81,8 +80,8 @@ addTimeToToggl = do
     when (getResponseStatusCode response /= 200) $
       error "Non-200 response from Toggl"
 
-completeScript :: L8.ByteString
-completeScript = L8.pack $
+completeScript :: String
+completeScript =
   "tell application \"Things3\"\n" ++
   "  repeat with toDo in to dos of list \"Today\"\n" ++
   "    set toDoName to name of toDo\n" ++
@@ -92,8 +91,8 @@ completeScript = L8.pack $
   "  end repeat\n" ++
   "end tell"
 
-ankiScript :: L8.ByteString
-ankiScript = L8.pack $
+ankiScript :: String
+ankiScript =
   "tell application \"Anki\"\n" ++
   "  activate\n" ++
   "end tell\n" ++
@@ -111,11 +110,9 @@ ankiScript = L8.pack $
   "  keystroke \"y\"\n" ++
   "end tell\n"
 
-runAppleScript :: L8.ByteString -> IO ()
+runAppleScript :: String -> IO ()
 runAppleScript script =
-  runProcess_ $
-    setStdin (byteStringInput script) $
-    proc "osascript" ["-"]
+  runProcess_ $ proc "osascript" ["-e", script]
 
 indicate :: String -> IO a -> IO a
 indicate msg  action = do
