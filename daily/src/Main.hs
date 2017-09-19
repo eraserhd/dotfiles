@@ -21,6 +21,8 @@ data DailyOp next = CurrentTimeZone (TimeZone -> next)
                   | DoREST String (Request -> Request) (Response () -> next)
                   deriving (Functor)
 
+type DailyM = Free DailyOp
+
 makeFree ''DailyOp
 
 centralParkProject :: Integer
@@ -70,7 +72,7 @@ timeEntryForToday tz now =
             , created_with = "curl"
             }
 
-addTimeToToggl :: Free DailyOp Bool
+addTimeToToggl :: DailyM Bool
 addTimeToToggl = do
   now <- currentUTCTime
   tz <- currentTimeZone
@@ -118,14 +120,14 @@ ankiScript =
   "  keystroke \"y\"\n" ++
   "end tell\n"
 
-indicating :: String -> Free DailyOp a -> Free DailyOp a
+indicating :: String -> DailyM a -> DailyM a
 indicating msg action = do
   writeMessage (msg ++ "... ")
   result <- action
   writeMessageLn "ok"
   return result
 
-everything :: Free DailyOp ()
+everything :: DailyM ()
 everything = do
   indicating "Adding time to Toggl" addTimeToToggl
   indicating "Checking off Toggl task" $ runOSAScript completeScript
