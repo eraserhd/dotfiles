@@ -15,9 +15,9 @@ import qualified Data.ByteString.Char8 as B
 data DailyOp next = CurrentTimeZone (TimeZone -> next)
                   | CurrentUTCTime (UTCTime -> next)
                   | GetEnv String (String -> next)
-                  | RunOSAScript String (() -> next)
-                  | WriteMessage String (() -> next)
-                  | WriteMessageLn String (() -> next)
+                  | RunOSAScript String next
+                  | WriteMessage String next
+                  | WriteMessageLn String next
                   | DoREST String (Request -> Request) (Response () -> next)
                   deriving (Functor)
 
@@ -135,9 +135,9 @@ dailyOpInterpret                            :: DailyOp (IO a) -> IO a
 dailyOpInterpret (CurrentTimeZone next)     = getCurrentTime >>= getTimeZone >>= next
 dailyOpInterpret (CurrentUTCTime next)      = getCurrentTime >>= next
 dailyOpInterpret (GetEnv name next)         = E.getEnv name >>= next
-dailyOpInterpret (RunOSAScript script next) = runProcess_ (proc "osascript" ["-e", script]) >>= (\_ -> next ())
-dailyOpInterpret (WriteMessage msg next)    = hPutStr stdout msg >> hFlush stdout >>= next
-dailyOpInterpret (WriteMessageLn msg next)  = putStrLn msg >>= next
+dailyOpInterpret (RunOSAScript script next) = runProcess_ (proc "osascript" ["-e", script]) >> next
+dailyOpInterpret (WriteMessage msg next)    = hPutStr stdout msg >> hFlush stdout >> next
+dailyOpInterpret (WriteMessageLn msg next)  = putStrLn msg >> next
 dailyOpInterpret (DoREST url reqfn next)    = do
   request <- reqfn <$> parseRequest url
   response <- httpNoBody request
