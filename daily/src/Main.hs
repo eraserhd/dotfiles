@@ -1,26 +1,37 @@
-{-# LANGUAGE DeriveGeneric #-}
-{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE DeriveFunctor, DeriveGeneric, FlexibleContexts, GADTs, OverloadedStrings, TemplateHaskell #-}
 
-import Control.Monad (when)
+import Control.Monad.Free
+import Control.Monad.Free.TH (makeFree)
 import Data.Aeson
 import Data.Time
 import Data.Time.Calendar.WeekDate (toWeekDate)
 import GHC.Generics
 import Network.HTTP.Simple
-import System.Environment (getEnv)
+import qualified System.Environment as E (getEnv)
 import System.IO (hPutStr, hFlush, stdout)
 import System.Process.Typed (runProcess_, proc)
 import qualified Data.ByteString.Char8 as B
+
+data DailyOp next = CurrentTimeZone (TimeZone -> next)
+                  | CurrentUTCTime (UTCTime -> next)
+                  | GetEnv String (String -> next)
+                  | RunOSAScript String (() -> next)
+                  | WriteMessage String (() -> next)
+                  | WriteMessageLn String (() -> next)
+                  | DoREST String (Request -> Request) (Response () -> next)
+                  deriving (Functor)
+
+makeFree ''DailyOp
 
 centralParkProject :: Integer
 centralParkProject = 38030885
 
 data TimeEntry =
-  TimeEntry { description :: String
-            , tags :: [String]
-            , duration :: Integer
-            , start :: UTCTime
-            , pid :: Integer
+  TimeEntry { description  :: String
+            , tags         :: [String]
+            , duration     :: Integer
+            , start        :: UTCTime
+            , pid          :: Integer
             , created_with :: String
             }
   deriving (Generic, Show)
@@ -59,26 +70,23 @@ timeEntryForToday tz now =
             , created_with = "curl"
             }
 
-makeRequest :: CreateTimeEntry -> String -> IO Request
-makeRequest body token = do
-  req <- parseRequest "https://www.toggl.com/api/v8/time_entries"
-  return $
-    setRequestMethod "POST" $
-    addRequestHeader "Content-Type" "application/json" $
-    setRequestBasicAuth (B.pack token) "api_token" $
-    setRequestBodyJSON body $
-    req
-
-addTimeToToggl :: IO ()
+addTimeToToggl :: Free DailyOp Bool
 addTimeToToggl = do
-  now <- getCurrentTime
-  tz <- getTimeZone now
-  when (isWeekDay tz now) $ do
+  now <- currentUTCTime
+  tz <- currentTimeZone
+  if isWeekDay tz now
+  then do
     token <- getEnv "TOGGL_API_TOKEN"
-    request <- makeRequest (CreateTimeEntry { time_entry = timeEntryForToday tz now }) token
-    response <- httpNoBody request
-    when (getResponseStatusCode response /= 200) $
-      error "Non-200 response from Toggl"
+    response <- doREST "https://www.toggl.com/api/v8/time_entries" $
+                  setRequestMethod "POST" .
+                  setRequestHeader "Content-Type" [B.pack "application/json"] .
+                  setRequestBasicAuth (B.pack token) "api_token" .
+                  setRequestBodyJSON (CreateTimeEntry { time_entry = timeEntryForToday tz now })
+    if (getResponseStatusCode response /= 200)
+    then do writeMessageLn "Non-200 response from Toggl"
+            return False
+    else return True
+  else return False
 
 completeScript :: String
 completeScript =
@@ -110,19 +118,30 @@ ankiScript =
   "  keystroke \"y\"\n" ++
   "end tell\n"
 
-runAppleScript :: String -> IO ()
-runAppleScript script =
-  runProcess_ $ proc "osascript" ["-e", script]
-
-indicate :: String -> IO a -> IO a
-indicate msg  action = do
-  hPutStr stdout (msg ++ "... ")
-  hFlush stdout
+indicating :: String -> Free DailyOp a -> Free DailyOp a
+indicating msg action = do
+  writeMessage (msg ++ "... ")
   result <- action
-  putStrLn "ok"
+  writeMessageLn "ok"
   return result
 
+everything :: Free DailyOp ()
+everything = do
+  indicating "Adding time to Toggl" addTimeToToggl
+  indicating "Checking off Toggl task" $ runOSAScript completeScript
+  indicating "Syncing Anki" $ runOSAScript ankiScript
+
+dailyOpInterpret                            :: DailyOp (IO a) -> IO a
+dailyOpInterpret (CurrentTimeZone next)     = getCurrentTime >>= getTimeZone >>= next
+dailyOpInterpret (CurrentUTCTime next)      = getCurrentTime >>= next
+dailyOpInterpret (GetEnv name next)         = E.getEnv name >>= next
+dailyOpInterpret (RunOSAScript script next) = runProcess_ (proc "osascript" ["-e", script]) >>= (\_ -> next ())
+dailyOpInterpret (WriteMessage msg next)    = hPutStr stdout msg >> hFlush stdout >>= next
+dailyOpInterpret (WriteMessageLn msg next)  = putStrLn msg >>= next
+dailyOpInterpret (DoREST url reqfn next)    = do
+  request <- reqfn <$> parseRequest url
+  response <- httpNoBody request
+  next response
+
 main :: IO ()
-main = do indicate "Adding time to Toggl" addTimeToToggl
-          indicate "Checking off Toggl task" $ runAppleScript completeScript
-          indicate "Syncing Anki" $ runAppleScript ankiScript
+main = iterM dailyOpInterpret everything
