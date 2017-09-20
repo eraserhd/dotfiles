@@ -1,6 +1,6 @@
 {-# LANGUAGE DeriveFunctor, DeriveGeneric, FlexibleContexts, OverloadedStrings, TemplateHaskell #-}
 
-module Daily (DailyOp(..), everything) where
+module Daily (DailyOp(..), DailyM(..), everything) where
 
 import Control.Monad.Free
 import Control.Monad.Free.TH (makeFree)

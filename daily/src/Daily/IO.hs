@@ -1,4 +1,4 @@
-{-# LANGUAGE DeriveFunctor, DeriveGeneric, FlexibleContexts, OverloadedStrings, TemplateHaskell #-}
+module Daily.IO (runDailyM) where
 
 import Daily
 
@@ -21,5 +21,5 @@ dailyOpInterpret (DoREST url reqfn next)    = do
   response <- httpNoBody request
   next response
 
-main :: IO ()
-main = iterM dailyOpInterpret everything
+runDailyM :: DailyM a -> IO a
+runDailyM = iterM dailyOpInterpret
