@@ -17,7 +17,7 @@ data DailyOp next = CurrentTimeZone (TimeZone -> next)
                   | RunOSAScript String next
                   | WriteMessage String next
                   | WriteMessageLn String next
-                  | DoREST String (Request -> Request) (Response () -> next)
+                  | DoREST String (Request -> Request) (Int -> next)
                   deriving (Functor)
 
 type DailyM = Free DailyOp
@@ -78,12 +78,12 @@ addTimeToToggl = do
   if isWeekDay tz now
   then do
     token <- getEnv "TOGGL_API_TOKEN"
-    response <- doREST "https://www.toggl.com/api/v8/time_entries" $
-                  setRequestMethod "POST" .
-                  setRequestHeader "Content-Type" [B.pack "application/json"] .
-                  setRequestBasicAuth (B.pack token) "api_token" .
-                  setRequestBodyJSON (CreateTimeEntry { time_entry = timeEntryForToday tz now })
-    if (getResponseStatusCode response /= 200)
+    statusCode <- doREST "https://www.toggl.com/api/v8/time_entries" $
+                    setRequestMethod "POST" .
+                    setRequestHeader "Content-Type" [B.pack "application/json"] .
+                    setRequestBasicAuth (B.pack token) "api_token" .
+                    setRequestBodyJSON (CreateTimeEntry { time_entry = timeEntryForToday tz now })
+    if (statusCode /= 200)
     then do writeMessageLn "Non-200 response from Toggl"
             return False
     else return True

@@ -19,7 +19,7 @@ dailyOpInterpret (WriteMessageLn msg next)  = putStrLn msg >> next
 dailyOpInterpret (DoREST url reqfn next)    = do
   request <- reqfn <$> parseRequest url
   response <- httpNoBody request
-  next response
+  next $ getResponseStatusCode response
 
 runDailyM :: DailyM a -> IO a
 runDailyM = iterM dailyOpInterpret
