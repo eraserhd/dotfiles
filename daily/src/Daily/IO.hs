@@ -1,13 +1,25 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Daily.IO (runDailyM) where
 
 import Daily
 
 import Control.Monad.Free (iterM)
+import Control.Monad.Catch
 import Data.Time
 import Network.HTTP.Simple
 import System.Environment (getEnv)
 import System.IO (hPutStr, hFlush, stdout)
 import System.Process.Typed (runProcess_, proc)
+import qualified Data.ByteString.Char8 as B
+
+conduitRequest :: MonadThrow m => REST -> m Request
+conduitRequest (POST url body user pw) =
+  setRequestMethod "POST" .
+  setRequestHeader "Content-Type" [B.pack "application/json"] .
+  setRequestBasicAuth (B.pack user) (B.pack pw) .
+  setRequestBodyLBS body <$>
+  parseRequest url
 
 dailyOpInterpret                            :: DailyOp (IO a) -> IO a
 dailyOpInterpret (CurrentTimeZone next)     = getCurrentTime >>= getTimeZone >>= next
@@ -16,8 +28,8 @@ dailyOpInterpret (GetEnv name next)         = getEnv name >>= next
 dailyOpInterpret (RunOSAScript script next) = runProcess_ (proc "osascript" ["-e", script]) >> next
 dailyOpInterpret (WriteMessage msg next)    = hPutStr stdout msg >> hFlush stdout >> next
 dailyOpInterpret (WriteMessageLn msg next)  = putStrLn msg >> next
-dailyOpInterpret (DoREST url reqfn next)    = do
-  request <- reqfn <$> parseRequest url
+dailyOpInterpret (DoREST req next)    = do
+  request <- conduitRequest req
   response <- httpNoBody request
   next $ getResponseStatusCode response
 

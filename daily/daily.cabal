@@ -17,6 +17,7 @@ library
   build-depends:       aeson >= 1.1 && <1.2,
                        base >=4.9 && <4.10,
                        bytestring >= 0.10 && <0.11,
+                       exceptions >= 0.8 && <0.9,
                        free >= 4.12 && <4.13,
                        http-conduit >= 2.2 && <2.3,
                        time >= 1.6 && <1.7,

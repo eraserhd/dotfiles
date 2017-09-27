@@ -1,6 +1,6 @@
 {-# LANGUAGE DeriveFunctor, DeriveGeneric, FlexibleContexts, OverloadedStrings, TemplateHaskell #-}
 
-module Daily (DailyOp(..), DailyM(..), everything) where
+module Daily (REST(..), DailyOp(..), DailyM(..), everything) where
 
 import Control.Monad.Free
 import Control.Monad.Free.TH (makeFree)
@@ -8,8 +8,13 @@ import Data.Aeson
 import Data.Time
 import Data.Time.Calendar.WeekDate (toWeekDate)
 import GHC.Generics
-import Network.HTTP.Simple
-import qualified Data.ByteString.Char8 as B
+import qualified Data.ByteString.Lazy.Char8 as B
+
+data REST = POST { restUrl      :: String
+                 , restBody     :: B.ByteString
+                 , restUser     :: String
+                 , restPassword :: String
+                 }
 
 data DailyOp next = CurrentTimeZone (TimeZone -> next)
                   | CurrentUTCTime (UTCTime -> next)
@@ -17,7 +22,7 @@ data DailyOp next = CurrentTimeZone (TimeZone -> next)
                   | RunOSAScript String next
                   | WriteMessage String next
                   | WriteMessageLn String next
-                  | DoREST String (Request -> Request) (Int -> next)
+                  | DoREST REST (Int -> next)
                   deriving (Functor)
 
 type DailyM = Free DailyOp
@@ -78,11 +83,11 @@ addTimeToToggl = do
   if isWeekDay tz now
   then do
     token <- getEnv "TOGGL_API_TOKEN"
-    statusCode <- doREST "https://www.toggl.com/api/v8/time_entries" $
-                    setRequestMethod "POST" .
-                    setRequestHeader "Content-Type" [B.pack "application/json"] .
-                    setRequestBasicAuth (B.pack token) "api_token" .
-                    setRequestBodyJSON (CreateTimeEntry { time_entry = timeEntryForToday tz now })
+    statusCode <- doREST $ POST { restUrl      = "https://www.toggl.com/api/v8/time_entries"
+                                , restBody     = encode (CreateTimeEntry { time_entry = timeEntryForToday tz now })
+                                , restUser     = token
+                                , restPassword = "api_token"
+                                }
     if (statusCode /= 200)
     then do writeMessageLn "Non-200 response from Toggl"
             return False
@@ -131,4 +136,3 @@ everything = do
   indicating "Adding time to Toggl" addTimeToToggl
   indicating "Checking off Toggl task" $ runOSAScript completeScript
   indicating "Syncing Anki" $ runOSAScript ankiScript
-
