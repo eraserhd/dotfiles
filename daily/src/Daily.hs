@@ -15,6 +15,12 @@ data REST = POST { restUrl      :: String
                  , restUser     :: String
                  , restPassword :: String
                  }
+          | GET  { restUrl      :: String
+                 , restUser     :: String
+                 , restPassowrd :: String
+                 }
+          deriving (Eq, Show)
+
 
 data DailyOp next = CurrentTimeZone (TimeZone -> next)
                   | CurrentUTCTime (UTCTime -> next)
