@@ -89,13 +89,13 @@ addTimeToToggl = do
   if isWeekDay tz now
   then do
     token <- getEnv "TOGGL_API_TOKEN"
-    (statusCode, _) <- doREST $ POST { restUrl      = "https://www.toggl.com/api/v8/time_entries"
+    (statusCode, r) <- doREST $ POST { restUrl      = "https://www.toggl.com/api/v8/time_entries"
                                      , restBody     = encode (CreateTimeEntry { time_entry = timeEntryForToday tz now })
                                      , restUser     = token
                                      , restPassword = "api_token"
                                      }
     if (statusCode /= 200)
-    then do writeMessageLn "Non-200 response from Toggl"
+    then do writeMessageLn $ "Non-200 response from Toggl:\n" ++ r
             return False
     else return True
   else return False
