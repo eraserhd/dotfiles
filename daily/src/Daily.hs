@@ -19,7 +19,7 @@ completeScript =
   "tell application \"Things3\"\n" ++
   "  repeat with toDo in to dos of list \"Today\"\n" ++
   "    set toDoName to name of toDo\n" ++
-  "    if (toDoName as string) is equal to \"Add time to Toggl\" then\n" ++
+  "    if (toDoName as string) is equal to \"Run Daily\" then\n" ++
   "      set completion date of toDo to current date\n" ++
   "    end if\n" ++
   "  end repeat\n" ++
