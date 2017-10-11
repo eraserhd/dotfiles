@@ -1,104 +1,18 @@
 {-# LANGUAGE DeriveFunctor, DeriveGeneric, FlexibleContexts, OverloadedStrings, TemplateHaskell #-}
 
-module Daily (REST(..), DailyOp(..), DailyM(..), everything) where
+module Daily (DailyOp(..), DailyM(..), everything) where
 
 import Control.Monad.Free
 import Control.Monad.Free.TH (makeFree)
-import Data.Aeson
-import Data.Time
-import Data.Time.Calendar.WeekDate (toWeekDate)
-import GHC.Generics
-import qualified Data.ByteString.Lazy.Char8 as B
 
-data REST = POST { restUrl      :: String
-                 , restBody     :: B.ByteString
-                 , restUser     :: String
-                 , restPassword :: String
-                 }
-          | GET  { restUrl      :: String
-                 , restUser     :: String
-                 , restPassowrd :: String
-                 }
-          deriving (Eq, Show)
-
-
-data DailyOp next = CurrentTimeZone (TimeZone -> next)
-                  | CurrentUTCTime (UTCTime -> next)
-                  | GetEnv String (String -> next)
-                  | RunOSAScript String next
+data DailyOp next = RunOSAScript String next
                   | WriteMessage String next
                   | WriteMessageLn String next
-                  | DoREST REST ((Int, String) -> next)
                   deriving (Functor)
 
 type DailyM = Free DailyOp
 
 makeFree ''DailyOp
-
-centralParkProject :: Integer
-centralParkProject = 38030885
-
-data TimeEntry =
-  TimeEntry { description  :: String
-            , tags         :: [String]
-            , duration     :: Integer
-            , start        :: UTCTime
-            , pid          :: Integer
-            , created_with :: String
-            }
-  deriving (Generic, Show)
-
-data CreateTimeEntry =
-  CreateTimeEntry { time_entry :: TimeEntry
-                  }
-  deriving (Generic, Show)
-
-instance ToJSON TimeEntry where
-  toEncoding = genericToEncoding defaultOptions
-instance ToJSON CreateTimeEntry where
-  toEncoding = genericToEncoding defaultOptions
-
-instance FromJSON TimeEntry
-instance FromJSON CreateTimeEntry
-
-today :: TimeZone -> UTCTime -> Day
-today tz now = localDay $ utcToLocalTime tz now
-
-hourToday :: TimeZone -> UTCTime -> Int -> UTCTime
-hourToday tz now hour =
-  localTimeToUTC tz $ LocalTime (today tz now) (TimeOfDay 9 0 0)
-
-isWeekDay :: TimeZone -> UTCTime -> Bool
-isWeekDay tz now = let (_, _, dayOfWeek) = toWeekDate (today tz now) in
-                   dayOfWeek < 6
-
-timeEntryForToday :: TimeZone -> UTCTime -> TimeEntry
-timeEntryForToday tz now =
-  TimeEntry { description = ""
-            , tags = []
-            , duration = 8 * 60 * 60
-            , start = hourToday tz now 9
-            , pid = centralParkProject
-            , created_with = "curl"
-            }
-
-addTimeToToggl :: DailyM Bool
-addTimeToToggl = do
-  now <- currentUTCTime
-  tz <- currentTimeZone
-  if isWeekDay tz now
-  then do
-    token <- getEnv "TOGGL_API_TOKEN"
-    (statusCode, r) <- doREST $ POST { restUrl      = "https://www.toggl.com/api/v8/time_entries"
-                                     , restBody     = encode (CreateTimeEntry { time_entry = timeEntryForToday tz now })
-                                     , restUser     = token
-                                     , restPassword = "api_token"
-                                     }
-    if (statusCode /= 200)
-    then do writeMessageLn $ "Non-200 response from Toggl:\n" ++ r
-            return False
-    else return True
-  else return False
 
 completeScript :: String
 completeScript =
@@ -139,6 +53,5 @@ indicating msg action = do
 
 everything :: DailyM ()
 everything = do
-  indicating "Adding time to Toggl" addTimeToToggl
   indicating "Checking off Toggl task" $ runOSAScript completeScript
   indicating "Syncing Anki" $ runOSAScript ankiScript
