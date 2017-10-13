@@ -53,5 +53,5 @@ indicating msg action = do
 
 everything :: DailyM ()
 everything = do
-  indicating "Checking off Toggl task" $ runOSAScript completeScript
+  indicating "Checking off Daily Run task" $ runOSAScript completeScript
   indicating "Syncing Anki" $ runOSAScript ankiScript
