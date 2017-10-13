@@ -10,6 +10,7 @@ import System.Process.Typed (runProcess_, proc)
 
 dailyOpInterpret                            :: DailyOp (IO a) -> IO a
 dailyOpInterpret (RunOSAScript script next) = runProcess_ (proc "osascript" ["-e", script]) >> next
+dailyOpInterpret (MacOpen file next)        = runProcess_ (proc "open" [file]) >> next
 dailyOpInterpret (WriteMessage msg next)    = hPutStr stdout msg >> hFlush stdout >> next
 dailyOpInterpret (WriteMessageLn msg next)  = putStrLn msg >> next
 

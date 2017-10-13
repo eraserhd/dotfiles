@@ -6,4 +6,4 @@ flags: {}
 extra-package-dbs: []
 
 ghc-options:
-  daily: -Wunused-imports -Wunused-binds
+  daily: -Wunused-imports -Wunused-binds -Wincomplete-patterns

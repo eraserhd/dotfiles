@@ -6,6 +6,7 @@ import Control.Monad.Free
 import Control.Monad.Free.TH (makeFree)
 
 data DailyOp next = RunOSAScript String next
+                  | MacOpen String next
                   | WriteMessage String next
                   | WriteMessageLn String next
                   deriving (Functor)
@@ -51,7 +52,12 @@ indicating msg action = do
   writeMessageLn "ok"
   return result
 
+showBluetoothMenu :: DailyM ()
+showBluetoothMenu =
+  macOpen "/System/Library/CoreServices/Menu Extras/Bluetooth.menu"
+
 everything :: DailyM ()
 everything = do
+  indicating "Showing bluetooth menu" $ showBluetoothMenu
   indicating "Checking off Daily Run task" $ runOSAScript completeScript
   indicating "Syncing Anki" $ runOSAScript ankiScript
