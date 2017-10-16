@@ -2,11 +2,14 @@
 
 module Daily (DailyOp(..), DailyM(..), everything) where
 
+import Control.Monad (when)
 import Control.Monad.Free
 import Control.Monad.Free.TH (makeFree)
+import System.Exit (ExitCode(..))
 
 data DailyOp next = RunOSAScript String next
                   | MacOpen String next
+                  | RunProgram (Maybe FilePath) String [String] (ExitCode -> next)
                   | WriteMessage String next
                   | WriteMessageLn String next
                   deriving (Functor)
@@ -56,8 +59,22 @@ showBluetoothMenu :: DailyM ()
 showBluetoothMenu =
   macOpen "/System/Library/CoreServices/Menu Extras/Bluetooth.menu"
 
+syncNotes :: DailyM ()
+syncNotes = do
+  addResultCode <- runProgram dataDir "git" ["add", "-A"]
+  when (addResultCode == ExitSuccess) $ do
+    commitResultCode <- runProgram dataDir "git" ["commit", "-m", "daily"]
+    when (commitResultCode == ExitSuccess) $ do
+      pushResultCode <- runProgram dataDir "git" ["push", "origin", "master"]
+      when (commitResultCode /= ExitSuccess) $
+        writeMessageLn "notes push failed."
+  where
+    dataDir :: Maybe FilePath
+    dataDir = Just "/Users/jfelice/src/data"
+
 everything :: DailyM ()
 everything = do
-  indicating "Showing bluetooth menu" $ showBluetoothMenu
+  indicating "Showing bluetooth menu" showBluetoothMenu
+  indicating "Syncing notes" syncNotes
   indicating "Checking off Daily Run task" $ runOSAScript completeScript
   indicating "Syncing Anki" $ runOSAScript ankiScript
