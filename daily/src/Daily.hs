@@ -2,9 +2,9 @@
 
 module Daily (DailyOp(..), DailyM(..), everything) where
 
-import Control.Monad (when)
 import Control.Monad.Free
 import Control.Monad.Free.TH (makeFree)
+import Control.Monad.Trans.Except (ExceptT(..), runExceptT)
 import System.Exit (ExitCode(..))
 
 data DailyOp next = RunOSAScript String next
@@ -61,16 +61,23 @@ showBluetoothMenu =
 
 syncNotes :: DailyM ()
 syncNotes = do
-  addResultCode <- runProgram dataDir "git" ["add", "-A"]
-  when (addResultCode == ExitSuccess) $ do
-    commitResultCode <- runProgram dataDir "git" ["commit", "-m", "daily"]
-    when (commitResultCode == ExitSuccess) $ do
-      pushResultCode <- runProgram dataDir "git" ["push", "origin", "master"]
-      when (commitResultCode /= ExitSuccess) $
-        writeMessageLn "notes push failed."
+  result <- runExceptT $ do
+    run "git" ["add", "-A"]
+    run "git" ["commit", "-m", "daily"]
+    run "git" ["push", "origin", "master"]
+  case result of
+    Left _ -> writeMessageLn "notes push failed."
+    _      -> return ()
   where
     dataDir :: Maybe FilePath
     dataDir = Just "/Users/jfelice/src/data"
+
+    run           :: String -> [String] -> ExceptT ExitCode DailyM ()
+    run prog args = ExceptT $ toEither <$> runProgram dataDir prog args
+
+    toEither             :: ExitCode -> Either ExitCode ()
+    toEither ExitSuccess = Right ()
+    toEither ec          = Left ec
 
 everything :: DailyM ()
 everything = do
