@@ -15,7 +15,7 @@ endfunction
 
 function! eraserhd#todo_winnr()
   for i in tabpagebuflist()
-    if bufname(i) =~ "/TODO$"
+    if getbufvar(i, "eraserhd_todo")
       return bufwinnr(i)
     endif
   endfor
@@ -81,6 +81,11 @@ let s:ReplCommands = {
   \ "clojure": "lein repl" ,
   \ "idris": "idris" }
 
+function! eraserhd#todo_filename()
+  let l:project_name = fnamemodify(getcwd(), ":t")
+  return $HOME . "/src/data/" . l:project_name . "_todo.md"
+endfunction
+
 function! eraserhd#configure()
   if exists("t:eraserhd_configured") && t:eraserhd_configured
     return
@@ -93,11 +98,13 @@ function! eraserhd#configure()
     let l:repl_command = ""
   endif
   below vsplit term://bash\ -l
+  let b:eraserhd_repl = 1
   wincmd L
   let l:git_dir = substitute(system("git rev-parse --git-dir"), "\n", "", 0)
-  execute "split " . l:git_dir . "/TODO"
+  execute "split " . eraserhd#todo_filename()
   10wincmd _
   set winfixheight
+  let b:eraserhd_todo = 1
   execute l:original_window . "wincmd w"
   if l:repl_command != ""
     call eraserhd#goto_repl()

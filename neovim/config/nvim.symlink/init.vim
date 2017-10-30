@@ -23,9 +23,12 @@ let localmapleader = ","
 nmap <Leader>gc :silent !git add -A<CR>:Gcommit<CR>
 
 " Terminal config
+set scrollback=10000
 let g:terminal_scrollback_buffer_size = 10000
 nmap <Leader>R :call eraserhd#goto("repl")<CR>
 nmap <Leader>r :call eraserhd#goto("repl", "insert")<CR>
+nmap <Leader>T :call eraserhd#goto("todo")<CR>
+nmap <Leader>t :call eraserhd#goto("todo", "insert")<CR>
 nmap <Leader><Leader> :call eraserhd#repeat_last_repl_command()<CR>
 tnoremap <Esc> <C-\><C-n>:call eraserhd#leave_insert()<CR>
 
