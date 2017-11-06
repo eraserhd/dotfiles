@@ -83,7 +83,7 @@ let s:ReplCommands = {
 
 function! eraserhd#todo_filename()
   let l:project_name = fnamemodify(getcwd(), ":t")
-  return $HOME . "/src/data/" . l:project_name . "_todo.md"
+  return $HOME . "/src/data/" . l:project_name . "-todo.md"
 endfunction
 
 function! eraserhd#configure()
