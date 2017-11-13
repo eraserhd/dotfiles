@@ -41,6 +41,7 @@ function HaskellBuffer()
   nmap <buffer> <Bslash>r :GhcModCheck<CR>
   nmap <buffer> <Bslash>c :GhcModSplitFunCase<CR>
   nmap <buffer> <Bslash>d :GhcModSigCodegen<CR>
+  nmap <buffer> K :execute "HoogleInfo " . expand("<cWORD>")<CR>
 endfunction
 augroup Haskell
   autocmd!
