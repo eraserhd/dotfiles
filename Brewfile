@@ -40,13 +40,9 @@ brew 'leiningen'
 brew 'neovim', args: ['HEAD']
 brew 'nodejs'
 brew 'reattach-to-user-namespace'
-brew 'rlwrap'
 brew 'sassc'
 brew 'terraform'
-brew 'tmate'
-brew 'tmux'
 brew 'vault'
-brew 'wget'
 brew 'z'
 
 brew './scheme/chezscheme.rb'
