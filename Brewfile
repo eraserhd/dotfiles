@@ -1,7 +1,5 @@
 cask_args appdir: '/Applications'
 
-cask 'zoomus'
-
 tap 'caskroom/fonts'
 cask 'font-mononoki'
 
@@ -22,6 +20,7 @@ cask 'slack'
 cask 'spotify'
 cask 'sublime-text'
 cask 'xquartz'
+cask 'zoomus'
 
 brew 'neovim', args: ['HEAD']
 brew './scheme/chezscheme.rb'

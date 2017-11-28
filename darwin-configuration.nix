@@ -6,6 +6,7 @@
   environment.systemPackages = with pkgs; [
       awscli
       bash-completion
+      ghc
       git
       git-crypt
       gnupg
