@@ -5,3 +5,4 @@ aws/aws/credentials.symlink filter=git-crypt diff=git-crypt
 npm/npmrc.symlink filter=git-crypt diff=git-crypt
 ssh/files/id_rsa filter=git-crypt diff=git-crypt
 ssh/files/id_dsa filter=git-crypt diff=git-crypt
+ssh/files/id_rsa-aws-idris filter=git-crypt diff=git-crypt
