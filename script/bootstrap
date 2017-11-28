@@ -136,6 +136,19 @@ then
   success 'nix installed'
 fi
 
+if ! [[ -e /etc/nixos/configuration.nix ]]
+then
+  if [ "$(uname -s)" == "Darwin" ]
+  then
+    info 'installing nix-darwin'
+    bash <(curl https://raw.githubusercontent.com/LnL7/nix-darwin/master/bootstrap.sh)
+    . /etc/static/bashrc
+    success 'nix-darwin installed'
+  else
+    fail "Don't know how to install NixOS on this platform."
+  fi
+fi
+
 if [ "$(uname -s)" == "Darwin" ]
 then
   if ! command -v brew >/dev/null
