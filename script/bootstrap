@@ -138,7 +138,7 @@ fi
 
 if [ "$(uname -s)" == "Darwin" ]
 then
-  if ! [[ -e /etc/nixos/configuration.nix ]]
+  if ! [[ -e /run/current-system ]]
   then
     info 'installing nix-darwin'
     bash <(curl https://raw.githubusercontent.com/LnL7/nix-darwin/master/bootstrap.sh)

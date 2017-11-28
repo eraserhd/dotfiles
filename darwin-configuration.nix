@@ -4,10 +4,26 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
+      awscli
+      bash-completion
+      git
+      git-crypt
+      gnupg
+      go
+      graphviz
+      idris
+      leiningen
       nix-repl
+      nodejs
+      python27Full
+      reattach-to-user-namespace
       rlwrap
+      sassc
+      stack
+      terraform
       tmate
       tmux
+      vault
       wget
     ];
 
