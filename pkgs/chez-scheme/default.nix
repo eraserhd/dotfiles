@@ -17,6 +17,7 @@ stdenv.mkDerivation {
     url = https://github.com/dybvig/stex/archive/v1.2.1.tar.gz;
     sha256 = "bf784ca46aaca9b665b7eb0c39f04f6a695aa40e99b11d8a6d4440648c1bf40e";
   };
+  buildInputs = [ libiconv libX11 ncurses ];
   builder = builtins.toFile "builder.sh" ''
     source $stdenv/setup
     tar xvfz $src
@@ -30,5 +31,10 @@ stdenv.mkDerivation {
     ./configure --installprefix="$out"
     make install
   '';
-  buildInputs = [ libiconv libX11 ncurses ];
+
+  meta = {
+    description = "A fast implementation of R6RS Scheme";
+    homepage = https://cisco.github.io/ChezScheme/;
+    license = stdenv.lib.licenses.asl20;
+  };
 }
