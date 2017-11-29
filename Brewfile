@@ -23,4 +23,3 @@ cask 'xquartz'
 cask 'zoomus'
 
 brew 'neovim', args: ['HEAD']
-brew './scheme/chezscheme.rb'

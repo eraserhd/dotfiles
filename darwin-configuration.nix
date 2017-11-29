@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
+let local = import ./local-packages.nix { };
+in
 {
-
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
@@ -14,6 +15,7 @@
       graphviz
       idris
       leiningen
+      local.chez-scheme
       nix-repl
       nodejs
       python27Full
