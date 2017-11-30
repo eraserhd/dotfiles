@@ -11,11 +11,9 @@ cask 'docker'
 cask 'evernote'
 cask 'java'
 cask 'mactex'
-cask 'marked'
 cask 'screenhero'
 cask 'slack'
 cask 'spotify'
-cask 'xquartz'
 cask 'zoomus'
 
 brew 'neovim', args: ['HEAD']
