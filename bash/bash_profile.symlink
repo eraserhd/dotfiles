@@ -1,20 +1,6 @@
 
-source_if_exists() {
-  if [[ -f "$1" ]]
-  then
-    source "$1"
-  fi
-}
-
 export GOPATH=~/src/go
 export PATH=~/.local/bin:$GOPATH/bin:~/.cabal/bin:"$PATH"
-
-if command -v brew >/dev/null
-then
-  brew_prefix=$(brew --prefix)
-  source_if_exists "${brew_prefix}/etc/bash_completion"
-  source_if_exists "${brew_prefix}/etc/profile.d/z.sh"
-fi
 
 if ! command -v __git_ps1 >/dev/null
 then
