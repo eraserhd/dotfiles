@@ -29,6 +29,7 @@ in
       wget
     ]) ++ (with local; [
       _1password
+      anki
       mactex
       slack
     ]);
