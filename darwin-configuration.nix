@@ -28,6 +28,7 @@ in
       wget
     ]) ++ (with local; [
       _1password
+      anki
       chez-scheme
       slack
     ]);
