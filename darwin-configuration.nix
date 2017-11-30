@@ -4,8 +4,7 @@ in
 {
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
-  environment.systemPackages = with pkgs; [
-      local._1password
+  environment.systemPackages = (with pkgs; [
       awscli
       ghc
       git
@@ -15,7 +14,6 @@ in
       graphviz
       idris
       leiningen
-      local.chez-scheme
       nix-repl
       nodejs
       python27Full
@@ -28,7 +26,11 @@ in
       tmux
       vault
       wget
-    ];
+    ]) ++ (with local; [
+      _1password
+      chez-scheme
+      evernote
+    ]);
 
   nixpkgs.config.allowUnfree = true;
 

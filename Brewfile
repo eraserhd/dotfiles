@@ -8,7 +8,6 @@ tap 'neovim/neovim'
 
 cask 'anki'
 cask 'docker'
-cask 'evernote'
 cask 'java'
 cask 'mactex'
 cask 'marked'

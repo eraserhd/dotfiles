@@ -9,4 +9,7 @@ rec {
     inherit (pkgs) stdenv fetchurl libiconv ncurses;
     inherit (pkgs.xorg) libX11;
   };
+  evernote = import ./pkgs/evernote {
+    inherit (pkgs) stdenv fetchurl undmg;
+  };
 }
