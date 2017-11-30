@@ -12,7 +12,6 @@ cask 'evernote'
 cask 'java'
 cask 'mactex'
 cask 'screenhero'
-cask 'slack'
 cask 'spotify'
 cask 'zoomus'
 
