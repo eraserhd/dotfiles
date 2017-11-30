@@ -30,6 +30,8 @@ in
       wget
     ];
 
+  nixpkgs.config.allowUnfree = true;
+
   # Create /etc/bashrc that loads the nix-darwin environment.
   programs.bash.enable = true;
   programs.bash.enableCompletion = true;
