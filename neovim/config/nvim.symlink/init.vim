@@ -68,3 +68,8 @@ augroup Terraform
   autocmd!
   autocmd FileType terraform set sts=2 sw=2 ai et
 augroup end
+
+augroup Terminal
+  autocmd!
+  autocmd TermOpen * setlocal nonumber
+augroup end
