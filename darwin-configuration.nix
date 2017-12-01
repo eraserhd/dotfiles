@@ -6,6 +6,7 @@ in
   # $ nix-env -qaP | grep wget
   environment.systemPackages = (with pkgs; [
       awscli
+      chez
       ghc
       git
       git-crypt
@@ -28,7 +29,6 @@ in
       wget
     ]) ++ (with local; [
       _1password
-      chez-scheme
       slack
     ]);
 
