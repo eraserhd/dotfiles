@@ -6,8 +6,6 @@ AUTHOR="%C(bold blue)%an%C(reset)"
 REFS="%C(red)%d%C(reset)"
 SUBJECT="%s"
 
-FORMAT="$HASH$RELATIVE_TIME$AUTHOR$REFS $SUBJECT"
+FORMAT="%<|(21)$HASH%<|(33,trunc)$RELATIVE_TIME %<|(50,trunc)$AUTHOR$REFS $SUBJECT"
 
-git log --graph --color=always --pretty="tformat:$FORMAT" "$@" |
-   column -t -s '' |
-   less -FXRS
+exec git log --graph --pretty="tformat:$FORMAT" "$@"
