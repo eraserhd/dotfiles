@@ -46,3 +46,6 @@
 [submodule "neovim/config/nvim.symlink/bundle/vim-hoogle"]
 	path = neovim/config/nvim.symlink/bundle/vim-hoogle
 	url = git@github.com:Twinside/vim-hoogle.git
+[submodule "neovim/config/nvim.symlink/bundle/vim-nix"]
+	path = neovim/config/nvim.symlink/bundle/vim-nix
+	url = git@github.com:LnL7/vim-nix.git
