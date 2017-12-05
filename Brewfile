@@ -9,7 +9,6 @@ tap 'neovim/neovim'
 cask 'anki'
 cask 'evernote'
 cask 'java'
-cask 'mactex'
 cask 'spotify'
 
 brew 'neovim', args: ['HEAD']
