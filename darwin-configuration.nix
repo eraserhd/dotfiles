@@ -1,6 +1,4 @@
 { config, lib, pkgs, ... }:
-let local = import ./local-packages.nix { };
-in
 {
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
@@ -27,9 +25,6 @@ in
       tmux
       vault
       wget
-    ]) ++ (with local; [
-      _1password
-      slack
     ]);
 
   nixpkgs.config.allowUnfree = true;
