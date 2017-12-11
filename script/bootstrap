@@ -138,25 +138,11 @@ fi
 
 if [ "$(uname -s)" == "Darwin" ]
 then
-  if ! [[ -e /run/current-system ]]
-  then
-    info 'installing nix-darwin'
-    bash <(curl https://raw.githubusercontent.com/LnL7/nix-darwin/master/bootstrap.sh)
-    . /etc/static/bashrc
-    success 'nix-darwin installed'
-  fi
-
-  ln -sf "$(pwd)/darwin-configuration.nix" ~/.nixpkgs/
-  darwin-rebuild switch
-
   if ! command -v brew >/dev/null
   then
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
   fi
   brew bundle
-
-else
-  fail "Don't know how to install NixOS on this platform."
 fi
 
 if ! grep -q TOKEN bin/private.sh
