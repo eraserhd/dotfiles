@@ -21,10 +21,8 @@ do
   fi
 done
 
-if [ "$(uname -s)" == "Darwin" ]
-then
-  export CLICOLOR=1
-fi
+# Darwin
+export CLICOLOR=1
 
 export IRCNICK=eraserhd
 export IRCSERVER=eraserhead.net
