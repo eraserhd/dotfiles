@@ -8,9 +8,6 @@ rec {
   anki = import ./pkgs/anki {
     inherit (pkgs) stdenv fetchurl undmg;
   };
-  mactex = import ./pkgs/mactex {
-    inherit (pkgs) stdenv fetchurl xar cpio;
-  };
   slack = import ./pkgs/slack {
     inherit (pkgs) stdenv fetchurl unzip;
   };
