@@ -7,3 +7,5 @@
 	r = "!git l -30"
 [core]
 	excludesfile = /Users/jfelice/.gitignore_global
+[grep]
+	lineNumber = true
