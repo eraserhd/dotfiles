@@ -31,6 +31,7 @@ brew 'leiningen'
 brew 'neovim', args: ['HEAD']
 brew 'node'
 brew 'reattach-to-user-namespace'
+brew 'rlwrap'
 brew 'sassc'
 brew 'terraform'
 brew 'tmate'
