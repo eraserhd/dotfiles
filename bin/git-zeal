@@ -1,0 +1,70 @@
+#!/bin/bash
+
+function zeal_status()
+{
+  local object="$1"
+  git notes --ref refs/notes/zeal show "$object" 2>/dev/null
+}
+
+function zeal_mark()
+{
+  local object="$1"
+  local status="$2"
+  git notes --ref refs/notes/zeal add -f -m "$status" "$object" 2>/dev/null
+}
+
+function zeal_test()
+{
+  local test_command=$(git config --get zeal.test-command)
+  if [[ -z "$test_command" ]]
+  then
+    printf 'git zeal test: zeal.test-command not set.\n' >&2
+    return 1
+  fi
+
+  local object=$(zeal_next)
+  if [[ -z "$object" ]]
+  then
+    return 0
+  fi
+
+  local status
+  eval "$test_command"
+  if [[ $? -eq 0 ]]
+  then
+    status=ok
+  else
+    status=failed
+  fi
+
+}
+
+function zeal_next()
+{
+  # HEAD always gets priority
+  if [[ -z "$(zeal_status HEAD)" ]]
+  then
+    git rev-parse HEAD
+    return 0
+  fi
+
+  # Next, find an untested branch tip
+  git for-each-ref --format='%(refname)' refs/heads/ | \
+  while read refname
+  do
+    local commit=$(git rev-parse "$refname")
+    if [[ "$(zeal_status "$commit")" != "ok" ]]
+    then
+      echo "$commit"
+      return 0
+    fi
+  done
+
+  # Nothing
+  return 1
+}
+
+command="$1"
+shift
+"zeal_${command}" "$@"
+exit $?
