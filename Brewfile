@@ -28,7 +28,7 @@ brew 'go'
 brew 'graphviz'
 brew 'haskell-stack'
 brew 'leiningen'
-brew 'neovim', args: ['HEAD']
+brew 'neovim'
 brew 'node'
 brew 'reattach-to-user-namespace'
 brew 'rlwrap'
