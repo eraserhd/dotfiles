@@ -23,20 +23,20 @@ function zeal_test()
   fi
 
   local object=$(zeal_next)
-  if [[ -z "$object" ]]
-  then
-    return 0
-  fi
+  [[ -z "$object" ]] && return 0
 
-  local status
-  eval "$test_command"
-  if [[ $? -eq 0 ]]
-  then
-    status=ok
-  else
-    status=failed
-  fi
+  local test_dir=$(mktemp -d -t 'zeal.XXXXXXX')
+  git worktree add -f --detach "$test_dir" "$object" || return $?
 
+  pushd "$test_dir" || return $?
+
+  local status=failed
+  eval "$test_command" && status=ok
+
+  popd
+
+  zeal_mark "$object" "$status"
+  rm -rf "$test_dir"
 }
 
 function zeal_next()
