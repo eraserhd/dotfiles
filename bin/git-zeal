@@ -105,7 +105,7 @@ function zeal_show_build_result()
 
   local -a sed_exprs=()
 
-  if [[ x$shell = xyes ]]; then
+  if [[ $shell = yes ]]; then
     sed_exprs+=( '-e' '1,/^$/{
       /^$/!{
         s/'\''/'\''\\'\'\''/g
@@ -132,6 +132,7 @@ function zeal_show_build_result()
 }
 
 ##############################################################################
+# Status
 
 function find_commits()
 {
