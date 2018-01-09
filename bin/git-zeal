@@ -52,7 +52,6 @@ function zeal_set_build_result()
     shift
   done
 
-
   if [[ -z "$object" ]]; then
     printf 'git zeal set-build-result: no object supplied.\n' >&2
     return 1
@@ -195,28 +194,44 @@ function zeal_mark()
 
 function zeal_build()
 {
-  local test_command=$(git config --get zeal.test-command)
-  if [[ -z "$test_command" ]]
+  local object="$1"
+
+  local build_command=$(git config --get zeal.build-command)
+  if [[ -z $build_command ]]
   then
-    printf 'git zeal test: zeal.test-command not set.\n' >&2
+    printf 'git zeal build: zeal.build-command not set.\n' >&2
     return 1
   fi
 
-  local object=$(zeal_next)
-  [[ -z "$object" ]] && return 0
+  if [[ -z $object ]]; then
+    printf 'git zeal build: no object specified.\n' >&2
+    return 1
+  fi
 
-  local test_dir=$(mktemp -d -t 'zeal.XXXXXXX')
-  git worktree add -f --detach "$test_dir" "$object" || return $?
+  local -i start=$(date +%s)
+  zeal_set_build_result -v start=$start "$object"
 
-  pushd "$test_dir" || return $?
+  local build_dir=$(mktemp -d -t 'zeal.XXXXXXX')
+  local build_log=$(mktemp -t 'zeal-log.XXXXXX')
+  git worktree add -f --detach "$build_dir" "$object" || return $?
 
-  local status=failed
-  eval "$test_command" && status=ok
+  pushd "$build_dir" || return $?
+
+  eval "$build_command" |tee "$build_log"
+  local -i build_exit=$?
 
   popd
+  local -i end=$(date +%s)
 
-  #zeal_mark "$object" "$status"
-  rm -rf "$test_dir"
+  zeal_set_build_result \
+    -e "$build_exit" \
+    -l "$build_log" \
+    -v start=$start \
+    -v end=$end \
+    "$object" || return $?
+
+  rm -rf "$build_dir" "$build_log"
+  return $?
 }
 
 function zeal_next()
