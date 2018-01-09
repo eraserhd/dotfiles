@@ -133,68 +133,18 @@ function zeal_show_build_result()
 
 ##############################################################################
 
-function read_mark()
-{
-  local object="$1"
-  git notes --ref refs/notes/zeal show "$object" 2>/dev/null
-}
-
 function zeal_status()
 {
   git for-each-ref --format='%(refname:short)' refs/heads/ | \
   while read refname
   do
     printf ' %s\n' "$refname"
-    git log --reverse -10 --notes=refs/notes/zeal --format='format:    %<(2,trunc)%N %h' "$refname"
-  done
-}
-
-function mark()
-{
-  local object="$1"
-  local status="$2"
-  git notes --ref refs/notes/zeal add -f -m "$status" "$object" 2>/dev/null
-  return $?
-}
-
-function zeal_mark()
-{
-  local -a objects=()
-  local status=ok
-  while [[ $# -ne 0 ]]
-  do
-    case "$1" in
-      -a|--all)
-        eval "objects=( $(git for-each-ref --shell --format='%(refname)' refs/heads/) )"
-        ;;
-      -s|--status)
-        shift
-        status="$1"
-        ;;
-      -s*)
-        status="${1#-s}"
-        ;;
-      --status=*)
-        status="${1#--status=}"
-        ;;
-      -*)
-        printf 'git zeal mark: unknown option "%s".\n' "$1" >&2
-        return 1
-        ;;
-      *)
-        objects+=("$1")
-        ;;
-    esac
-    shift
-  done
-  for object in "${objects[@]}"; do
-    mark "$object" "$status" || return $?
   done
 }
 
 function zeal_build()
 {
-  local object="$1"
+  local object="${1:-HEAD}"
 
   local build_command=$(git config --get zeal.build-command)
   if [[ -z $build_command ]]
@@ -203,16 +153,11 @@ function zeal_build()
     return 1
   fi
 
-  if [[ -z $object ]]; then
-    printf 'git zeal build: no object specified.\n' >&2
-    return 1
-  fi
-
   local -i start=$(date +%s)
   zeal_set_build_result -v start=$start "$object"
 
-  local build_dir=$(mktemp -d -t 'zeal.XXXXXXX')
-  local build_log=$(mktemp -t 'zeal-log.XXXXXX')
+  local build_dir=$(mktemp -d -t zeal)
+  local build_log=$(mktemp -t zeal-log)
   git worktree add -f --detach "$build_dir" "$object" || return $?
 
   pushd "$build_dir" || return $?
