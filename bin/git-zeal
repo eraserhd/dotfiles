@@ -1,9 +1,153 @@
 #!/bin/bash
 
-function zeal_status()
+##############################################################################
+# Build Results
+
+function zeal_notes()
+{
+  git notes --ref refs/notes/zeal "$@"
+  return $?
+}
+
+function zeal_clear_build_result()
+{
+  local object="$1"
+  zeal_notes remove --ignore-missing "$object" 2>/dev/null
+  return $?
+}
+
+function zeal_set_build_result()
+{
+  local object
+  local build_log=/dev/null
+  local -a vars
+  while [[ $# -ne 0 ]]; do
+    case "$1" in
+      -e|--exit)     shift; vars[${#vars[@]}]="exit=$1";;
+      -e*)           vars[${#vars[@]}]="exit=${1#-e}";;
+      --exit=*)      vars[${#vars[@]}]="exit=${1#--exit=}";;
+
+      -l|--log)      shift; build_log="$1";;
+      -l*)           build_log="${1#-l}";;
+      --log=*)       build_log="${1#--log=}";;
+
+      -v|--variable) shift; vars[${#vars[@]}]="$1";;
+      -v*)           vars[${#vars[@]}]="${1#-v}";;
+      --variable=*)  vars[${#vars[@]}]="${1#--variable=}";;
+
+      -*)
+        printf 'git zeal set-build-result: unknown option "%s".\n' "$1" >&2
+        return 1
+        ;;
+
+      *)
+        if [[ -n "$object" ]]; then
+          printf 'git zeal set-build-result: only one object allowed.\n' >&2
+          return 1
+        fi
+        object="$1"
+        ;;
+
+    esac
+    shift
+  done
+
+
+  if [[ -z "$object" ]]; then
+    printf 'git zeal set-build-result: no object supplied.\n' >&2
+    return 1
+  fi
+
+  (
+    for var in "${vars[@]}"; do
+      printf '%s\n' "$var"
+    done
+    printf '\n'
+    cat "$build_log"
+  ) | zeal_notes add -f -F- "$object" 2>/dev/null
+  return $?
+}
+
+function zeal_show_build_result()
+{
+  local object
+  local what=all
+  local var_prefix=''
+  local shell=no
+  while [[ $# -ne 0 ]]; do
+    case "$1" in
+      -l|--log)   what=log;;
+      -s|--shell) shell=yes;;
+      -v|--vars)  what=vars;;
+
+      --var-prefix)   shift; var_prefix="$1";;
+      --var-prefix=*) var_prefix="${1#--var-prefix=}";;
+
+      -*)
+        printf 'git zeal show-build-result: unknown option "%s".\n' "$1" >&2
+        return 1
+        ;;
+
+      *)
+        if [[ -n "$object" ]]; then
+          printf 'git zeal show-build-result: only one object allowed.\n' >&2
+          return 1
+        fi
+        object="$1"
+        ;;
+    esac
+    shift
+  done
+
+  if [[ -z "$object" ]]; then
+    printf 'git zeal show-build-result: no object supplied.\n' >&2
+    return 1
+  fi
+
+  local -a sed_exprs=()
+
+  if [[ x$shell = xyes ]]; then
+    sed_exprs+=( '-e' '1,/^$/{
+      /^$/!{
+        s/'\''/'\''\\'\'\''/g
+        s/=\(.*\)$/='\''\1'\''/
+      }
+    }' )
+  fi
+
+  if [[ -n "$var_prefix" ]]; then
+    sed_exprs+=( '-e' '1,/^$/{
+      /^$/!{
+        s/^/'"$var_prefix"'/
+      }
+    }' )
+  fi
+
+  case "$what" in
+    vars) sed_exprs+=( '-e' '/^$/,$d' );;
+    log)  sed_exprs+=( '-e' '1,/^$/d' );;
+  esac
+
+  zeal_notes show "$object" 2>/dev/null | sed "${sed_exprs[@]}"
+  return $?
+}
+
+##############################################################################
+
+function read_mark()
 {
   local object="$1"
   git notes --ref refs/notes/zeal show "$object" 2>/dev/null
+}
+
+function zeal_status()
+{
+  git for-each-ref --format='%(refname:short)' refs/heads/ | \
+  while read refname
+  do
+    printf ' %s\n' "$refname"
+    git log --reverse -10 --notes=refs/notes/zeal --format='format:    %<(2,trunc)%N %h' "$refname"
+  done
 }
 
 function mark()
@@ -49,7 +193,7 @@ function zeal_mark()
   done
 }
 
-function zeal_test()
+function zeal_build()
 {
   local test_command=$(git config --get zeal.test-command)
   if [[ -z "$test_command" ]]
@@ -71,14 +215,14 @@ function zeal_test()
 
   popd
 
-  zeal_mark "$object" "$status"
+  #zeal_mark "$object" "$status"
   rm -rf "$test_dir"
 }
 
 function zeal_next()
 {
   # HEAD always gets priority
-  if [[ -z "$(zeal_status HEAD)" ]]
+  if [[ -z "$(read_mark HEAD)" ]]
   then
     git rev-parse HEAD
     return 0
@@ -89,7 +233,7 @@ function zeal_next()
   while read refname
   do
     local commit=$(git rev-parse "$refname")
-    if [[ "$(zeal_status "$commit")" != "ok" ]]
+    if [[ "$(read_mark "$commit")" != "ok" ]]
     then
       echo "$commit"
       return 0
