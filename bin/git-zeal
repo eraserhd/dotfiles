@@ -5,14 +5,14 @@
 
 function zeal_notes()
 {
-  git notes --ref refs/notes/zeal "$@"
+  git notes --ref refs/notes/zeal "$@" 2>/dev/null
   return $?
 }
 
 function zeal_clear_build_result()
 {
   local object="$1"
-  zeal_notes remove --ignore-missing "$object" 2>/dev/null
+  zeal_notes remove --ignore-missing "$object"
   return $?
 }
 
@@ -63,7 +63,7 @@ function zeal_set_build_result()
     done
     printf '\n'
     cat "$build_log"
-  ) | zeal_notes add -f -F- "$object" 2>/dev/null
+  ) | zeal_notes add -f -F- "$object"
   return $?
 }
 
@@ -127,18 +127,55 @@ function zeal_show_build_result()
     log)  sed_exprs+=( '-e' '1,/^$/d' );;
   esac
 
-  zeal_notes show "$object" 2>/dev/null | sed "${sed_exprs[@]}"
+  zeal_notes show "$object" | sed "${sed_exprs[@]}"
   return $?
 }
 
 ##############################################################################
 
+function find_commits()
+{
+  local -a q=( "$(git rev-parse "$1")" )
+  local -i i=0 end=1
+  while (( i < end && end < 10 )); do
+    local top="${q[i++]}"
+
+    local zeal_build_var_exit=-1
+    eval "$(zeal_show_build_result --vars --var-prefix=zeal_build_var_ --shell "$top")"
+    if [[ $zeal_build_var_exit -eq 0 ]]; then
+      continue
+    fi
+    for parent in $(git rev-parse "${top}^@"); do
+      q[end++]=$parent
+    done
+  done
+
+  for (( j = i - 1; j >= 0; j-- )); do
+    printf '%s\n' "${q[j]}"
+  done
+}
+
 function zeal_status()
 {
   git for-each-ref --format='%(refname:short)' refs/heads/ | \
-  while read refname
-  do
+  while read refname; do
     printf ' %s\n' "$refname"
+    for commit in $(find_commits "$refname"); do
+      local -i zeal_build_var_exit=-1
+      eval "$(zeal_show_build_result --vars --var-prefix=zeal_build_var_ --shell "$commit")"
+      local status
+      if (( zeal_build_var_exit == -1 )); then
+        status='??'
+      elif (( zeal_build_var_exit == 0 )); then
+        status='OK'
+      else
+        status='XX'
+      fi
+      printf '   [%2s] %s %s\n' \
+        "$status" \
+        "$(git rev-parse --short "$commit")" \
+        "$(git log -1 --pretty=%s "$commit")"
+    done
   done
 }
 
@@ -147,8 +184,7 @@ function zeal_build()
   local object="${1:-HEAD}"
 
   local build_command=$(git config --get zeal.build-command)
-  if [[ -z $build_command ]]
-  then
+  if [[ -z $build_command ]]; then
     printf 'git zeal build: zeal.build-command not set.\n' >&2
     return 1
   fi
