@@ -218,27 +218,22 @@ function zeal_build()
 
 function zeal_next()
 {
-  # HEAD always gets priority
-  if [[ -z "$(read_mark HEAD)" ]]
-  then
-    git rev-parse HEAD
-    return 0
-  fi
-
-  # Next, find an untested branch tip
   git for-each-ref --format='%(refname)' refs/heads/ | \
-  while read refname
-  do
-    local commit=$(git rev-parse "$refname")
-    if [[ "$(read_mark "$commit")" != "ok" ]]
-    then
-      echo "$commit"
+  while read refname; do
+    git log -1 --pretty='%at %H' "$refname"
+  done | sort -nr | \
+  while read ts commit; do
+    local -i zeal_build_var_exit=-1
+    eval "$(zeal_show_build_result --vars --var-prefix=zeal_build_var_ --shell "$commit")"
+    if (( zeal_build_var_exit == -1 )); then
+      printf '%s\n' "$commit"
       return 0
+    elif (( zeal_build_var_exit == 0 )); then
+      :
+    else
+      :
     fi
   done
-
-  # Nothing
-  return 1
 }
 
 command="${1//-/_}"
