@@ -236,6 +236,21 @@ function zeal_next()
   done
 }
 
+function zeal_run()
+{
+  while true; do
+    clear
+    zeal_status
+    local commit=$(zeal_next)
+    if [[ -z $commit ]]; then
+      sleep 30
+      continue
+    fi
+    printf '\n (building %s)\n' "$commit"
+    zeal_build "$commit" >/dev/null 2>&1
+  done
+}
+
 command="${1//-/_}"
 shift
 "zeal_${command}" "$@"
