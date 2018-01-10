@@ -229,9 +229,92 @@ function zeal_next()
       printf '%s\n' "$commit"
       return 0
     elif (( zeal_build_var_exit == 0 )); then
-      :
+      continue
     else
-      :
+      # This is a bad commit, so we want to find all the untested commits
+      # reachable from it.  EXCEPT, if we find another bad commit, we can
+      # discard everything we've found so far and only search under the
+      # deeper bad commit.
+
+      local -a candidates=()
+      local -a search_queue=( "$commit" )
+      local -a root_queue=( "$commit" )
+      local -i depth_queue=( 0 )
+      local current_root="$commit"
+      local -i q_start=0 q_end=1
+      while (( q_start < q_end )); do
+        local top_commit=${search_queue[q_start]}
+        local top_root=${root_queue[q_start]}
+        local top_depth=${depth_queue[q_start++]}
+
+
+        # Skip subtrees when we've found a better root.
+        if [[ $current_root != $top_root ]]; then continue; fi
+        if (( top_depth > 15 )); then continue; fi
+
+        local -i zeal_build_var_exit=-1
+        eval "$(zeal_show_build_result --vars --var-prefix=zeal_build_var_ --shell "$top_commit")"
+
+        # This branch is pruned by a good build result
+        if (( zeal_build_var_exit == 0 )); then continue; fi
+
+        # We've found a better (deeper) root.
+        if (( zeal_build_var_exit > 0 )); then
+          candidates=()
+          current_root="$top_commit"
+          top_depth=0
+        fi
+
+        # Add untested commit to candidates
+        if (( zeal_build_var_exit == -1 )); then
+          candidates+=( "$top_commit" )
+        fi
+
+        for parent in $(git rev-parse "${top_commit}^@"); do
+          search_queue[q_end]="$parent"
+          root_queue[q_end]="$current_root"
+          depth_queue[q_end++]=$(( top_depth + 1 ))
+        done
+      done
+
+      if [[ ${#candidates[@]} -eq 0 ]]; then
+        break
+      fi
+
+      # Find the number of reachable, commits from each commit
+      local -i best_middle=99999
+      local best=${candidates[0]}
+      for candidate in "${candidates[@]}"; do
+        eval "local -i size_${candidate}=1"
+      done
+      for candidate in "${candidates[@]}"; do
+        local -a q=( "$candidate" )
+        local -i start=0 end=1
+        while (( start < end )); do
+          local t=${q[start++]}
+
+          for parent in $(git rev-parse "${t}^@"); do
+            local key="size_${parent}"
+            if [[ -z ${!key} ]]; then continue; fi
+            eval "size_${candidate}=\$(( size_${candidate} + 1 ))"
+            q[end++]="$parent"
+          done
+        done
+
+        # See if we are closer to the middle.  If so, record it.
+        local key=size_${candidate}
+        local -i dist=$(( ${!key} * 2 - ${#candidates[@]} ))
+        if (( dist < 0 )); then
+          dist=$(( -dist ))
+        fi
+        if (( dist < best_middle )); then
+          best_middle=$dist
+          best=$candidate
+        fi
+      done
+
+      printf '%s\n' "$best"
+      return 0
     fi
   done
 }
