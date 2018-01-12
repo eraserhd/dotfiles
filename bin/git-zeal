@@ -256,8 +256,8 @@ function zeal_build()
 
   pushd "$build_dir" || return $?
 
-  eval "$build_command" |tee "$build_log"
-  local -i build_exit=$?
+  ( $build_command ) |tee "$build_log"
+  local -i build_exit=${PIPESTATUS[0]}
 
   popd
   local -i end=$(date +%s)
