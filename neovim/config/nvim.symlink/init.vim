@@ -10,7 +10,6 @@ set nocompatible
 set noincsearch
 set number
 set switchbuf=usetab
-set winheight=6 winminheight=6
 
 " Files I never want to see in CtrlP
 set wildignore=*/.git/*,*.pyc,*.class,*.jar,*.war,out/**

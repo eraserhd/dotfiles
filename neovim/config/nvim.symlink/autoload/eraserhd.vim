@@ -98,11 +98,12 @@ function! eraserhd#configure()
     let l:repl_command = ""
   endif
   below vsplit term://bash\ -l
-  set winheight=999
   let b:eraserhd_repl = 1
   wincmd L
+  let l:git_dir = substitute(system("git rev-parse --git-dir"), "\n", "", 0)
   execute "split " . eraserhd#todo_filename()
-  set winheight=999
+  10wincmd _
+  set winfixheight
   let b:eraserhd_todo = 1
   execute l:original_window . "wincmd w"
   if l:repl_command != ""
