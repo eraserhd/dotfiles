@@ -73,3 +73,9 @@ augroup Terminal
   autocmd!
   autocmd TermOpen * setlocal nonumber
 augroup end
+
+" FIXME: Move to markdorg plugin
+augroup Markdorg
+  autocmd!
+  autocmd FileType markdown setlocal textwidth=89 formatoptions-=l
+augroup end
