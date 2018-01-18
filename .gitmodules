@@ -49,6 +49,6 @@
 [submodule "neovim/config/nvim.symlink/bundle/vim-nix"]
 	path = neovim/config/nvim.symlink/bundle/vim-nix
 	url = git@github.com:LnL7/vim-nix.git
-[submodule "neovim/config/nvim.symlink/bundle/vim-markdown-folding"]
-	path = neovim/config/nvim.symlink/bundle/vim-markdown-folding
-	url = git@github.com:nelstrom/vim-markdown-folding.git
+[submodule "neovim/config/nvim.symlink/bundle/markdorg-vim"]
+	path = neovim/config/nvim.symlink/bundle/markdorg-vim
+	url = git@github.com:eraserhd/markdorg-vim.git
