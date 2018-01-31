@@ -10,6 +10,9 @@ set nocompatible
 set noincsearch
 set number
 set switchbuf=usetab
+set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
+  \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+  \,sm:block-blinkwait175-blinkoff150-blinkon175
 
 " Files I never want to see in CtrlP
 set wildignore=*/.git/*,*.pyc,*.class,*.jar,*.war,out/**
