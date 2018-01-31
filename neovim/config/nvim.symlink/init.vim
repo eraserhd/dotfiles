@@ -80,5 +80,5 @@ augroup end
 " FIXME: Move to markdorg plugin
 augroup Markdorg
   autocmd!
-  autocmd FileType markdown setlocal textwidth=89 formatoptions-=l
+  autocmd FileType markdown setlocal textwidth=78 formatoptions-=l
 augroup end
