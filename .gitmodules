@@ -52,3 +52,6 @@
 [submodule "neovim/config/nvim.symlink/bundle/markdorg-vim"]
 	path = neovim/config/nvim.symlink/bundle/markdorg-vim
 	url = git@github.com:eraserhd/markdorg-vim.git
+[submodule "neovim/config/nvim.symlink/bundle/git-zeal-vim"]
+	path = neovim/config/nvim.symlink/bundle/git-zeal-vim
+	url = git@github.com:eraserhd/git-zeal-vim.git
