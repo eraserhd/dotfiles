@@ -12,6 +12,7 @@ cask 'evernote'
 #cask 'google-chrome'
 cask 'java'
 cask 'mactex'
+cask 'postman'
 cask 'slack'
 cask 'spotify'
 
