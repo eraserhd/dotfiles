@@ -41,3 +41,10 @@ brew 'tmux'
 brew 'vault'
 brew 'wget'
 brew 'z'
+
+# ErgoDox environment
+tap 'osx-cross/avr'
+tap 'PX4/homebrew-px4'
+brew 'avr-gcc'
+brew 'dfu-programmer'
+brew 'avrdude'
