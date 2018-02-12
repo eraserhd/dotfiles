@@ -30,7 +30,7 @@ brew 'graphviz'
 brew 'gtypist'
 brew 'haskell-stack'
 brew 'leiningen'
-brew 'neovim'
+brew 'neovim', args: ["HEAD"]
 brew 'node'
 brew 'reattach-to-user-namespace'
 brew 'rlwrap'

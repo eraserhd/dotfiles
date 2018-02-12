@@ -19,18 +19,12 @@
 [submodule "neovim/config/nvim.symlink/bundle/node-host"]
 	path = neovim/config/nvim.symlink/bundle/node-host
 	url = git@github.com:neovim/node-host
-[submodule "neovim/config/nvim.symlink/bundle/clj-refactor.nvim"]
-	path = neovim/config/nvim.symlink/bundle/clj-refactor.nvim
-	url = git@github.com:clojure-vim/clj-refactor.nvim.git
 [submodule "neovim/config/nvim.symlink/bundle/idris-vim"]
 	path = neovim/config/nvim.symlink/bundle/idris-vim
 	url = git@github.com:Idris-hackers/idris-vim.git
 [submodule "neovim/config/nvim.symlink/bundle/vim-terraform"]
 	path = neovim/config/nvim.symlink/bundle/vim-terraform
 	url = git@github.com:hashivim/vim-terraform.git
-[submodule "neovim/config/nvim.symlink/bundle/agda-vim"]
-	path = neovim/config/nvim.symlink/bundle/agda-vim
-	url = git@github.com:derekelkins/agda-vim.git
 [submodule "neovim/config/nvim.symlink/bundle/tabular"]
 	path = neovim/config/nvim.symlink/bundle/tabular
 	url = git@github.com:godlygeek/tabular.git
