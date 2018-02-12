@@ -13,12 +13,6 @@
 [submodule "neovim/config/nvim.symlink/bundle/vim-fugitive"]
 	path = neovim/config/nvim.symlink/bundle/vim-fugitive
 	url = git@github.com:tpope/vim-fugitive.git
-[submodule "neovim/config/nvim.symlink/bundle/nvim-parinfer.js"]
-	path = neovim/config/nvim.symlink/bundle/nvim-parinfer.js
-	url = git@github.com:eraserhd/nvim-parinfer.js
-[submodule "neovim/config/nvim.symlink/bundle/node-host"]
-	path = neovim/config/nvim.symlink/bundle/node-host
-	url = git@github.com:neovim/node-host
 [submodule "neovim/config/nvim.symlink/bundle/idris-vim"]
 	path = neovim/config/nvim.symlink/bundle/idris-vim
 	url = git@github.com:Idris-hackers/idris-vim.git
