@@ -43,3 +43,9 @@
 [submodule "neovim/config/nvim.symlink/bundle/git-zeal-vim"]
 	path = neovim/config/nvim.symlink/bundle/git-zeal-vim
 	url = git@github.com:eraserhd/git-zeal-vim.git
+[submodule "neovim/config/nvim.symlink/vim-sexp"]
+	path = neovim/config/nvim.symlink/vim-sexp
+	url = git@github.com:guns/vim-sexp.git
+[submodule "neovim/config/nvim.symlink/vim-sexp-mappings-for-regular-people"]
+	path = neovim/config/nvim.symlink/vim-sexp-mappings-for-regular-people
+	url = git@github.com:tpope/vim-sexp-mappings-for-regular-people.git
