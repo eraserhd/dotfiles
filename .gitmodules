@@ -1,48 +1,48 @@
 [submodule "vim/vim.symlink/bundle/vim-clojure-static"]
-	path = neovim/config/nvim.symlink/bundle/vim-clojure-static
+	path = vim/vim.symlink/bundle/vim-clojure-static
 	url = git@github.com:guns/vim-clojure-static.git
 [submodule "vim/vim.symlink/bundle/vim-fireplace"]
-	path = neovim/config/nvim.symlink/bundle/vim-fireplace
+	path = vim/vim.symlink/bundle/vim-fireplace
 	url = git@github.com:tpope/vim-fireplace.git
 [submodule "neovim/config/nvim.symlink/bundle/vim-surround"]
-	path = neovim/config/nvim.symlink/bundle/vim-surround
+	path = vim/vim.symlink/bundle/vim-surround
 	url = git@github.com:tpope/vim-surround.git
 [submodule "ctrlp"]
-	path = neovim/config/nvim.symlink/bundle/ctrlp.vim
+	path = vim/vim.symlink/bundle/ctrlp.vim
 	url = git@github.com:ctrlpvim/ctrlp.vim.git
 [submodule "neovim/config/nvim.symlink/bundle/vim-fugitive"]
-	path = neovim/config/nvim.symlink/bundle/vim-fugitive
+	path = vim/vim.symlink/bundle/vim-fugitive
 	url = git@github.com:tpope/vim-fugitive.git
 [submodule "neovim/config/nvim.symlink/bundle/idris-vim"]
-	path = neovim/config/nvim.symlink/bundle/idris-vim
+	path = vim/vim.symlink/bundle/idris-vim
 	url = git@github.com:Idris-hackers/idris-vim.git
 [submodule "neovim/config/nvim.symlink/bundle/vim-terraform"]
-	path = neovim/config/nvim.symlink/bundle/vim-terraform
+	path = vim/vim.symlink/bundle/vim-terraform
 	url = git@github.com:hashivim/vim-terraform.git
 [submodule "neovim/config/nvim.symlink/bundle/tabular"]
-	path = neovim/config/nvim.symlink/bundle/tabular
+	path = vim/vim.symlink/bundle/tabular
 	url = git@github.com:godlygeek/tabular.git
 [submodule "neovim/config/nvim.symlink/bundle/ghcmod-vim"]
-	path = neovim/config/nvim.symlink/bundle/ghcmod-vim
+	path = vim/vim.symlink/bundle/ghcmod-vim
 	url = git@github.com:eagletmt/ghcmod-vim.git
 [submodule "neovim/config/nvim.symlink/bundle/vimproc.vim"]
-	path = neovim/config/nvim.symlink/bundle/vimproc.vim
+	path = vim/vim.symlink/bundle/vimproc.vim
 	url = git@github.com:Shougo/vimproc.vim.git
 [submodule "neovim/config/nvim.symlink/bundle/vim-repeat"]
-	path = neovim/config/nvim.symlink/bundle/vim-repeat
+	path = vim/vim.symlink/bundle/vim-repeat
 	url = git@github.com:tpope/vim-repeat.git
 [submodule "neovim/config/nvim.symlink/bundle/vim-hoogle"]
-	path = neovim/config/nvim.symlink/bundle/vim-hoogle
+	path = vim/vim.symlink/bundle/vim-hoogle
 	url = git@github.com:Twinside/vim-hoogle.git
 [submodule "neovim/config/nvim.symlink/bundle/vim-nix"]
-	path = neovim/config/nvim.symlink/bundle/vim-nix
+	path = vim/vim.symlink/bundle/vim-nix
 	url = git@github.com:LnL7/vim-nix.git
 [submodule "neovim/config/nvim.symlink/bundle/markdorg-vim"]
-	path = neovim/config/nvim.symlink/bundle/markdorg-vim
+	path = vim/vim.symlink/bundle/markdorg-vim
 	url = git@github.com:eraserhd/markdorg-vim.git
 [submodule "neovim/config/nvim.symlink/bundle/git-zeal-vim"]
-	path = neovim/config/nvim.symlink/bundle/git-zeal-vim
+	path = vim/vim.symlink/bundle/git-zeal-vim
 	url = git@github.com:eraserhd/git-zeal-vim.git
 [submodule "neovim/config/nvim.symlink/bundle/vim-parinfer"]
-	path = neovim/config/nvim.symlink/bundle/vim-parinfer
+	path = vim/vim.symlink/bundle/vim-parinfer
 	url = git@github.com:bhurlow/vim-parinfer.git

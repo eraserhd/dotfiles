@@ -23,7 +23,7 @@ fi
 
 export PS1='[\u@\h \W$(__git_ps1 "(%s)")]$ '
 
-for editor in nvim vim vi
+for editor in vim vi
 do
   if command -v "$editor" >/dev/null
   then
