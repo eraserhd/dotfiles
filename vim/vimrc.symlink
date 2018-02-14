@@ -32,7 +32,7 @@ nmap <Leader>r :call eraserhd#goto("repl", "insert")<CR>
 nmap <Leader>T :call eraserhd#goto("todo")<CR>
 nmap <Leader>t :call eraserhd#goto("todo", "insert")<CR>
 nmap <Leader><Leader> :call eraserhd#repeat_last_repl_command()<CR>
-" tnoremap <Esc> <C-\><C-n>:call eraserhd#leave_insert()<CR>
+tnoremap <Esc> <C-W>N:call eraserhd#leave_insert()<CR>
 
 " File types
 
@@ -64,6 +64,11 @@ augroup end
 augroup VimL
   autocmd!
   autocmd FileType vim set sts=2 sw=2 ai et
+augroup end
+
+augroup Terminal
+  autocmd!
+  autocmd BufWinEnter if &buftype == "terminal" | setlocal nonumber | endif
 augroup end
 
 augroup Terraform

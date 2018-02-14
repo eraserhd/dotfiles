@@ -97,7 +97,11 @@ function! eraserhd#configure()
   else
     let l:repl_command = ""
   endif
-  below vsplit term://bash\ -l
+  if has('nvim')
+    below vsplit term://bash\ -l
+  else
+    below vertical term bash -l
+  endif
   let b:eraserhd_repl = 1
   wincmd L
   execute "split " . eraserhd#todo_filename()
