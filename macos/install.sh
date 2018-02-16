@@ -13,3 +13,4 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode T
 
 # Terminal.app
 defaults write com.apple.Terminal "Default Window Settings" Pro
+defaults write com.apple.Terminal AppleShowScrollBars -string WhenScrolling
