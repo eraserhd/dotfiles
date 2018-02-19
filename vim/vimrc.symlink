@@ -5,10 +5,8 @@ filetype plugin indent on
 
 set autoread
 set background=dark
-set list " Show me tabs and space at end-of-line
 set nocompatible
 set noincsearch
-set number
 set switchbuf=usetab
 set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
   \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
