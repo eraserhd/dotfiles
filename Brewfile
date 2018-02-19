@@ -38,7 +38,7 @@ brew 'terraform'
 brew 'tmate'
 brew 'tmux'
 brew 'vault'
-brew 'vim'
+brew 'vim', args: ['HEAD']
 brew 'wget'
 brew 'z'
 
