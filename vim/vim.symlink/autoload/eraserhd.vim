@@ -40,17 +40,6 @@ function! eraserhd#repeat_last_repl_command()
   call term_sendkeys(l:repl_buffer, "\<C-P>\<CR>")
 endfunction
 
-function! eraserhd#leave_insert()
-  if !exists("t:return_on_escape")
-    return
-  endif
-  if !t:return_on_escape
-    return
-  endif
-  let t:return_on_escape = 0
-  execute winnr("#") . "wincmd w" 
-endfunction
-
 function! eraserhd#goto_todo()
   call eraserhd#configure()
   let l:todo = eraserhd#todo_winnr()
@@ -63,10 +52,6 @@ endfunction
 function! eraserhd#goto(what, ...)
   if a:what == "repl"
     call eraserhd#goto_repl()
-    if a:0 >= 1 && a:1 == "insert"
-      let t:return_on_escape = 1
-      normal "i"
-    endif
   elseif a:what == "todo"
     call eraserhd#goto_todo()
   else
@@ -108,9 +93,6 @@ function! eraserhd#configure()
   let b:eraserhd_todo = 1
   execute l:original_window . "wincmd w"
   if l:repl_command != ""
-    call eraserhd#goto_repl()
-    let t:return_on_escape = 1
-    startinsert
-    call feedkeys(l:repl_command . "\<CR>\<Esc>")
+    call term_sendkeys(eraserhd#repl_bufnr(), l:repl_command . "\<CR>")
   endif
 endfunction
