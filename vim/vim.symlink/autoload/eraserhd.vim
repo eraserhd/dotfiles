@@ -1,16 +1,16 @@
 
-" Find a terminal on the same tab page
-function! eraserhd#repl_winnr()
-  let l:terminal_buffer = -1
-  for i in tabpagebuflist()
-    if getbufvar(i, "&buftype") == "terminal"
-      let l:terminal_buffer = i
+function! eraserhd#repl_bufnr()
+  for l:i in tabpagebuflist()
+    if getbufvar(l:i, "&buftype") ==# "terminal"
+      return l:i
     endif
   endfor
-  if l:terminal_buffer == -1
-    return -1
-  endif
-  return bufwinnr(l:terminal_buffer)
+  return -1
+endfunction
+
+" Find a terminal on the same tab page
+function! eraserhd#repl_winnr()
+  return bufwinnr(eraserhd#repl_bufnr())
 endfunction
 
 function! eraserhd#todo_winnr()
@@ -32,15 +32,12 @@ function! eraserhd#goto_repl()
 endfunction
 
 function! eraserhd#repeat_last_repl_command()
-  let t:return_on_escape = 1
-  let l:start_winnr = winnr()
-  let l:terminal_win = eraserhd#repl_winnr()
-  if l:terminal_win == -1
+  let l:repl_buffer = eraserhd#repl_bufnr()
+  if l:repl_buffer ==# -1
     echoe "No terminal found!"
     return
   endif
-  execute l:terminal_win . "wincmd w"
-  call feedkeys("i\<Up>\<CR>\<Esc>")
+  call term_sendkeys(l:repl_buffer, "\<C-P>\<CR>")
 endfunction
 
 function! eraserhd#leave_insert()
@@ -68,7 +65,7 @@ function! eraserhd#goto(what, ...)
     call eraserhd#goto_repl()
     if a:0 >= 1 && a:1 == "insert"
       let t:return_on_escape = 1
-      startinsert
+      normal "i"
     endif
   elseif a:what == "todo"
     call eraserhd#goto_todo()
@@ -101,6 +98,7 @@ function! eraserhd#configure()
     below vsplit term://bash\ -l
   else
     below vertical term bash -l
+    setlocal nonumber
   endif
   let b:eraserhd_repl = 1
   wincmd L
