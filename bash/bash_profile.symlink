@@ -6,6 +6,12 @@ source_if_exists() {
   fi
 }
 
+if [[ -f /usr/local/opt/nvm/nvm.sh ]]
+then
+  source "/usr/local/opt/nvm/nvm.sh"
+  export NVM_DIR="$HOME/.nvm"
+fi
+
 export GOPATH=~/src/go
 export PATH=~/.local/bin:$GOPATH/bin:~/.cabal/bin:"$PATH"
 
