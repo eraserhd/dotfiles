@@ -13,7 +13,7 @@ then
 fi
 
 export GOPATH=~/src/go
-export PATH=~/.local/bin:$GOPATH/bin:~/.cabal/bin:"$PATH"
+export PATH=~/.cargo/bin:~/.local/bin:$GOPATH/bin:~/.cabal/bin:"$PATH"
 
 if command -v brew >/dev/null
 then
