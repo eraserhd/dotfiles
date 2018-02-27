@@ -1,9 +1,0 @@
-resolver: lts-9.3
-packages:
-- .
-extra-deps: []
-flags: {}
-extra-package-dbs: []
-
-ghc-options:
-  daily: -Wunused-imports -Wunused-binds -Wincomplete-patterns
