@@ -8,6 +8,7 @@ tap 'neovim/neovim'
 
 cask '1password'
 cask 'anki'
+cask 'duet'
 cask 'evernote'
 #cask 'google-chrome'
 cask 'java'
