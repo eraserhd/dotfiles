@@ -1,64 +1,3 @@
-
-function! eraserhd#repl_bufnr()
-  for l:i in tabpagebuflist()
-    if getbufvar(l:i, "&buftype") ==# "terminal"
-      return l:i
-    endif
-  endfor
-  return -1
-endfunction
-
-" Find a terminal on the same tab page
-function! eraserhd#repl_winnr()
-  return bufwinnr(eraserhd#repl_bufnr())
-endfunction
-
-function! eraserhd#todo_winnr()
-  for i in tabpagebuflist()
-    if getbufvar(i, "eraserhd_todo")
-      return bufwinnr(i)
-    endif
-  endfor
-endfunction
-
-function! eraserhd#goto_repl()
-  call eraserhd#configure()
-  let l:terminal_win = eraserhd#repl_winnr()
-  if l:terminal_win == -1
-    echoerr "No terminal found!"
-    return
-  endif
-  execute l:terminal_win . "wincmd w"
-endfunction
-
-function! eraserhd#repeat_last_repl_command()
-  let l:repl_buffer = eraserhd#repl_bufnr()
-  if l:repl_buffer ==# -1
-    echoe "No terminal found!"
-    return
-  endif
-  call term_sendkeys(l:repl_buffer, "\<C-P>\<CR>")
-endfunction
-
-function! eraserhd#goto_todo()
-  call eraserhd#configure()
-  let l:todo = eraserhd#todo_winnr()
-  if !empty(l:todo)
-    execute l:todo . "wincmd w"
-    return
-  endif
-endfunction
-
-function! eraserhd#goto(what, ...)
-  if a:what == "repl"
-    call eraserhd#goto_repl()
-  elseif a:what == "todo"
-    call eraserhd#goto_todo()
-  else
-    echoe "Don't know how to go to '" . a:what . "'"
-  endif
-endfunction
-
 let s:ReplCommands = {
   \ "clojure": "lein repl" ,
   \ "idris": "idris" }
@@ -85,14 +24,47 @@ function! eraserhd#configure()
     below vertical term bash -l
     setlocal nonumber
   endif
-  let b:eraserhd_repl = 1
+  let b:eraserhd_tag = "repl"
   wincmd L
   execute "split " . eraserhd#todo_filename()
   10wincmd _
   set winfixheight
-  let b:eraserhd_todo = 1
+  let b:eraserhd_tag = "todo"
   execute l:original_window . "wincmd w"
   if l:repl_command != ""
-    call term_sendkeys(eraserhd#repl_bufnr(), l:repl_command . "\<CR>")
+    call term_sendkeys(eraserhd#special_buffer("repl"), l:repl_command . "\<CR>")
   endif
+endfunction
+
+function! eraserhd#special_buffer(tag)
+  for l:i in tabpagebuflist()
+    if getbufvar(l:i, "eraserhd_tag") ==# a:tag
+      return l:i
+    endif
+  endfor
+  return -1
+endfunction
+
+function! eraserhd#run_repl_command(cmd)
+  call eraserhd#configure()
+  let l:repl_buffer = eraserhd#special_buffer("repl")
+  if l:repl_buffer ==# -1
+    echoe "No terminal found!"
+    return
+  endif
+  call term_sendkeys(l:repl_buffer, a:cmd . "\<CR>")
+endfunction
+
+function! eraserhd#repeat_last_repl_command()
+  call eraserhd#run_repl_command("\<C-P>")
+endfunction
+
+function! eraserhd#goto(what, ...)
+  call eraserhd#configure()
+  let l:bufnr = eraserhd#special_buffer(a:what)
+  if l:bufnr == -1
+    echoe "Can't find special buffer '" . a:what . "'"
+    return
+  endif
+  execute bufwinnr(l:bufnr) . "wincmd w"
 endfunction
