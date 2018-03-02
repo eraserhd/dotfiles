@@ -33,10 +33,7 @@ for editor in vim vi
 do
   if command -v "$editor" >/dev/null
   then
-    editor_path=$(command -v "$editor")
-    alias vi=$editor_path
-    alias vim=$editor_path
-    export EDITOR=$editor_path
+    export EDITOR=$(command -v "$editor")
     break
   fi
 done
