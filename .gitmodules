@@ -46,3 +46,6 @@
 [submodule "neovim/config/nvim.symlink/bundle/vim-parinfer"]
 	path = vim/vim.symlink/bundle/vim-parinfer
 	url = git@github.com:bhurlow/vim-parinfer.git
+[submodule "vim/vim.symlink/bundle/vim-abolish"]
+	path = vim/vim.symlink/bundle/vim-abolish
+	url = git@github.com:tpope/vim-abolish.git
