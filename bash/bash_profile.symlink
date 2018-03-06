@@ -29,14 +29,14 @@ fi
 
 export PS1='[\u@\h \W$(__git_ps1 "(%s)")]$ '
 
-for editor in vim vi
-do
-  if command -v "$editor" >/dev/null
-  then
-    export EDITOR=$(command -v "$editor")
-    break
-  fi
-done
+
+unalias vi vim 2>/dev/null
+if command -v vim >/dev/null
+then
+  export EDITOR=$(command -v vim)
+  alias vi=$EDITOR
+  alias vim=$EDITOR
+fi
 
 # Darwin
 export CLICOLOR=1
