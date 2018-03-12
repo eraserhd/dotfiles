@@ -34,6 +34,15 @@ nmap <Leader><Leader> :call eraserhd#repeat_last_repl_command()<CR>
 
 command! -nargs=1 -complete=shellcmd R call eraserhd#run_repl_command(<q-args>)
 
+" Configure vim-angry so that ca, and ci, change arguments, rather than caa
+" and cia -- that's intuitive to me and I imagine that aa could be useful
+" elsewhere.
+let g:angry_disable_maps = 1
+vmap <silent> a, <Plug>AngryOuterPrefix
+omap <silent> a, <Plug>AngryOuterPrefix
+vmap <silent> i, <Plug>AngryInnerPrefix
+omap <silent> i, <Plug>AngryInnerPrefix
+
 " File types
 
 let g:haddock_browser = "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"

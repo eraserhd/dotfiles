@@ -49,3 +49,6 @@
 [submodule "vim/vim.symlink/bundle/vim-abolish"]
 	path = vim/vim.symlink/bundle/vim-abolish
 	url = git@github.com:tpope/vim-abolish.git
+[submodule "vim/vim.symlink/bundle/vim-angry"]
+	path = vim/vim.symlink/bundle/vim-angry
+	url = git@github.com:b4winckler/vim-angry
