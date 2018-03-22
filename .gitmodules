@@ -55,3 +55,6 @@
 [submodule "vim/vim.symlink/bundle/parinfer-rust"]
 	path = vim/vim.symlink/bundle/parinfer-rust
 	url = git@github.com:eraserhd/parinfer-rust.git
+[submodule "vim/vim.symlink/bundle/AnsiEsc.vim"]
+	path = vim/vim.symlink/bundle/AnsiEsc.vim
+	url = git@github.com:vim-scripts/AnsiEsc.vim
