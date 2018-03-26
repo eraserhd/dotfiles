@@ -49,6 +49,31 @@ omap <silent> a, <Plug>AngryOuterPrefix
 vmap <silent> i, <Plug>AngryInnerPrefix
 omap <silent> i, <Plug>AngryInnerPrefix
 
+" Projectionist
+let g:projectionist_heuristics = {
+  \ "test/&src/&project.clj": {
+  \   "src/*.clj": {
+  \     "type": "clj",
+  \     "alternate": "test/{}_test.clj"
+  \   },
+  \   "src/*.cljc": {
+  \     "type": "cljc",
+  \     "alternate": "test/{}_test.clj"
+  \   },
+  \   "src/*.cljs": {
+  \     "type": "cljs",
+  \     "alternate": "test/{}_test.clj"
+  \   },
+  \   "test/*_test.clj": {
+  \     "type": "test",
+  \     "alternate": [
+  \       "src/{}.cljc",
+  \       "src/{}.clj",
+  \       "src/{}.cljs"
+  \     ]
+  \   }
+  \ }}
+
 " File types
 
 let g:haddock_browser = "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"

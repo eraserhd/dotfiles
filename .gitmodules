@@ -58,3 +58,6 @@
 [submodule "vim/vim.symlink/bundle/AnsiEsc.vim"]
 	path = vim/vim.symlink/bundle/AnsiEsc.vim
 	url = git@github.com:vim-scripts/AnsiEsc.vim
+[submodule "vim/vim.symlink/bundle/vim-projectionist"]
+	path = vim/vim.symlink/bundle/vim-projectionist
+	url = git@github.com:tpope/vim-projectionist.git
