@@ -74,6 +74,9 @@ let g:projectionist_heuristics = {
   \   }
   \ }}
 
+" vim-sexp
+let g:sexp_enable_insert_mode_mappings = 0
+
 " File types
 
 let g:haddock_browser = "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"

@@ -61,3 +61,9 @@
 [submodule "vim/vim.symlink/bundle/vim-projectionist"]
 	path = vim/vim.symlink/bundle/vim-projectionist
 	url = git@github.com:tpope/vim-projectionist.git
+[submodule "vim/vim.symlink/bundle/vim-sexp"]
+	path = vim/vim.symlink/bundle/vim-sexp
+	url = git@github.com:guns/vim-sexp.git
+[submodule "vim/vim.symlink/bundle/vim-sexp-mappings-for-regular-people"]
+	path = vim/vim.symlink/bundle/vim-sexp-mappings-for-regular-people
+	url = git@github.com:tpope/vim-sexp-mappings-for-regular-people.git
