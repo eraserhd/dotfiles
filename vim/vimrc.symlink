@@ -29,6 +29,10 @@ nmap <Leader>T :call eraserhd#goto("todo")<CR>
 nmap <Leader>t :call eraserhd#goto("todo", "insert")<CR>
 nmap <Leader><Leader> :call eraserhd#repeat_last_repl_command()<CR>
 
+" I use <C-a>o in tmux to switch to other window, but <C-w>o in Vim closes
+" all my crap!  Deleted.
+nmap <C-w>o <NOP>
+
 command! -nargs=1 -complete=shellcmd R call eraserhd#run_repl_command(<q-args>)
 
 " CtrlP
