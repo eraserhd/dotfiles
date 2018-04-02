@@ -13,26 +13,23 @@ function! eraserhd#configure()
   endif
   let t:eraserhd_configured = 1
   let l:original_window = winnr()
-  if has_key(s:ReplCommands, &filetype)
-    let l:repl_command = s:ReplCommands[&filetype]
-  else
-    let l:repl_command = ""
-  endif
   if has('nvim')
-    below vsplit term://bash\ -l
+    botright vsplit term://bash\ -l
   else
-    below vertical term bash -l
+    botright vertical term bash -l
     setlocal nonumber
   endif
   let b:eraserhd_tag = "repl"
-  wincmd L
+  if exists(':ZealSplit')
+    ZealSplit
+  endif
   execute "split " . eraserhd#todo_filename()
-  10wincmd _
+  resize 10
   set winfixheight
   let b:eraserhd_tag = "todo"
   execute l:original_window . "wincmd w"
-  if l:repl_command != ""
-    call term_sendkeys(eraserhd#special_buffer("repl"), l:repl_command . "\<CR>")
+  if has_key(s:ReplCommands, &filetype)
+    call eraserhd#run_repl_command(s:ReplCommands[&filetype])
   endif
 endfunction
 
