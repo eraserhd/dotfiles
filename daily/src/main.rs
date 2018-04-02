@@ -70,4 +70,10 @@ fn main() {
         .current_dir("/Users/jfelice/src/data")
         .status()
         .expect("failed to `git push` in data");
+
+    Command::new("gtypist")
+        .arg("-b")
+        .arg("/Users/jfelice/src/dotfiles/gtypist/gtypist.typ")
+        .status()
+        .expect("failed to `gtypist`");
 }
