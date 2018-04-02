@@ -22,6 +22,7 @@ function! eraserhd#configure()
   let b:eraserhd_tag = "repl"
   if exists(':ZealSplit')
     ZealSplit
+    let b:eraserhd_tag = "zeal"
   endif
   execute "split " . eraserhd#todo_filename()
   resize 10

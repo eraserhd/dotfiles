@@ -27,6 +27,7 @@ nmap <Leader>R :call eraserhd#goto("repl")<CR>
 nmap <Leader>r :call eraserhd#goto("repl", "insert")<CR>
 nmap <Leader>T :call eraserhd#goto("todo")<CR>
 nmap <Leader>t :call eraserhd#goto("todo", "insert")<CR>
+nmap <Leader>z :call eraserhd#goto("zeal")<CR>
 nmap <Leader><Leader> :call eraserhd#repeat_last_repl_command()<CR>
 
 " I use <C-a>o in tmux to switch to other window, but <C-w>o in Vim closes
