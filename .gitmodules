@@ -67,3 +67,6 @@
 [submodule "vim/vim.symlink/bundle/vim-sexp-mappings-for-regular-people"]
 	path = vim/vim.symlink/bundle/vim-sexp-mappings-for-regular-people
 	url = git@github.com:tpope/vim-sexp-mappings-for-regular-people.git
+[submodule "vim/vim.symlink/bundle/vim-choosewin"]
+	path = vim/vim.symlink/bundle/vim-choosewin
+	url = git@github.com:t9md/vim-choosewin.git

@@ -45,6 +45,16 @@ let g:ctrlp_user_command = {
     \ }
   \ }
 
+" choosewin
+let g:choosewin_label_align = 'left'
+let g:choosewin_color_label = {
+  \ 'gui': ['red', 'white', 'bold'],
+  \ 'cterm': ['red', 'white', 'bold'] }
+let g:choosewin_color_label_current = g:choosewin_color_label
+
+nmap <C-w>y <Plug>(choosewin)
+nmap <C-w>Y :<C-u>ChooseWinSwap<CR>
+
 " Configure vim-angry so that ca, and ci, change arguments, rather than caa
 " and cia -- that's intuitive to me and I imagine that aa could be useful
 " elsewhere.
