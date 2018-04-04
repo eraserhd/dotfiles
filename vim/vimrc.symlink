@@ -53,7 +53,9 @@ let g:choosewin_color_label = {
 let g:choosewin_color_label_current = g:choosewin_color_label
 
 nmap <C-w>y <Plug>(choosewin)
+tmap <C-w>y <C-w>:ChooseWin<CR>
 nmap <C-w>Y :<C-u>ChooseWinSwap<CR>
+tmap <C-w>Y <C-w>:<C-u>ChooseWinSwap<CR>
 
 " Configure vim-angry so that ca, and ci, change arguments, rather than caa
 " and cia -- that's intuitive to me and I imagine that aa could be useful
