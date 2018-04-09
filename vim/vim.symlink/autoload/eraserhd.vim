@@ -66,3 +66,13 @@ function! eraserhd#goto(what, ...)
   endif
   execute bufwinnr(l:bufnr) . "wincmd w"
 endfunction
+
+sign define compile_error text=xx texthl=ErrorMsg
+
+function! Tapi_ClearSourceErrors(bufnum, arg)
+  silent! sign unplace 1
+endfunction
+
+function! Tapi_SourceError(bufnum, data)
+  execute "sign place 1 name=compile_error line=" . a:data[1] . " file=" . a:data[0]
+endfunction
