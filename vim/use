@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# Usage: ./vim/use tomtom/quickfixsigns_vim 
+
+github_plugin_path=$1
+plugin_name=${github_plugin_path##*/}
+
+exec git submodule add git@github.com:"$github_plugin_path" vim/vim.symlink/bundle/"$plugin_name"
