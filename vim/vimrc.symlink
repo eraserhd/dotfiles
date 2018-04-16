@@ -53,14 +53,6 @@ endfunction
 
 nnoremap <C-P> :<C-U>call Fzy('git ls-files', 'edit')<CR>
 
-
-let g:ctrlp_working_path_mode = 'd'  " Always start at Vim's current directory
-let g:ctrlp_user_command = {
-  \ 'types': {
-    \ 1: ['.git', 'cd %s && git ls-files']
-    \ }
-  \ }
-
 " choosewin
 let g:choosewin_label_align = 'left'
 let g:choosewin_color_label = {
