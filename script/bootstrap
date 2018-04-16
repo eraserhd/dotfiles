@@ -128,14 +128,6 @@ do
   ln -sf "$bin_script" ~/.local/bin/
 done
 
-if ! [[ -d /nix ]]
-then
-  info 'installing nix'
-  curl -fsSL https://nixos.org/nix/install | sh
-  . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-  success 'nix installed'
-fi
-
 if [ "$(uname -s)" == "Darwin" ]
 then
   if ! command -v brew >/dev/null
