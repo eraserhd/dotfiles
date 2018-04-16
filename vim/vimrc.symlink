@@ -12,6 +12,7 @@ set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
   \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
   \,sm:block-blinkwait175-blinkoff150-blinkon175
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+set wildignore=*/.git/*,*.pyc,*.class,*.jar,*.war,out/**
 
 " Get swap files out of the way
 set directory=/private/tmp//,/tmp//
@@ -37,8 +38,22 @@ tmap <C-w>o <NOP>
 
 command! -nargs=1 -complete=shellcmd R call eraserhd#run_repl_command(<q-args>)
 
-" CtrlP
-set wildignore=*/.git/*,*.pyc,*.class,*.jar,*.war,out/**
+" Fzy
+function! Fzy(choice_command, vim_command)
+  try
+    let output = system(a:choice_command . " |fzy")
+  catch /Vim:Interrupt/
+    " Swallows errors from <C-c>, allow redraw! below
+  endtry
+  redraw!
+  if v:shell_error == 0 && !empty(output)
+    execute a:vim_command output
+  endif
+endfunction
+
+nnoremap <C-P> :<C-U>call Fzy('git ls-files', 'edit')<CR>
+
+
 let g:ctrlp_working_path_mode = 'd'  " Always start at Vim's current directory
 let g:ctrlp_user_command = {
   \ 'types': {
