@@ -2,7 +2,10 @@
 #
 # Usage: ./vim/use tomtom/quickfixsigns_vim 
 
+set -e
+
 github_plugin_path=$1
 plugin_name=${github_plugin_path##*/}
 
-exec git submodule add git@github.com:"$github_plugin_path" vim/vim.symlink/bundle/"$plugin_name"
+git submodule add git@github.com:"$github_plugin_path" vim/vim.symlink/bundle/"$plugin_name"
+vim -c Helptags -c quit
