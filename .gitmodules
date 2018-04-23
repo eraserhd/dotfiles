@@ -16,9 +16,6 @@
 [submodule "neovim/config/nvim.symlink/bundle/vim-terraform"]
 	path = vim/vim.symlink/bundle/vim-terraform
 	url = git@github.com:hashivim/vim-terraform.git
-[submodule "neovim/config/nvim.symlink/bundle/vimproc.vim"]
-	path = vim/vim.symlink/bundle/vimproc.vim
-	url = git@github.com:Shougo/vimproc.vim.git
 [submodule "neovim/config/nvim.symlink/bundle/vim-repeat"]
 	path = vim/vim.symlink/bundle/vim-repeat
 	url = git@github.com:tpope/vim-repeat.git
