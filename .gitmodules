@@ -16,9 +16,6 @@
 [submodule "neovim/config/nvim.symlink/bundle/vim-terraform"]
 	path = vim/vim.symlink/bundle/vim-terraform
 	url = git@github.com:hashivim/vim-terraform.git
-[submodule "neovim/config/nvim.symlink/bundle/tabular"]
-	path = vim/vim.symlink/bundle/tabular
-	url = git@github.com:godlygeek/tabular.git
 [submodule "neovim/config/nvim.symlink/bundle/ghcmod-vim"]
 	path = vim/vim.symlink/bundle/ghcmod-vim
 	url = git@github.com:eagletmt/ghcmod-vim.git
