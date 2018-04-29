@@ -1,0 +1,38 @@
+#!/bin/bash
+
+set -e
+
+open "/System/Library/CoreServices/Menu Extras/Bluetooth.menu"
+
+osascript -e '
+  tell application "Anki"
+    activate
+  end tell
+  tell application "System Events"
+    keystroke "y"
+    delay 3
+    tell process "Anki"
+      tell menu bar 1
+	tell menu "Tools"
+	  click menu item "Check Media..."
+	end tell
+      end tell
+    end tell
+    delay 3
+    keystroke "y"
+  end tell
+  '
+
+( 
+  cd /Users/jfelice/src/data
+  git add -A
+  git commit -m daily || true
+  git push origin master || true
+)
+
+if wunderline list Focus |grep -q 'Run `daily`.*Today'
+then
+  wunderline done 'Run `daily`'
+fi
+
+gtypist -b /Users/jfelice/src/dotfiles/gtypist/gtypist.typ
