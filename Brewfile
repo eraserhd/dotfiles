@@ -20,6 +20,7 @@ cask 'spotify'
 brew 'python'
 
 brew 'agda'
+brew 'autossh'
 brew 'awscli'
 brew 'bash-completion'
 brew 'chezscheme'
