@@ -44,8 +44,9 @@ export CLICOLOR=1
 export IRCNICK=eraserhd
 export IRCSERVER=eraserhead.net
 
+export CDPATH=~/src:~/src/dotfiles/vim/vim.symlink/bundle
+
 export ELI_ENV=corp-tech-jfelice
-export NEOVIM_JS_DEBUG=/tmp/nvimdebug.log
 export VAULT_ADDR=https://vault.prod.2u.com:8200/
 export VAULT_CACERT=$HOME/src/ops-terraform/consul-classic/ansible/creds/vault-ca.pem
 
