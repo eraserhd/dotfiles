@@ -17,19 +17,27 @@ set wildignore=*/.git/*,*.pyc,*.class,*.jar,*.war,out/**
 " Get swap files out of the way
 set directory=/private/tmp//,/tmp//
 
+function! FlashCursor()
+  set cul cuc
+  redraw
+  sleep 50m
+  set nocul nocuc
+endfunction
+
+nnoremap <silent> <CR> :<C-U>call FlashCursor()<CR>
+
 " Local commands
 let mapleader = ","
-let localmapleader = ","
 nmap <Leader>gc :silent !git add -A<CR>:Gcommit<CR>
 
 " Terminal config
 " set scrollback=10000
-nmap <Leader>R :call eraserhd#goto("repl")<CR>
-nmap <Leader>r :call eraserhd#goto("repl", "insert")<CR>
-nmap <Leader>T :call eraserhd#goto("todo")<CR>
-nmap <Leader>t :call eraserhd#goto("todo", "insert")<CR>
-nmap <Leader>z :call eraserhd#goto("zeal")<CR>
-nmap <Leader><Leader> :call eraserhd#repeat_last_repl_command()<CR>
+nmap <silent> <Leader>R :call eraserhd#goto("repl")<CR>
+nmap <silent> <Leader>r :call eraserhd#goto("repl", "insert")<CR>
+nmap <silent> <Leader>T :call eraserhd#goto("todo")<CR>
+nmap <silent> <Leader>t :call eraserhd#goto("todo", "insert")<CR>
+nmap <silent> <Leader>z :call eraserhd#goto("zeal")<CR>
+nmap <silent> <Leader><Leader> :call eraserhd#repeat_last_repl_command()<CR>
 
 " I use <C-a>o in tmux to switch to other window, but <C-w>o in Vim closes
 " all my crap!  Deleted.
