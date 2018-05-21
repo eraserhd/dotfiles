@@ -13,6 +13,7 @@ set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
   \,sm:block-blinkwait175-blinkoff150-blinkon175
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set wildignore=*/.git/*,*.pyc,*.class,*.jar,*.war,out/**
+set grepprg=git\ grep\ -nH
 
 " Get swap files out of the way
 set directory=/private/tmp//,/tmp//
