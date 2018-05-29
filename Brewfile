@@ -5,6 +5,7 @@ cask 'font-mononoki'
 
 tap 'homebrew/bundle'
 tap 'neovim/neovim'
+tap 'robdimsdale/tap'
 
 cask '1password'
 cask 'anki'
