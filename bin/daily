@@ -27,12 +27,8 @@ osascript -e '
   cd /Users/jfelice/src/data
   git add -A
   git commit -m daily || true
+  git pull --rebase || true
   git push origin master || true
 )
-
-if wunderline list Focus |grep -q 'Run `daily`.*Today'
-then
-  wunderline done 'Run `daily`'
-fi
 
 gtypist -b /Users/jfelice/src/dotfiles/gtypist/gtypist.typ
