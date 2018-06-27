@@ -9,3 +9,5 @@
 	excludesfile = /Users/jfelice/.gitignore_global
 [grep]
 	lineNumber = true
+[rebase]
+	autosquash = true
