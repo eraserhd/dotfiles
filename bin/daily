@@ -31,4 +31,6 @@ osascript -e '
   git push origin master || true
 )
 
+star-due-tasks
+
 gtypist -b /Users/jfelice/src/dotfiles/gtypist/gtypist.typ

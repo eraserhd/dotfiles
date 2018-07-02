@@ -1,0 +1,6 @@
+#!/bin/bash
+
+now=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+for task_id in $(wl tasks "$list_id" -j |jq '.[] |select(.starred |not) |select(.due_date != "0001-01-01T00:00:00Z") |select(.due_date < "'${now}'") |.id'); do
+  wl update-task --starred=true "$task_id"
+done
