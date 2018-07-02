@@ -1,0 +1,12 @@
+#!/bin/bash
+
+
+today=$(date -u '+%Y-%m-%dT00:00:00Z')
+outdated_tasks=$(wl tasks -j |jq '.[] |select(.due_date != "0001-01-01T00:00:00Z" and
+					      .due_date < "'${today}'" and
+					      .recurrence_type == "day" and
+					      .recurrence_count == 1
+					      ) | .id')
+for task_id in $outdated_tasks; do
+  wl update-task --dueDate="$(date '+%Y-%m-%d')" $task_id >/dev/null
+done

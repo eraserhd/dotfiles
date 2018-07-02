@@ -31,5 +31,6 @@ osascript -e '
   git push origin master || true
 )
 
+daily-due-today
 star-due-tasks
 typing-test
