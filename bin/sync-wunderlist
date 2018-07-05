@@ -1,0 +1,12 @@
+#!/bin/sh
+exec osascript -e '
+  tell application "System Events"
+    tell process "Wunderlist"
+      tell menu bar 1
+	tell menu "Account"
+	  click menu item "Sync"
+	end tell
+      end tell
+    end tell
+  end tell
+  ' >/dev/null

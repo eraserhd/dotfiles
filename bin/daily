@@ -37,4 +37,13 @@ star-due-tasks
 # Complete "Run `daily`"
 wl update-task --completed=true --starred=false 3993421041 >/dev/null
 
+sync-wunderlist
+
+osascript -e '
+  tell application "Terminal"
+    activate
+  end tell
+  '
+
 typing-test
+
