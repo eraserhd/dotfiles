@@ -4,10 +4,8 @@ set -e
 
 open "/System/Library/CoreServices/Menu Extras/Bluetooth.menu"
 
+activate Anki
 osascript -e '
-  tell application "Anki"
-    activate
-  end tell
   tell application "System Events"
     keystroke "y"
     delay 3
@@ -39,11 +37,6 @@ wl update-task --completed=true --starred=false 3993421041 >/dev/null
 
 sync-wunderlist
 
-osascript -e '
-  tell application "Terminal"
-    activate
-  end tell
-  '
-
+activate Terminal
 typing-test
 
