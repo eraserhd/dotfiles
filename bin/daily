@@ -33,4 +33,8 @@ osascript -e '
 
 daily-due-today
 star-due-tasks
+
+# Complete "Run `daily`"
+wl update-task --completed=true --starred=false 3993421041 >/dev/null
+
 typing-test
