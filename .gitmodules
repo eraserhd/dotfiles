@@ -67,3 +67,6 @@
 [submodule "vim/vim.symlink/bundle/vim-pencil"]
 	path = vim/vim.symlink/bundle/vim-pencil
 	url = git@github.com:reedes/vim-pencil
+[submodule "vim/vim.symlink/bundle/vim-rhubarb"]
+	path = vim/vim.symlink/bundle/vim-rhubarb
+	url = git@github.com:tpope/vim-rhubarb
