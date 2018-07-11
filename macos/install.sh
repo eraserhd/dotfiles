@@ -14,3 +14,9 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode T
 # Terminal.app
 defaults write com.apple.Terminal "Default Window Settings" Pro
 defaults write com.apple.Terminal AppleShowScrollBars -string WhenScrolling
+
+# No Command+Space for Spotlight
+# This doesn't seem to take effect immediately unless changed through the UI :(
+defaults export com.apple.symbolichotkeys /tmp/defaults.plist
+plutil -replace AppleSymbolicHotKeys.64.enabled -integer 0 /tmp/defaults.plist
+defaults import com.apple.symbolichotkeys /tmp/defaults.plist

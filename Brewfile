@@ -8,6 +8,7 @@ tap 'neovim/neovim'
 tap 'robdimsdale/tap'
 
 cask '1password'
+cask 'alfred'
 cask 'anki'
 cask 'duet'
 cask 'evernote'
