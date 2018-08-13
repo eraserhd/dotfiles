@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string></string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
+	<dict>
+		<key>1267F1FE-4634-4C62-A1D9-433FCED5D575</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>C629C023-AA96-413F-9A0B-FDE398B0110B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>47DF27E3-FB13-4B99-BD3F-6AD4AFAF9D9F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>C629C023-AA96-413F-9A0B-FDE398B0110B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string></string>
+	<key>description</key>
+	<string></string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>[Central Park Tabs]</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>3</integer>
+				<key>argumenttext</key>
+				<string>http://localhost:8080/</string>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>37</integer>
+				<key>hotmod</key>
+				<integer>1966080</integer>
+				<key>hotstring</key>
+				<string>L</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>1267F1FE-4634-4C62-A1D9-433FCED5D575</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>applescript</key>
+				<string>on alfred_script(parameter)
+  focusTab(parameter)
+end alfred_script
+on focusTab(urlPrefix)	tell application "Google Chrome"		set found to false		repeat with theWindow in every window			set tabIndex to 1			repeat with theTab in every tab of theWindow				if theTab's URL starts with urlPrefix then					set found to true					exit repeat				end if				set tabIndex to tabIndex + 1			end repeat			if found then				exit repeat			end if		end repeat		if found then			set theWindow's active tab index to tabIndex			set index of theWindow to 1		else			tell window 1 to make new tab with properties {URL:urlPrefix}		end if
+		activate	end tellend focusTab</string>
+				<key>cachescript</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.applescript</string>
+			<key>uid</key>
+			<string>C629C023-AA96-413F-9A0B-FDE398B0110B</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>3</integer>
+				<key>argumenttext</key>
+				<string>https://dev.centralpark.2u.com/</string>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>2</integer>
+				<key>hotmod</key>
+				<integer>1966080</integer>
+				<key>hotstring</key>
+				<string>D</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>47DF27E3-FB13-4B99-BD3F-6AD4AFAF9D9F</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>1267F1FE-4634-4C62-A1D9-433FCED5D575</key>
+		<dict>
+			<key>xpos</key>
+			<integer>120</integer>
+			<key>ypos</key>
+			<integer>80</integer>
+		</dict>
+		<key>47DF27E3-FB13-4B99-BD3F-6AD4AFAF9D9F</key>
+		<dict>
+			<key>xpos</key>
+			<integer>120</integer>
+			<key>ypos</key>
+			<integer>220</integer>
+		</dict>
+		<key>C629C023-AA96-413F-9A0B-FDE398B0110B</key>
+		<dict>
+			<key>xpos</key>
+			<integer>410</integer>
+			<key>ypos</key>
+			<integer>80</integer>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string></string>
+</dict>
+</plist>
