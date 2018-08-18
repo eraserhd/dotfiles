@@ -12,7 +12,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>5D969332-1BEA-47A4-A30D-E531B5FF18FD</string>
+				<string>AFFE9AEE-C975-4079-A482-B4AA03516F8D</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -32,6 +32,23 @@
 	<string>[Focus Terminal]</string>
 	<key>objects</key>
 	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>paths</key>
+				<array>
+					<string>/Applications/Alacritty.app</string>
+				</array>
+				<key>toggle</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.launchfiles</string>
+			<key>uid</key>
+			<string>AFFE9AEE-C975-4079-A482-B4AA03516F8D</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -63,23 +80,6 @@
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>paths</key>
-				<array>
-					<string>/Applications/Utilities/Terminal.app</string>
-				</array>
-				<key>toggle</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.launchfiles</string>
-			<key>uid</key>
-			<string>5D969332-1BEA-47A4-A30D-E531B5FF18FD</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
 	</array>
 	<key>readme</key>
 	<string></string>
@@ -88,16 +88,16 @@
 		<key>5491CAE8-CB39-4FB2-AAAE-1E9F266DF31F</key>
 		<dict>
 			<key>xpos</key>
-			<integer>110</integer>
+			<integer>120</integer>
 			<key>ypos</key>
-			<integer>200</integer>
+			<integer>190</integer>
 		</dict>
-		<key>5D969332-1BEA-47A4-A30D-E531B5FF18FD</key>
+		<key>AFFE9AEE-C975-4079-A482-B4AA03516F8D</key>
 		<dict>
 			<key>xpos</key>
-			<integer>440</integer>
+			<integer>450</integer>
 			<key>ypos</key>
-			<integer>200</integer>
+			<integer>190</integer>
 		</dict>
 	</dict>
 	<key>webaddress</key>
