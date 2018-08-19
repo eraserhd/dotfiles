@@ -111,6 +111,20 @@ let g:projectionist_heuristics = {
 " vim-sexp
 let g:sexp_enable_insert_mode_mappings = 0
 
+" airline
+set laststatus=2
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+
+function! AirlineInit() abort
+  call airline#parts#define_function('win', 'winnr')
+  call airline#parts#define_accent('win', 'red')
+  let g:airline_section_c = airline#section#create(['win', ' ', 'file'])
+endfunction
+autocmd User AirlineAfterInit call AirlineInit()
+
 " File types
 
 let g:haddock_browser = "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
