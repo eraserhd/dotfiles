@@ -47,6 +47,7 @@ brew 'tmux'
 brew 'vault'
 brew 'vim', args: ['HEAD']
 brew 'wget'
+brew 'wl'
 brew 'z'
 
 # ErgoDox environment
