@@ -61,12 +61,6 @@ bind -r J resize-pane -D 5
 bind -r K resize-pane -U 5
 bind -r L resize-pane -R 5
 
-# Renumber windows
-bind m command-prompt -p "move window to:"  "move-window -t '%%'"
-
-
-
-
 ##### Colors #####
 # Ensure we're using 256 colors
 set -g default-terminal "screen-256color"
@@ -74,13 +68,17 @@ set -g default-terminal "screen-256color"
 # Status bar
 set -g status-fg white
 set -g status-bg "#333333"
+set -g status-position top
 
 # Window list
-setw -g window-status-fg green
+setw -g window-status-format "#I #W"
+setw -g window-status-separator "  "
+setw -g window-status-fg white
 setw -g window-status-bg default
 setw -g window-status-attr dim
-setw -g window-status-current-fg green
-setw -g window-status-current-bg white
+setw -g window-status-current-format "#I #W"
+setw -g window-status-current-fg white
+setw -g window-status-current-bg default
 setw -g window-status-current-attr bright
 
 # Pane borders
@@ -95,10 +93,10 @@ set -g message-bg black
 set -g message-attr bright
 
 # Status Bar Items
+set -g status-justify left
 set -g status-left-length 40
-set -g status-left "#[fg=green]Session: #S #[fg=yellow]#I #[fg=green]#P"
+set -g status-left "#[bg=green,fg=white,bright] #S #[fg=green,bg=#333333,nobright] "
 set -g status-right "#[fg=yellow]%d %b %R #[fg=green]#(wemux status_users)"
-set -g status-justify centre
 set -g status-interval 15
 
 # Monitor windows for activity
