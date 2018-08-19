@@ -4,8 +4,6 @@ tap 'caskroom/fonts'
 cask 'font-mononoki'
 
 tap 'homebrew/bundle'
-tap 'neovim/neovim'
-tap 'robdimsdale/tap'
 
 cask '1password'
 cask 'alfred'
@@ -47,8 +45,10 @@ brew 'tmux'
 brew 'vault'
 brew 'vim', args: ['HEAD']
 brew 'wget'
-brew 'wl'
 brew 'z'
+
+tap 'robdimsdale/tap'
+brew 'wl'
 
 # ErgoDox environment
 tap 'osx-cross/avr'
