@@ -7,7 +7,6 @@ The organization and a lot of scripts were stolen from https://github.com/holman
 ### App Store
 
 * Better Snap Tool
-* Ulysses
 * Wunderlist
 
 ### Miscellaneous
