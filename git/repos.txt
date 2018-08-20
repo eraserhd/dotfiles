@@ -1,0 +1,6 @@
+avi             git@github.com:maitria/avi.git
+centralpark     git@github.com:2uinc/centralpark.git
+ehk             git@github.com:eraserhd/ehk.git
+git-zeal        git@github.com:eraserhd/git-zeal.git
+qmk_firmware    git@github.com:eraserhd/qmk_firmware.git
+suggest-commit  git@github.com:eraserhd/suggest-commit.git
