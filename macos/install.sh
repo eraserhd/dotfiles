@@ -6,6 +6,10 @@ set -e
 
 defaults write com.apple.finder AppleShowAllFiles NO || exit $?
 
+# Keyboard (Needs relogin to take effect)
+defaults write -g InitialKeyRepeat -int 10
+defaults write -g KeyRepeat -int 1
+
 # Dock
 osascript -e 'tell application "System Events" to set the autohide of the dock preferences to true'
 
