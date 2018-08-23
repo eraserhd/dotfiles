@@ -32,7 +32,9 @@ set -sg repeat-time 1000
 # Use vi-style navigation in Copy mode (which is also scrollback mode)
 setw -g mode-keys vi
 
-
+# Make Shift+Arrow work
+setw -g xterm-keys on
+set -g terminal-overrides "xterm*:kLFT5=\eOD:kRIT5=\eOC:kUP5=\eOA:kDN5=\eOB:smkx@:rmkx@"
 
 ##### Window/Pane Management #####
 
