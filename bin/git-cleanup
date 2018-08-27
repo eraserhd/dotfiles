@@ -8,7 +8,7 @@ do
 done
 
 # Remove local branches which have already been merged
-git for-each-ref --format '%(refname)' --merged origin/master 'refs/heads/*' | \
+git for-each-ref --format '%(refname)' --merged $(git symbolic-ref --short refs/remotes/origin/HEAD) 'refs/heads/*' | \
 while read refname
 do
   branchname=${refname#refs/heads/}
