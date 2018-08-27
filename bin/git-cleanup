@@ -8,11 +8,13 @@ do
 done
 
 # Remove local branches which have already been merged
-git for-each-ref --format '%(refname)' --merged $(git symbolic-ref --short refs/remotes/origin/HEAD) 'refs/heads/*' | \
+remote_primary_branch=$(git symbolic-ref --short refs/remotes/origin/HEAD)
+local_primary_branch=${remote_primary_branch#origin/}
+git for-each-ref --format '%(refname)' --merged "$remote_primary_branch" 'refs/heads/*' | \
 while read refname
 do
   branchname=${refname#refs/heads/}
-  if [[ "$branchname" != "master" ]]
+  if [[ $branchname != $local_primary_branch ]]
   then
     git branch -d "$branchname"
   fi
