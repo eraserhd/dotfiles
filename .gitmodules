@@ -76,3 +76,9 @@
 [submodule "vim/vim.symlink/bundle/vim-airline-themes"]
 	path = vim/vim.symlink/bundle/vim-airline-themes
 	url = git@github.com:vim-airline/vim-airline-themes.git
+[submodule "vim/vim.symlink/bundle/fzf"]
+	path = vim/vim.symlink/bundle/fzf
+	url = git@github.com:junegunn/fzf.git
+[submodule "vim/vim.symlink/bundle/fzf.vim"]
+	path = vim/vim.symlink/bundle/fzf.vim
+	url = git@github.com:junegunn/fzf.vim.git
