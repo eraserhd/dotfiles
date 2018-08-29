@@ -33,8 +33,9 @@ set -sg repeat-time 1000
 setw -g mode-keys vi
 
 # Make Shift+Arrow work
-setw -g xterm-keys on
+set -g focus-events on
 set -g terminal-overrides "xterm*:kLFT5=\eOD:kRIT5=\eOC:kUP5=\eOA:kDN5=\eOB:smkx@:rmkx@"
+setw -g xterm-keys on
 
 ##### Window/Pane Management #####
 
@@ -79,14 +80,18 @@ bind -Tpane-menu h select-pane -L
 bind -Tpane-menu j select-pane -D
 bind -Tpane-menu k select-pane -U
 bind -Tpane-menu l select-pane -R
-bind -Tpane-menu m select-pane -m # mark pane
-bind -Tpane-menu M select-pane -M # clear marked pane
+bind -Tpane-menu m select-pane -m
+bind -Tpane-menu M select-pane -M
+bind -Tpane-menu N copy-mode
 bind -Tpane-menu p select-pane -t !
-bind -Tpane-menu r select-pane -t '{bottom-right}'
 
 bind -Tpane-menu . send-keys C-w
 bind -Tpane-menu w send-keys C-w
 bind -Tpane-menu C-w send-keys C-w
+
+## REPLy stuff
+bind -Tpane-menu r select-pane -t '{bottom-right}'
+bind -Tpane-menu , send-keys -t '{bottom-right}' C-p Enter
 
 ##### Colors #####
 # Ensure we're using 256 colors
@@ -106,7 +111,7 @@ setw -g window-status-current-style fg=white,bright
 # Pane borders
 set -g pane-border-status bottom
 set -g pane-border-style "fg=white,bg=#333333,dim"
-set -g pane-active-border-style "fg=white,bg=#333333,bright"
+set -g pane-active-border-style "fg=#333333,bg=white,bright"
 set -g pane-border-format " #P "
 
 # Command line
