@@ -66,6 +66,7 @@ bind -r L resize-pane -R 5
 
 # C-w mode
 bind -Troot C-w switch-client -Tpane-menu
+bind -Tpane-menu = select-layout -E
 bind -Tpane-menu 0 select-pane -t 0
 bind -Tpane-menu 1 select-pane -t 1
 bind -Tpane-menu 2 select-pane -t 2
