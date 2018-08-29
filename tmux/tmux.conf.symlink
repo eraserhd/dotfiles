@@ -63,42 +63,60 @@ bind -r J resize-pane -D 5
 bind -r K resize-pane -U 5
 bind -r L resize-pane -R 5
 
+# C-w mode
+bind -Troot C-w switch-client -Tpane-menu
+bind -Tpane-menu 0 select-pane -t 0
+bind -Tpane-menu 1 select-pane -t 1
+bind -Tpane-menu 2 select-pane -t 2
+bind -Tpane-menu 3 select-pane -t 3
+bind -Tpane-menu 4 select-pane -t 4
+bind -Tpane-menu 5 select-pane -t 5
+bind -Tpane-menu 6 select-pane -t 6
+bind -Tpane-menu 7 select-pane -t 7
+bind -Tpane-menu 8 select-pane -t 8
+bind -Tpane-menu 9 select-pane -t 9
+bind -Tpane-menu h select-pane -L
+bind -Tpane-menu j select-pane -D
+bind -Tpane-menu k select-pane -U
+bind -Tpane-menu l select-pane -R
+bind -Tpane-menu m select-pane -m # mark pane
+bind -Tpane-menu M select-pane -M # clear marked pane
+bind -Tpane-menu p select-pane -t !
+bind -Tpane-menu r select-pane -t '{bottom-right}'
+
+bind -Tpane-menu . send-keys C-w
+bind -Tpane-menu w send-keys C-w
+bind -Tpane-menu C-w send-keys C-w
+
 ##### Colors #####
 # Ensure we're using 256 colors
 set -g default-terminal "screen-256color"
 
 # Status bar
-set -g status-fg white
-set -g status-bg "#333333"
+set -g status-style "fg=white,bg=#333333"
 set -g status-position top
 
 # Window list
 setw -g window-status-format "#I #W"
 setw -g window-status-separator "  "
-setw -g window-status-fg white
-setw -g window-status-bg default
-setw -g window-status-attr dim
+setw -g window-status-style fg=white,dim
 setw -g window-status-current-format "#I #W"
-setw -g window-status-current-fg white
-setw -g window-status-current-bg default
-setw -g window-status-current-attr bright
+setw -g window-status-current-style fg=white,bright
 
 # Pane borders
-set -g pane-border-fg green
-set -g pane-border-bg black
-set -g pane-active-border-fg green
-set -g pane-active-border-bg yellow
+set -g pane-border-status bottom
+set -g pane-border-style "fg=white,bg=#333333,dim"
+set -g pane-active-border-style "fg=white,bg=#333333,bright"
+set -g pane-border-format " #P "
 
 # Command line
-set -g message-fg white
-set -g message-bg black
-set -g message-attr bright
+set -g message-style fg=white,bg=black,bright
 
 # Status Bar Items
 set -g status-justify left
 set -g status-left-length 40
 set -g status-left "#[bg=green,fg=white,bright] #S #[fg=green,bg=#333333,nobright] "
-set -g status-right "#[fg=yellow]%d %b %R #[fg=green]#(wemux status_users)"
+set -g status-right "#[fg=yellow]%d %b %R "
 set -g status-interval 15
 
 # Monitor windows for activity
