@@ -41,18 +41,6 @@ command! -nargs=1 -complete=shellcmd R call SendToREPL(<q-args>)
 " Fzf
 nnoremap <C-P> :<C-U>GFiles<CR>
 
-" choosewin
-let g:choosewin_label_align = 'left'
-let g:choosewin_color_label = {
-  \ 'gui': ['red', 'white', 'bold'],
-  \ 'cterm': ['red', 'white', 'bold'] }
-let g:choosewin_color_label_current = g:choosewin_color_label
-
-nmap <C-w>y <Plug>(choosewin)
-tmap <C-w>y <C-w>:ChooseWin<CR>
-nmap <C-w>Y :<C-u>ChooseWinSwap<CR>
-tmap <C-w>Y <C-w>:<C-u>ChooseWinSwap<CR>
-
 " Configure vim-angry so that ca, and ci, change arguments, rather than caa
 " and cia -- that's intuitive to me and I imagine that aa could be useful
 " elsewhere.
