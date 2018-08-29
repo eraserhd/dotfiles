@@ -15,6 +15,7 @@ set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 set wildignore=*/.git/*,*.pyc,*.class,*.jar,*.war,out/**
 set grepprg=git\ grep\ -nH
 set updatetime=100
+set signcolumn=yes
 
 " Get swap files out of the way
 set directory=/private/tmp//,/tmp//
@@ -106,14 +107,7 @@ let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
-let g:airline_theme = 'cool'
-
-function! AirlineInit() abort
-  call airline#parts#define_function('win', 'winnr')
-  call airline#parts#define_accent('win', 'red')
-  let g:airline_section_c = airline#section#create(['win', ' ', 'file'])
-endfunction
-autocmd User AirlineAfterInit call AirlineInit()
+let g:airline_theme = 'base16_grayscale'
 
 " File types
 
