@@ -46,8 +46,8 @@ setw -g xterm-keys on
 # Split windows more intuitively (except for the fact that tmux doesn't
 # understand that a horizontal split means the pane should be split down the
 # middle horizontally, and likewise for a vertical split).
-bind | split-window -h # horizontal columns
-bind - split-window -v # vertical rows
+bind | split-window -h -c '#{pane_current_path}' # horizontal columns
+bind - split-window -v -c '#{pane_current_path}' # vertical rows
 
 # Navigate panes vim-style!
 bind h select-pane -L
