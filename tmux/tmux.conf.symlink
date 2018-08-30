@@ -104,22 +104,22 @@ set -g default-terminal "screen-256color"
 
 # Pane borders
 set -g pane-border-status bottom
-set -g pane-border-style "fg=#444444,bg=#333333,dim"
-set -g pane-active-border-style "fg=cyan,bg=#333333,bright"
-set -g pane-border-format " #[fg=cyan,bright]#P "
+set -g pane-border-style "fg=#333333,bg=#333333"
+set -g pane-active-border-style "fg=#333333,bg=#333333"
+set -g pane-border-format "#[fg=#333333,bg=#{?pane_active,#e4e4e4,#333333}]#[fg=#{?pane_active,#585858,white,bright}] #P #[fg=#{?pane_active,#e4e4e4,#333333},bg=#{?pane_active,#0087af,#005f87}]#[fg=#{?pane_active,white,#333333},bright] #T #[bg=#333333,fg=#{?pane_active,#0087af,#005f87}]"
 
 # Command line
 set -g message-style fg=white,bg=black,bright
 
 # Status bar
-set -g status-style "fg=white,bg=#005f87"
+set -g status-style "fg=white,bg=#333333"
 set -g status-position top
 
 set -g status-justify left
 set -g status-left-length 40
 
-set -g status-left "#[fg=#585858,bg=#e4e4e4] #S #[fg=#e4e4e4,bg=#0087af]#[fg=#0087af,bg=#005f87] "
-set -g status-right "#[fg=#0087af,bg=#005f87]#[fg=#e4e4e4,bg=#0087af]#[fg=#585858,bg=#e4e4e4] %d %b %R "
+set -g status-left "#[fg=#585858,bg=#e4e4e4] #S #[fg=#e4e4e4,bg=#0087af]#[fg=#0087af,bg=#005f87]#[fg=#005787,bg=#333333] "
+set -g status-right "#[bg=#333333,fg=white] %d %b %R "
 set -g status-interval 15
 
 # Window list
