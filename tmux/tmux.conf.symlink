@@ -105,8 +105,8 @@ set -g default-terminal "screen-256color"
 # Pane borders
 set -g pane-border-status bottom
 set -g pane-border-style "fg=#333333,bg=#333333"
-set -g pane-active-border-style "fg=#333333,bg=#333333"
-set -g pane-border-format "#[fg=#333333,bg=#{?pane_active,#e4e4e4,#333333}]#[fg=#{?pane_active,#585858,white,bright}] #P #[fg=#{?pane_active,#e4e4e4,#333333},bg=#{?pane_active,#0087af,#005f87}]#[fg=#{?pane_active,white,#333333},bright] #T #[bg=#333333,fg=#{?pane_active,#0087af,#005f87}]"
+set -g pane-active-border-style "fg=#666666,bg=#666666"
+set -g pane-border-format "#[bg=#{?pane_active,#e4e4e4,#333333}]#[fg=#{?pane_active,#585858,white,bright}] #P #[fg=#{?pane_active,#e4e4e4,#333333},bg=#{?pane_active,#0087af,#005f87}]#[fg=#{?pane_active,white,#333333},bright] #T #[bg=#{?pane_active,#666666,#333333},fg=#{?pane_active,#0087af,#005f87}]"
 
 # Command line
 set -g message-style fg=white,bg=black,bright
