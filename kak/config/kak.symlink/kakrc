@@ -3,10 +3,10 @@ colorscheme desertex
 
 define-command -docstring 'Invoke fzf to open a file' -params 0 fzf-edit %{
     evaluate-commands %sh{
-        if [ -z "$TMUX" ]; then
-            printf 'echo -markup "{error}fzf-edit only works in tmux"'
+        if [ -z "${kak_client_env_TMUX}" ]; then
+            printf 'fail "client was not started under tmux"\n'
         else
-            file="$(git ls-files |fzf-tmux -d 15)"
+            file="$(git ls-files |TMUX="${kak_client_env_TMUX}" fzf-tmux -d 15)"
             if [ -n "$file" ]; then
                 printf 'edit "%s"\n' "$file"
             fi
