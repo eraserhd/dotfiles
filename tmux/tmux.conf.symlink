@@ -128,6 +128,7 @@ setw -g window-status-separator "  "
 setw -g window-status-style fg=white,dim
 setw -g window-status-current-format "#I #W"
 setw -g window-status-current-style fg=white,bright
+setw -g window-status-activity-style fg=white,dim
 
 # Monitor windows for activity
 setw -g monitor-activity on
