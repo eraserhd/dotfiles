@@ -1,6 +1,8 @@
 
 colorscheme desertex
 
+set-option global autoreload yes
+
 define-command -docstring 'Invoke fzf to open a file' -params 0 fzf-edit %{
     evaluate-commands %sh{
         if [ -z "${kak_client_env_TMUX}" ]; then
