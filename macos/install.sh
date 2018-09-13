@@ -7,7 +7,7 @@ set -e
 defaults write com.apple.finder AppleShowAllFiles NO || exit $?
 
 # Keyboard (Needs relogin to take effect)
-defaults write -g InitialKeyRepeat -int 10
+defaults write -g InitialKeyRepeat -int 20
 defaults write -g KeyRepeat -int 1
 
 # Dock
