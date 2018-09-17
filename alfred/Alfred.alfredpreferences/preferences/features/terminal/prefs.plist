@@ -4,6 +4,13 @@
 <dict>
 	<key>application</key>
 	<integer>1</integer>
+	<key>custom</key>
+	<string>on alfred_script(q)
+	tell application "Alacritty"
+		activate
+		do script q
+	end tell
+end alfred_script</string>
 	<key>prefix</key>
 	<integer>2</integer>
 </dict>
