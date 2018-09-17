@@ -9,6 +9,7 @@ defaults write com.apple.finder AppleShowAllFiles NO || exit $?
 # Keyboard (Needs relogin to take effect)
 defaults write -g InitialKeyRepeat -int 20
 defaults write -g KeyRepeat -int 1
+defaults write -g AppleKeyboardUIMode -int 2   # Tab to all controls
 
 # Dock
 osascript -e 'tell application "System Events" to set the autohide of the dock preferences to true'
