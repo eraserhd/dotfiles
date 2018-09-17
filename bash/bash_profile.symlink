@@ -28,21 +28,12 @@ then
 fi
 
 export PS1='[\u@\h \W$(__git_ps1 "(%s)")]$ '
-
-
-unalias vi vim 2>/dev/null
-if command -v vim >/dev/null
-then
-  export EDITOR=$(command -v vim)
-  alias vi=$EDITOR
-  alias vim=$EDITOR
-fi
+export EDITOR=/usr/local/bin/kak
+alias vi=$EDITOR
+alias vim=$EDITOR
 
 # Darwin
 export CLICOLOR=1
-
-export IRCNICK=eraserhd
-export IRCSERVER=eraserhead.net
 
 export CDPATH=.:~/src:~/src/dotfiles/vim/vim.symlink/bundle
 
