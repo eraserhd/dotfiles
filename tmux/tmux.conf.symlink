@@ -35,6 +35,7 @@ bind -Tcopy-mode-vi Escape send-keys -X cancel
 bind -Tcopy-mode-vi i send-keys -X cancel
 bind -Tcopy-mode-vi v send-keys -X begin-selection
 bind -Tcopy-mode-vi y send-keys -X copy-selection-and-cancel
+bind -Tcopy-mode-vi o send-keys -X copy-pipe-and-cancel 'xargs -0 open'
 
 # Make Shift+Arrow work
 set -g focus-events on
