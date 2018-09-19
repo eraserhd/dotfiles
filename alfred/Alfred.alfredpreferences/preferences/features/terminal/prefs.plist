@@ -6,10 +6,7 @@
 	<integer>1</integer>
 	<key>custom</key>
 	<string>on alfred_script(q)
-	tell application "Alacritty"
-		activate
-		do script q
-	end tell
+    do shell script "source /etc/profile; tmux new-window " &amp; (quoted form of q) &amp; " &gt;/dev/null 2&gt;&amp;1"
 end alfred_script</string>
 	<key>prefix</key>
 	<integer>2</integer>
