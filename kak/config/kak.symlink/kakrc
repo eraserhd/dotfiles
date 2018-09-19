@@ -15,3 +15,5 @@ define-command -docstring 'Invoke fzf to open a file' -params 0 fzf-edit %{
         fi
     }
 }
+
+add-highlighter global/ show-matching
