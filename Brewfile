@@ -53,6 +53,8 @@ brew 'z'
 tap 'robdimsdale/tap'
 brew 'wl'
 
+brew 'ul/kak-lsp/kak-lsp'
+
 # ErgoDox environment
 tap 'osx-cross/avr'
 tap 'PX4/homebrew-px4'
