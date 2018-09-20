@@ -2,6 +2,7 @@
 colorscheme desertex
 
 set-option global autoreload yes
+set-option global ui_options ncurses_assistant=none ncurses_status_on_top=true
 
 define-command -docstring 'Invoke fzf to open a file' -params 0 fzf-edit %{
     evaluate-commands %sh{
