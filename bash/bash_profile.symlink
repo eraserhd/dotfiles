@@ -43,3 +43,27 @@ export VAULT_CACERT=$HOME/src/ops-terraform/consul-classic/ansible/creds/vault-c
 
 [[ -f ~/.local/bin/private.sh ]] && source ~/.local/bin/private.sh
 
+want_kak_session() {
+    while (( $# != 0 )); do
+        case "$1" in
+            -l|-c|-s) return 1;;
+            -e|-E|-p|-f|-i|-ui|-debug) shift;;
+        esac
+        shift
+    done
+    return 0
+}
+
+kak() {
+    if [[ -n "$TMUX_PANE" ]] && want_kak_session "$@"; then
+        local session="$(tmux display -t "$TMUX_PANE" -p '#W')" flag="-s"
+        if command kak -l 2>/dev/null |grep -q "^${session}\$"; then
+            flag="-c"
+        fi
+        command kak "${flag}" "${session}" "$@"
+        return $?
+    else
+        command kak "$@"
+        return $?
+    fi
+}
