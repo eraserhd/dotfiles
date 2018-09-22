@@ -17,6 +17,14 @@ define-command -docstring 'Invoke fzf to open a file' -params 0 fzf-edit %{
     }
 }
 
-add-highlighter global/ show-matching
+alias global fzf-edit fze
+
+add-highlighter global/matching show-matching
+
+set-face global LineNumbersWrapped black
+add-highlighter global/number number-lines
+
+set-face global Whitespace rgb:333333
+add-highlighter global/whitespace show-whitespaces -spc ' ' -tab '➤' -lf '↩'
 
 evaluate-commands %sh{kak-lsp --kakoune -s "${kak_session}"}
