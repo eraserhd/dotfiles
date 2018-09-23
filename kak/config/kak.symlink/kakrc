@@ -15,7 +15,7 @@ add-highlighter global/matching show-matching
 set-face global LineNumbersWrapped black
 add-highlighter global/number number-lines
 
-set-face global Whitespace rgb:333333+F
+set-face global Whitespace rgb:333333+f
 add-highlighter global/whitespace show-whitespaces -spc ' ' -tab '➤' -lf '↩'
 
 # FZF
