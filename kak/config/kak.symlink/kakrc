@@ -34,7 +34,7 @@ define-command -docstring 'Invoke fzf to open a file' -params 0 fzf-edit %{
     }
 }
 
-alias global fzf-edit fze
+alias global fze fzf-edit
 
 # LSP
 # ‾‾‾
