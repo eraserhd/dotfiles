@@ -26,7 +26,7 @@ define-command -docstring 'Invoke fzf to open a file' -params 0 fzf-edit %{
         if [ -z "${kak_client_env_TMUX}" ]; then
             printf 'fail "client was not started under tmux"\n'
         else
-            file="$(git ls-files |TMUX="${kak_client_env_TMUX}" fzf-tmux -d 15)"
+            file="$(ag -l -f |TMUX="${kak_client_env_TMUX}" fzf-tmux -d 15)"
             if [ -n "$file" ]; then
                 printf 'edit "%s"\n' "$file"
             fi
