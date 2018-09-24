@@ -18,6 +18,25 @@ add-highlighter global/number number-lines
 set-face global Whitespace rgb:333333+f
 add-highlighter global/whitespace show-whitespaces -spc ' ' -tab '➤' -lf '↩'
 
+# Soft tabs
+# ‾‾‾‾‾‾‾‾‾
+
+define-command -params 0 expand-tabs %{
+    hook -group expand-tabs window InsertChar \t %{ try %{
+        execute-keys -draft "h<a-h><a-k>\A\h+\z<ret><a-;>;%opt{indentwidth}@"
+    } }
+    hook -group expand-tabs window InsertDelete ' ' %{ try %{
+        execute-keys -draft "h<a-h><a-k>\A\h+\z<ret>i<space><esc><lt>"
+    } }
+}
+
+define-command -params 0 keep-tabs %{
+    remove-hooks window expand-tabs
+}
+
+hook global WinSetOption filetype=(?!makefile).* expand-tabs
+hook global WinSetOption filetype=makefile keep-tabs
+
 # FZF
 # ‾‾‾
 
