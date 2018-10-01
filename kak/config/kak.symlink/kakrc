@@ -3,6 +3,8 @@
 
 set-option global autoreload yes
 
+hook global BufWritePre .* %{ nop %sh{ mkdir -p $(dirname "$kak_hook_param") }}
+
 # Appearance
 # ‾‾‾‾‾‾‾‾‾‾
 
