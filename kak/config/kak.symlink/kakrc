@@ -39,21 +39,9 @@ define-command -params 0 keep-tabs %{
 hook global WinSetOption filetype=(?!makefile).* expand-tabs
 hook global WinSetOption filetype=makefile keep-tabs
 
-# FZF
-# ‾‾‾
-
-define-command -docstring 'Invoke fzf to open a file' -params 0 fzf-edit %{
-    evaluate-commands %sh{
-        if [ -z "${kak_client_env_TMUX}" ]; then
-            printf 'fail "client was not started under tmux"\n'
-        else
-            file="$(ag -l -f |TMUX="${kak_client_env_TMUX}" fzf-tmux -d 15)"
-            if [ -n "$file" ]; then
-                printf 'edit "%s"\n' "$file"
-            fi
-        fi
-    }
-}
+# Find
+# ‾‾‾‾
+define-command -docstring 'Find a file' -params 1 -shell-candidates %{ag -l -f} find %{ edit %arg{@} }
 
 alias global fze fzf-edit
 
