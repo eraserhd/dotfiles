@@ -41,9 +41,32 @@ hook global WinSetOption filetype=makefile keep-tabs
 
 # Find
 # ‾‾‾‾
+
 define-command -docstring 'Find a file' -params 1 -shell-candidates %{ag -l -f} find %{ edit %arg{@} }
 
-alias global fze fzf-edit
+# Jump
+# ‾‾‾‾
+
+declare-option -hidden str jump_search_result
+
+define-command -override jump -params 1..3 %{
+    set-option global jump_search_result %opt{jumpclient}
+    evaluate-commands %sh{
+        for client in ${kak_client_list}; do
+            echo "evaluate-commands -client \"${client}\" %{
+                evaluate-commands %sh{
+                    if [ \"$1\" -ef \"\${kak_buffile}\" ]; then
+                        echo \"set-option global jump_search_result \${kak_client}\"
+                    fi
+                }
+            }"
+        done
+    }
+    evaluate-commands -try-client %opt{jump_search_result} %{
+        edit %arg{@}
+        try %{ focus }
+    }
+}
 
 # LSP
 # ‾‾‾
