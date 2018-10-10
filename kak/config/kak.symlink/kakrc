@@ -42,7 +42,7 @@ hook global WinSetOption filetype=makefile keep-tabs
 # Find
 # ‾‾‾‾
 
-define-command -docstring 'Find a file' -params 1 -shell-candidates %{ag -l -f} find %{ edit %arg{@} }
+define-command -docstring 'Find a file' -params 1 -shell-script-candidates %{ag -l -f} find %{ edit %arg{@} }
 
 # Jump
 # ‾‾‾‾
