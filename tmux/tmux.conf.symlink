@@ -88,8 +88,25 @@ bind -Tpane-menu k select-pane -U
 bind -Tpane-menu l select-pane -R
 bind -Tpane-menu m select-pane -m
 bind -Tpane-menu M select-pane -M
-bind -Tpane-menu N copy-mode
 bind -Tpane-menu p select-pane -t !
+
+# Make our own copy-mode with Kakoune!
+bind -Tpane-menu N capture-pane -S- -E- -J -b copy-mode \; \
+    new-window -n copy-mode -d '\
+      file=$(mktemp) ; \
+      tmux save-buffer -b copy-mode "$file" ; \
+      tmux delete-buffer -b copy-mode ; \
+      command kak -e "\
+         edit $file ;\
+         exec gj ;\
+         set-option buffer readonly true ;\
+         set-option window filetype tmux-copy ;\
+         rename-buffer *tmux-copy* ;\
+         " ; \
+      rm -f "$file" ; \
+      tmux swap-pane -s :copy-mode.0 -t : ; \
+    ' \; \
+    swap-pane -s :copy-mode.0 -t :
 
 bind -Tpane-menu . send-keys C-w
 bind -Tpane-menu w send-keys C-w
