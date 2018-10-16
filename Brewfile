@@ -63,4 +63,4 @@ tap 'PX4/homebrew-px4'
 brew 'avr-gcc'
 brew 'avrdude'
 brew 'dfu-programmer'
-brew 'teensy_loader_cli'
+brew 'teensy_loader_cli', args: ['with-libusb-compat']
