@@ -82,6 +82,27 @@ Takes all the same switches as edit.} \
     }
 }
 
+# Open Nearest Link
+# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+define-command \
+    -docstring %{open-nearest-link: find a link on or after the cursor and open it} \
+    open-nearest-link %{
+    evaluate-commands -draft %{
+        try %{
+            execute-keys '<a-i><a-w><a-k>https?://<ret>'
+            execute-keys '<a-|>xargs open<ret>'
+        } catch %{
+            execute-keys '/\bhttps?://[^\s]*<ret>'
+            execute-keys '<a-|>xargs open<ret>'
+        } catch %{
+            echo -markup '{Error}no URL found.'
+        }
+    }
+}
+
+map global user o ': open-nearest-link<ret>'
+
 # LSP
 # ‾‾‾
 
