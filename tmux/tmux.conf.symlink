@@ -91,7 +91,7 @@ bind -Tpane-menu M select-pane -M
 bind -Tpane-menu p select-pane -t !
 
 # Make our own copy-mode with Kakoune!
-bind -Tpane-menu N capture-pane -S- -E- -J -b copy-mode \; \
+bind -Tpane-menu N capture-pane -S- -E- -J -e -b copy-mode \; \
     new-window -n copy-mode -d '\
       file=$(mktemp) ; \
       tmux save-buffer -b copy-mode "$file" ; \
@@ -99,6 +99,12 @@ bind -Tpane-menu N capture-pane -S- -E- -J -b copy-mode \; \
       command kak -e "\
          edit $file ;\
          exec gj ;\
+         try %{\
+            ansi-render ;\
+         } catch %{\
+            exec -draft '%s\x1B[\d;]+m<ret><a-d>' ;\
+         } ;\
+         write ;\
          set-option buffer readonly true ;\
          set-option window filetype tmux-copy ;\
          rename-buffer *tmux-copy* ;\
