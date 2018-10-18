@@ -40,6 +40,8 @@ export CDPATH=.:~/src:~/src/dotfiles/vim/vim.symlink/bundle
 export ELI_ENV=corp-tech-jfelice
 export VAULT_ADDR=https://vault.prod.2u.com:8200/
 export VAULT_CACERT=$HOME/src/ops-terraform/consul-classic/ansible/creds/vault-ca.pem
+export IRCNICK=eraserhd
+export IRCSERVER=irc.freenode.net
 
 [[ -f ~/.local/bin/private.sh ]] && source ~/.local/bin/private.sh
 

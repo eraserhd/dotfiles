@@ -10,3 +10,4 @@ hub/config/hub.symlink filter=git-crypt diff=git-crypt
 alfred/license.txt filter=git-crypt diff=git-crypt
 ssh/files/id_rsa-centralpark-server-dev-1 filter=git-crypt diff=git-crypt
 ssh/files/id_rsa-centralpark-server-prod-1 filter=git-crypt diff=git-crypt
+bitchx/bitchxrc.symlink filter=git-crypt diff=git-crypt
