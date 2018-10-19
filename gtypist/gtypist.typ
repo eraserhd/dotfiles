@@ -1,5 +1,5 @@
 *:CODE
-D:(]]} ~@ %$^&& /~ []{} !x `f` *foo ?b -1 +=
+D:#$%@! #!@%$ %$@!# %#@!$ (*^&) )(^&* *)^(& ^)*(&
 *:BOTTOMROW
 D:vxz xmv, mcz vmv cmvcm zcxz. vz xvzxz cv mv mz xvmz vxmz czvc, vxc mvc xmz. mcmc, zvx vmxc xm vm, vz
 D:zvxm zv zxvcm, zmzm, cmc mc xz, mzmvz cvm vmc zmvm vm vx cxmc zx zmczx vzc zvzx zmvxm zc. vzvm vzm.
