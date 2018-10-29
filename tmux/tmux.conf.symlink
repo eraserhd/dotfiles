@@ -1,6 +1,7 @@
 set-option -g prefix C-a
 bind-key C-a last-window
 set-option -g default-command "reattach-to-user-namespace -l bash"
+set-option -g update-environment ''
 
 ##### Basic Usage #####
 
