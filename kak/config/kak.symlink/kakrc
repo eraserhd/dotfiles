@@ -2,6 +2,7 @@
 # ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 set-option global autoreload yes
+set-option global grepcmd 'ag --column'
 
 hook global BufWritePre .* %{ nop %sh{ mkdir -p $(dirname "$kak_hook_param") }}
 
