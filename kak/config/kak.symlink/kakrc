@@ -21,10 +21,10 @@ set-face global Whitespace rgb:333333+f
 add-highlighter global/whitespace show-whitespaces -spc ' ' -tab '➤' -lf '↩'
 
 hook global WinSetOption filetype=(?!tmux-copy).* %{
-    add-highlighter window/number number-lines
+    try %{ add-highlighter window/number number-lines }
 }
 hook global WinSetOption filetype=tmux-copy %{
-    remove-highlighter window/number
+    try %{ remove-highlighter window/number }
 }
 
 # Stolen from mawww
