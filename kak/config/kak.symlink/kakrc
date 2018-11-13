@@ -121,3 +121,9 @@ map global user o ': open-nearest-link<ret>'
 # ‾‾‾
 
 evaluate-commands %sh{kak-lsp --kakoune -s "${kak_session}"}
+
+# Normal Mode
+# ‾‾‾‾‾‾‾‾‾‾‾
+
+map global normal * '<a-i>w"/yn'
+map global normal <a-*> '<a-i>w"/y<a-n>'
