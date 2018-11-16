@@ -92,11 +92,19 @@ bind -Tpane-menu M select-pane -M
 bind -Tpane-menu p select-pane -t !
 
 # Make our own copy-mode with Kakoune!
-bind -Tpane-menu N capture-pane -S- -E- -J -e -b copy-mode \; \
+bind -Tpane-menu N run-shell 'tmux set-buffer -b copy-pane-id "#D"' \; \
     new-window -n copy-mode -d '\
-      file=$(mktemp) ; \
-      tmux save-buffer -b copy-mode "$file" ; \
-      tmux delete-buffer -b copy-mode ; \
+      pane_id="$(tmux show-buffer -b copy-pane-id)" ;\
+      file=$(mktemp) ;\
+      tmux capture-pane -t "${pane_id}" -S- -E- -J -e -p >"$file" ;\
+      cursor_y=$(tmux display-message -t "${pane_id}" -p "#{cursor_y}") ;\
+      cursor_x=$(tmux display-message -t "${pane_id}" -p "#{cursor_x}") ;\
+      pane_height=$(tmux display-message -t "${pane_id}" -p "#{pane_height}") ;\
+      line_count="$(wc -l "$file" |awk "{print \$1}")" ;\
+      sel_line=$(( line_count - ( pane_height - cursor_y ) + 1 )) ;\
+      printf "sel = %s\n" "$line_count" >>/tmp/debug.log ;\
+      cursor="${sel_line}.${cursor_x},${sel_line}.${cursor_x}" ;\
+      printf "cursor = %s\n" "$cursor" >>/tmp/debug.log ;\
       command kak -e "\
          edit $file ;\
          exec gj ;\
@@ -109,6 +117,7 @@ bind -Tpane-menu N capture-pane -S- -E- -J -e -b copy-mode \; \
          set-option buffer readonly true ;\
          set-option window filetype tmux-copy ;\
          rename-buffer *tmux-copy* ;\
+         select $cursor ;\
          " ; \
       rm -f "$file" ; \
       tmux swap-pane -s :copy-mode.0 -t : ; \
