@@ -4,7 +4,7 @@ verbosity = 2
 # exit session if no requests were received during given period in seconds
 # works only in unix sockets mode (-s/--session)
 # set to 0 to disable
-timeout = 1800 # seconds = 30 minutes
+timeout = 0
 
 [language.rust]
 extensions = ["rs"]
@@ -80,3 +80,6 @@ args = ["start"]
 extensions = ["clj", "cljc", "cljs"]
 roots = ["project.clj", "boot.clj", "deps.clj", ".git", ".hg"]
 command = "clojure-lsp"
+
+[language.go.initialization_options]
+source-paths = ["src", "dev", "test"]
