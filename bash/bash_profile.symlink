@@ -48,7 +48,7 @@ export IRCSERVER=irc.freenode.net
 want_kak_session() {
     while (( $# != 0 )); do
         case "$1" in
-            -l|-c|-s) return 1;;
+            -l|-c|-s|-n) return 1;;
             -e|-E|-p|-f|-i|-ui|-debug) shift;;
         esac
         shift
