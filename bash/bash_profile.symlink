@@ -12,9 +12,6 @@ then
   export NVM_DIR="$HOME/.nvm"
 fi
 
-export GOPATH=~/src/go
-export PATH=~/.cargo/bin:~/.local/bin:$GOPATH/bin:~/.cabal/bin:"$PATH"
-
 if command -v brew >/dev/null
 then
   brew_prefix=$(brew --prefix)
@@ -27,21 +24,21 @@ then
   __git_ps1() { :; }
 fi
 
-export PS1='[\u@\h \W$(__git_ps1 "(%s)")]$ '
-export EDITOR=/usr/local/bin/kak
+CDPATH=.:~/src:~/src/dotfiles/kak/config/kak.symlink/autoload:~/src/dotfiles/vim/vim.symlink/bundle
+CLICOLOR=1
+EDITOR=/usr/local/bin/kak
+ELI_ENV=corp-tech-jfelice
+GOPATH=~/src/go
+IRCNICK=eraserhd
+IRCSERVER=irc.freenode.net
+PATH=~/.cargo/bin:~/.local/bin:$GOPATH/bin:~/.cabal/bin:"$PATH"
+PS1='[\u@\h \W$(__git_ps1 "(%s)")]$ '
+VAULT_ADDR=https://vault.prod.2u.com:8200/
+VAULT_CACERT=$HOME/src/ops-terraform/consul-classic/ansible/creds/vault-ca.pem
+export CDPATH CLICOLOR EDITOR ELI_ENV GOPATH IRCNICK IRCSERVER PATH PS1 VAULT_ADDR VAULT_CACERT
+
 alias vi=$EDITOR
 alias vim=$EDITOR
-
-# Darwin
-export CLICOLOR=1
-
-export CDPATH=.:~/src:~/src/dotfiles/kak/config/kak.symlink/autoload:~/src/dotfiles/vim/vim.symlink/bundle
-
-export ELI_ENV=corp-tech-jfelice
-export VAULT_ADDR=https://vault.prod.2u.com:8200/
-export VAULT_CACERT=$HOME/src/ops-terraform/consul-classic/ansible/creds/vault-ca.pem
-export IRCNICK=eraserhd
-export IRCSERVER=irc.freenode.net
 
 [[ -f ~/.local/bin/private.sh ]] && source ~/.local/bin/private.sh
 
