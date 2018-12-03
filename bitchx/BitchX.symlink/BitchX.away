@@ -1,0 +1,2488 @@
+MsgLog started [Thu Oct 18 10:09:00 2018]
+[SEND_MSG] [10:19am] - #kakoune So, EDN files are basically clojure, without
+           the keywords.  Should I make clojure.kak detect edn as clojure, and
+           add a conditional to not add the keywords?  Or make a different
+           filetype?
+[SEND_MSG] [10:52am] - #kakoune alex``: It's a regular file that gets symlinked
+           to ~/.bash_profile
+[TimeStamp Thu Oct 18 11:00:00 2018]
+[TimeStamp Thu Oct 18 12:00:00 2018]
+[TimeStamp Thu Oct 18 13:00:00 2018]
+[TimeStamp Thu Oct 18 14:00:00 2018]
+[TimeStamp Thu Oct 18 15:00:00 2018]
+[TimeStamp Thu Oct 18 16:00:00 2018]
+[TimeStamp Thu Oct 18 17:00:00 2018]
+[TimeStamp Thu Oct 18 18:00:00 2018]
+[SEND_MSG] [06:07pm] - #kakoune So I had to transform some JSON into EDN,
+           picking out a few fields.  A thing I've done with Vim quite a few
+           times.  And with Kakoune, it was really a breeze.
+[SEND_MSG] [06:08pm] - #kakoune Made me happy. :D  <a-k> is super useful
+[TimeStamp Thu Oct 18 19:00:00 2018]
+[TimeStamp Thu Oct 18 20:00:00 2018]
+[TimeStamp Thu Oct 18 21:00:00 2018]
+[TimeStamp Thu Oct 18 22:00:00 2018]
+[TimeStamp Thu Oct 18 23:00:00 2018]
+[TimeStamp Fri Oct 19 00:00:00 2018]
+[TimeStamp Fri Oct 19 01:00:00 2018]
+[TimeStamp Fri Oct 19 02:00:00 2018]
+[TimeStamp Fri Oct 19 03:00:00 2018]
+[TimeStamp Fri Oct 19 04:00:00 2018]
+[NOTICES ] [04:06am] - leguin.freenode.net *** Looking up your hostname...
+[NOTICES ] [04:06am] - leguin.freenode.net *** Checking Ident
+[NOTICES ] [04:06am] - leguin.freenode.net *** No Ident response
+[NOTICES ] [04:06am] - leguin.freenode.net *** Couldn't look up your hostname
+[SEND_MSG] [04:06am] - nickserv identify horsenose
+[NOTICES ] [04:06am] - NickServ This nickname is registered. Please choose a
+          different nickname, or identify via /msg NickServ identify
+          <password>.
+[NOTICES ] [04:06am] - freenode-connect Due to the persistent ongoing spam, all
+          new connections are being set +R (block messages from unidentified
+          users) and will be scanned for vulnerabilities. This will not harm
+          your computer, and vulnerable hosts will be notified.
+[NOTICES ] [04:06am] - NickServ You are now identified for eraserhd.
+[TimeStamp Fri Oct 19 05:00:00 2018]
+[TimeStamp Fri Oct 19 06:00:00 2018]
+[TimeStamp Fri Oct 19 07:00:00 2018]
+[TimeStamp Fri Oct 19 08:00:00 2018]
+[TimeStamp Fri Oct 19 09:00:00 2018]
+[TimeStamp Fri Oct 19 10:00:00 2018]
+[TimeStamp Fri Oct 19 11:00:00 2018]
+[TimeStamp Fri Oct 19 12:00:00 2018]
+[TimeStamp Fri Oct 19 13:00:00 2018]
+[TimeStamp Fri Oct 19 14:00:00 2018]
+[TimeStamp Fri Oct 19 15:00:00 2018]
+[TimeStamp Fri Oct 19 16:00:00 2018]
+[TimeStamp Fri Oct 19 17:00:00 2018]
+[TimeStamp Fri Oct 19 18:00:00 2018]
+[TimeStamp Fri Oct 19 19:00:00 2018]
+[TimeStamp Fri Oct 19 20:00:00 2018]
+[TimeStamp Fri Oct 19 21:00:00 2018]
+[TimeStamp Fri Oct 19 22:00:00 2018]
+[TimeStamp Fri Oct 19 23:00:00 2018]
+[TimeStamp Sat Oct 20 00:00:00 2018]
+[TimeStamp Sat Oct 20 01:00:00 2018]
+[TimeStamp Sat Oct 20 02:00:00 2018]
+[TimeStamp Sat Oct 20 03:00:00 2018]
+[TimeStamp Sat Oct 20 04:00:00 2018]
+[TimeStamp Sat Oct 20 05:00:00 2018]
+[TimeStamp Sat Oct 20 06:00:00 2018]
+[NOTICES ] [06:56am] - KakouneMinion [13kakoune] 15occivink opened pull request
+          #2503: Expose selection(s) length with a value
+          (06master...06selections-length-value) 02https://git.io/fxoi1
+[TimeStamp Sat Oct 20 07:00:00 2018]
+[TimeStamp Sat Oct 20 08:00:00 2018]
+[TimeStamp Sat Oct 20 09:00:00 2018]
+[TimeStamp Sat Oct 20 10:00:00 2018]
+[TimeStamp Sat Oct 20 11:00:00 2018]
+[TimeStamp Sat Oct 20 12:00:00 2018]
+[TimeStamp Sat Oct 20 13:00:00 2018]
+[TimeStamp Sat Oct 20 14:00:00 2018]
+[TimeStamp Sat Oct 20 15:00:00 2018]
+[TimeStamp Sat Oct 20 16:00:00 2018]
+[TimeStamp Sat Oct 20 17:00:00 2018]
+[TimeStamp Sat Oct 20 18:00:00 2018]
+[TimeStamp Sat Oct 20 19:00:00 2018]
+[TimeStamp Sat Oct 20 20:00:00 2018]
+[TimeStamp Sat Oct 20 21:00:00 2018]
+[NOTICES ] [09:11pm] - KakouneMinion [13kakoune] 15mawww pushed 4 new commits to
+          06master: 02https://git.io/fxKYJ
+[NOTICES ] [09:11pm] - KakouneMinion 13kakoune/06master 148e698e0 15Matt Schick:
+          Simplify handlebars adding/removal hooks...
+[NOTICES ] [09:11pm] - KakouneMinion 13kakoune/06master 14a383ce3 15Maxime Coste: Fix
+          LineRangeSet::udpate not updating some traling ranges correctly...
+[NOTICES ] [09:11pm] - KakouneMinion 13kakoune/06master 147dbca46 15Maxime Coste: Merge
+          remote-tracking branch 'schickm/bugfix/hbs-highlighter-toggling'
+[NOTICES ] [09:11pm] - KakouneMinion [13kakoune] 15mawww closed pull request #2501:
+          Simplify handlebars adding/removal hooks
+          (06master...06bugfix/hbs-highlighter-toggling)
+          02https://git.io/fxVtO
+[TimeStamp Sat Oct 20 22:00:00 2018]
+[TimeStamp Sat Oct 20 23:00:00 2018]
+[TimeStamp Sun Oct 21 00:00:00 2018]
+[TimeStamp Sun Oct 21 01:00:00 2018]
+[TimeStamp Sun Oct 21 02:00:00 2018]
+[TimeStamp Sun Oct 21 03:00:00 2018]
+[NOTICES ] [03:58am] - KakouneMinion [13kakoune] 15mawww pushed 2 new commits to
+          06master: 02https://git.io/fxKWT
+[NOTICES ] [03:58am] - KakouneMinion 13kakoune/06master 14451c72c 15Maxim Baz: Do not
+          enforce autoformat in ocaml
+[NOTICES ] [03:58am] - KakouneMinion 13kakoune/06master 147470c85 15Maxime Coste: Merge
+          remote-tracking branch 'maximbaz/do-not-enforce-autoformat-ocaml'
+[TimeStamp Sun Oct 21 04:00:00 2018]
+[TimeStamp Sun Oct 21 05:00:00 2018]
+[NOTICES ] [05:41am] - KakouneMinion [13kakoune] 15maximbaz opened pull request
+          #2506: gruvbox: show comments in italic
+          (06master...06gruvbox-comments-italic) 02https://git.io/fxK42
+[TimeStamp Sun Oct 21 06:00:00 2018]
+[TimeStamp Sun Oct 21 07:00:00 2018]
+[NOTICES ] [07:07am] - KakouneMinion [13kakoune] 15lenormf opened pull request
+          #2507: doc: Convert the man page to the TROFF format
+          (06master...06no-a2x) 02https://git.io/fxKRd
+[NOTICES ] [07:10am] - KakouneMinion [13kakoune] 15FranzSkuffka opened pull request
+          #2509: Improve ubuntu installation instructions (06master...06patch-3)
+          02https://git.io/fxKRN
+[NOTICES ] [07:44am] - KakouneMinion [13kakoune] 15lenormf opened pull request
+          #2511: rc troff: Highlight *ROFF files (06master...06highlight-troff)
+          02https://git.io/fxKET
+[TimeStamp Sun Oct 21 08:00:00 2018]
+[TimeStamp Sun Oct 21 09:00:00 2018]
+[TimeStamp Sun Oct 21 10:00:00 2018]
+[TimeStamp Sun Oct 21 11:00:00 2018]
+[TimeStamp Sun Oct 21 12:00:00 2018]
+[TimeStamp Sun Oct 21 13:00:00 2018]
+[TimeStamp Sun Oct 21 14:00:00 2018]
+[TimeStamp Sun Oct 21 15:00:00 2018]
+[TimeStamp Sun Oct 21 16:00:00 2018]
+[TimeStamp Sun Oct 21 17:00:00 2018]
+[TimeStamp Sun Oct 21 18:00:00 2018]
+[TimeStamp Sun Oct 21 19:00:00 2018]
+[TimeStamp Sun Oct 21 20:00:00 2018]
+[TimeStamp Sun Oct 21 21:00:00 2018]
+[TimeStamp Sun Oct 21 22:00:00 2018]
+[TimeStamp Sun Oct 21 23:00:00 2018]
+[TimeStamp Mon Oct 22 00:00:00 2018]
+[TimeStamp Mon Oct 22 01:00:00 2018]
+[TimeStamp Mon Oct 22 02:00:00 2018]
+[TimeStamp Mon Oct 22 03:00:00 2018]
+[TimeStamp Mon Oct 22 04:00:00 2018]
+[TimeStamp Mon Oct 22 05:00:00 2018]
+[TimeStamp Mon Oct 22 06:00:00 2018]
+[TimeStamp Mon Oct 22 07:00:00 2018]
+[TimeStamp Mon Oct 22 08:00:00 2018]
+[TimeStamp Mon Oct 22 09:00:00 2018]
+[TimeStamp Mon Oct 22 10:00:00 2018]
+[SEND_MSG] [10:37am] - #kakoune on my kakoune todo list this week: figure out
+           how to make a hook for when the user runs "cat foo |kak" and run
+           ansi-render, figure out how to track state to update an ANSI buffer
+           when fifo data is received (if this even makes sense), run parinfer
+           automatically on clojure buffers, and see if I can't solve "waiting
+           for shell command to finish" with <a-|>.  That's alot.
+[TimeStamp Mon Oct 22 11:00:00 2018]
+[TimeStamp Mon Oct 22 12:00:00 2018]
+[TimeStamp Mon Oct 22 13:00:00 2018]
+[SEND_MSG] [01:19pm] - #kakoune hmm, should I make ansi.kak a separate plugin?
+[SEND_MSG] [01:20pm] - #kakoune ok, cool
+[SEND_MSG] [01:22pm] - #kakoune what's the idiomatic way to name it?  kak-ansi?
+           ansi.kak?
+[SEND_MSG] [01:22pm] - #kakoune I guess kak-ansi, right?
+[SEND_MSG] [01:32pm] - #kakoune kak-ansi: https://github.com/eraserhd/kak-ansi
+[SEND_MSG] [01:32pm] - #kakoune oh, is that how it works?
+[SEND_MSG] [01:34pm] - #kakoune the nice thing about standards... :)
+[SEND_MSG] [01:58pm] - #kakoune AFAICT, On BufCreate, when you pipe something
+           to kak, the buffer is created but empty?
+[SEND_MSG] [01:59pm] - #kakoune And there's no other hooks called until
+           WinSetOption.
+[TimeStamp Mon Oct 22 14:00:00 2018]
+[SEND_MSG] [02:07pm] - #kakoune This works.  Does it seem like it's right? 
+           Should this be a Kakoune issue?
+           https://github.com/eraserhd/kak-ansi/blob/develop/rc/ansi.kak#L85-L87
+           
+[SEND_MSG] [02:37pm] - #kakoune welp, kak-ansi needs 256 color support already.
+[TimeStamp Mon Oct 22 15:00:00 2018]
+[NOTICES ] [03:04pm] - KakouneMinion [13kakoune] 15eraserhd opened pull request
+          #2514: EDN files are Clojure syntax (06master...06detect-edn-as-clojure)
+          02https://git.io/fx6V6
+[TimeStamp Mon Oct 22 16:00:00 2018]
+[TimeStamp Mon Oct 22 17:00:00 2018]
+[SEND_MSG] [05:15pm] - #kakoune Yeah, that's what I was hoping for in the first
+           place.  But the feature list gets bigger...
+[SEND_MSG] [05:16pm] - #kakoune Although, there's quite a nice fallback with '
+           try ansi-render catch %{ execute-keys '%s\x1B[\d;]+m<a-d>' } '
+[NOTICES ] [05:45pm] - KakouneMinion [13kakoune] 15mawww pushed 8 new commits to
+          06master: 02https://git.io/fxiO7
+[NOTICES ] [05:45pm] - KakouneMinion 13kakoune/06master 14fbe6f65 15Maxim Baz: gruvbox:
+          show comments in italic
+[NOTICES ] [05:45pm] - KakouneMinion 13kakoune/06master 1460b24c6 15Frank LENORMAND:
+          doc: Convert the man page to the TROFF format...
+[NOTICES ] [05:45pm] - KakouneMinion 13kakoune/06master 142999702 15Frank LENORMAND: rc
+          troff: Highlight *ROFF files...
+[NOTICES ] [05:45pm] - KakouneMinion [13kakoune] 15mawww closed pull request #2507:
+          doc: Convert the man page to the TROFF format (06master...06no-a2x)
+          02https://git.io/fxKRd
+[NOTICES ] [05:45pm] - KakouneMinion [13kakoune] 15mawww closed pull request #2511:
+          rc troff: Highlight *ROFF files (06master...06highlight-troff)
+          02https://git.io/fxKET
+[NOTICES ] [05:46pm] - KakouneMinion [13kakoune] 15mawww pushed 1 new commit to
+          06master: 02https://git.io/fxi3f
+[NOTICES ] [05:46pm] - KakouneMinion 13kakoune/06master 14e9802ba 15Maxime Coste:
+          Notify that asciidoc is not a dependency anymore in the changelog
+[TimeStamp Mon Oct 22 18:00:00 2018]
+[TimeStamp Mon Oct 22 19:00:00 2018]
+[TimeStamp Mon Oct 22 20:00:00 2018]
+[NOTICES ] [08:35pm] - KakouneMinion [13kakoune] 15maximbaz opened pull request
+          #2515: Fix Makefile for manpage (06master...06fix-makefile-manpage)
+          02https://git.io/fxiE0
+[TimeStamp Mon Oct 22 21:00:00 2018]
+[TimeStamp Mon Oct 22 22:00:00 2018]
+[TimeStamp Mon Oct 22 23:00:00 2018]
+[TimeStamp Tue Oct 23 00:00:00 2018]
+[TimeStamp Tue Oct 23 01:00:00 2018]
+[TimeStamp Tue Oct 23 02:00:00 2018]
+[TimeStamp Tue Oct 23 03:00:00 2018]
+[TimeStamp Tue Oct 23 04:00:00 2018]
+[TimeStamp Tue Oct 23 05:00:00 2018]
+[TimeStamp Tue Oct 23 06:00:00 2018]
+[TimeStamp Tue Oct 23 07:00:00 2018]
+[TimeStamp Tue Oct 23 08:00:00 2018]
+[TimeStamp Tue Oct 23 09:00:00 2018]
+[TimeStamp Tue Oct 23 10:00:00 2018]
+[SEND_MSG] [10:18am] - #kakoune You want an InsertDelete that fires when A is
+           deleted, but contains all selections, not just the one with A?
+[SEND_MSG] [10:19am] - #kakoune Oh, you're saying InsertDelete only matches on
+           the main selection.
+[TimeStamp Tue Oct 23 11:00:00 2018]
+[SEND_MSG] [11:06am] - #kakoune It would be cool to track frequency of normal
+           mode commands while coding.
+[SEND_MSG] [11:07am] - #kakoune ironzorg: awesome
+[SEND_MSG] [11:07am] - #kakoune I care about my own by itself.  But also,
+           comparing two users, especially mawww, might make one of them go,
+           "hey, wait a minute..."
+[SEND_MSG] [11:08am] - #kakoune I'm going to bet that I'm like h/j/k/l then
+           ^U/^D then m then c/<a-X>/<gt>/<lt>
+[SEND_MSG] [11:09am] - #kakoune I used those all the time in Vim, but not in
+           Kakoune.  Not sure why.
+[SEND_MSG] [11:09am] - #kakoune In any case, it's not about right/wrong, but
+           learning shorter ways to do things.
+[SEND_MSG] [11:38am] - #kakoune Hmm, so parinfer is going to be a mess without
+           something like Vim's undojoin.  Hrmm.
+[SEND_MSG] [11:39am] - #kakoune That's a big project, methinks.  But also
+           involves philosophy, perhaps.
+[SEND_MSG] [11:40am] - #kakoune Doesn't that make a single insert require two
+           undos?  I need to merge it with the user's edit.
+[SEND_MSG] [11:40am] - #kakoune yeah, it does
+[SEND_MSG] [11:41am] - #kakoune Oh, in kakoune, it might be an option to
+           exec/eval.
+[SEND_MSG] [11:41am] - #kakoune how so?
+[SEND_MSG] [11:43am] - #kakoune Ah...  Right...
+[SEND_MSG] [11:44am] - #kakoune I could undo *first*, then replay with the
+           changes in my case.
+[SEND_MSG] [11:45am] - #kakoune Ugh, so, since I want to do it in one go, I'd
+           have to make all my changes with coordinates computed from the
+           undone buffer, which is painful.
+[SEND_MSG] [11:53am] - #kakoune Well, I think it's useful to discuss, even if
+           there's a different approach mawww likes.
+[SEND_MSG] [11:59am] - #kakoune Ahhh, I'm not necessarily seeing lack of
+           undojoin really.  It's that parinfer makes a bunch of small edits,
+           so when I undo, there's multiple cursors.
+[TimeStamp Tue Oct 23 12:00:00 2018]
+[SEND_MSG] [12:00pm] - #kakoune Because of #1184
+           https://github.com/mawww/kakoune/issues/1184
+[SEND_MSG] [12:00pm] - #kakoune It would be much better to fix this.
+[SEND_MSG] [12:04pm] - #kakoune Or... I'm wrong.  No, I'm wrong.
+[SEND_MSG] [12:29pm] - #kakoune Franciman: That doesn't really help.  I'd need
+           to save selections prior to the user's arbitrary change, I think.
+[SEND_MSG] [12:32pm] - #kakoune I wonder if there's an interesting way to pack
+           a selection into a 64-bit integer.
+[TimeStamp Tue Oct 23 13:00:00 2018]
+[NOTICES ] [01:15pm] - KakouneMinion [13kakoune] 15Delapouite opened pull request
+          #2518: Change next_key title for <a-f>, <a-t>, <a-F> and <a-T>
+          (06master...06previous-char) 02https://git.io/fxP58
+[TimeStamp Tue Oct 23 14:00:00 2018]
+[TimeStamp Tue Oct 23 15:00:00 2018]
+[TimeStamp Tue Oct 23 16:00:00 2018]
+[TimeStamp Tue Oct 23 17:00:00 2018]
+[NOTICES ] [05:14pm] - KakouneMinion [13kakoune] 15mawww pushed 9 new commits to
+          06master: 02https://git.io/fxX3x
+[NOTICES ] [05:14pm] - KakouneMinion 13kakoune/06master 14a1e3fa0 15Justin Frank: added
+          option for vertical menu layout in the ncurses ui
+[NOTICES ] [05:14pm] - KakouneMinion 13kakoune/06master 14c5a1225 15Justin Frank:
+          removed option and horizontal layout
+[NOTICES ] [05:14pm] - KakouneMinion 13kakoune/06master 14ac013c3 15Jan Wirth: Improve
+          ubuntu installation instructions
+[NOTICES ] [05:14pm] - KakouneMinion [13kakoune] 15mawww closed pull request #2515:
+          Fix Makefile for manpage (06master...06fix-makefile-manpage)
+          02https://git.io/fxiE0
+[TimeStamp Tue Oct 23 18:00:00 2018]
+[TimeStamp Tue Oct 23 19:00:00 2018]
+[TimeStamp Tue Oct 23 20:00:00 2018]
+[TimeStamp Tue Oct 23 21:00:00 2018]
+[NOTICES ] [09:16pm] - KakouneMinion [13kakoune] 15laelath opened pull request
+          #2519: Keep doc/kak.1 when running make install (06master...06keep-kak-1)
+          02https://git.io/fxX2Q
+[TimeStamp Tue Oct 23 22:00:00 2018]
+[TimeStamp Tue Oct 23 23:00:00 2018]
+[TimeStamp Wed Oct 24 00:00:00 2018]
+[TimeStamp Wed Oct 24 01:00:00 2018]
+[TimeStamp Wed Oct 24 02:00:00 2018]
+[TimeStamp Wed Oct 24 03:00:00 2018]
+[NOTICES ] [03:48am] - KakouneMinion [13kakoune] 15occivink closed pull request
+          #2363: Update ncurses menu line-by-line when scrolling down
+          (06master...06menu-line-by-line) 02https://git.io/fAuNO
+[TimeStamp Wed Oct 24 04:00:00 2018]
+[TimeStamp Wed Oct 24 05:00:00 2018]
+[TimeStamp Wed Oct 24 06:00:00 2018]
+[TimeStamp Wed Oct 24 07:00:00 2018]
+[TimeStamp Wed Oct 24 08:00:00 2018]
+[TimeStamp Wed Oct 24 09:00:00 2018]
+[TimeStamp Wed Oct 24 10:00:00 2018]
+[NOTICES ] [10:09am] - KakouneMinion [13kakoune] 15lenormf opened pull request
+          #2521: rc: Replace occurrences of `setsid`
+          (06master...06fix-setsid-calls) 02https://git.io/fx1zh
+[TimeStamp Wed Oct 24 11:00:00 2018]
+[TimeStamp Wed Oct 24 12:00:00 2018]
+[TimeStamp Wed Oct 24 13:00:00 2018]
+[TimeStamp Wed Oct 24 14:00:00 2018]
+[TimeStamp Wed Oct 24 15:00:00 2018]
+[TimeStamp Wed Oct 24 16:00:01 2018]
+[TimeStamp Wed Oct 24 17:00:00 2018]
+[SEND_MSG] [05:46pm] - nickserv identify horsenose
+[NOTICES ] [05:46pm] - NickServ This nickname is registered. Please choose a
+          different nickname, or identify via /msg NickServ identify
+          <password>.
+[NOTICES ] [05:46pm] - freenode-connect Due to the persistent ongoing spam, all
+          new connections are being set +R (block messages from unidentified
+          users) and will be scanned for vulnerabilities. This will not harm
+          your computer, and vulnerable hosts will be notified.
+[NOTICES ] [05:46pm] - NickServ You are now identified for eraserhd.
+[TimeStamp Wed Oct 24 18:00:00 2018]
+[TimeStamp Wed Oct 24 19:00:00 2018]
+[TimeStamp Wed Oct 24 20:00:00 2018]
+[TimeStamp Wed Oct 24 21:00:00 2018]
+[TimeStamp Wed Oct 24 22:00:00 2018]
+[TimeStamp Wed Oct 24 23:00:00 2018]
+[TimeStamp Thu Oct 25 00:00:00 2018]
+[TimeStamp Thu Oct 25 01:00:00 2018]
+[TimeStamp Thu Oct 25 02:00:00 2018]
+[TimeStamp Thu Oct 25 03:00:00 2018]
+[TimeStamp Thu Oct 25 04:00:00 2018]
+[TimeStamp Thu Oct 25 05:00:00 2018]
+[TimeStamp Thu Oct 25 06:00:00 2018]
+[TimeStamp Thu Oct 25 07:00:00 2018]
+[TimeStamp Thu Oct 25 08:00:00 2018]
+[TimeStamp Thu Oct 25 09:00:00 2018]
+[SEND_MSG] [09:50am] - #kakoune is the main selection always first (or
+           something) in %val{selections}?
+[SEND_MSG] [09:52am] - #kakoune parinfer responds with an updated cursor
+           position, and I'm trying to figure out how to update the cursor
+           position without destroying other selections.
+[TimeStamp Thu Oct 25 10:00:00 2018]
+[SEND_MSG] [10:42am] - #kakoune wat?  Don't selections and selections_desc have
+           to line up?  I was relying on that in earlier versions of ansi.kak
+[SEND_MSG] [10:44am] - #kakoune They don't.  I guess I made them always line
+           up.
+[TimeStamp Thu Oct 25 11:00:00 2018]
+[SEND_MSG] [11:48am] - #kakoune parinfer is alive!!
+[SEND_MSG] [11:49am] - #kakoune I mean, it needs a bit of polish, but it is
+           live.
+[SEND_MSG] [11:49am] - #kakoune I've only tested clojure.
+[SEND_MSG] [11:49am] - #kakoune In theory, also Scheme and CL
+[SEND_MSG] [11:50am] - #kakoune Oh, I didn't solve the cursor position thing
+           yet, tho... FYI.  If you type an opening bracket, the cursor jumps.
+[SEND_MSG] [11:50am] - #kakoune But inserting text before an opening paren
+           pushes the whole structure, and reindenting fixes parens and all
+           that.
+[SEND_MSG] [11:50am] - #kakoune So warning... it is rough.  But barely usable,
+           finally.
+[SEND_MSG] [11:55am] - #kakoune Franciman: Oh, if you are using Kakoune and
+           writing Clojure and in Clojurians slack, join #kakoune.
+[TimeStamp Thu Oct 25 12:00:00 2018]
+[TimeStamp Thu Oct 25 13:00:00 2018]
+[SEND_MSG] [01:05pm] - #kakoune humm, I have a clojure buffer that takes like
+           30 seconds to highlight... and then it isn't responsive.
+[TimeStamp Thu Oct 25 14:00:00 2018]
+[TimeStamp Thu Oct 25 15:00:00 2018]
+[TimeStamp Thu Oct 25 16:00:00 2018]
+[SEND_MSG] [04:50pm] - #kakoune robertmeta: added to my to-do list.  Next few
+           days, hopefully?
+[SEND_MSG] [04:51pm] - #kakoune I discovered today that after 18 years of Vim
+           use and a few months of Kakoune, I literally cannot use Vim.
+[SEND_MSG] [04:51pm] - #kakoune I... can't remember how to select text.  It's
+           visual mode only??
+[SEND_MSG] [04:53pm] - #kakoune I'm like, "I'll just delete this char with d. 
+           Oh, right, you can't do that with Vim.  Well, it's a word, so I'll
+           just select it first with w..."
+[TimeStamp Thu Oct 25 17:00:00 2018]
+[TimeStamp Thu Oct 25 18:00:00 2018]
+[TimeStamp Thu Oct 25 19:00:00 2018]
+[TimeStamp Thu Oct 25 20:00:00 2018]
+[TimeStamp Thu Oct 25 21:00:00 2018]
+[TimeStamp Thu Oct 25 22:00:00 2018]
+[TimeStamp Thu Oct 25 23:00:00 2018]
+[TimeStamp Fri Oct 26 00:00:00 2018]
+[NOTICES ] [12:33am] - KakouneMinion [13kakoune] 15ul opened pull request #2525:
+          Replace usage of the deprecated 'e' face attribute with the new 'F'
+          one in rc files (06master...06replace-e-face-with-F-in-rc)
+          02https://git.io/fxyjc
+[TimeStamp Fri Oct 26 01:00:00 2018]
+[TimeStamp Fri Oct 26 02:00:00 2018]
+[NOTICES ] [02:20am] - KakouneMinion [13kakoune] 15lenormf closed pull request
+          #2521: rc: Replace occurrences of `setsid`
+          (06master...06fix-setsid-calls) 02https://git.io/fx1zh
+[TimeStamp Fri Oct 26 03:00:00 2018]
+[TimeStamp Fri Oct 26 04:00:00 2018]
+[TimeStamp Fri Oct 26 05:00:00 2018]
+[TimeStamp Fri Oct 26 06:00:00 2018]
+[TimeStamp Fri Oct 26 07:00:00 2018]
+[TimeStamp Fri Oct 26 08:00:00 2018]
+[TimeStamp Fri Oct 26 09:00:00 2018]
+[TimeStamp Fri Oct 26 10:00:00 2018]
+[SEND_MSG] [10:32am] - #kakoune so, uh, I just had a thought.  Kakoune doesn't
+           support 3i0<esc> like vim does.  Kind of makes sense, it's a bit of
+           a can of worms.  But, what if 3i made 3 (or 3x) the cursors?
+[SEND_MSG] [10:33am] - #kakoune The hard bit is that it would start with three
+           cursors in the same location.
+[SEND_MSG] [10:33am] - #kakoune Which I think Kakoune doesn't support.
+[SEND_MSG] [10:34am] - #kakoune yeah, hey I didn't know it did that.
+[SEND_MSG] [10:35am] - #kakoune hmm, feels very kakoune-y.
+[SEND_MSG] [10:35am] - #kakoune this goes back to my theory that "cursors (and
+           therefore anchors also) are really zero-width things"
+[TimeStamp Fri Oct 26 11:00:00 2018]
+[SEND_MSG] [11:02am] - #kakoune They just came out with a new ergodox, oh no.
+[SEND_MSG] [11:13am] - #kakoune Ah, yeah, that would be neat.
+[SEND_MSG] [11:13am] - #kakoune I'll see if I can do that today.
+[TimeStamp Fri Oct 26 12:00:00 2018]
+[TimeStamp Fri Oct 26 13:00:00 2018]
+[TimeStamp Fri Oct 26 14:00:00 2018]
+[SEND_MSG] [02:29pm] - #kakoune danr: well, ok, in a couple days.  There's some
+           icky performance problems at the moment :)
+[NOTICES ] [02:55pm] - KakouneMinion [13kakoune] 15notramo opened pull request
+          #2526: Translated webpage to Hungarian (06gh-pages...06gh-pages)
+          02https://git.io/fx9YM
+[TimeStamp Fri Oct 26 15:00:00 2018]
+[TimeStamp Fri Oct 26 16:00:00 2018]
+[TimeStamp Fri Oct 26 17:00:00 2018]
+[TimeStamp Fri Oct 26 18:00:00 2018]
+[NOTICES ] [06:28pm] - KakouneMinion [13kakoune] 15mawww pushed 2 new commits to
+          06master: 02https://git.io/fx9VY
+[NOTICES ] [06:28pm] - KakouneMinion 13kakoune/06master 140d49c92 15Justin Frank: Keep
+          doc/kak.1 when running make-install
+[NOTICES ] [06:28pm] - KakouneMinion 13kakoune/06master 143b40ab8 15Maxime Coste:
+          Kakoune v2018.10.27
+[NOTICES ] [06:29pm] - KakouneMinion [13kakoune] 15mawww tagged 06v2018.10.27 at
+          06master: 02https://git.io/fx9Vn
+[TimeStamp Fri Oct 26 19:00:00 2018]
+[TimeStamp Fri Oct 26 20:00:00 2018]
+[TimeStamp Fri Oct 26 21:00:00 2018]
+[TimeStamp Fri Oct 26 22:00:00 2018]
+[TimeStamp Fri Oct 26 23:00:00 2018]
+[TimeStamp Sat Oct 27 00:00:00 2018]
+[TimeStamp Sat Oct 27 01:00:00 2018]
+[TimeStamp Sat Oct 27 02:00:00 2018]
+[TimeStamp Sat Oct 27 03:00:00 2018]
+[TimeStamp Sat Oct 27 04:00:00 2018]
+[NOTICES ] [04:23am] - KakouneMinion [13kakoune] 15lenormf closed pull request
+          #2379: Documentation refactoring (06master...06fix-doc)
+          02https://git.io/fAawm
+[TimeStamp Sat Oct 27 05:00:00 2018]
+[TimeStamp Sat Oct 27 06:00:00 2018]
+[NOTICES ] [06:53am] - KakouneMinion [13kakoune] 15Delapouite opened pull request
+          #2531: test: add end-extending-parent/braces for }B}B - Ref #2479
+          (06master...06test-end-extending-parent) 02https://git.io/fx9he
+[TimeStamp Sat Oct 27 07:00:00 2018]
+[TimeStamp Sat Oct 27 08:00:00 2018]
+[TimeStamp Sat Oct 27 09:00:00 2018]
+[TimeStamp Sat Oct 27 10:00:00 2018]
+[TimeStamp Sat Oct 27 11:00:00 2018]
+[SEND_MSG] [11:04am] - #kakoune Hmm... I haven't heard of any.  I was going to
+           do something like this for Vim, though.
+[SEND_MSG] [11:04am] - #kakoune In like 1 b.v.
+[SEND_MSG] [11:04am] - #kakoune In like 1 b.k.
+[SEND_MSG] [11:04am] - #kakoune (1 year before kakoune)
+[SEND_MSG] [11:05am] - #kakoune I looked, but perhaps I'm not good at finding. 
+           But also, not using markdown as the basis bothered me.
+[SEND_MSG] [11:06am] - #kakoune Though, I guess asciidoc works.  Hmm.
+[NOTICES ] [11:09am] - KakouneMinion [13kakoune] 15Delapouite opened pull request
+          #2533: doc: complete list of normal commands using default registers
+          (06master...06doc-registers) 02https://git.io/fxHtL
+[SEND_MSG] [11:39am] - #kakoune hmm, is there an easy way to log to the debug
+           buffer in random Kakoune code?
+[SEND_MSG] [11:40am] - #kakoune I mean in the C++ code
+[SEND_MSG] [11:41am] - #kakoune hurrah!
+[TimeStamp Sat Oct 27 12:00:00 2018]
+[TimeStamp Sat Oct 27 13:00:00 2018]
+[TimeStamp Sat Oct 27 14:00:00 2018]
+[TimeStamp Sat Oct 27 15:00:00 2018]
+[TimeStamp Sat Oct 27 16:00:00 2018]
+[TimeStamp Sat Oct 27 17:00:00 2018]
+[TimeStamp Sat Oct 27 18:00:00 2018]
+[TimeStamp Sat Oct 27 19:00:00 2018]
+[TimeStamp Sat Oct 27 20:00:00 2018]
+[TimeStamp Sat Oct 27 21:00:00 2018]
+[TimeStamp Sat Oct 27 22:00:00 2018]
+[TimeStamp Sat Oct 27 23:00:00 2018]
+[TimeStamp Sun Oct 28 00:00:00 2018]
+[TimeStamp Sun Oct 28 01:00:00 2018]
+[TimeStamp Sun Oct 28 02:00:00 2018]
+[NOTICES ] [02:17am] - KakouneMinion [13kakoune] 15lenormf opened pull request
+          #2534: Use the Noto font by default (06gh-pages...06gh-pages)
+          02https://git.io/fxH1c
+[TimeStamp Sun Oct 28 03:00:00 2018]
+[TimeStamp Sun Oct 28 04:00:00 2018]
+[TimeStamp Sun Oct 28 05:00:00 2018]
+[TimeStamp Sun Oct 28 06:00:00 2018]
+[TimeStamp Sun Oct 28 07:00:00 2018]
+[NOTICES ] [07:19am] - TigerWoods [13golf] 15TeddyDD opened pull request #22: add
+          Create Leading Zeros only for id columns
+          http://www.vimgolf.com/challenges/52552abfb089a00002000007
+          (06master...06create-leading-zeros) 02https://git.io/fxH5X
+[NOTICES ] [07:44am] - TigerWoods [13golf] 15mawww pushed 2 new commits to 06master:
+          02https://git.io/fxHda
+[NOTICES ] [07:44am] - TigerWoods 13golf/06master 142d39eaa 15Daniel Lewan: add Create
+          Leading Zeros only for id columns...
+[NOTICES ] [07:44am] - TigerWoods 13golf/06master 143604bf6 15Maxime Coste: Merge
+          remote-tracking branch 'TeddyDD/create-leading-zeros'
+[TimeStamp Sun Oct 28 08:00:00 2018]
+[TimeStamp Sun Oct 28 09:00:00 2018]
+[NOTICES ] [09:19am] - KakouneMinion [13kakoune] 15Delapouite opened pull request
+          #2535: Remove extra spaces for switches list in info
+          (06master...06switches-indent) 02https://git.io/fxHAz
+[TimeStamp Sun Oct 28 10:00:00 2018]
+[TimeStamp Sun Oct 28 11:00:00 2018]
+[TimeStamp Sun Oct 28 12:00:00 2018]
+[TimeStamp Sun Oct 28 13:00:00 2018]
+[TimeStamp Sun Oct 28 14:00:00 2018]
+[TimeStamp Sun Oct 28 15:00:00 2018]
+[TimeStamp Sun Oct 28 16:00:00 2018]
+[TimeStamp Sun Oct 28 17:00:00 2018]
+[TimeStamp Sun Oct 28 18:00:00 2018]
+[TimeStamp Sun Oct 28 19:00:00 2018]
+[TimeStamp Sun Oct 28 20:00:00 2018]
+[TimeStamp Sun Oct 28 21:00:00 2018]
+[TimeStamp Sun Oct 28 22:00:00 2018]
+[TimeStamp Sun Oct 28 23:00:00 2018]
+[TimeStamp Mon Oct 29 00:00:00 2018]
+[TimeStamp Mon Oct 29 01:00:00 2018]
+[TimeStamp Mon Oct 29 02:00:00 2018]
+[TimeStamp Mon Oct 29 03:00:00 2018]
+[TimeStamp Mon Oct 29 04:00:00 2018]
+[NOTICES ] [04:35am] - KakouneMinion [13kakoune] 15mawww closed pull request #2526:
+          Translated webpage to Hungarian (06gh-pages...06gh-pages)
+          02https://git.io/fx9YM
+[NOTICES ] [04:42am] - KakouneMinion [13kakoune] 15mawww pushed 6 new commits to
+          06master: 02https://git.io/fxQPr
+[NOTICES ] [04:42am] - KakouneMinion 13kakoune/06master 14feea006 15Jason Felice:
+          Simplify surround selection...
+[NOTICES ] [04:42am] - KakouneMinion 13kakoune/06master 14c08ec08 15Delapouite: test:
+          add end-extending-parent/braces for }B}B - Ref #2479
+[NOTICES ] [04:42am] - KakouneMinion 13kakoune/06master 14794f844 15Delapouite: doc:
+          complete list of normal commands using default registers
+[NOTICES ] [04:42am] - KakouneMinion [13kakoune] 15mawww closed pull request #2533:
+          doc: complete list of normal commands using default registers
+          (06master...06doc-registers) 02https://git.io/fxHtL
+[TimeStamp Mon Oct 29 05:00:00 2018]
+[TimeStamp Mon Oct 29 06:00:00 2018]
+[TimeStamp Mon Oct 29 07:00:00 2018]
+[TimeStamp Mon Oct 29 08:00:00 2018]
+[TimeStamp Mon Oct 29 09:00:00 2018]
+[SEND_MSG] [09:23am] - #kakoune :q
+[SEND_MSG] [09:23am] - #kakoune well, everybody here knows what that means :D
+[TimeStamp Mon Oct 29 10:00:00 2018]
+[SEND_MSG] [10:11am] - #kakoune I realize the chances are super remote, but
+           just in case: Anybody here going to Clojure/conj this year?
+[TimeStamp Mon Oct 29 11:00:00 2018]
+[SEND_MSG] [11:25am] - #kakoune JosephFerano: nice!  The rust support is good,
+           too.
+[SEND_MSG] [11:27am] - #kakoune I think the only rust-related thing I have is
+           kak-lsp.  Highlight recommended.  It's setup instructions were
+           decent.
+[SEND_MSG] [11:27am] - #kakoune *highly recommended
+[SEND_MSG] [11:45am] - #kakoune I don't have experience with anything else, but
+           I'm using a heavily configured tmux and I've found it is
+           surprisingly close to having an editor which supports splits.
+[SEND_MSG] [11:45am] - #kakoune It's actually nicer than I thought it would be,
+           since the splits are more general.
+[SEND_MSG] [11:47am] - #kakoune Looks like i3 is the right answer, then.  (I'm
+           on OSX.  And I live in tmux anyway.)
+[SEND_MSG] [11:58am] - #kakoune JosephFerano: I have surprisingly uninteresting
+           needs in this department.  I have a curved ultra-wide monitor that
+           has a maximized terminal, and my laptop screen, which keeps my
+           browser, and that's all I really use.
+[TimeStamp Mon Oct 29 12:00:00 2018]
+[SEND_MSG] [12:00pm] - #kakoune right?
+[SEND_MSG] [12:01pm] - #kakoune I've been using tmux in a full screen terminal
+           since well before Kakoune.  Not actually sure when I started.
+[SEND_MSG] [12:03pm] - #kakoune I think I hang onto qwerty as sort of a thread
+           of sanity.
+[SEND_MSG] [12:04pm] - #kakoune me, too.  I just seem to have too many running
+           that haven't hit the inflection point yet.
+[SEND_MSG] [12:05pm] - #kakoune I guess I'm actually past the inflection point
+           for keyboard.  That was pretty rough.
+[SEND_MSG] [12:06pm] - #kakoune JosephFerano: agreed.  I've worked around, I
+           think, three software/OS bugs with my keyboard :D
+[SEND_MSG] [12:06pm] - #kakoune JosephFerano: That's what I've got :D
+[SEND_MSG] [12:06pm] - #kakoune I've hacked mine to hell. :D
+[SEND_MSG] [12:07pm] - #kakoune I was disapointed that the new glow doesn't
+           have a faster CPU or more memory.
+[SEND_MSG] [12:07pm] - #kakoune JosephFerano: enter, tab, command on left;
+           backspace, space, command on right.
+[NOTICES ] [12:17pm] - KakouneMinion [13kakoune] 15eraserhd opened pull request
+          #2538: Make lisp/clojure indent work for append
+          (06master...06clojure-indent-fix) 02https://git.io/fx7B0
+[TimeStamp Mon Oct 29 13:00:00 2018]
+[TimeStamp Mon Oct 29 14:00:00 2018]
+[SEND_MSG] [02:07pm] - #kakoune Is that a client-side environment variable?
+[SEND_MSG] [02:08pm] - #kakoune If so, it should be $kak_client_TRAMPOLINE
+[SEND_MSG] [02:09pm] - #kakoune Ohhh, that.
+[TimeStamp Mon Oct 29 15:00:00 2018]
+[SEND_MSG] [03:39pm] - #kakoune I have tmux configured so that <c-w>N goes to
+           pane N, but I'm wondering if I should map it so that <c-w>X goes to
+           the pane at X, where X is a letter from my right hand that's mapped
+           to a grid based on position.
+[SEND_MSG] [03:39pm] - #kakoune e.g, <c-w>y goes to the upper left corner,
+           <c-w>/ goes to the lower-right.
+[SEND_MSG] [03:41pm] - #kakoune Mmm, probably better to do it left-handed and
+           with control...  <c-w><c-q> goes to upper left?
+[SEND_MSG] [03:42pm] - #kakoune Orr I should just practice typing numbers so
+           that I can actually go to panes 5 and 6 :D
+[TimeStamp Mon Oct 29 16:00:00 2018]
+[SEND_MSG] [04:11pm] - #kakoune The right-hand column is somewhat standard
+           (todo list, [tool-window,] shell, repl), the rest are different
+           files and the only pattern there is that I usually open the test
+           file just to the right of the implementation file.
+[SEND_MSG] [04:12pm] - #kakoune I'm thinking, if I'm fairly accurate at
+           guessing which key corresponds to a window, then it saves me trying
+           to look at the gutter to find the pane number.  Which is awkward,
+           even though I've made it bright.
+[SEND_MSG] [04:50pm] - #kakoune Does anybody have a grepcmd settting for ag?
+[SEND_MSG] [04:52pm] - #kakoune haha.... I just arrived there :)
+[SEND_MSG] [04:55pm] - #kakoune now I have to figure out why
+           :grep-next/:grep-prev don't seem to jump.  I might be doing it wrong
+[TimeStamp Mon Oct 29 17:00:00 2018]
+[TimeStamp Mon Oct 29 18:00:00 2018]
+[NOTICES ] [06:49pm] - KakouneMinion [13kakoune] 15Delapouite closed pull request
+          #2531: test: add end-extending-parent/braces for }B}B - Ref #2479
+          (06master...06test-end-extending-parent) 02https://git.io/fx9he
+[TimeStamp Mon Oct 29 19:00:00 2018]
+[TimeStamp Mon Oct 29 20:00:00 2018]
+[TimeStamp Mon Oct 29 21:00:00 2018]
+[TimeStamp Mon Oct 29 22:00:00 2018]
+[TimeStamp Mon Oct 29 23:00:00 2018]
+[TimeStamp Tue Oct 30 00:00:00 2018]
+[TimeStamp Tue Oct 30 01:00:00 2018]
+[TimeStamp Tue Oct 30 02:00:00 2018]
+[TimeStamp Tue Oct 30 03:00:00 2018]
+[TimeStamp Tue Oct 30 04:00:00 2018]
+[TimeStamp Tue Oct 30 05:00:00 2018]
+[TimeStamp Tue Oct 30 06:00:00 2018]
+[TimeStamp Tue Oct 30 07:00:00 2018]
+[TimeStamp Tue Oct 30 08:00:00 2018]
+[SEND_MSG] [08:59am] - #kakoune scrolling in *debug* while set global debug
+           profile locks up Kakoune :(
+[TimeStamp Tue Oct 30 09:00:00 2018]
+[SEND_MSG] [09:00am] - #kakoune Oh, I should remember to get a backtrace when
+           that happens.
+[TimeStamp Tue Oct 30 10:00:00 2018]
+[TimeStamp Tue Oct 30 11:00:00 2018]
+[TimeStamp Tue Oct 30 12:00:00 2018]
+[TimeStamp Tue Oct 30 13:00:00 2018]
+[TimeStamp Tue Oct 30 14:00:00 2018]
+[SEND_MSG] [02:39pm] - #kakoune hmm, dash seems to be faster than bash.  OK,
+           but I'm not sure how I can convince kakoune to use it.
+[SEND_MSG] [02:39pm] - #kakoune I mean, aside from overwriting the system
+           /bin/sh
+[SEND_MSG] [02:41pm] - #kakoune Mac OS X
+[SEND_MSG] [02:43pm] - #kakoune kakoune actually searches the path, and I have
+           stuff before /bin, that's nice.
+[SEND_MSG] [02:46pm] - #kakoune but, apparently, bash doesn't search the path
+           for sh??  Ugh.
+[SEND_MSG] [02:47pm] - #kakoune Oh, no, that's my silly process getting in the
+           way, it works.
+[SEND_MSG] [02:49pm] - #kakoune Hmm, it didn't help parinfer be faster, though.
+[NOTICES ] [02:50pm] - KakouneMinion [13kakoune] 15Delapouite opened pull request
+          #2541: Truncate incomplete debug command docstring
+          (06master...06debug-regex) 02https://git.io/fxdSo
+[SEND_MSG] [02:57pm] - #kakoune Kakoune ignores symlinks, tho.
+           https://github.com/mawww/kakoune/blob/master/src/shell_manager.cc#L46
+           
+[TimeStamp Tue Oct 30 15:00:00 2018]
+[SEND_MSG] [03:03pm] - #kakoune interesting, although my manpage says, "For
+           symbolic links, the st_mode member contains meaningful information
+           when used iwth the file type macros...  File mode bits and the
+           contents of the remaining members of the stat structure are
+           unspecified."
+[SEND_MSG] [03:03pm] - #kakoune So, S_ISREG() shoudl work, but the executable
+           test is undefined on Mac OS X, I think is what it is saying.
+[SEND_MSG] [03:06pm] - #kakoune man 2 stat() says "BSD System Calls Manual" as
+           the title.  I actually don't know.
+[SEND_MSG] [03:12pm] - #kakoune Ahh, OK.  So the permissions are actually
+           correct, even though I'm not sure they should be.  The problem is
+           that confstr(_CS_PATH,...) doesn't return $PATH, but "a value for
+           PATH environmentvariable that finds all the standard utilities"
+[SEND_MSG] [03:15pm] - #kakoune Ha, and the dumb-ass Mac OS X "you can't change
+           some parts of the fs, even if you are root" prevents me from using
+           dash.
+[SEND_MSG] [03:16pm] - #kakoune It would be nice to have a config option for
+           shell.  On my to-do list for this week.
+[SEND_MSG] [03:28pm] - #kakoune No reason I can think of, off the top of my
+           head.
+[SEND_MSG] [03:29pm] - #kakoune I mean, are you trying to get the cwd of the
+           terminal?  That might always be $HOME, even if the shell running in
+           it isn't.
+[SEND_MSG] [03:32pm] - #kakoune My memory is kind of vague, but I think the
+           terminal emulator ends up being the ... head ... of a process group,
+           and you can find it's immediate child or something like that?
+[SEND_MSG] [03:32pm] - #kakoune I haven't done POSIX C stuff in a while.
+[TimeStamp Tue Oct 30 16:00:00 2018]
+[TimeStamp Tue Oct 30 17:00:00 2018]
+[NOTICES ] [05:33pm] - KakouneMinion [13kakoune] 15mawww pushed 1 new commit to
+          06master: 02https://git.io/fxFk4
+[NOTICES ] [05:33pm] - KakouneMinion 13kakoune/06master 149fec1b3 15Maxime Coste:
+          Buffer: Remove m_line_count field from BufferIterator...
+[TimeStamp Tue Oct 30 18:00:00 2018]
+[TimeStamp Tue Oct 30 19:00:00 2018]
+[TimeStamp Tue Oct 30 20:00:00 2018]
+[TimeStamp Tue Oct 30 21:00:00 2018]
+[TimeStamp Tue Oct 30 22:00:00 2018]
+[TimeStamp Tue Oct 30 23:00:00 2018]
+[TimeStamp Wed Oct 31 00:00:00 2018]
+[TimeStamp Wed Oct 31 01:00:00 2018]
+[TimeStamp Wed Oct 31 02:00:00 2018]
+[TimeStamp Wed Oct 31 03:00:00 2018]
+[TimeStamp Wed Oct 31 04:00:00 2018]
+[TimeStamp Wed Oct 31 05:00:00 2018]
+[TimeStamp Wed Oct 31 06:00:00 2018]
+[TimeStamp Wed Oct 31 07:00:00 2018]
+[TimeStamp Wed Oct 31 08:00:00 2018]
+[TimeStamp Wed Oct 31 09:00:00 2018]
+[SEND_MSG] [09:47am] - #kakoune I think it isn't because it isn't a terminal
+           code.  Unless you do some terminfo stuff.
+[SEND_MSG] [09:48am] - #kakoune I thihk there's just <c-a> through <c-z>, plus
+           [, \, ], ^, _
+[SEND_MSG] [09:49am] - #kakoune You know, somebody gave me tmux config to allow
+           control+arrow, and I use it when remote pairing in emacs.
+[SEND_MSG] [09:50am] - #kakoune
+           https://github.com/eraserhd/dotfiles/blob/develop/tmux/tmux.conf.syml
+           ink#L43-L44
+[SEND_MSG] [09:51am] - #kakoune Oh, that's shift+arrow, but I definitely use
+           ctrl+arrow, because that's emacs slurp/barf.
+[SEND_MSG] [09:55am] - #kakoune It seems that "xterm-keys" enables this
+           mapping.  Though I *think* Kakoune's parsing of <c-x> just subtracts
+           0x40 to get into the control range.
+[TimeStamp Wed Oct 31 10:00:00 2018]
+[SEND_MSG] [10:03am] - #kakoune I'm wrong.  It looks like Kakoune should pass
+           it through all right, so long as ncurses can detect it.
+[TimeStamp Wed Oct 31 11:00:00 2018]
+[TimeStamp Wed Oct 31 12:00:00 2018]
+[TimeStamp Wed Oct 31 13:00:00 2018]
+[TimeStamp Wed Oct 31 14:00:00 2018]
+[TimeStamp Wed Oct 31 15:00:00 2018]
+[TimeStamp Wed Oct 31 16:00:00 2018]
+[TimeStamp Wed Oct 31 17:00:00 2018]
+[NOTICES ] [05:40pm] - wilhelm.freenode.net *** Looking up your hostname...
+[NOTICES ] [05:40pm] - wilhelm.freenode.net *** Checking Ident
+[NOTICES ] [05:40pm] - wilhelm.freenode.net *** Couldn't look up your hostname
+[NOTICES ] [05:40pm] - wilhelm.freenode.net *** No Ident response
+[SEND_MSG] [05:40pm] - nickserv identify horsenose
+[NOTICES ] [05:40pm] - NickServ This nickname is registered. Please choose a
+          different nickname, or identify via /msg NickServ identify
+          <password>.
+[NOTICES ] [05:40pm] - freenode-connect Due to the persistent ongoing spam, all
+          new connections are being set +R (block messages from unidentified
+          users) and will be scanned for vulnerabilities. This will not harm
+          your computer, and vulnerable hosts will be notified.
+[NOTICES ] [05:40pm] - NickServ You are now identified for eraserhd.
+[TimeStamp Wed Oct 31 18:00:00 2018]
+[TimeStamp Wed Oct 31 19:00:00 2018]
+[NOTICES ] [07:11pm] - KakouneMinion [13kakoune] 15laelath opened pull request
+          #2544: Make statement after if/else/while/for optional for indenting
+          c-family (06master...06c-indent-fixes) 02https://git.io/fxNtL
+[TimeStamp Wed Oct 31 20:00:00 2018]
+[NOTICES ] [08:05pm] - KakouneMinion [13kakoune] 15laelath opened pull request
+          #2545: Added ModePush and ModePop hooks (06master...06push-pop-mode)
+          02https://git.io/fxNYL
+[TimeStamp Wed Oct 31 21:00:00 2018]
+[TimeStamp Wed Oct 31 22:00:00 2018]
+[TimeStamp Wed Oct 31 23:00:00 2018]
+[TimeStamp Thu Nov  1 00:00:00 2018]
+[TimeStamp Thu Nov  1 01:00:00 2018]
+[TimeStamp Thu Nov  1 02:00:00 2018]
+[TimeStamp Thu Nov  1 03:00:00 2018]
+[TimeStamp Thu Nov  1 04:00:00 2018]
+[TimeStamp Thu Nov  1 05:00:00 2018]
+[TimeStamp Thu Nov  1 06:00:00 2018]
+[TimeStamp Thu Nov  1 07:00:00 2018]
+[TimeStamp Thu Nov  1 08:00:00 2018]
+[TimeStamp Thu Nov  1 09:00:00 2018]
+[TimeStamp Thu Nov  1 10:00:00 2018]
+[TimeStamp Thu Nov  1 11:00:00 2018]
+[TimeStamp Thu Nov  1 12:00:00 2018]
+[TimeStamp Thu Nov  1 13:00:00 2018]
+[SEND_MSG] [01:28pm] - #kakoune Is it possible that you did something that
+           copied the .kak?  Like an editor backujp or something?
+[SEND_MSG] [01:29pm] - #kakoune That would cause "can't define new commands"
+[SEND_MSG] [01:29pm] - #kakoune oh, nm then
+[TimeStamp Thu Nov  1 14:00:00 2018]
+[SEND_MSG] [02:05pm] - #kakoune dash is weird.
+[SEND_MSG] [02:05pm] - #kakoune I have a patch that adds a shell option to
+           kakoune that can be set, but I can't run tests with dash.
+[SEND_MSG] [02:06pm] - #kakoune It appears to think there a backslashes
+           preceding the forward slashes on line 153 of c-family.kak, but I
+           can't think why that might happen.
+[SEND_MSG] [02:20pm] - #kakoune it looks like maybe dash is just broken on OSX?
+[SEND_MSG] [02:20pm] - #kakoune A POSIX shell which is minimal but supposed to
+           be a bunch faster than bash.
+[NOTICES ] [02:24pm] - KakouneMinion [13kakoune] 15eraserhd opened pull request
+          #2547: Add 'shell' option (06master...06shell-option)
+          02https://git.io/fxAaS
+[TimeStamp Thu Nov  1 15:00:00 2018]
+[TimeStamp Thu Nov  1 16:00:00 2018]
+[TimeStamp Thu Nov  1 17:00:00 2018]
+[NOTICES ] [05:24pm] - KakouneMinion [13kakoune] 15mawww created 06regex-perf-tweaks
+          (+3 new commits): 02https://git.io/fxAFO
+[NOTICES ] [05:24pm] - KakouneMinion 13kakoune/06regex-perf-tweaks 148a751e1 15Maxime
+          Coste: Remove caching from utf8_iterator
+[NOTICES ] [05:24pm] - KakouneMinion 13kakoune/06regex-perf-tweaks 146fce805 15Maxime
+          Coste: Use BufferCoord sentinel type for regex matching on
+          BufferIterators...
+[NOTICES ] [05:24pm] - KakouneMinion 13kakoune/06regex-perf-tweaks 14ee74c2c 15Maxime
+          Coste: Use custom code instead of reverse_iterator in Regex VM
+[TimeStamp Thu Nov  1 18:00:00 2018]
+[TimeStamp Thu Nov  1 19:00:00 2018]
+[TimeStamp Thu Nov  1 20:00:00 2018]
+[TimeStamp Thu Nov  1 21:00:00 2018]
+[TimeStamp Thu Nov  1 22:00:00 2018]
+[TimeStamp Thu Nov  1 23:00:00 2018]
+[TimeStamp Fri Nov  2 00:00:00 2018]
+[TimeStamp Fri Nov  2 01:00:00 2018]
+[TimeStamp Fri Nov  2 02:00:00 2018]
+[TimeStamp Fri Nov  2 03:00:00 2018]
+[TimeStamp Fri Nov  2 04:00:00 2018]
+[TimeStamp Fri Nov  2 05:00:00 2018]
+[TimeStamp Fri Nov  2 06:00:00 2018]
+[TimeStamp Fri Nov  2 07:00:00 2018]
+[TimeStamp Fri Nov  2 08:00:00 2018]
+[TimeStamp Fri Nov  2 09:00:00 2018]
+[TimeStamp Fri Nov  2 10:00:00 2018]
+[SEND_MSG] [10:15am] - #kakoune There's not a way to link to a man page in the
+           asciidoc, is theree?
+[NOTICES ] [10:15am] - moon.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:15am] - moon.freenode.net *** Checking Ident
+[NOTICES ] [10:15am] - moon.freenode.net *** No Ident response
+[NOTICES ] [10:15am] - moon.freenode.net *** Couldn't look up your hostname
+[SEND_MSG] [10:15am] - nickserv identify horsenose
+[NOTICES ] [10:15am] - NickServ This nickname is registered. Please choose a
+          different nickname, or identify via /msg NickServ identify
+          <password>.
+[NOTICES ] [10:15am] - freenode-connect Due to the persistent ongoing spam, all
+          new connections are being set +R (block messages from unidentified
+          users) and will be scanned for vulnerabilities. This will not harm
+          your computer, and vulnerable hosts will be notified.
+[NOTICES ] [10:16am] - NickServ You are now identified for eraserhd.
+[SEND_MSG] [10:16am] - #kakoune There's not a way to link to a man page in the
+           asciidoc, is there?
+[TimeStamp Fri Nov  2 11:00:00 2018]
+[TimeStamp Fri Nov  2 12:00:00 2018]
+[TimeStamp Fri Nov  2 13:00:00 2018]
+[TimeStamp Fri Nov  2 14:00:00 2018]
+[NOTICES ] [02:31pm] - KakouneMinion [13kakoune] 15Delapouite opened pull request
+          #2548: Add set-face/unset-face CommandHelpers (06master...06face-helper)
+          02https://git.io/fxplo
+[TimeStamp Fri Nov  2 15:00:00 2018]
+[TimeStamp Fri Nov  2 16:00:00 2018]
+MsgLog ended [Fri Nov  2 16:00:49 2018]
+MsgLog started [Fri Nov  2 16:25:00 2018]
+[TimeStamp Fri Nov  2 17:00:00 2018]
+[TimeStamp Fri Nov  2 18:00:00 2018]
+[TimeStamp Fri Nov  2 19:00:00 2018]
+[TimeStamp Fri Nov  2 20:00:00 2018]
+[TimeStamp Fri Nov  2 21:00:00 2018]
+[TimeStamp Fri Nov  2 22:00:00 2018]
+[TimeStamp Fri Nov  2 23:00:00 2018]
+[TimeStamp Sat Nov  3 00:00:00 2018]
+[TimeStamp Sat Nov  3 01:00:00 2018]
+[TimeStamp Sat Nov  3 02:00:00 2018]
+[SEND_MSG] [02:28am] - #kakoune adrusi: kak-lsp uses NormalIdle and tracks the
+           buffer's last content and changed timestamp in options.
+[SEND_MSG] [02:28am] - #kakoune It's OK for asynchronous, it lags behind
+           typing.
+[SEND_MSG] [02:29am] - #kakoune What's the use case?
+[TimeStamp Sat Nov  3 03:00:00 2018]
+[TimeStamp Sat Nov  3 04:00:00 2018]
+[TimeStamp Sat Nov  3 05:00:00 2018]
+[TimeStamp Sat Nov  3 06:00:00 2018]
+[NOTICES ] [06:55am] - tomaw [Global Notice] freenode #live 2018 is underway.
+          Most talks are being live-streamed and if you cannot join us in
+          person you can tune in at https://www.youtube.com/watch?v=BFpe8BnlOgA
+[TimeStamp Sat Nov  3 07:00:00 2018]
+[TimeStamp Sat Nov  3 08:00:00 2018]
+[TimeStamp Sat Nov  3 09:00:00 2018]
+[TimeStamp Sat Nov  3 10:00:00 2018]
+[TimeStamp Sat Nov  3 11:00:00 2018]
+[TimeStamp Sat Nov  3 12:00:00 2018]
+[TimeStamp Sat Nov  3 13:00:00 2018]
+[TimeStamp Sat Nov  3 14:00:00 2018]
+[TimeStamp Sat Nov  3 15:00:00 2018]
+[TimeStamp Sat Nov  3 16:00:00 2018]
+[TimeStamp Sat Nov  3 17:00:00 2018]
+[TimeStamp Sat Nov  3 18:00:00 2018]
+[TimeStamp Sat Nov  3 19:00:00 2018]
+[TimeStamp Sat Nov  3 20:00:00 2018]
+[TimeStamp Sat Nov  3 21:00:00 2018]
+[TimeStamp Sat Nov  3 22:00:00 2018]
+[TimeStamp Sat Nov  3 23:00:00 2018]
+[TimeStamp Sun Nov  4 00:00:00 2018]
+[TimeStamp Sun Nov  4 01:00:00 2018]
+[TimeStamp Sun Nov  4 02:00:00 2018]
+[TimeStamp Sun Nov  4 03:00:00 2018]
+[TimeStamp Sun Nov  4 04:00:00 2018]
+[TimeStamp Sun Nov  4 05:00:00 2018]
+[TimeStamp Sun Nov  4 06:00:00 2018]
+[TimeStamp Sun Nov  4 07:00:00 2018]
+[TimeStamp Sun Nov  4 08:00:00 2018]
+[TimeStamp Sun Nov  4 09:00:00 2018]
+[TimeStamp Sun Nov  4 10:00:00 2018]
+[TimeStamp Sun Nov  4 11:00:00 2018]
+[TimeStamp Sun Nov  4 12:00:00 2018]
+[TimeStamp Sun Nov  4 13:00:00 2018]
+[TimeStamp Sun Nov  4 14:00:00 2018]
+[TimeStamp Sun Nov  4 15:00:00 2018]
+[TimeStamp Sun Nov  4 16:00:00 2018]
+[NOTICES ] [04:19pm] - KakouneMinion [13kakoune] 15mawww pushed 3 new commits to
+          06regex-perf-tweaks: 02https://git.io/fxjYM
+[NOTICES ] [04:19pm] - KakouneMinion 13kakoune/06regex-perf-tweaks 144ac7df3 15Maxime
+          Coste: Remove most regex impl special casing for backwards matching
+[NOTICES ] [04:19pm] - KakouneMinion 13kakoune/06regex-perf-tweaks 14b4571bd 15Maxime
+          Coste: Dump start description as well when writing a regex dump
+[NOTICES ] [04:19pm] - KakouneMinion 13kakoune/06regex-perf-tweaks 147463a0d 15Maxime
+          Coste: Remove use of utf8::iterator in regex execution...
+[TimeStamp Sun Nov  4 17:00:00 2018]
+[TimeStamp Sun Nov  4 18:00:00 2018]
+[TimeStamp Sun Nov  4 19:00:00 2018]
+[TimeStamp Sun Nov  4 20:00:00 2018]
+[TimeStamp Sun Nov  4 21:00:00 2018]
+[TimeStamp Sun Nov  4 22:00:00 2018]
+[TimeStamp Sun Nov  4 23:00:00 2018]
+[TimeStamp Mon Nov  5 00:00:00 2018]
+[TimeStamp Mon Nov  5 01:00:00 2018]
+[TimeStamp Mon Nov  5 02:00:00 2018]
+[TimeStamp Mon Nov  5 03:00:00 2018]
+[TimeStamp Mon Nov  5 04:00:00 2018]
+[TimeStamp Mon Nov  5 05:00:00 2018]
+[TimeStamp Mon Nov  5 06:00:00 2018]
+[TimeStamp Mon Nov  5 07:00:00 2018]
+[TimeStamp Mon Nov  5 08:00:00 2018]
+[TimeStamp Mon Nov  5 09:00:00 2018]
+[TimeStamp Mon Nov  5 10:00:00 2018]
+[TimeStamp Mon Nov  5 11:00:00 2018]
+[TimeStamp Mon Nov  5 12:00:00 2018]
+[TimeStamp Mon Nov  5 13:00:00 2018]
+[TimeStamp Mon Nov  5 14:00:00 2018]
+[TimeStamp Mon Nov  5 15:00:00 2018]
+[TimeStamp Mon Nov  5 16:00:00 2018]
+[NOTICES ] [04:16pm] - KakouneMinion [13kakoune] 15mawww pushed 3 new commits to
+          06regex-perf-tweaks: 02https://git.io/fpeb9
+[NOTICES ] [04:16pm] - KakouneMinion 13kakoune/06regex-perf-tweaks 147959c7f 15Maxime
+          Coste: Refactor ThreadedRegexVM::exec_program to avoid branching...
+[NOTICES ] [04:16pm] - KakouneMinion 13kakoune/06regex-perf-tweaks 147fbde0d 15Maxime
+          Coste: Various micro performance tweaks in ThreadedRegexVM
+[NOTICES ] [04:16pm] - KakouneMinion 13kakoune/06regex-perf-tweaks 1405a9eb6 15Maxime
+          Coste: Never grow the DualThreadStack in push_next...
+[TimeStamp Mon Nov  5 17:00:00 2018]
+[TimeStamp Mon Nov  5 18:00:00 2018]
+[TimeStamp Mon Nov  5 19:00:00 2018]
+[TimeStamp Mon Nov  5 20:00:00 2018]
+[TimeStamp Mon Nov  5 21:00:00 2018]
+[TimeStamp Mon Nov  5 22:00:00 2018]
+[TimeStamp Mon Nov  5 23:00:00 2018]
+[TimeStamp Tue Nov  6 00:00:00 2018]
+[TimeStamp Tue Nov  6 01:00:00 2018]
+[TimeStamp Tue Nov  6 02:00:00 2018]
+[TimeStamp Tue Nov  6 03:00:00 2018]
+[TimeStamp Tue Nov  6 04:00:00 2018]
+[TimeStamp Tue Nov  6 05:00:00 2018]
+[NOTICES ] [05:09am] - KakouneMinion [13kakoune] 15mawww pushed 10 new commits to
+          06master: 02https://git.io/fpv6Q
+[NOTICES ] [05:09am] - KakouneMinion 13kakoune/06master 14b65a649 15Ruslan Prokopchuk:
+          replace usage of the deprecated 'e' face attribute with the new 'F'
+          one...
+[NOTICES ] [05:09am] - KakouneMinion 13kakoune/06master 14db937be 15Jason Felice: Make
+          lisp/clojure indent work for append
+[NOTICES ] [05:09am] - KakouneMinion 13kakoune/06master 14a61c6a9 15Delapouite:
+          Truncate incomplete debug command docstring
+[NOTICES ] [05:09am] - KakouneMinion [13kakoune] 15mawww 04deleted 06regex-perf-tweaks
+          at 1405a9eb6: 02https://git.io/fpv6F
+[TimeStamp Tue Nov  6 06:00:00 2018]
+[TimeStamp Tue Nov  6 07:00:00 2018]
+[TimeStamp Tue Nov  6 08:00:00 2018]
+[TimeStamp Tue Nov  6 09:00:00 2018]
+[TimeStamp Tue Nov  6 10:00:00 2018]
+[TimeStamp Tue Nov  6 11:00:00 2018]
+[TimeStamp Tue Nov  6 12:00:00 2018]
+[TimeStamp Tue Nov  6 13:00:00 2018]
+[TimeStamp Tue Nov  6 14:00:00 2018]
+[TimeStamp Tue Nov  6 15:00:00 2018]
+[TimeStamp Tue Nov  6 16:00:00 2018]
+[TimeStamp Tue Nov  6 17:00:00 2018]
+[TimeStamp Tue Nov  6 18:00:00 2018]
+[TimeStamp Tue Nov  6 19:00:00 2018]
+[TimeStamp Tue Nov  6 20:00:00 2018]
+[NOTICES ] [08:29pm] - KakouneMinion [13kakoune] 15mawww pushed 1 new commit to
+          06master: 02https://git.io/fpJOg
+[NOTICES ] [08:29pm] - KakouneMinion 13kakoune/06master 148c2c3d2 15Maxime Coste: Fix
+          memory leak in DualThreadStack...
+[TimeStamp Tue Nov  6 21:00:00 2018]
+[TimeStamp Tue Nov  6 22:00:00 2018]
+[TimeStamp Tue Nov  6 23:00:00 2018]
+[TimeStamp Wed Nov  7 00:00:00 2018]
+[TimeStamp Wed Nov  7 01:00:00 2018]
+[TimeStamp Wed Nov  7 02:00:00 2018]
+[TimeStamp Wed Nov  7 03:00:00 2018]
+[TimeStamp Wed Nov  7 04:00:00 2018]
+[TimeStamp Wed Nov  7 05:00:00 2018]
+[TimeStamp Wed Nov  7 06:00:00 2018]
+[TimeStamp Wed Nov  7 07:00:00 2018]
+[TimeStamp Wed Nov  7 08:00:00 2018]
+[TimeStamp Wed Nov  7 09:00:00 2018]
+[TimeStamp Wed Nov  7 10:00:00 2018]
+[TimeStamp Wed Nov  7 11:00:00 2018]
+[TimeStamp Wed Nov  7 12:00:00 2018]
+[TimeStamp Wed Nov  7 13:00:00 2018]
+[TimeStamp Wed Nov  7 14:00:00 2018]
+[TimeStamp Wed Nov  7 15:00:00 2018]
+[TimeStamp Wed Nov  7 16:00:00 2018]
+[TimeStamp Wed Nov  7 17:00:00 2018]
+[TimeStamp Wed Nov  7 18:00:00 2018]
+[TimeStamp Wed Nov  7 19:00:00 2018]
+[TimeStamp Wed Nov  7 20:00:00 2018]
+[TimeStamp Wed Nov  7 21:00:00 2018]
+[TimeStamp Wed Nov  7 22:00:00 2018]
+[TimeStamp Wed Nov  7 23:00:00 2018]
+[TimeStamp Thu Nov  8 00:00:00 2018]
+[TimeStamp Thu Nov  8 01:00:00 2018]
+[TimeStamp Thu Nov  8 02:00:00 2018]
+[TimeStamp Thu Nov  8 03:00:00 2018]
+[TimeStamp Thu Nov  8 04:00:00 2018]
+[NOTICES ] [04:16am] - KakouneMinion [13kakoune] 15mawww pushed 1 new commit to
+          06master: 02https://git.io/fpT3x
+[NOTICES ] [04:16am] - KakouneMinion 13kakoune/06master 14b96ab67 15Olivier Perret:
+          Expose selection(s) length with a value
+[NOTICES ] [04:41am] - KakouneMinion [13kakoune] 15Muffindrake opened pull request
+          #2560: Update C grammar (06master...06c_stdint) 02https://git.io/fpTZt
+[TimeStamp Thu Nov  8 05:00:00 2018]
+[TimeStamp Thu Nov  8 06:00:00 2018]
+[TimeStamp Thu Nov  8 07:00:00 2018]
+[TimeStamp Thu Nov  8 08:00:00 2018]
+[TimeStamp Thu Nov  8 09:00:00 2018]
+[SEND_MSG] [09:05am] - #kakoune Does kakoune load kakrc first or last?
+[SEND_MSG] [09:09am] - #kakoune Ah, last.  Interesting how that works.
+[NOTICES ] [09:18am] - KakouneMinion [13kakoune] 15occivink closed pull request
+          #2503: Expose selection(s) length with a value
+          (06master...06selections-length-value) 02https://git.io/fxoi1
+[TimeStamp Thu Nov  8 10:00:00 2018]
+[TimeStamp Thu Nov  8 11:00:00 2018]
+[TimeStamp Thu Nov  8 12:00:00 2018]
+[TimeStamp Thu Nov  8 13:00:00 2018]
+[NOTICES ] [01:32pm] - KakouneMinion [13kakoune] 15lePerdu opened pull request
+          #2561: Fix markdown list highlighter (06master...06markdown_highlighter)
+          02https://git.io/fpksU
+[TimeStamp Thu Nov  8 14:00:00 2018]
+[TimeStamp Thu Nov  8 15:00:00 2018]
+[TimeStamp Thu Nov  8 16:00:00 2018]
+[TimeStamp Thu Nov  8 17:00:00 2018]
+[TimeStamp Thu Nov  8 18:00:00 2018]
+[TimeStamp Thu Nov  8 19:00:00 2018]
+[TimeStamp Thu Nov  8 20:00:00 2018]
+[TimeStamp Thu Nov  8 21:00:00 2018]
+[TimeStamp Thu Nov  8 22:00:00 2018]
+[TimeStamp Thu Nov  8 23:00:00 2018]
+[TimeStamp Fri Nov  9 00:00:00 2018]
+[TimeStamp Fri Nov  9 01:00:00 2018]
+[TimeStamp Fri Nov  9 02:00:00 2018]
+[NOTICES ] [02:41am] - KakouneMinion [13kakoune] 15Delapouite opened pull request
+          #2563: doc: fix misc typos for source and region highlighter
+          (06master...06typos) 02https://git.io/fpIY7
+[TimeStamp Fri Nov  9 03:00:00 2018]
+[TimeStamp Fri Nov  9 04:00:00 2018]
+[TimeStamp Fri Nov  9 05:00:00 2018]
+[TimeStamp Fri Nov  9 06:00:00 2018]
+[TimeStamp Fri Nov  9 07:00:00 2018]
+[TimeStamp Fri Nov  9 08:00:00 2018]
+[TimeStamp Fri Nov  9 09:00:00 2018]
+[TimeStamp Fri Nov  9 10:00:00 2018]
+MsgLog ended [Fri Nov  9 10:19:47 2018]
+MsgLog started [Fri Nov  9 11:13:00 2018]
+[TimeStamp Fri Nov  9 12:00:00 2018]
+[TimeStamp Fri Nov  9 13:00:00 2018]
+[TimeStamp Fri Nov  9 14:00:00 2018]
+[TimeStamp Fri Nov  9 15:00:00 2018]
+[TimeStamp Fri Nov  9 16:00:00 2018]
+[TimeStamp Fri Nov  9 17:00:00 2018]
+[TimeStamp Fri Nov  9 18:00:00 2018]
+[TimeStamp Fri Nov  9 19:00:00 2018]
+[TimeStamp Fri Nov  9 20:00:00 2018]
+[TimeStamp Fri Nov  9 21:00:00 2018]
+[TimeStamp Fri Nov  9 22:00:00 2018]
+[TimeStamp Fri Nov  9 23:00:00 2018]
+[TimeStamp Sat Nov 10 00:00:00 2018]
+[TimeStamp Sat Nov 10 01:00:00 2018]
+[TimeStamp Sat Nov 10 02:00:00 2018]
+[TimeStamp Sat Nov 10 03:00:00 2018]
+[TimeStamp Sat Nov 10 04:00:00 2018]
+[TimeStamp Sat Nov 10 05:00:00 2018]
+[TimeStamp Sat Nov 10 06:00:00 2018]
+[NOTICES ] [06:27am] - KakouneMinion [13kakoune] 15Delapouite opened pull request
+          #2566: website: add link to discuss.kakoune.com in navbar
+          (06gh-pages...06gh-forum) 02https://git.io/fptvW
+[TimeStamp Sat Nov 10 07:00:00 2018]
+[TimeStamp Sat Nov 10 08:00:00 2018]
+[TimeStamp Sat Nov 10 09:00:00 2018]
+[NOTICES ] [09:40am] - KakouneMinion [13kakoune] 15JJK96 opened pull request #2567:
+          Add markdown sql language support (06master...06master)
+          02https://git.io/fptLl
+[TimeStamp Sat Nov 10 10:00:00 2018]
+[TimeStamp Sat Nov 10 11:00:00 2018]
+[TimeStamp Sat Nov 10 12:00:00 2018]
+[TimeStamp Sat Nov 10 13:00:00 2018]
+[TimeStamp Sat Nov 10 14:00:00 2018]
+[TimeStamp Sat Nov 10 15:00:00 2018]
+[TimeStamp Sat Nov 10 16:00:00 2018]
+[TimeStamp Sat Nov 10 17:00:00 2018]
+[TimeStamp Sat Nov 10 18:00:00 2018]
+[TimeStamp Sat Nov 10 19:00:00 2018]
+[TimeStamp Sat Nov 10 20:00:00 2018]
+[TimeStamp Sat Nov 10 21:00:00 2018]
+[TimeStamp Sat Nov 10 22:00:00 2018]
+[TimeStamp Sat Nov 10 23:00:00 2018]
+[TimeStamp Sun Nov 11 00:00:00 2018]
+[TimeStamp Sun Nov 11 01:00:00 2018]
+[TimeStamp Sun Nov 11 02:00:00 2018]
+[TimeStamp Sun Nov 11 03:00:00 2018]
+[TimeStamp Sun Nov 11 04:00:00 2018]
+[TimeStamp Sun Nov 11 05:00:00 2018]
+[TimeStamp Sun Nov 11 06:00:00 2018]
+[TimeStamp Sun Nov 11 07:00:00 2018]
+[TimeStamp Sun Nov 11 08:00:00 2018]
+[TimeStamp Sun Nov 11 09:00:00 2018]
+[TimeStamp Sun Nov 11 10:00:00 2018]
+[TimeStamp Sun Nov 11 11:00:00 2018]
+[TimeStamp Sun Nov 11 12:00:00 2018]
+[TimeStamp Sun Nov 11 13:00:00 2018]
+[SEND_MSG] [01:55pm] - #kakoune kakoune lately has gotten a bit laggier, at
+           least in C mode, I think.
+[TimeStamp Sun Nov 11 14:00:00 2018]
+[SEND_MSG] [02:14pm] - #kakoune Hmm, I've not done user modes much.
+[SEND_MSG] [02:16pm] - #kakoune I take it that "map global mymode c {: exec
+           'c'}" doesn't do it?
+[SEND_MSG] [02:17pm] - #kakoune I mean, the docs seem to imply that "map global
+           mymode c c" might do it.
+[SEND_MSG] [02:18pm] - #kakoune er, there's supposed to be a % before the first
+           curly.
+[SEND_MSG] [02:18pm] - #kakoune Doesn't it say user modes only apply to the
+           next key?
+[SEND_MSG] [02:19pm] - #kakoune I don't even know what that is... is it an
+           extension?
+[SEND_MSG] [02:19pm] - #kakoune oooh
+[SEND_MSG] [02:19pm] - #kakoune right, so you probably want to "map global
+           mymode c <esc>c"
+[SEND_MSG] [02:19pm] - #kakoune Oh, but, that's in normal mode.
+[SEND_MSG] [02:20pm] - #kakoune So maybe <esc><esc>c , since the modes are a
+           stack?
+[TimeStamp Sun Nov 11 15:00:00 2018]
+[TimeStamp Sun Nov 11 16:00:00 2018]
+[TimeStamp Sun Nov 11 17:00:00 2018]
+[TimeStamp Sun Nov 11 18:00:00 2018]
+[TimeStamp Sun Nov 11 19:00:00 2018]
+[TimeStamp Sun Nov 11 20:00:00 2018]
+[TimeStamp Sun Nov 11 21:00:00 2018]
+[TimeStamp Sun Nov 11 22:00:00 2018]
+[TimeStamp Sun Nov 11 23:00:00 2018]
+[TimeStamp Mon Nov 12 00:00:00 2018]
+[TimeStamp Mon Nov 12 01:00:00 2018]
+[TimeStamp Mon Nov 12 02:00:00 2018]
+[TimeStamp Mon Nov 12 03:00:00 2018]
+[TimeStamp Mon Nov 12 04:00:00 2018]
+[TimeStamp Mon Nov 12 05:00:00 2018]
+[TimeStamp Mon Nov 12 06:00:00 2018]
+[TimeStamp Mon Nov 12 07:00:00 2018]
+[NOTICES ] [07:26am] - KakouneMinion [13kakoune] 15Roger opened pull request #2570:
+          python: add async/await keywords highlighting
+          (06master...06python_add_async_await_keywords)
+          02https://git.io/fpqyV
+[TimeStamp Mon Nov 12 08:00:00 2018]
+[TimeStamp Mon Nov 12 09:00:00 2018]
+[TimeStamp Mon Nov 12 10:00:00 2018]
+[SEND_MSG] [10:39am] - #kakoune Is `*` with just the cursor selected supposed
+           to expand the selection to a word?  I don't understand the docs, I
+           think.
+[SEND_MSG] [10:39am] - #kakoune Or just shrink it?
+[SEND_MSG] [10:48am] - #kakoune ahh
+[SEND_MSG] [10:49am] - #kakoune so it's really "/y then.
+[SEND_MSG] [10:53am] - #kakoune well, right.  I mean, coming from Vim, I
+           expected * to search.  Then I realized it just set "/ but it kept
+           being broken (not taking the whole word), now I realize it's really
+           *just* setting "/ (perhaps adding \b)
+[SEND_MSG] [10:56am] - #kakoune it does seem that, since * has special handling
+           for word boundaries, I should really just map it to <a-i>w"/y . I
+           don't think I every want a word boundary on one side.
+[TimeStamp Mon Nov 12 11:00:00 2018]
+[SEND_MSG] [11:07am] - #kakoune I've been reading about (and working with)
+           production systems, Rete, and datalog a whole bunch, and it seems
+           like it could be a general replacement for a bunch of things in
+           Kakoune - options, highlighters, ... ?
+[SEND_MSG] [11:08am] - #kakoune JosephFerano: Interesting approach.
+[SEND_MSG] [11:10am] - #kakoune I suspect the datalog thing is too difficult to
+           explain, though.
+[TimeStamp Mon Nov 12 12:00:00 2018]
+[TimeStamp Mon Nov 12 13:00:00 2018]
+[TimeStamp Mon Nov 12 14:00:00 2018]
+[TimeStamp Mon Nov 12 15:00:00 2018]
+[NOTICES ] [03:44pm] - KakouneMinion [13kakoune] 15lePerdu opened pull request
+          #2571: Give lua block comments higher match precedence
+          (06master...06fix-lua-comments) 02https://git.io/fpmgC
+[TimeStamp Mon Nov 12 16:00:00 2018]
+[TimeStamp Mon Nov 12 17:00:00 2018]
+[TimeStamp Mon Nov 12 18:00:00 2018]
+[TimeStamp Mon Nov 12 19:00:00 2018]
+[TimeStamp Mon Nov 12 20:00:00 2018]
+[TimeStamp Mon Nov 12 21:00:00 2018]
+[TimeStamp Mon Nov 12 22:00:00 2018]
+[TimeStamp Mon Nov 12 23:00:00 2018]
+[TimeStamp Tue Nov 13 00:00:00 2018]
+[TimeStamp Tue Nov 13 01:00:00 2018]
+[TimeStamp Tue Nov 13 02:00:00 2018]
+[TimeStamp Tue Nov 13 03:00:00 2018]
+[NOTICES ] [03:32am] - KakouneMinion [13kakoune] 15laelath opened pull request
+          #2573: Prototype lazy loading implementation (06master...06lazy-load)
+          02https://git.io/fpYtZ
+[TimeStamp Tue Nov 13 04:00:00 2018]
+[TimeStamp Tue Nov 13 05:00:00 2018]
+[NOTICES ] [05:11am] - KakouneMinion [13kakoune] 15andreyorst opened pull request
+          #2574: fix hex numbers for gas filetype - add missing a-f letters
+          (06master...06gas-hex-fix) 02https://git.io/fpYGQ
+[TimeStamp Tue Nov 13 06:00:00 2018]
+[TimeStamp Tue Nov 13 07:00:00 2018]
+[TimeStamp Tue Nov 13 08:00:00 2018]
+[TimeStamp Tue Nov 13 09:00:00 2018]
+[TimeStamp Tue Nov 13 10:00:00 2018]
+[NOTICES ] [10:20am] - TigerWoods [13golf] 15eraserhd opened pull request #23: Skip
+          one keystroke (making tie) (06master...06attr_aligner-minus-one)
+          02https://git.io/fpYMe
+[TimeStamp Tue Nov 13 11:00:00 2018]
+[SEND_MSG] [11:43am] - #kakoune huh, interesting.  You could do: kak $(git diff
+           --check | cut -d: -f1 |sort -u)
+[SEND_MSG] [11:43am] - #kakoune but there's no switches or anything to disable
+           that
+[SEND_MSG] [11:44am] - #kakoune I wonder if it could detect stdin better.
+[SEND_MSG] [11:45am] - #kakoune I suspect that kakoune actually gets /dev/null
+           for stdin in this case, and it probably just checks for isatty().
+[SEND_MSG] [11:45am] - #kakoune I think *that* scratch buffer is from not
+           having a buffer on the command line
+[SEND_MSG] [11:49am] - #kakoune Yeah, so the `|xargs kak` thing is definitely
+           because stdin is either a tty, or gets read into *stdin*.
+[SEND_MSG] [11:50am] - #kakoune ^^ sounds good
+[SEND_MSG] [11:50am] - #kakoune I'm not sure what to do, except possibly
+           killing *stdin* if it's zero bytes.  I doubt the process knows its
+           input is /dev/null.
+[TimeStamp Tue Nov 13 12:00:00 2018]
+[TimeStamp Tue Nov 13 13:00:00 2018]
+[TimeStamp Tue Nov 13 14:00:00 2018]
+[TimeStamp Tue Nov 13 15:00:00 2018]
+[TimeStamp Tue Nov 13 16:00:00 2018]
+[TimeStamp Tue Nov 13 17:00:00 2018]
+[TimeStamp Tue Nov 13 18:00:00 2018]
+[NOTICES ] [06:24pm] - wolfe.freenode.net *** Looking up your hostname...
+[NOTICES ] [06:24pm] - wolfe.freenode.net *** Checking Ident
+[NOTICES ] [06:24pm] - wolfe.freenode.net *** Couldn't look up your hostname
+[NOTICES ] [06:24pm] - wolfe.freenode.net *** No Ident response
+[SEND_MSG] [06:24pm] - nickserv identify horsenose
+[NOTICES ] [06:24pm] - NickServ This nickname is registered. Please choose a
+          different nickname, or identify via /msg NickServ identify
+          <password>.
+[NOTICES ] [06:24pm] - freenode-connect Due to the persistent ongoing spam, all
+          new connections are being set +R (block messages from unidentified
+          users) and will be scanned for vulnerabilities. This will not harm
+          your computer, and vulnerable hosts will be notified.
+[NOTICES ] [06:24pm] - NickServ You are now identified for eraserhd.
+[TimeStamp Tue Nov 13 19:00:00 2018]
+[TimeStamp Tue Nov 13 20:00:00 2018]
+[TimeStamp Tue Nov 13 21:00:00 2018]
+[TimeStamp Tue Nov 13 22:00:00 2018]
+[TimeStamp Tue Nov 13 23:00:00 2018]
+[TimeStamp Wed Nov 14 00:00:00 2018]
+[TimeStamp Wed Nov 14 01:00:00 2018]
+[NOTICES ] [01:57am] - KakouneMinion [13kakoune] 15mawww pushed 4 new commits to
+          06master: 02https://git.io/fpO1s
+[NOTICES ] [01:57am] - KakouneMinion 13kakoune/06master 14b9ca3ee 15Maxime Coste: Fix
+          column highlighter adding display atoms past the window width
+[NOTICES ] [01:57am] - KakouneMinion 13kakoune/06master 1454d3547 15Maxime Coste: Fix
+          spurious redraw...
+[NOTICES ] [01:57am] - KakouneMinion 13kakoune/06master 14021ba55 15Maxime Coste: Small
+          code tweak in DualThreadStack::swap_next
+[TimeStamp Wed Nov 14 02:00:00 2018]
+[TimeStamp Wed Nov 14 03:00:00 2018]
+[TimeStamp Wed Nov 14 04:00:00 2018]
+[TimeStamp Wed Nov 14 05:00:00 2018]
+[TimeStamp Wed Nov 14 06:00:00 2018]
+[TimeStamp Wed Nov 14 07:00:00 2018]
+[TimeStamp Wed Nov 14 08:00:00 2018]
+[TimeStamp Wed Nov 14 09:00:00 2018]
+[SEND_MSG] [09:50am] - #kakoune hmm, I've been saying "the current project is
+           the name of the tmux window" (and I name kakoune's socket after
+           that), but I think I bounce around a little bit more than that.
+MsgLog ended [Wed Nov 14 09:50:43 2018]
+MsgLog started [Wed Nov 14 10:02:00 2018]
+[TimeStamp Wed Nov 14 11:00:00 2018]
+[TimeStamp Wed Nov 14 12:00:00 2018]
+[TimeStamp Wed Nov 14 13:00:00 2018]
+[TimeStamp Wed Nov 14 14:00:00 2018]
+[TimeStamp Wed Nov 14 15:00:00 2018]
+[TimeStamp Wed Nov 14 16:00:00 2018]
+[SEND_MSG] [04:23pm] - #kakoune How so?  I've not but I'm familiar with it.
+[SEND_MSG] [04:50pm] - #kakoune Ah, so something which hooks shell expansion
+           and piping and sets the environment?
+[SEND_MSG] [04:51pm] - #kakoune I'm not aware of anything, but that doesn't
+           mean there isn't.
+[TimeStamp Wed Nov 14 17:00:00 2018]
+[TimeStamp Wed Nov 14 18:00:00 2018]
+[TimeStamp Wed Nov 14 19:00:00 2018]
+[TimeStamp Wed Nov 14 20:00:00 2018]
+[TimeStamp Wed Nov 14 21:00:00 2018]
+[TimeStamp Wed Nov 14 22:00:00 2018]
+[TimeStamp Wed Nov 14 23:00:00 2018]
+[TimeStamp Thu Nov 15 00:00:00 2018]
+[TimeStamp Thu Nov 15 01:00:00 2018]
+[TimeStamp Thu Nov 15 02:00:00 2018]
+[TimeStamp Thu Nov 15 03:00:00 2018]
+[TimeStamp Thu Nov 15 04:00:00 2018]
+[TimeStamp Thu Nov 15 05:00:00 2018]
+[TimeStamp Thu Nov 15 06:00:00 2018]
+[TimeStamp Thu Nov 15 07:00:00 2018]
+[TimeStamp Thu Nov 15 08:00:00 2018]
+[TimeStamp Thu Nov 15 09:00:00 2018]
+[TimeStamp Thu Nov 15 10:00:00 2018]
+[TimeStamp Thu Nov 15 11:00:00 2018]
+[SEND_MSG] [11:48am] - #kakoune Does Kakoune do anything weird when you just
+           use j/k to move up/down?  This is laggy for me.
+[SEND_MSG] [11:50am] - #kakoune hmm, it doesn't happen on exec 'j', just
+           interactively.
+[SEND_MSG] [11:53am] - #kakoune window display update for
+           'test/twou/centralpark/http_server_test.clj' took 1185 us
+[SEND_MSG] [11:53am] - #kakoune :(
+[SEND_MSG] [11:53am] - #kakoune Oh, those are microseconds, not milliseconds.
+[TimeStamp Thu Nov 15 12:00:00 2018]
+[SEND_MSG] [12:01pm] - #kakoune OK, it's definitely something not being
+           measured with `set global debug profile`; my keyboard repeat rate is
+           set to 30ms, and holding j down for 27 lines moves through 5 or so
+           lines, then jumps to the bottom after a pause.
+[SEND_MSG] [12:37pm] - #kakoune it doesn't happen in Vim (though I found out
+           that 30ms is slower than I thought), it happens only a little with
+           kak -n.
+[TimeStamp Thu Nov 15 13:00:00 2018]
+[TimeStamp Thu Nov 15 14:00:00 2018]
+[TimeStamp Thu Nov 15 15:00:01 2018]
+[TimeStamp Thu Nov 15 16:00:00 2018]
+[TimeStamp Thu Nov 15 17:00:00 2018]
+[TimeStamp Thu Nov 15 18:00:00 2018]
+[TimeStamp Thu Nov 15 19:00:00 2018]
+[TimeStamp Thu Nov 15 20:00:00 2018]
+[TimeStamp Thu Nov 15 21:00:00 2018]
+[TimeStamp Thu Nov 15 22:00:00 2018]
+[TimeStamp Thu Nov 15 23:00:00 2018]
+[TimeStamp Fri Nov 16 00:00:00 2018]
+[TimeStamp Fri Nov 16 01:00:00 2018]
+[TimeStamp Fri Nov 16 02:00:00 2018]
+[TimeStamp Fri Nov 16 03:00:00 2018]
+[TimeStamp Fri Nov 16 04:00:00 2018]
+[TimeStamp Fri Nov 16 05:00:00 2018]
+[TimeStamp Fri Nov 16 06:00:00 2018]
+[TimeStamp Fri Nov 16 07:00:00 2018]
+[NOTICES ] [07:56am] - KakouneMinion [13kakoune] 15JJK96 opened pull request #2577:
+          Make header more visible (06master...06markdown) 02https://git.io/fpZVN
+[TimeStamp Fri Nov 16 08:00:00 2018]
+[TimeStamp Fri Nov 16 09:00:00 2018]
+[TimeStamp Fri Nov 16 10:00:00 2018]
+[TimeStamp Fri Nov 16 11:00:00 2018]
+[TimeStamp Fri Nov 16 12:00:00 2018]
+[TimeStamp Fri Nov 16 13:00:00 2018]
+[TimeStamp Fri Nov 16 14:00:00 2018]
+[SEND_MSG] [02:12pm] - #kakoune I seem to have gamed the kakoune plugin ratings
+           since parinfer-rust has stars for being a good Vim plugin o_O
+[TimeStamp Fri Nov 16 15:00:00 2018]
+[TimeStamp Fri Nov 16 16:00:00 2018]
+[TimeStamp Fri Nov 16 17:00:00 2018]
+[TimeStamp Fri Nov 16 18:00:00 2018]
+[TimeStamp Fri Nov 16 19:00:00 2018]
+[TimeStamp Fri Nov 16 20:00:00 2018]
+[TimeStamp Fri Nov 16 21:00:00 2018]
+[TimeStamp Fri Nov 16 22:00:00 2018]
+[TimeStamp Fri Nov 16 23:00:00 2018]
+[TimeStamp Sat Nov 17 00:00:00 2018]
+[TimeStamp Sat Nov 17 01:00:00 2018]
+[TimeStamp Sat Nov 17 02:00:00 2018]
+[TimeStamp Sat Nov 17 03:00:00 2018]
+[TimeStamp Sat Nov 17 04:00:00 2018]
+[TimeStamp Sat Nov 17 05:00:00 2018]
+[TimeStamp Sat Nov 17 06:00:00 2018]
+[TimeStamp Sat Nov 17 07:00:00 2018]
+[TimeStamp Sat Nov 17 08:00:00 2018]
+[TimeStamp Sat Nov 17 09:00:00 2018]
+[TimeStamp Sat Nov 17 10:00:00 2018]
+[TimeStamp Sat Nov 17 11:00:00 2018]
+[TimeStamp Sat Nov 17 12:00:00 2018]
+[NOTICES ] [12:58pm] - KakouneMinion [13kakoune] 15lenormf opened pull request
+          #2580: contrib: Implement a script to describe sessions
+          (06master...06describe-sessions) 02https://git.io/fpce4
+[TimeStamp Sat Nov 17 13:00:00 2018]
+[TimeStamp Sat Nov 17 14:00:00 2018]
+[TimeStamp Sat Nov 17 15:00:00 2018]
+[TimeStamp Sat Nov 17 16:00:00 2018]
+[TimeStamp Sat Nov 17 17:00:00 2018]
+[TimeStamp Sat Nov 17 18:00:00 2018]
+[TimeStamp Sat Nov 17 19:00:00 2018]
+[TimeStamp Sat Nov 17 20:00:00 2018]
+[TimeStamp Sat Nov 17 21:00:00 2018]
+[TimeStamp Sat Nov 17 22:00:00 2018]
+[TimeStamp Sat Nov 17 23:00:00 2018]
+[TimeStamp Sun Nov 18 00:00:00 2018]
+[TimeStamp Sun Nov 18 01:00:00 2018]
+[TimeStamp Sun Nov 18 02:00:00 2018]
+[TimeStamp Sun Nov 18 03:00:00 2018]
+[TimeStamp Sun Nov 18 04:00:00 2018]
+[TimeStamp Sun Nov 18 05:00:00 2018]
+[TimeStamp Sun Nov 18 06:00:01 2018]
+[TimeStamp Sun Nov 18 07:00:00 2018]
+[TimeStamp Sun Nov 18 08:00:00 2018]
+[TimeStamp Sun Nov 18 09:00:00 2018]
+[TimeStamp Sun Nov 18 10:00:00 2018]
+[TimeStamp Sun Nov 18 11:00:00 2018]
+[TimeStamp Sun Nov 18 12:00:00 2018]
+[TimeStamp Sun Nov 18 13:00:00 2018]
+[TimeStamp Sun Nov 18 14:00:00 2018]
+[TimeStamp Sun Nov 18 15:00:00 2018]
+[TimeStamp Sun Nov 18 16:00:00 2018]
+[TimeStamp Sun Nov 18 17:00:00 2018]
+[TimeStamp Sun Nov 18 18:00:00 2018]
+[TimeStamp Sun Nov 18 19:00:00 2018]
+[TimeStamp Sun Nov 18 20:00:00 2018]
+[TimeStamp Sun Nov 18 21:00:00 2018]
+[TimeStamp Sun Nov 18 22:00:00 2018]
+[TimeStamp Sun Nov 18 23:00:00 2018]
+[TimeStamp Mon Nov 19 00:00:00 2018]
+[NOTICES ] [12:24am] - KakouneMinion [13kakoune] 15andreyorst opened pull request
+          #2583: Added expandtab, noexpandtab and smarttab features
+          (06master...06expandtab) 02https://git.io/fpCez
+[TimeStamp Mon Nov 19 01:00:00 2018]
+[TimeStamp Mon Nov 19 02:00:00 2018]
+[TimeStamp Mon Nov 19 03:00:00 2018]
+[TimeStamp Mon Nov 19 04:00:01 2018]
+[NOTICES ] [04:47am] - TigerWoods [13golf] 15mawww pushed 1 new commit to 06master:
+          02https://git.io/fpCmn
+[NOTICES ] [04:47am] - TigerWoods 13golf/06master 1479fcc0a 15Jason Felice: Skip one
+          keystroke (making tie)
+[NOTICES ] [04:50am] - KakouneMinion [13kakoune] 15andreyorst closed pull request
+          #2583: Added expandtab, noexpandtab and smarttab features
+          (06master...06expandtab) 02https://git.io/fpCez
+[TimeStamp Mon Nov 19 05:00:00 2018]
+[NOTICES ] [05:09am] - KakouneMinion [13kakoune] 15mawww pushed 10 new commits to
+          06master: 02https://git.io/fpCOf
+[NOTICES ] [05:09am] - KakouneMinion 13kakoune/06master 144c68aba 15Delapouite: doc:
+          fix misc typos for source and region highlighter
+[NOTICES ] [05:09am] - KakouneMinion 13kakoune/06master 14b672e7c 15roger: python: add
+          async/await keywords highlighting
+[NOTICES ] [05:09am] - KakouneMinion 13kakoune/06master 143e194fb 15Andrey Orst: fix
+          hex numbers for gas filetype - add missing a-f letters
+[NOTICES ] [05:09am] - KakouneMinion [13kakoune] 15mawww closed pull request #2577:
+          [Markdown] Make header more visible (06master...06markdown)
+          02https://git.io/fpZVN
+[TimeStamp Mon Nov 19 06:00:00 2018]
+[TimeStamp Mon Nov 19 07:00:00 2018]
+[TimeStamp Mon Nov 19 08:00:00 2018]
+[TimeStamp Mon Nov 19 09:00:00 2018]
+[SEND_MSG] [09:24am] - #kakoune g'mornin
+[SEND_MSG] [09:54am] - #kakoune I'm going to Clojure/conj, and there's going to
+           be an unsession on tree-sitter I'll attend.  I'm curious.
+[SEND_MSG] [09:55am] - #kakoune sort -n |head?
+[SEND_MSG] [09:56am] - #kakoune you mean selections_desc?
+[SEND_MSG] [09:57am] - #kakoune Oh, I see.  |tr ' ' '\n' |sort |head -1, but I
+           would probably use a shell function/loop.
+[SEND_MSG] [09:59am] - #kakoune v=-1; for n in $kak_selections_length; do v=$((
+           n > v ? v : n )); done
+[SEND_MSG] [09:59am] - #kakoune That should generally not spawn any other
+           programs or subshells.
+[SEND_MSG] [09:59am] - #kakoune I've reversed the result variables, though.
+[TimeStamp Mon Nov 19 10:00:00 2018]
+[SEND_MSG] [10:14am] - #kakoune alex``: it is POSIX.  All C operators except
+           sizeof() and ++/-- (prefix or postfix) are required to be supported.
+[TimeStamp Mon Nov 19 11:00:00 2018]
+[TimeStamp Mon Nov 19 12:00:00 2018]
+[SEND_MSG] [12:52pm] - #kakoune here makes it work more like Vim:
+           https://github.com/eraserhd/dotfiles/blob/develop/kak/config/kak.syml
+           ink/kakrc#L129-L130
+[SEND_MSG] [12:53pm] - #kakoune Which is the only normal mode override I've
+           made so far.
+[TimeStamp Mon Nov 19 13:00:00 2018]
+[SEND_MSG] [01:00pm] - #kakoune vdl: cool!
+[SEND_MSG] [01:00pm] - #kakoune Some quick greps don't suggest there are any
+           solutions that would benefit from *.
+[TimeStamp Mon Nov 19 14:00:00 2018]
+[TimeStamp Mon Nov 19 15:00:00 2018]
+[TimeStamp Mon Nov 19 16:00:00 2018]
+[TimeStamp Mon Nov 19 17:00:00 2018]
+[TimeStamp Mon Nov 19 18:00:00 2018]
+[TimeStamp Mon Nov 19 19:00:00 2018]
+[TimeStamp Mon Nov 19 20:00:01 2018]
+[TimeStamp Mon Nov 19 21:00:00 2018]
+[TimeStamp Mon Nov 19 22:00:00 2018]
+[TimeStamp Mon Nov 19 23:00:00 2018]
+[TimeStamp Tue Nov 20 00:00:00 2018]
+[TimeStamp Tue Nov 20 01:00:00 2018]
+[TimeStamp Tue Nov 20 02:00:00 2018]
+[TimeStamp Tue Nov 20 03:00:00 2018]
+[TimeStamp Tue Nov 20 04:00:00 2018]
+[TimeStamp Tue Nov 20 05:00:00 2018]
+[TimeStamp Tue Nov 20 06:00:00 2018]
+[TimeStamp Tue Nov 20 07:00:00 2018]
+[TimeStamp Tue Nov 20 08:00:00 2018]
+[TimeStamp Tue Nov 20 09:00:00 2018]
+[TimeStamp Tue Nov 20 10:00:00 2018]
+[TimeStamp Tue Nov 20 11:00:00 2018]
+[TimeStamp Tue Nov 20 12:00:00 2018]
+[TimeStamp Tue Nov 20 13:00:00 2018]
+[TimeStamp Tue Nov 20 14:00:00 2018]
+[TimeStamp Tue Nov 20 15:00:00 2018]
+[TimeStamp Tue Nov 20 16:00:00 2018]
+[TimeStamp Tue Nov 20 17:00:00 2018]
+[TimeStamp Tue Nov 20 18:00:00 2018]
+[NOTICES ] [06:22pm] - leguin.freenode.net *** Looking up your hostname...
+[NOTICES ] [06:22pm] - leguin.freenode.net *** Checking Ident
+[NOTICES ] [06:22pm] - leguin.freenode.net *** Couldn't look up your hostname
+[NOTICES ] [06:22pm] - leguin.freenode.net *** No Ident response
+[SEND_MSG] [06:22pm] - nickserv identify horsenose
+[NOTICES ] [06:22pm] - NickServ This nickname is registered. Please choose a
+          different nickname, or identify via /msg NickServ identify
+          <password>.
+[NOTICES ] [06:22pm] - freenode-connect Due to the persistent ongoing spam, all
+          new connections are being set +R (block messages from unidentified
+          users) and will be scanned for vulnerabilities. This will not harm
+          your computer, and vulnerable hosts will be notified.
+[NOTICES ] [06:22pm] - NickServ You are now identified for eraserhd.
+[TimeStamp Tue Nov 20 19:00:00 2018]
+[TimeStamp Tue Nov 20 20:00:00 2018]
+[TimeStamp Tue Nov 20 21:00:00 2018]
+[TimeStamp Tue Nov 20 22:00:00 2018]
+[TimeStamp Tue Nov 20 23:00:00 2018]
+[TimeStamp Wed Nov 21 00:00:00 2018]
+[TimeStamp Wed Nov 21 01:00:00 2018]
+[TimeStamp Wed Nov 21 02:00:00 2018]
+[TimeStamp Wed Nov 21 03:00:00 2018]
+[TimeStamp Wed Nov 21 04:00:00 2018]
+[TimeStamp Wed Nov 21 05:00:00 2018]
+[NOTICES ] [05:45am] - KakouneMinion [13kakoune] 15lenormf opened pull request
+          #2585: Add a "Community" menu in the navigation bar
+          (06gh-pages...06gh-pages-community-tab) 02https://git.io/fp89d
+[NOTICES ] [05:46am] - KakouneMinion [13kakoune] 15lenormf opened pull request
+          #2586: translate: Auto-detect the local browser language
+          (06gh-pages...06gh-pages-local-lang) 02https://git.io/fp89F
+[TimeStamp Wed Nov 21 06:00:00 2018]
+[TimeStamp Wed Nov 21 07:00:00 2018]
+[TimeStamp Wed Nov 21 08:00:00 2018]
+[TimeStamp Wed Nov 21 09:00:00 2018]
+[SEND_MSG] [09:46am] - #kakoune I wonder if my Kakoune being sluggish lately is
+           because I switched to dash??  That'd be weird.
+[TimeStamp Wed Nov 21 10:00:00 2018]
+[TimeStamp Wed Nov 21 11:00:00 2018]
+[NOTICES ] [11:31am] - KakouneMinion [13kakoune] 15occivink opened pull request
+          #2587: doc: don't pollute command history with mapping (06master...06doc)
+          02https://git.io/fp4nj
+[TimeStamp Wed Nov 21 12:00:00 2018]
+[TimeStamp Wed Nov 21 13:00:00 2018]
+[TimeStamp Wed Nov 21 14:00:00 2018]
+[TimeStamp Wed Nov 21 15:00:00 2018]
+[NOTICES ] [03:05pm] - wolfe.freenode.net *** Looking up your hostname...
+[NOTICES ] [03:05pm] - wolfe.freenode.net *** Checking Ident
+[NOTICES ] [03:05pm] - wolfe.freenode.net *** Couldn't look up your hostname
+[NOTICES ] [03:05pm] - wolfe.freenode.net *** No Ident response
+[SEND_MSG] [03:05pm] - nickserv identify horsenose
+[NOTICES ] [03:05pm] - NickServ This nickname is registered. Please choose a
+          different nickname, or identify via /msg NickServ identify
+          <password>.
+[NOTICES ] [03:05pm] - freenode-connect Due to the persistent ongoing spam, all
+          new connections are being set +R (block messages from unidentified
+          users) and will be scanned for vulnerabilities. This will not harm
+          your computer, and vulnerable hosts will be notified.
+[NOTICES ] [03:05pm] - NickServ You are now identified for eraserhd.
+[TimeStamp Wed Nov 21 16:00:00 2018]
+[TimeStamp Wed Nov 21 17:00:00 2018]
+[NOTICES ] [05:15pm] - wilhelm.freenode.net *** Looking up your hostname...
+[NOTICES ] [05:15pm] - wilhelm.freenode.net *** Checking Ident
+[NOTICES ] [05:15pm] - wilhelm.freenode.net *** Couldn't look up your hostname
+[NOTICES ] [05:15pm] - wilhelm.freenode.net *** No Ident response
+[SEND_MSG] [05:15pm] - nickserv identify horsenose
+[NOTICES ] [05:15pm] - NickServ This nickname is registered. Please choose a
+          different nickname, or identify via /msg NickServ identify
+          <password>.
+[NOTICES ] [05:15pm] - freenode-connect Due to the persistent ongoing spam, all
+          new connections are being set +R (block messages from unidentified
+          users) and will be scanned for vulnerabilities. This will not harm
+          your computer, and vulnerable hosts will be notified.
+[NOTICES ] [05:15pm] - NickServ You are now identified for eraserhd.
+[TimeStamp Wed Nov 21 18:00:00 2018]
+[TimeStamp Wed Nov 21 19:00:00 2018]
+[TimeStamp Wed Nov 21 20:00:00 2018]
+[TimeStamp Wed Nov 21 21:00:00 2018]
+[TimeStamp Wed Nov 21 22:00:00 2018]
+[SEND_MSG] [10:35pm] - #kakoune hullo
+[TimeStamp Wed Nov 21 23:00:00 2018]
+[TimeStamp Thu Nov 22 00:00:00 2018]
+[TimeStamp Thu Nov 22 01:00:00 2018]
+[TimeStamp Thu Nov 22 02:00:00 2018]
+[TimeStamp Thu Nov 22 03:00:00 2018]
+[TimeStamp Thu Nov 22 04:00:00 2018]
+[TimeStamp Thu Nov 22 05:00:00 2018]
+[TimeStamp Thu Nov 22 06:00:00 2018]
+[TimeStamp Thu Nov 22 07:00:00 2018]
+[TimeStamp Thu Nov 22 08:00:00 2018]
+[TimeStamp Thu Nov 22 09:00:00 2018]
+[TimeStamp Thu Nov 22 10:00:00 2018]
+[TimeStamp Thu Nov 22 11:00:00 2018]
+[TimeStamp Thu Nov 22 12:00:00 2018]
+[TimeStamp Thu Nov 22 13:00:00 2018]
+[TimeStamp Thu Nov 22 14:00:00 2018]
+[TimeStamp Thu Nov 22 15:00:00 2018]
+[TimeStamp Thu Nov 22 16:00:00 2018]
+[TimeStamp Thu Nov 22 17:00:00 2018]
+[TimeStamp Thu Nov 22 18:00:00 2018]
+[TimeStamp Thu Nov 22 19:00:00 2018]
+[TimeStamp Thu Nov 22 20:00:00 2018]
+[TimeStamp Thu Nov 22 21:00:00 2018]
+[TimeStamp Thu Nov 22 22:00:00 2018]
+[TimeStamp Thu Nov 22 23:00:00 2018]
+[TimeStamp Fri Nov 23 00:00:00 2018]
+[TimeStamp Fri Nov 23 01:00:00 2018]
+[TimeStamp Fri Nov 23 02:00:00 2018]
+[TimeStamp Fri Nov 23 03:00:00 2018]
+[TimeStamp Fri Nov 23 04:00:00 2018]
+[NOTICES ] [04:14am] - KakouneMinion [13kakoune] 15occivink opened pull request
+          #2591: Add missing newline to 'regions' highlighter description
+          (06master...06missing-newline) 02https://git.io/fpR8O
+[TimeStamp Fri Nov 23 05:00:00 2018]
+[TimeStamp Fri Nov 23 06:00:00 2018]
+[NOTICES ] [06:36am] - KakouneMinion [13kakoune] 15mawww pushed 5 new commits to
+          06master: 02https://git.io/fpR2C
+[NOTICES ] [06:36am] - KakouneMinion 13kakoune/06master 148085800 15Olivier Perret:
+          doc: don't pollute command history with mapping
+[NOTICES ] [06:36am] - KakouneMinion 13kakoune/06master 14576f7b1 15Jimmy Thrasher:
+          Don't highlight Ruby eigenclass definitions as here docs...
+[NOTICES ] [06:36am] - KakouneMinion 13kakoune/06master 14052eccd 15Olivier Perret: Add
+          missing newline to 'regions' highlighter description
+[NOTICES ] [06:36am] - KakouneMinion [13kakoune] 15mawww closed pull request #2587:
+          doc: don't pollute command history with mapping (06master...06doc)
+          02https://git.io/fp4nj
+[TimeStamp Fri Nov 23 07:00:00 2018]
+[TimeStamp Fri Nov 23 08:00:00 2018]
+[TimeStamp Fri Nov 23 09:00:00 2018]
+[TimeStamp Fri Nov 23 10:00:00 2018]
+[TimeStamp Fri Nov 23 11:00:00 2018]
+[TimeStamp Fri Nov 23 12:00:00 2018]
+[TimeStamp Fri Nov 23 13:00:00 2018]
+[TimeStamp Fri Nov 23 14:00:00 2018]
+[TimeStamp Fri Nov 23 15:00:00 2018]
+[TimeStamp Fri Nov 23 16:00:00 2018]
+[SEND_MSG] [04:24pm] - #kakoune woot!  The horrible parinfer performance
+           problems were solved by using a naive diffing algorithm!
+[TimeStamp Fri Nov 23 17:00:00 2018]
+[TimeStamp Fri Nov 23 18:00:00 2018]
+[TimeStamp Fri Nov 23 19:00:00 2018]
+[SEND_MSG] [07:51pm] - #kakoune Hmm, there's no way to trigger NormalIdle from
+           exec/eval, so I can't use kakoune's test runner to test my plugin,
+           AFAICT.
+[SEND_MSG] [07:53pm] - #kakoune It'd be nice if there was a run-hook command or
+           something.
+[SEND_MSG] [07:59pm] - #kakoune huh, I'm overthinking it as usual... I can just
+           run the hook commands, I think.
+[TimeStamp Fri Nov 23 20:00:00 2018]
+[TimeStamp Fri Nov 23 21:00:00 2018]
+[TimeStamp Fri Nov 23 22:00:00 2018]
+[TimeStamp Fri Nov 23 23:00:00 2018]
+[NOTICES ] [11:23pm] - KakouneMinion [13kakoune] 15dpc opened pull request #2593:
+          Include a simple `.cquery` file (06master...06dotcquery)
+          02https://git.io/fp0Zr
+[NOTICES ] [11:31pm] - KakouneMinion [13kakoune] 15dpc closed pull request #2593:
+          Include a simple `.cquery` file (06master...06dotcquery)
+          02https://git.io/fp0Zr
+[TimeStamp Sat Nov 24 00:00:00 2018]
+[SEND_MSG] [12:11am] - #kakoune dpc: yup
+[SEND_MSG] [12:11am] - #kakoune Pretty nice one, IMHO.
+[SEND_MSG] [12:12am] - #kakoune So, I really really want an expansion with the
+           buffer's contents.  Is this a thing that has been discussed before?
+[SEND_MSG] [12:13am] - #kakoune No, I mean a %val{buffer_contents} and
+           $kak_buffer_contents, for example.
+[SEND_MSG] [12:14am] - #kakoune Which I can get from $kak_selection after '%',
+           but I need to pass both the contents and selection info to
+           parinfer-rust.
+[SEND_MSG] [12:18am] - #kakoune :)  ... well, right, this happens on every
+           keystroke tho.
+[SEND_MSG] [12:18am] - #kakoune Two version of the entire buffer, in fact.
+[SEND_MSG] [12:19am] - #kakoune shachaf: I kind of don't want to clobber any
+           registers, as this is a plugin.
+[SEND_MSG] [12:19am] - #kakoune dbc: because in Kakoune, having no selection is
+           an error.
+[SEND_MSG] [12:19am] - #kakoune yes
+[SEND_MSG] [12:20am] - #kakoune Does it do something in a catch?
+[SEND_MSG] [12:23am] - #kakoune Hmm, is it because you are in insert mode when
+           the completion menu is up, so without that, you couldn't insert
+           whitespace?
+[SEND_MSG] [12:24am] - #kakoune oh, still backward, huh? I dunno.
+[SEND_MSG] [12:49am] - #kakoune shachaf: Oh, I guess I can do that.  It's a bit
+           easier than making an option.
+[TimeStamp Sat Nov 24 01:00:00 2018]
+[TimeStamp Sat Nov 24 02:00:00 2018]
+[TimeStamp Sat Nov 24 03:00:00 2018]
+[TimeStamp Sat Nov 24 04:00:00 2018]
+[TimeStamp Sat Nov 24 05:00:00 2018]
+[TimeStamp Sat Nov 24 06:00:00 2018]
+[TimeStamp Sat Nov 24 07:00:00 2018]
+[TimeStamp Sat Nov 24 08:00:00 2018]
+[TimeStamp Sat Nov 24 09:00:00 2018]
+[TimeStamp Sat Nov 24 10:00:00 2018]
+[TimeStamp Sat Nov 24 11:00:00 2018]
+[TimeStamp Sat Nov 24 12:00:00 2018]
+[TimeStamp Sat Nov 24 13:00:00 2018]
+[TimeStamp Sat Nov 24 14:00:00 2018]
+[TimeStamp Sat Nov 24 15:00:00 2018]
+[TimeStamp Sat Nov 24 16:00:00 2018]
+[TimeStamp Sat Nov 24 17:00:00 2018]
+[TimeStamp Sat Nov 24 18:00:00 2018]
+[TimeStamp Sat Nov 24 19:00:00 2018]
+[TimeStamp Sat Nov 24 20:00:00 2018]
+[TimeStamp Sat Nov 24 21:00:00 2018]
+[TimeStamp Sat Nov 24 22:00:00 2018]
+[TimeStamp Sat Nov 24 23:00:00 2018]
+[SEND_MSG] [11:11pm] - #kakoune asciinema of Kakoune with Parinfer!!
+           https://asciinema.org/a/iMxZ19c4caRQ3rdc17yzYnfYd
+[SEND_MSG] [11:11pm] - #kakoune Going to record and upload about three more, I
+           think.
+[SEND_MSG] [11:14pm] - #kakoune Indenting and dedenting with < and > with
+           parinfer in Clojure (so it automatically fixes braces).
+[SEND_MSG] [11:14pm] - #kakoune It does everything you see here:
+           http://shaunlebron.github.io/parinfer/ ... I'm just recording doing
+           it in Kakoune.
+[SEND_MSG] [11:21pm] - #kakoune dpc: Until today, it had bad performance issues
+           and and parinfer_enabled was off by default.  You should update!
+[SEND_MSG] [11:21pm] - #kakoune Screw
+[SEND_MSG] [11:21pm] - #kakoune Screwtape: it's a port to rust of a thing for
+           Lisp.
+[SEND_MSG] [11:22pm] - #kakoune It was originally written in JavaScript, and
+           that was not usable realtime from Vim.
+[SEND_MSG] [11:23pm] - #kakoune it was written in pure JavaScript, with a
+           little nodejs thunk and it was used that way in a bunch of editors.
+[SEND_MSG] [11:24pm] - #kakoune it was designed for Lisp, since Lisp has a
+           property where indentation and parentheses must match.
+[SEND_MSG] [11:25pm] - #kakoune It has sort of the opposite approach to
+           paredit, which doesn't allow you to edit parentheses because you
+           have to work with lisp structural objects.
+[SEND_MSG] [11:26pm] - #kakoune Parinfer is neat because most of the things
+           paredit does just emerge, like slurp and barf.
+[SEND_MSG] [11:28pm] - #kakoune well, the trick here is that the structure is
+           always encoded twice hence "infer".  I don't think that's true for
+           Python.  I mean,  you know the line after a : is indented, but you
+           don't know the line after that.
+[SEND_MSG] [11:31pm] - #kakoune Yea, sorry :D
+[SEND_MSG] [11:31pm] - #kakoune If I could stop hacking on Kakoune plugins,
+           it's what I write 40 hours a week.
+[SEND_MSG] [11:32pm] - #kakoune Yeah, the name is unfortunate, I guess.  I'm
+           bad at naming things.
+[SEND_MSG] [11:35pm] - #kakoune
+           https://asciinema.org/a/6U5weRwpisGFsqNwoL4bFLpyB <-- this is the
+           cool one, I think
+[SEND_MSG] [11:37pm] - #kakoune eh, the problem is that that ship has sunk...
+           78 stars and a lot of Vim users.
+[SEND_MSG] [11:40pm] - #kakoune You can, I think it will break people who have
+           it cloned in their bundle directory.  Maybe I'm wrong?
+[SEND_MSG] [11:40pm] - #kakoune I know it redirects your web when you rename.
+[SEND_MSG] [11:41pm] - #kakoune OK. I'm updating the README now.
+[SEND_MSG] [11:43pm] - #kakoune First line after title: "Infer parentheses for
+           Clojure, Lisp, and Scheme".
+[SEND_MSG] [11:43pm] - #kakoune Ahhh.  Right.  And that's not really the
+           interesting bit to users.
+[SEND_MSG] [11:44pm] - #kakoune Rust, I mean.
+[SEND_MSG] [11:45pm] - #kakoune
+           https://asciinema.org/a/QrZ06KsfxOBNMD8DUt7u6bbgD <-- maybe this is
+           the cool one?
+[SEND_MSG] [11:47pm] - #kakoune (The error is something with the Kakoune
+           wrapper code.  I left it in for honesty's sake.)
+[TimeStamp Sun Nov 25 00:00:00 2018]
+[NOTICES ] [12:04am] - KakouneMinion [13kakoune] 15dpc opened pull request #2595:
+          Change slightly how `x`/`X` works (06master...06line_editing)
+          02https://git.io/fp0bp
+[TimeStamp Sun Nov 25 01:00:00 2018]
+[NOTICES ] [01:33am] - KakouneMinion [13kakoune] 15lenormf opened pull request
+          #2596: src: Build options to compile with sanitizers
+          (06master...06clang-sanitizers) 02https://git.io/fp0An
+[TimeStamp Sun Nov 25 02:00:00 2018]
+[TimeStamp Sun Nov 25 03:00:00 2018]
+[TimeStamp Sun Nov 25 04:00:00 2018]
+[TimeStamp Sun Nov 25 05:00:00 2018]
+[TimeStamp Sun Nov 25 06:00:00 2018]
+[TimeStamp Sun Nov 25 07:00:00 2018]
+[NOTICES ] [07:01am] - KakouneMinion [13kakoune] 15mawww pushed 2 new commits to
+          06gh-pages: 02https://git.io/fpEfZ
+[NOTICES ] [07:01am] - KakouneMinion 13kakoune/06gh-pages 149a6c39c 15Frank LENORMAND:
+          translate: Auto-detect the local browser language...
+[NOTICES ] [07:01am] - KakouneMinion 13kakoune/06gh-pages 143bf0195 15Maxime Coste:
+          Merge remote-tracking branch 'lenormf/gh-pages-local-lang' into
+          gh-pages
+[NOTICES ] [07:02am] - KakouneMinion [13kakoune] 15mawww pushed 12 new commits to
+          06master: 02https://git.io/fpEfc
+[NOTICES ] [07:02am] - KakouneMinion 13kakoune/06master 140b8899d 15Frank LENORMAND:
+          src: Rename `auto_complete` to `autocomplete`...
+[NOTICES ] [07:02am] - KakouneMinion 13kakoune/06master 1421e93eb 15Frank LENORMAND:
+          doc: Fixed a typo in the changelog
+[NOTICES ] [07:02am] - KakouneMinion 13kakoune/06master 14f088dd9 15Muffindrake: Update
+          C grammar...
+[NOTICES ] [07:02am] - KakouneMinion [13kakoune] 15mawww closed pull request #2560:
+          rc c-family: Update C grammar (06master...06c_stdint)
+          02https://git.io/fpTZt
+[TimeStamp Sun Nov 25 08:00:00 2018]
+[TimeStamp Sun Nov 25 09:00:00 2018]
+[NOTICES ] [09:11am] - KakouneMinion [13kakoune] 15occivink opened pull request
+          #2597: [WIP] Implement a scrollbar highlighter (06master...06scrollbar)
+          02https://git.io/fpEkV
+[TimeStamp Sun Nov 25 10:00:00 2018]
+[TimeStamp Sun Nov 25 11:00:00 2018]
+[SEND_MSG] [11:34am] - #kakoune it would be nice to set ncurses_set_title=false
+           and set the window title to *just* the filename.  AFAICT, there's no
+           way to get raw access to the terminal during shell expansion. 
+           There's not a $kak_client_TTY or anything.  Ideas?
+[TimeStamp Sun Nov 25 12:00:00 2018]
+[SEND_MSG] [12:25pm] - #kakoune hmm, yeah.
+[TimeStamp Sun Nov 25 13:00:00 2018]
+[TimeStamp Sun Nov 25 14:00:00 2018]
+[TimeStamp Sun Nov 25 15:00:00 2018]
+[TimeStamp Sun Nov 25 16:00:00 2018]
+[TimeStamp Sun Nov 25 17:00:00 2018]
+[TimeStamp Sun Nov 25 18:00:00 2018]
+[TimeStamp Sun Nov 25 19:00:00 2018]
+[TimeStamp Sun Nov 25 20:00:00 2018]
+[TimeStamp Mon Nov 26 00:20:03 2018]
+[TimeStamp Mon Nov 26 02:21:11 2018]
+[TimeStamp Mon Nov 26 07:34:46 2018]
+[TimeStamp Mon Nov 26 08:40:34 2018]
+[TimeStamp Tue Nov 27 09:22:39 2018]
+[TimeStamp Tue Nov 27 10:18:21 2018]
+[TimeStamp Tue Nov 27 11:00:00 2018]
+[TimeStamp Tue Nov 27 12:00:00 2018]
+[NOTICES ] [12:22pm] - orwell.freenode.net *** Looking up your hostname...
+[NOTICES ] [12:22pm] - orwell.freenode.net *** Checking Ident
+[NOTICES ] [12:22pm] - orwell.freenode.net *** Found your hostname
+[NOTICES ] [12:22pm] - orwell.freenode.net *** No Ident response
+[SEND_MSG] [12:22pm] - nickserv identify horsenose
+[NOTICES ] [12:22pm] - NickServ This nickname is registered. Please choose a
+          different nickname, or identify via /msg NickServ identify
+          <password>.
+[NOTICES ] [12:22pm] - freenode-connect Due to the persistent ongoing spam, all
+          new connections are being set +R (block messages from unidentified
+          users) and will be scanned for vulnerabilities. This will not harm
+          your computer, and vulnerable hosts will be notified.
+[NOTICES ] [12:22pm] - NickServ You are now identified for eraserhd.
+[TimeStamp Tue Nov 27 13:00:00 2018]
+[TimeStamp Tue Nov 27 14:00:00 2018]
+[TimeStamp Tue Nov 27 15:00:00 2018]
+[TimeStamp Tue Nov 27 16:00:00 2018]
+[NOTICES ] [04:34pm] - barjavel.freenode.net *** Looking up your hostname...
+[NOTICES ] [04:34pm] - barjavel.freenode.net *** Checking Ident
+[NOTICES ] [04:34pm] - barjavel.freenode.net *** Found your hostname
+[NOTICES ] [04:34pm] - barjavel.freenode.net *** No Ident response
+[SEND_MSG] [04:34pm] - nickserv identify horsenose
+[NOTICES ] [04:34pm] - NickServ This nickname is registered. Please choose a
+          different nickname, or identify via /msg NickServ identify
+          <password>.
+[NOTICES ] [04:34pm] - freenode-connect Due to the persistent ongoing spam, all
+          new connections are being set +R (block messages from unidentified
+          users) and will be scanned for vulnerabilities. This will not harm
+          your computer, and vulnerable hosts will be notified.
+[NOTICES ] [04:34pm] - NickServ You are now identified for eraserhd.
+[NOTICES ] [04:51pm] - KakouneMinion [13kakoune] 15occivink opened pull request
+          #2603: Setup language cleanup hooks only during initialization
+          (06master...06cleanup-hook-once) 02https://git.io/fpgK4
+[TimeStamp Tue Nov 27 18:57:24 2018]
+[NOTICES ] [07:37pm] - tolkien.freenode.net *** Looking up your hostname...
+[NOTICES ] [07:37pm] - tolkien.freenode.net *** Checking Ident
+[NOTICES ] [07:37pm] - tolkien.freenode.net *** Found your hostname
+[NOTICES ] [07:37pm] - tolkien.freenode.net *** No Ident response
+[SEND_MSG] [07:37pm] - nickserv identify horsenose
+[NOTICES ] [07:37pm] - NickServ This nickname is registered. Please choose a
+          different nickname, or identify via /msg NickServ identify
+          <password>.
+[NOTICES ] [07:37pm] - freenode-connect Due to the persistent ongoing spam, all
+          new connections are being set +R (block messages from unidentified
+          users) and will be scanned for vulnerabilities. This will not harm
+          your computer, and vulnerable hosts will be notified.
+[NOTICES ] [07:37pm] - NickServ You are now identified for eraserhd.
+[SEND_MSG] [07:46pm] - nickserv identify horsenose
+[NOTICES ] [07:46pm] - NickServ This nickname is registered. Please choose a
+          different nickname, or identify via /msg NickServ identify
+          <password>.
+[NOTICES ] [07:46pm] - freenode-connect Due to the persistent ongoing spam, all
+          new connections are being set +R (block messages from unidentified
+          users) and will be scanned for vulnerabilities. This will not harm
+          your computer, and vulnerable hosts will be notified.
+[NOTICES ] [07:46pm] - NickServ You are now identified for eraserhd.
+[TimeStamp Tue Nov 27 20:00:00 2018]
+[TimeStamp Tue Nov 27 21:00:00 2018]
+[TimeStamp Tue Nov 27 22:00:00 2018]
+[TimeStamp Wed Nov 28 00:31:16 2018]
+[TimeStamp Wed Nov 28 01:25:29 2018]
+[TimeStamp Wed Nov 28 03:13:51 2018]
+[TimeStamp Wed Nov 28 06:08:42 2018]
+[TimeStamp Wed Nov 28 07:37:42 2018]
+[TimeStamp Wed Nov 28 08:42:43 2018]
+[TimeStamp Wed Nov 28 09:00:00 2018]
+[TimeStamp Wed Nov 28 10:00:00 2018]
+[NOTICES ] [10:47am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:47am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:47am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:47am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:47am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:47am] - wolfe.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:47am] - wolfe.freenode.net *** Checking Ident
+[NOTICES ] [10:47am] - wolfe.freenode.net *** Couldn't look up your hostname
+[NOTICES ] [10:47am] - wolfe.freenode.net *** No Ident response
+[NOTICES ] [10:47am] - wolfe.freenode.net *** Notice -- You need to identify
+          via SASL to use this server
+[NOTICES ] [10:47am] - leguin.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:47am] - leguin.freenode.net *** Checking Ident
+[NOTICES ] [10:47am] - leguin.freenode.net *** Couldn't look up your hostname
+[NOTICES ] [10:47am] - leguin.freenode.net *** No Ident response
+[NOTICES ] [10:47am] - leguin.freenode.net *** Notice -- You need to identify
+          via SASL to use this server
+[NOTICES ] [10:47am] - orwell.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:47am] - orwell.freenode.net *** Checking Ident
+[NOTICES ] [10:47am] - orwell.freenode.net *** Found your hostname
+[NOTICES ] [10:47am] - orwell.freenode.net *** No Ident response
+[NOTICES ] [10:47am] - orwell.freenode.net *** Notice -- You need to identify
+          via SASL to use this server
+[NOTICES ] [10:47am] - card.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:47am] - card.freenode.net *** Checking Ident
+[NOTICES ] [10:47am] - card.freenode.net *** Found your hostname
+[NOTICES ] [10:48am] - card.freenode.net *** No Ident response
+[NOTICES ] [10:48am] - card.freenode.net *** Notice -- You need to identify via
+          SASL to use this server
+[NOTICES ] [10:48am] - livingstone.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:48am] - livingstone.freenode.net *** Checking Ident
+[NOTICES ] [10:48am] - livingstone.freenode.net *** No Ident response
+[NOTICES ] [10:48am] - livingstone.freenode.net *** Found your hostname
+[NOTICES ] [10:48am] - livingstone.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:48am] - tepper.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:48am] - tepper.freenode.net *** Checking Ident
+[NOTICES ] [10:48am] - tepper.freenode.net *** Found your hostname
+[NOTICES ] [10:48am] - tepper.freenode.net *** No Ident response
+[NOTICES ] [10:48am] - tepper.freenode.net *** Notice -- You need to identify
+          via SASL to use this server
+[NOTICES ] [10:48am] - cherryh.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:48am] - cherryh.freenode.net *** Checking Ident
+[NOTICES ] [10:48am] - cherryh.freenode.net *** Found your hostname
+[NOTICES ] [10:48am] - cherryh.freenode.net *** No Ident response
+[NOTICES ] [10:48am] - cherryh.freenode.net *** Notice -- You need to identify
+          via SASL to use this server
+[NOTICES ] [10:48am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:48am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:48am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:48am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:48am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:48am] - orwell.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:48am] - orwell.freenode.net *** Checking Ident
+[NOTICES ] [10:48am] - orwell.freenode.net *** Found your hostname
+[NOTICES ] [10:48am] - orwell.freenode.net *** No Ident response
+[NOTICES ] [10:48am] - orwell.freenode.net *** Notice -- You need to identify
+          via SASL to use this server
+[NOTICES ] [10:48am] - card.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:48am] - card.freenode.net *** Checking Ident
+[NOTICES ] [10:48am] - card.freenode.net *** Found your hostname
+[NOTICES ] [10:49am] - card.freenode.net *** No Ident response
+[NOTICES ] [10:49am] - card.freenode.net *** Notice -- You need to identify via
+          SASL to use this server
+[NOTICES ] [10:49am] - livingstone.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:49am] - livingstone.freenode.net *** Checking Ident
+[NOTICES ] [10:49am] - livingstone.freenode.net *** Found your hostname
+[NOTICES ] [10:49am] - livingstone.freenode.net *** No Ident response
+[NOTICES ] [10:49am] - livingstone.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:49am] - tepper.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:49am] - tepper.freenode.net *** Checking Ident
+[NOTICES ] [10:49am] - tepper.freenode.net *** Found your hostname
+[NOTICES ] [10:49am] - tepper.freenode.net *** No Ident response
+[NOTICES ] [10:49am] - tepper.freenode.net *** Notice -- You need to identify
+          via SASL to use this server
+[NOTICES ] [10:49am] - cherryh.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:49am] - cherryh.freenode.net *** Checking Ident
+[NOTICES ] [10:49am] - cherryh.freenode.net *** Found your hostname
+[NOTICES ] [10:49am] - cherryh.freenode.net *** No Ident response
+[NOTICES ] [10:49am] - cherryh.freenode.net *** Notice -- You need to identify
+          via SASL to use this server
+[NOTICES ] [10:49am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:49am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:49am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:49am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:49am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:49am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:49am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:49am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:49am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:49am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:50am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:50am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:50am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:50am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:50am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:50am] - orwell.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:50am] - orwell.freenode.net *** Checking Ident
+[NOTICES ] [10:50am] - orwell.freenode.net *** Found your hostname
+[NOTICES ] [10:50am] - orwell.freenode.net *** No Ident response
+[NOTICES ] [10:50am] - orwell.freenode.net *** Notice -- You need to identify
+          via SASL to use this server
+[NOTICES ] [10:50am] - livingstone.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:50am] - livingstone.freenode.net *** Checking Ident
+[NOTICES ] [10:50am] - livingstone.freenode.net *** Found your hostname
+[NOTICES ] [10:50am] - livingstone.freenode.net *** No Ident response
+[NOTICES ] [10:50am] - livingstone.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:50am] - card.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:50am] - card.freenode.net *** Checking Ident
+[NOTICES ] [10:50am] - card.freenode.net *** Found your hostname
+[NOTICES ] [10:50am] - card.freenode.net *** No Ident response
+[NOTICES ] [10:50am] - card.freenode.net *** Notice -- You need to identify via
+          SASL to use this server
+[NOTICES ] [10:50am] - cherryh.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:50am] - cherryh.freenode.net *** Checking Ident
+[NOTICES ] [10:50am] - cherryh.freenode.net *** Found your hostname
+[NOTICES ] [10:50am] - cherryh.freenode.net *** No Ident response
+[NOTICES ] [10:50am] - cherryh.freenode.net *** Notice -- You need to identify
+          via SASL to use this server
+[NOTICES ] [10:50am] - tepper.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:50am] - tepper.freenode.net *** Checking Ident
+[NOTICES ] [10:50am] - tepper.freenode.net *** Found your hostname
+[NOTICES ] [10:51am] - tepper.freenode.net *** No Ident response
+[NOTICES ] [10:51am] - tepper.freenode.net *** Notice -- You need to identify
+          via SASL to use this server
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:51am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:52am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:53am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:54am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:55am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:56am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:57am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:58am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [10:59am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [11:00am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [11:01am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [11:01am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [11:01am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [11:01am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [11:01am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [11:01am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [11:01am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [11:01am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [11:01am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [11:01am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [11:01am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [11:01am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [11:01am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+[NOTICES ] [11:01am] - kornbluth.freenode.net *** No Ident response
+[NOTICES ] [11:01am] - kornbluth.freenode.net *** Notice -- You need to
+          identify via SASL to use this server
+[NOTICES ] [11:01am] - kornbluth.freenode.net *** Looking up your hostname...
+[NOTICES ] [11:01am] - kornbluth.freenode.net *** Checking Ident
+[NOTICES ] [11:01am] - kornbluth.freenode.net *** Couldn't look up your
+          hostname
+MsgLog ended [Wed Nov 28 11:01:37 2018]
+MsgLog started [Mon Dec  3 09:50:00 2018]
+[SEND_MSG] [09:57am] - #kakoune This year it felt a bit more Cognitect-y to me.
+            They announced a bunch of things.  I skipped a bunch of AI talks
+           which I plan to watch on youtube, so maybe I'm just making that up.
+[SEND_MSG] [09:58am] - #kakoune I'm there.  I mean, it's probably not in the
+           states right?
+[SEND_MSG] [09:58am] - #kakoune So I shouldn't promise that yet.
+[TimeStamp Mon Dec  3 10:00:00 2018]
+[SEND_MSG] [10:16am] - #kakoune rschulman: is that literally blockchain
+           messaging?
+[SEND_MSG] [10:17am] - #kakoune heh, well I didn't get to the history
+           resolution part yet :D
+[SEND_MSG] [10:18am] - #kakoune wait, does it have a curses-based client?
+[SEND_MSG] [10:18am] - #kakoune cause that would solve like six problems for
+           me, if it does.
+[SEND_MSG] [10:21am] - #kakoune (and it does!)
+[SEND_MSG] [10:24am] - #kakoune Hmm, now I'll have to see if I can connect it
+           to my work Slack, which has 2FA.
+MsgLog ended [Mon Dec  3 10:36:20 2018]
