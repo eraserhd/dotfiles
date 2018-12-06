@@ -35,7 +35,7 @@ IRCSERVER=irc.freenode.net
 PATH=~/.cargo/bin:~/.local/bin:$GOPATH/bin:~/.cabal/bin:"$PATH"
 PS1='[\u@\h \W$(__git_ps1 "(%s)")]$ '
 VAULT_ADDR=https://vault.prod.2u.com:8200/
-VAULT_CACERT=$HOME/src/ops-terraform/consul-classic/ansible/creds/vault-ca.pem
+VAULT_CACERT=$HOME/src/ops-terraform/consul-vpc/policies/vault-ca.pem
 
 export CDPATH CLICOLOR EDITOR ELI_ENV GOPATH IRCNICK IRCSERVER KAKOUNE_POSIX_SHELL
 export PATH PS1 VAULT_ADDR VAULT_CACERT
