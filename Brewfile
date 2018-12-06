@@ -17,11 +17,13 @@ cask 'slack'
 cask 'spotify'
 
 brew 'python'
+brew 'python@2'
 
 brew 'asciidoc'
 brew 'autossh'
 brew 'awscli'
 brew 'bash-completion'
+brew 'brew-pip'
 brew 'chezscheme'
 brew 'dash'
 brew 'dialog'
@@ -50,7 +52,7 @@ brew 'tmate'
 brew 'tmux'
 brew 'vault'
 brew 'vim', args: ['HEAD']
-brew 'weechat'
+brew 'weechat', args: ['with-python@2']
 brew 'wget'
 brew 'z'
 
