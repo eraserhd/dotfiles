@@ -13,5 +13,8 @@ accounts_to_reconcile() {
 
 list=$(wl lists -j |jq '.[] |select(.title == "inbox") |.id')
 accounts_to_reconcile |while read account; do
+    if [[ -z $account ]]; then
+        continue
+    fi
     wl create-task --listID=$list --starred=true --dueDate="$(date '+%Y-%m-%d')" --title="Reconcile $account" >/dev/null
 done
