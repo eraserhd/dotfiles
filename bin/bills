@@ -1,0 +1,17 @@
+#!/bin/sh
+
+accounts_to_reconcile() {
+    sed -n '/^\.Accounts to Reconcile/,/^$/{
+        /^\[/d
+        /^[^|]/d
+        /^|===/d
+        /^| /d
+        s/^|//
+        p
+    }' ~/src/data/accounts.asciidoc
+}
+
+list=$(wl lists -j |jq '.[] |select(.title == "inbox") |.id')
+accounts_to_reconcile |while read account; do
+    wl create-task --listID=$list --starred=true --dueDate="$(date '+%Y-%m-%d')" --title="Reconcile $account" >/dev/null
+done
