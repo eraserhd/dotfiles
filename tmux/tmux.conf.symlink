@@ -73,6 +73,7 @@ bind -Tpane-menu 6 select-pane -t 6
 bind -Tpane-menu 7 select-pane -t 7
 bind -Tpane-menu 8 select-pane -t 8
 bind -Tpane-menu 9 select-pane -t 9
+bind -Tpane-menu a select-window -t 0 \; select-pane -t 0
 bind -Tpane-menu h select-pane -L
 bind -Tpane-menu j select-pane -D
 bind -Tpane-menu k select-pane -U
