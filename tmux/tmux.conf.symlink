@@ -157,3 +157,5 @@ setw -g window-status-activity-style fg=white,dim
 # Monitor windows for activity
 setw -g monitor-activity on
 set -g visual-activity on
+
+run -b '~/.tmux/plugins/tpm/tpm'

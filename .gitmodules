@@ -85,3 +85,6 @@
 [submodule "kak/config/kak.symlink/autoload/kak-ansi"]
 	path = kak/config/kak.symlink/autoload/kak-ansi
 	url = git@github.com:eraserhd/kak-ansi.git
+[submodule "tmux/tmux.symlink/plugins/tpm"]
+	path = tmux/tmux.symlink/plugins/tpm
+	url = git@github.com:tmux-plugins/tpm.git
