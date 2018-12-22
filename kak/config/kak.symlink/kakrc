@@ -118,11 +118,6 @@ define-command \
 
 map global user o ': open-nearest-link<ret>'
 
-# LSP
-# ‾‾‾
-
-evaluate-commands %sh{kak-lsp --kakoune -s "${kak_session}"}
-
 # Normal Mode
 # ‾‾‾‾‾‾‾‾‾‾‾
 
