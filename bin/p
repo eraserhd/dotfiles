@@ -15,7 +15,7 @@ project_directory() {
 }
 
 project_todo() {
-    printf '%s\n' ~/src/data/"$1"-todo.md
+    printf '%s\n' ~/src/data/"$1"-todo.edn
 }
 
 project="$1"
@@ -45,7 +45,7 @@ else
 
     todo="$(project_todo "$project")"
     if [[ ! -f $todo ]]; then
-        printf '# TODO\n\n' >"$todo"
+        printf '#net.eraserhead.productivity/task-list\n[]\n' >"$todo"
     fi
     tmux split-window -b -v -c "${project_dir}" -l15 reattach-to-user-namespace kak -c "${project}" "$todo"
     exec kak -c "${project}"
