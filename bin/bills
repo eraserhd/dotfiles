@@ -1,20 +1,18 @@
-#!/bin/sh
+#!/usr/bin/env clj
+(require '[clojure.string :as s])
+(require '[clojure.java.shell :refer [sh]])
 
-accounts_to_reconcile() {
-    sed -n '/^\.Accounts to Reconcile/,/^$/{
-        /^\[/d
-        /^[^|]/d
-        /^|===/d
-        /^| /d
-        s/^|//
-        p
-    }' ~/src/data/accounts.asciidoc
-}
+(defn- accounts-to-reconcile []
+  (read-string (slurp (str (System/getProperty "user.home") "/src/data/accounts.edn"))))
 
-list=$(wl lists -j |jq '.[] |select(.title == "inbox") |.id')
-accounts_to_reconcile |while read account; do
-    if [[ -z $account ]]; then
-        continue
-    fi
-    wl create-task --listID=$list --starred=true --dueDate="$(date '+%Y-%m-%d')" --title="Reconcile $account" >/dev/null
-done
+(def now (let [fmt (java.text.SimpleDateFormat. "yyyy-mm-dd")]
+           (.format fmt (java.util.Date.))))
+(def list-id (s/trimr (:out (sh "/bin/sh" "-c" "wl lists -j |jq '.[] |select(.title == \"inbox\") |.id'"))))
+
+(doseq [{:keys [:bank-account/name]} (accounts-to-reconcile)]
+  (sh "/bin/sh" "-c" (format "wl create-task --listID=\"%s\" --starred=true --dueDate=\"%s\" --title=\"Reconcile %s\""
+                             list-id
+                             now
+                             name)))
+
+(System/exit 0)
