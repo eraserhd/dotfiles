@@ -26,7 +26,7 @@ osascript -e '
   git add -A
   git commit -m daily || true
   git pull --rebase || true
-  git push origin master || true
+  git push origin develop || true
 )
 
 daily-due-today
