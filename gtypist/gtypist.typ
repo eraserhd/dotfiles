@@ -1,6 +1,5 @@
-*:MIDDLE
-D:#d3Ec# c#Ec3 d# #e *k8I, <k8,*kK <*i8*
-D:#d3Ec# *k8I, c#Ec3 <*i8*d# <k8,*kK #e
+*:RPINKY
+D:;P/|0-p\:'?)_ -)|?0\:_pP';/ 0\;?_p'P)/:-| _)p:P;|'-\?0/ _'/)P;-|:\p?0 :')\/Pp|-;0_? 0-|:_;\)/'?Pp -/_?;)p|P\:0'
 *:BOTTOMROW
 D:vxz xmv, mcz vmv cmvcm zcxz. vz xvzxz cv mv mz xvmz vxmz czvc, vxc mvc xmz. mcmc, zvx vmxc xm vm, vz
 D:zvxm zv zxvcm, zmzm, cmc mc xz, mzmvz cvm vmc zmvm vm vx cxmc zx zmczx vzc zvzx zmvxm zc. vzvm vzm.
