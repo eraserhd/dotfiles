@@ -1,0 +1,38 @@
+eraserhd's dotfiles
+===================
+
+The organization and a lot of scripts were stolen from https://github.com/holman/dotfiles.
+
+Manual Installation Steps (Still)
+---------------------------------
+
+- Install developer tools (clone https:// URL prompted me)
+- Run git clone again
+- manually install homebrew by running the line in script/boostrap
+- Manually brew install 1Password
+- Scan code from phone code
+- brew install gnupg
+- gpg --import --allow-secret-key-import private-key.txt # downloaded from 1Password
+- gpg --import public-key.txt # downloaded from 1Password
+- brew install git-crypt
+- Had to restart Google Chrome (already installed by IT) for 1Password to work
+- Needed to use SMS for 2FA for 2u Google
+- git crypt unlock (working directory needed to be clean, needed to git reset --hard from failed git submodule update)
+- Run ssh/install.sh works!
+- Alacritty did not work, because cargo was not installed (rustup doesn't install stable)
+- Run `rustup-init`, select 1) default install.
+- Needed to source ~/.bash_profile to get cargo in the path
+- rustup-init added a line to ~/.bash_profile which was already there, git reset --hard
+- Destination `alacritty` already exists and is not an empty directory
+- alacritty build script needed to be fixed for when alacritty was already checked out in ~/src
+- Switch remote to git@github.com:eraserhd/dotfiles.git ('cause we now have SSH).
+- Found no ~/src/data, reran git/install.sh by itself. "authenticity of host 'eraserhead.net (nn.nn." from SSH!) Why?
+- java wasn't installed, but cask thoght it was.  brew cask reinstall java worked.
+- 1p, needed to "Enable integration with 3rd Party Apps", then in Alfred,
+  click around to get that stuff back.
+
+App Store
+---------
+
+* Better Snap Tool
+* Wunderlist
