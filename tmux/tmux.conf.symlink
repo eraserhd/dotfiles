@@ -78,9 +78,21 @@ bind -Tpane-menu h select-pane -L
 bind -Tpane-menu j select-pane -D
 bind -Tpane-menu k select-pane -U
 bind -Tpane-menu l select-pane -R
-bind -Tpane-menu m select-pane -m
-bind -Tpane-menu M select-pane -M
 bind -Tpane-menu p select-pane -t !
+
+# C-w s N - swap current with pane N
+bind -Tpane-menu s switch-client -Tswap-pane-menu
+bind -Tswap-pane-menu 0 swap-pane -t 0
+bind -Tswap-pane-menu 1 swap-pane -t 1
+bind -Tswap-pane-menu 2 swap-pane -t 2
+bind -Tswap-pane-menu 3 swap-pane -t 3
+bind -Tswap-pane-menu 4 swap-pane -t 4
+bind -Tswap-pane-menu 5 swap-pane -t 5
+bind -Tswap-pane-menu 6 swap-pane -t 6
+bind -Tswap-pane-menu 7 swap-pane -t 7
+bind -Tswap-pane-menu 8 swap-pane -t 8
+bind -Tswap-pane-menu 9 swap-pane -t 9
+bind -Tswap-pane-menu p swap-pane -t !
 
 # Make our own copy-mode with Kakoune!
 bind -Tpane-menu N run-shell 'tmux set-buffer -b copy-pane-id "#D"' \; \
