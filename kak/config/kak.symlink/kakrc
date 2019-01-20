@@ -112,6 +112,103 @@ Takes all the same switches as edit.} \
     }
 }
 
+# Layout
+# ‾‾‾‾‾‾
+
+declare-option -hidden str-list tmux_client_info
+
+define-command -hidden tmux-visit-client %{
+    evaluate-commands %sh{
+        if [ -n "${kak_client_env_TMUX}" ] && [ -n "${kak_client_env_TMUX_PANE}" ]; then
+            printf 'set-option -add global tmux_client_info %%{%s} %%{%s} %%{%s}\n' "${kak_client}" "${kak_client_env_TMUX}" "${kak_client_env_TMUX_PANE}"
+        fi
+    }
+}
+
+define-command -hidden tmux-collect-client-info %{
+    set-option global tmux_client_info
+    evaluate-commands %sh{
+        for client in ${kak_client_list}; do
+            printf 'evaluate-commands -client "%s" tmux-visit-client\n' "${client}"
+        done
+    }
+}
+
+define-command update-client-options %{
+    tmux-collect-client-info
+    evaluate-commands %sh{
+        toolsclient=
+        toolsclient_left=-1
+        toolsclient_top=999999
+
+        # Best client for tools client is upper-righthand corner
+        eval set -- "${kak_opt_tmux_client_info}"
+        while [ $# -gt 0 ]; do
+            client="$1"; shift
+            TMUX="$1"; shift
+            TMUX_PANE="$1"; shift
+            export TMUX TMUX_PANE
+
+            pane_position=$(tmux display-message -t "${TMUX_PANE}" -p -F '#{pane_top}.#{pane_left}')
+            pane_top="${pane_position%.*}"
+            pane_left="${pane_position#*.}"
+
+            accept=no
+            if [ $pane_left -gt $toolsclient_left ]; then
+                accept=yes
+            elif [ $pane_left -eq $toolsclient_left ] && [ $pane_top -lt $toolsclient_top ]; then
+                accept=yes
+            fi
+
+            if [ $accept = yes ]; then
+                toolsclient=$client
+                toolsclient_left=$pane_left
+                toolsclient_top=$pane_top
+            fi
+        done
+
+        jumpclient=
+        jumpclient_left=-1
+        jumpclient_top=999999
+
+        # Best client for jumpclient is just to left of toolsclient
+        eval set -- "${kak_opt_tmux_client_info}"
+        while [ $# -gt 0 ]; do
+            client="$1"; shift
+            TMUX="$1"; shift
+            TMUX_PANE="$1"; shift
+            export TMUX TMUX_PANE
+
+            pane_position=$(tmux display-message -t "${TMUX_PANE}" -p -F '#{pane_top}.#{pane_left}')
+            pane_top="${pane_position%.*}"
+            pane_left="${pane_position#*.}"
+
+            accept=no
+            if [ $pane_left -lt $toolsclient_left ] && [ $pane_left -gt $jumpclient_left ]; then
+                accept=yes
+            elif [ $pane_left -eq $jumpclient_left ] && [ $pane_top -lt $jumpclient_top ]; then
+                accept=yes
+            fi
+
+            if [ $accept = yes ]; then
+                jumpclient=$client
+                jumpclient_left=$pane_left
+                jumpclient_top=$pane_top
+            fi
+        done
+
+        if [ -n "$toolsclient" ]; then
+            printf 'set-option global toolsclient "%s"\n' "$toolsclient"
+            printf 'set-option global docsclient "%s"\n' "$toolsclient"
+        fi
+        if [ -n "$jumpclient" ]; then
+            printf 'set-option global jumpclient "%s"\n' "$jumpclient"
+        fi
+    }
+}
+
+hook -group client-tracker global NormalIdle .* update-client-options
+
 # Open Nearest Link
 # ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
