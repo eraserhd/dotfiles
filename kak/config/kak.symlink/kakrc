@@ -247,9 +247,9 @@ define-command \
     evaluate-commands -save-regs 'sf' %{
         set-register f ''
         execute-keys '"sZ'
-        try %{ execute-keys %{<a-a>c(?:#_|#\?|[#@`'])?\(,\)<ret>"fZ} }
+        try %{ execute-keys %{<a-a>c(?:#\?@?\s*|[#@`']\s*)?\(,\)<ret>"fZ} }
         try %{ execute-keys '"sz<a-a>r"f<a-Z>-' }
-        try %{ execute-keys '"sz<a-a>B"f<a-Z>-' }
+        try %{ execute-keys '"sz<a-a>c(?:#|\^\s*)?\{,\}<ret>"f<a-Z>-' }
         try %{
             execute-keys '"fz<a-:>'
         } catch %{
