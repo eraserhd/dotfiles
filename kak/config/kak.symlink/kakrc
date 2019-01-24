@@ -241,19 +241,45 @@ map global normal <a-*> '<a-i>w"/y<a-n>'
 define-command \
     -override \
     -params 0..0 \
-    -docstring 'select Clojure form' \
-    clojure-select-whole-form %{
-    evaluate-commands -save-regs 'sf' %{
-        set-register f ''
+    -docstring %{Clojure form object
+Sets the 'w' register to the whole form and 'i' to inside the form.} \
+    clojure-form-object %{
+    evaluate-commands -save-regs 's' %{
         execute-keys '"sZ'
-        try %{ execute-keys %{<a-a>c(?:#\?@?\s*|[#@`']\s*)?\(,\)<ret>"fZ} }
-        try %{ execute-keys '"sz<a-a>r"f<a-Z>-' }
-        try %{ execute-keys '"sz<a-a>c(?:#|\^\s*)?\{,\}<ret>"f<a-Z>-' }
+        try %{ execute-keys %{<a-a>c(?:#\?@?\s*|[#@`']\s*)?\(,\)<ret>} '"wZ' }
+        try %{ execute-keys '"sz<a-a>r' '"w<a-Z>-' }
+        try %{ execute-keys '"sz<a-a>c(?:#|\^\s*)?\{,\}<ret>' '"w<a-Z>-' }
         try %{
-            execute-keys '"fz<a-:>'
+            execute-keys -draft '"wz'
         } catch %{
             fail 'no Clojure form at cursor'
         }
+        try %{
+            execute-keys '"wz' 's\A(?:' \
+                %<(?:#\?@?\s*|[#@`']\s*)?\(\K.*(?=\))> '|' \
+                %<\[\K.*(?=\])> '|' \
+                %<(?:#|\^\s*)?\{\K.*(?=\}))> \
+                ')<ret>' '"iZ'
+        }
+        execute-keys '"sz'
+    }
+}
+
+define-command -params 0..0 -docstring 'select whole Clojure form' clojure-select-whole-form %{
+    evaluate-commands -save-regs 'wi' %{
+        set-register w ''
+        set-register i ''
+        clojure-form-object
+        execute-keys '"wz<a-:>'
+    }
+}
+
+define-command -override -params 0..0 -docstring 'select inside Clojure form' clojure-select-inside-form %{
+    evaluate-commands -save-regs 'wi' %{
+        set-register w ''
+        set-register i ''
+        clojure-form-object
+        execute-keys '"iz<a-:>'
     }
 }
 
