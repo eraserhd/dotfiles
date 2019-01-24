@@ -199,7 +199,6 @@ define-command update-client-options %{
 
         if [ -n "$toolsclient" ]; then
             printf 'set-option global toolsclient "%s"\n' "$toolsclient"
-            printf 'set-option global docsclient "%s"\n' "$toolsclient"
         fi
         if [ -n "$jumpclient" ]; then
             printf 'set-option global jumpclient "%s"\n' "$jumpclient"
