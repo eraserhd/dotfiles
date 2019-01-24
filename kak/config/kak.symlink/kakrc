@@ -265,22 +265,21 @@ Sets the 'w' register to the whole form and 'i' to inside the form.} \
     }
 }
 
-define-command -params 0..0 -docstring 'select whole Clojure form' clojure-select-whole-form %{
+define-command -params 2 execute-text-object %{
     evaluate-commands -save-regs 'wi' %{
         set-register w ''
         set-register i ''
-        clojure-form-object
-        execute-keys '"wz<a-:>'
+        %arg{1}
+        execute-keys '"' %arg{2} 'wz<a-:>'
     }
 }
 
-define-command -override -params 0..0 -docstring 'select inside Clojure form' clojure-select-inside-form %{
-    evaluate-commands -save-regs 'wi' %{
-        set-register w ''
-        set-register i ''
-        clojure-form-object
-        execute-keys '"iz<a-:>'
-    }
+define-command -params 0..0 -docstring 'select whole Clojure form' clojure-select-whole-form %{
+    execute-text-object clojure-form-object w
+}
+
+define-command -params 0..0 -docstring 'select inside Clojure form' clojure-select-inside-form %{
+    execute-text-object clojure-form-object i
 }
 
 define-command \
