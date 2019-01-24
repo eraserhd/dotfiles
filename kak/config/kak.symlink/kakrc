@@ -240,21 +240,42 @@ map global normal <a-*> '<a-i>w"/y<a-n>'
 # ‾‾‾‾‾‾‾
 
 define-command \
+    -override \
+    -params 0..0 \
+    -docstring 'select Clojure form' \
+    clojure-select-whole-form %{
+    evaluate-commands -save-regs 'sf' %{
+        set-register f ''
+        execute-keys '"sZ'
+        try %{ execute-keys %{<a-a>c(?:#_|#\?|[#@`'])?\(,\)<ret>"fZ} }
+        try %{ execute-keys '"sz<a-a>r"f<a-Z>-' }
+        try %{ execute-keys '"sz<a-a>B"f<a-Z>-' }
+        try %{
+            execute-keys '"fz<a-:>'
+        } catch %{
+            fail 'no Clojure form at cursor'
+        }
+    }
+}
+
+define-command \
+    -override \
     -params 0..0 \
     -docstring 'select top-level Clojure form' \
-    clojure-select-toplevel-form %{
+    clojure-select-whole-toplevel-form %{
     try %{
-        execute-keys '<a-a>b'
-        try clojure-select-toplevel-form
+        clojure-select-whole-form
+        try clojure-select-whole-toplevel-form
     } catch %{
         execute-keys 'm'
     } catch %{
-        fail 'no top-level form here'
+        fail 'no Clojure top-level form here'
     }
     execute-keys '<a-:>'
 }
 
 hook global WinSetOption filetype=clojure %{
     set-option window indentwidth 2
-    map -docstring 'top-level Clojure form' window object t '<esc>: clojure-select-toplevel-form<ret>'
+    map -docstring 'Clojure form'           window object f '<esc>: clojure-select-whole-form<ret>'
+    map -docstring 'top-level Clojure form' window object t '<esc>: clojure-select-whole-toplevel-form<ret>'
 }
