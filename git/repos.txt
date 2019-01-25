@@ -5,3 +5,4 @@ git@github.com:eraserhd/ehk.git
 git@github.com:eraserhd/git-zeal.git
 git@github.com:eraserhd/qmk_firmware.git
 git@github.com:eraserhd/suggest-commit.git
+git@github.com:alexhebro2/objectify.kak.git

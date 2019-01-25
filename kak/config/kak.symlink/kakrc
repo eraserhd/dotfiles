@@ -306,6 +306,11 @@ define-command -params 0..0 -docstring 'select inside Clojure form' clojure-sele
     execute-text-object clojure-form-object i
 }
 
+define-command -hidden clojure-form-object-handler %{ objectify %{
+    '<a-a>' clojure-select-whole-form
+    '<a-i>' clojure-select-inside-form
+} }
+
 define-command \
     -override \
     -params 0..0 \
@@ -324,6 +329,6 @@ define-command \
 
 hook global WinSetOption filetype=clojure %{
     set-option window indentwidth 2
-    map -docstring 'Clojure form'           window object f '<esc>: clojure-select-whole-form<ret>'
+    map -docstring 'Clojure form'           window object f '<esc>: clojure-form-object-handler<ret>'
     map -docstring 'top-level Clojure form' window object t '<esc>: clojure-select-whole-toplevel-form<ret>'
 }
