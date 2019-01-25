@@ -289,26 +289,71 @@ Sets the 'w' register to the whole form and 'i' to inside the form.} \
     }
 }
 
-define-command -override -params 2 execute-text-object %{
+# execute-text-object <object-command> <reg> <dir> <merge-type>
+define-command -override -params 4 execute-text-object %{
     evaluate-commands -save-regs 'wi' %{
         set-register w ''
         set-register i ''
         %arg{1}
-        execute-keys '"' %arg{2} 'z<a-:>'
+        execute-keys '"' %arg{2} %arg{4} %arg{3}
     }
 }
 
-define-command -params 0..0 -docstring 'select whole Clojure form' clojure-select-whole-form %{
-    execute-text-object clojure-form-object w
+define-command define-object-commands -params 0.. %{
+    evaluate-commands %sh{
+        object_command="$1"
+        prefix="${1%%-*}"
+        name="${1%-object}"
+        name="${name#*-}"
+        for method in select extend; do
+            for scope in whole inside; do
+                for ends in start end both; do
+                    cmd="${prefix}-${method}"
+                    if ! [ $ends = both ]; then
+                        cmd="${cmd}-to"
+                    fi
+                    cmd="${cmd}-${scope}-${name}"
+                    if ! [ $ends = both ]; then
+                        cmd="${cmd}-${ends}"
+                    fi
+
+                    reg=w
+                    if [ $scope = inside ]; then
+                        reg=i
+                    fi
+
+                    dir='<a-:>'
+                    if [ $ends = start ]; then
+                        dir='<a-:><a-;>'
+                    fi
+
+                    merge_type=z
+                    if [ $method = extend ]; then
+                        merge_type='<a-z>u'
+                    fi
+
+                    printf 'define-command -params 0 %s %%{\n' "$cmd"
+                    printf '    execute-text-object "%s" "%s" %%{%s} %%{%s}\n' "$object_command" "$reg" "$dir" "$merge_type"
+                    printf '}\n'
+                done
+            done
+        done
+    }
 }
 
-define-command -params 0..0 -docstring 'select inside Clojure form' clojure-select-inside-form %{
-    execute-text-object clojure-form-object i
-}
+define-object-commands clojure-form-object
 
 define-command -hidden clojure-form-object-handler %{ objectify %{
     '<a-a>' clojure-select-whole-form
+    '[' clojure-select-to-whole-form-start
+    ']' clojure-select-to-whole-form-end
+    '{' clojure-extend-to-whole-form-start
+    '}' clojure-extend-to-whole-form-end
     '<a-i>' clojure-select-inside-form
+    '<a-[>' clojure-select-to-inside-form-start
+    '<a-]>' clojure-select-to-inside-form-end
+    '<a-{>' clojure-extend-to-inside-form-start
+    '<a-}>' clojure-extend-to-inside-form-end
 } }
 
 define-command \
