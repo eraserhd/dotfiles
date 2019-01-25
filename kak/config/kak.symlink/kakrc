@@ -289,16 +289,6 @@ Sets the 'w' register to the whole form and 'i' to inside the form.} \
     }
 }
 
-# execute-text-object <object-command> <reg> <dir> <merge-type>
-define-command -override -params 4 execute-text-object %{
-    evaluate-commands -save-regs 'wi' %{
-        set-register w ''
-        set-register i ''
-        %arg{1}
-        execute-keys '"' %arg{2} %arg{4} %arg{3}
-    }
-}
-
 define-command define-object-commands -params 0.. %{
     evaluate-commands %sh{
         object_command="$1"
@@ -327,34 +317,63 @@ define-command define-object-commands -params 0.. %{
                         dir='<a-:><a-;>'
                     fi
 
-                    merge_type=z
+                    merge_keys=z
                     if [ $method = extend ]; then
-                        merge_type='<a-z>u'
+                        merge_keys='<a-z>u'
                     fi
 
-                    printf 'define-command -params 0 %s %%{\n' "$cmd"
-                    printf '    execute-text-object "%s" "%s" %%{%s} %%{%s}\n' "$object_command" "$reg" "$dir" "$merge_type"
-                    printf '}\n'
+                    filter=''
+                    if [ $ends = start ]; then
+                        filter="
+                            execute-keys '\"sZ\"oz'
+                            evaluate-commands -itersel -save-regs x %{
+                                execute-keys '\"xZGk\"x<a-z>i'
+                            }
+                            execute-keys '\"oZ\"sz'
+                        "
+                    elif [ $ends = end ]; then
+                        filter="
+                            execute-keys '\"sZ\"oz'
+                            evaluate-commands -itersel -save-regs x %{
+                                execute-keys '\"xZGj<a-L>\"x<a-z>i'
+                            }
+                            execute-keys '\"oZ\"sz'
+                        "
+                    fi
+
+                    printf '%s\n' "
+                        define-command -params 0 ${cmd} %{
+                            evaluate-commands -save-regs 'wios' %{
+                                set-register w ''
+                                set-register i ''
+                                ${object_command}
+                                set-register o %reg{${reg}}
+                                ${filter}
+                                execute-keys '\"o${merge_keys}' '${dir}'
+                            }
+                        }
+                        "
                 done
             done
         done
+        printf '%s\n' "
+            define-command -hidden -params 0 ${object_command}-handler %{ objectify %{
+                '<a-a>' ${prefix}-select-whole-${name}
+                '['     ${prefix}-select-to-whole-${name}-start
+                ']'     ${prefix}-select-to-whole-${name}-end
+                '{'     ${prefix}-extend-to-whole-${name}-start
+                '}'     ${prefix}-extend-to-whole-${name}-end
+                '<a-i>' ${prefix}-select-inside-${name}
+                '<a-[>' ${prefix}-select-to-inside-${name}-start
+                '<a-]>' ${prefix}-select-to-inside-${name}-end
+                '<a-{>' ${prefix}-extend-to-inside-${name}-start
+                '<a-}>' ${prefix}-extend-to-inside-${name}-end
+            } }
+            "
     }
 }
 
 define-object-commands clojure-form-object
-
-define-command -hidden clojure-form-object-handler %{ objectify %{
-    '<a-a>' clojure-select-whole-form
-    '[' clojure-select-to-whole-form-start
-    ']' clojure-select-to-whole-form-end
-    '{' clojure-extend-to-whole-form-start
-    '}' clojure-extend-to-whole-form-end
-    '<a-i>' clojure-select-inside-form
-    '<a-[>' clojure-select-to-inside-form-start
-    '<a-]>' clojure-select-to-inside-form-end
-    '<a-{>' clojure-extend-to-inside-form-start
-    '<a-}>' clojure-extend-to-inside-form-end
-} }
 
 define-command \
     -override \
