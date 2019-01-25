@@ -197,6 +197,30 @@ define-command update-client-options %{
             fi
         done
 
+        # REPL pane is in the lower, right-hand corner
+        repl_pane=
+        repl_pane_left=-1
+        repl_pane_top=-1
+        tmux list-panes -F '#{pane_top} #{pane_left} #{pane_id}' | {
+            while read pane_top pane_left pane_id; do
+                accept=no
+                if [ $pane_left -gt $repl_pane_left ]; then
+                    accept=yes
+                elif [ $pane_left -eq $repl_pane_left ] && [ $pane_top -gt $repl_pane_top ]; then
+                    accept=yes
+                fi
+
+                if [ $accept = yes ]; then
+                    repl_pane="$pane_id"
+                    repl_pane_left=$pane_left
+                    repl_pane_top=$pane_top
+                fi
+            done
+            if [ -n "$repl_pane" ]; then
+                printf 'set-option global tmux_repl_id %%{%s}\n' "$repl_pane"
+            fi
+        }
+
         if [ -n "$toolsclient" ]; then
             printf 'set-option global toolsclient "%s"\n' "$toolsclient"
         fi
@@ -265,12 +289,12 @@ Sets the 'w' register to the whole form and 'i' to inside the form.} \
     }
 }
 
-define-command -params 2 execute-text-object %{
+define-command -override -params 2 execute-text-object %{
     evaluate-commands -save-regs 'wi' %{
         set-register w ''
         set-register i ''
         %arg{1}
-        execute-keys '"' %arg{2} 'wz<a-:>'
+        execute-keys '"' %arg{2} 'z<a-:>'
     }
 }
 
