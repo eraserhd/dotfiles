@@ -262,22 +262,14 @@ map global normal <a-*> '<a-i>w"/y<a-n>'
 # Clojure
 # ‾‾‾‾‾‾‾
 
-define-command \
-    -override \
-    -params 0..0 \
-    -docstring %{Clojure form object
-Sets the 'w' register to the whole form and 'i' to inside the form.} \
+define-command -params 0 -docstring %{Clojure form object
+Expects %reg{s} to be the input selection.  Sets %reg{w} to the whole form and
+%reg{i} to inside the form.} \
     clojure-form-object %{
-    evaluate-commands -save-regs 's' %{
-        execute-keys '"sZ'
+    evaluate-commands -draft %{
         try %{ execute-keys %{<a-a>c(?:#\?@?\s*|[#@`']\s*)?\(,\)<ret>} '"wZ' }
         try %{ execute-keys '"sz<a-a>r' '"w<a-Z>-' }
         try %{ execute-keys '"sz<a-a>c(?:#|\^\s*)?\{,\}<ret>' '"w<a-Z>-' }
-        try %{
-            execute-keys -draft '"wz'
-        } catch %{
-            fail 'no Clojure form at cursor'
-        }
         try %{
             execute-keys '"wz' 's\A(?:' \
                 %<(?:#\?@?\s*|[#@`']\s*)?\(\K.*(?=\))> '|' \
@@ -285,11 +277,10 @@ Sets the 'w' register to the whole form and 'i' to inside the form.} \
                 %<(?:#|\^\s*)?\{\K.*(?=\}))> \
                 ')<ret>' '"iZ'
         }
-        execute-keys '"sz'
     }
 }
 
-define-command define-object-commands -params 0.. %{
+define-command define-object-commands -params 1 %{
     evaluate-commands %sh{
         object_command="$1"
         prefix="${1%%-*}"
@@ -306,28 +297,24 @@ define-command define-object-commands -params 0.. %{
                     if ! [ $ends = both ]; then
                         cmd="${cmd}-${ends}"
                     fi
-
                     reg=w
                     if [ $scope = inside ]; then
                         reg=i
                     fi
-
                     dir='<a-:>'
                     if [ $ends = start ]; then
                         dir='<a-:><a-;>'
                     fi
-
                     merge_keys=z
                     if [ $method = extend ]; then
                         merge_keys='<a-z>u'
                     fi
-
                     filter=''
                     if [ $ends = start ]; then
                         filter="
                             execute-keys '\"sZ\"oz'
                             evaluate-commands -itersel -save-regs x %{
-                                execute-keys '\"xZGk\"x<a-z>i'
+                                execute-keys '\"xZ\"s<a-z>iGk\"x<a-z>i'
                             }
                             execute-keys '\"oZ\"sz'
                         "
@@ -335,17 +322,17 @@ define-command define-object-commands -params 0.. %{
                         filter="
                             execute-keys '\"sZ\"oz'
                             evaluate-commands -itersel -save-regs x %{
-                                execute-keys '\"xZGj<a-L>\"x<a-z>i'
+                                execute-keys '\"xZ\"s<a-z>iGj<a-L>\"x<a-z>i'
                             }
                             execute-keys '\"oZ\"sz'
                         "
                     fi
-
-                    printf '%s\n' "
+                    printf %s "
                         define-command -params 0 ${cmd} %{
                             evaluate-commands -save-regs 'wios' %{
-                                set-register w ''
-                                set-register i ''
+                                set-register w
+                                set-register i
+                                execute-keys '\"sZ'
                                 ${object_command}
                                 set-register o %reg{${reg}}
                                 ${filter}
@@ -356,7 +343,7 @@ define-command define-object-commands -params 0.. %{
                 done
             done
         done
-        printf '%s\n' "
+        printf %s "
             define-command -hidden -params 0 ${object_command}-handler %{ objectify %{
                 '<a-a>' ${prefix}-select-whole-${name}
                 '['     ${prefix}-select-to-whole-${name}-start
