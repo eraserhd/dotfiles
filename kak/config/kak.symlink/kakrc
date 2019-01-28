@@ -267,10 +267,19 @@ Expects %reg{s} to be the input selection.  Sets %reg{w} to the whole form and
 %reg{i} to inside the form.} \
     clojure-form-object %{
     evaluate-commands -draft %{
+        # (), w/leaders for reader conditionals, quote
         try %{ execute-keys %{"sz<a-a>c(?:#\?@?\s*|[#@`']\s*)?\(,\)<ret>} '"wZ' }
-        try %{ execute-keys '"sz<a-a>r' '"w<a-Z>-' }
-        try %{ execute-keys '"sz<a-a>c(?:#|#:[^\s()\[\]{}"\\\\%/]+\s*|\^\s*)?\{,\}<ret>' '"w<a-Z>-' }
+        # [], w/leaders for tagged literals
+        try %{ execute-keys '"sz<a-a>c(?:#[^\s()\[\]{}"\\\\%/]+(?:/[^\s()\[\]{}"\\\\%/]+)?\s*)?\[,\]<ret>' '"w<a-Z>-' }
+        # {}, w/leaders for 1. sets, 2. tagged literals, 3. namespaced maps, 4. metadata
+        try %{ execute-keys '"sz<a-a>c(?:' \
+            '#|' \
+            '#[^\s()\[\]{}"\\\\%/]+(?:/[^\s()\[\]{}"\\\\%/]+)?\s*|' \
+            '#:[^\s()\[\]{}"\\\\%/]+\s*|' \
+            '\^\s*' \
+            ')?\{,\}<ret>' '"w<a-Z>-' }
         try %{
+            # Shrink "i from "a (needs to handle all leaders above)
             execute-keys '"wz' 's\A(?:' \
                 %<(?:#\?@?\s*|[#@`']\s*)?\(\K.*(?=\))> '|' \
                 %<\[\K.*(?=\])> '|' \
