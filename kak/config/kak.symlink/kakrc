@@ -267,7 +267,7 @@ Expects %reg{s} to be the input selection.  Sets %reg{w} to the whole form and
 %reg{i} to inside the form.} \
     clojure-form-object %{
     evaluate-commands -draft %{
-        try %{ execute-keys %{<a-a>c(?:#\?@?\s*|[#@`']\s*)?\(,\)<ret>} '"wZ' }
+        try %{ execute-keys %{"sz<a-a>c(?:#\?@?\s*|[#@`']\s*)?\(,\)<ret>} '"wZ' }
         try %{ execute-keys '"sz<a-a>r' '"w<a-Z>-' }
         try %{ execute-keys '"sz<a-a>c(?:#|\^\s*)?\{,\}<ret>' '"w<a-Z>-' }
         try %{
@@ -277,6 +277,35 @@ Expects %reg{s} to be the input selection.  Sets %reg{w} to the whole form and
                 %<(?:#|\^\s*)?\{\K.*(?=\}))> \
                 ')<ret>' '"iZ'
         }
+    }
+}
+
+define-command -hidden clojure-toplevel-form-object-helper %{
+    set-register s %reg{w}
+    clojure-form-object
+    try %{
+        execute-keys -draft '"wz'
+        set-register x %reg{w}
+        set-register j %reg{i}
+        evaluate-commands %sh{
+            if ! [ "$kak_reg_w" = "$kak_reg_s" ]; then
+                echo clojure-toplevel-form-object-helper
+            fi
+        }
+    }
+}
+
+define-command -params 0 -docstring %{Clojure top-level form object
+Expects %reg{s} to be the input selection.  Sets %reg{w} to the whole form and
+%reg{i} to inside the form.} \
+    clojure-toplevel-form-object %{
+    clojure-form-object
+    evaluate-commands -save-regs sxj %{
+        set-register x %reg{w}
+        set-register j %reg{i}
+        clojure-toplevel-form-object-helper
+        set-register w %reg{x}
+        set-register i %reg{j}
     }
 }
 
@@ -361,25 +390,10 @@ define-command define-object-commands -params 1 %{
 }
 
 define-object-commands clojure-form-object
-
-define-command \
-    -override \
-    -params 0..0 \
-    -docstring 'select top-level Clojure form' \
-    clojure-select-whole-toplevel-form %{
-    try %{
-        clojure-select-whole-form
-        try clojure-select-whole-toplevel-form
-    } catch %{
-        execute-keys 'm'
-    } catch %{
-        fail 'no Clojure top-level form here'
-    }
-    execute-keys '<a-:>'
-}
+define-object-commands clojure-toplevel-form-object
 
 hook global WinSetOption filetype=clojure %{
     set-option window indentwidth 2
     map -docstring 'Clojure form'           window object f '<esc>: clojure-form-object-handler<ret>'
-    map -docstring 'top-level Clojure form' window object t '<esc>: clojure-select-whole-toplevel-form<ret>'
+    map -docstring 'top-level Clojure form' window object t '<esc>: clojure-toplevel-form-object-handler<ret>'
 }
