@@ -6,17 +6,9 @@ source_if_exists() {
   fi
 }
 
-if [[ -f /usr/local/opt/nvm/nvm.sh ]]
-then
-  source "/usr/local/opt/nvm/nvm.sh"
-  export NVM_DIR="$HOME/.nvm"
-fi
-
-if command -v brew >/dev/null
-then
-  brew_prefix=$(brew --prefix)
+brew_prefix="$(command -v brew 2>/dev/null)"
+if [ -n "${brew_prefix}" ]; then
   source_if_exists "${brew_prefix}/etc/bash_completion"
-  source_if_exists "${brew_prefix}/etc/profile.d/z.sh"
 fi
 
 if ! command -v __git_ps1 >/dev/null
