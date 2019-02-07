@@ -321,10 +321,14 @@ define-command -override -params 1 -docstring %{Clojure element} \
             --print err,2,%{err} \
             --print value,2,%{value}%n \
             "$kak_opt_clojure_buffer_contents" )"
+        # selection is anchor,cursor
         if [ -n "$selection" ]; then
             case "$kak_opt_objectify_last_object" in
-                "["|"{"|"<a-[>"|"<a-{>") selection="${cursor_line}.${cursor_column},${selection%,*}";;
-                "]"|"}"|"<a-]>"|"<a-}>") selection="${cursor_line}.${cursor_column},${selection#*,}";;
+                "["|"<a-[>"|"{"|"<a-{>") selection="${selection#*,},${selection%,*}";; # }} <-- balance braces
+            esac
+            case "$kak_opt_objectify_last_object" in
+                "{"|"<a-{>"|"}"|"<a-}>") selection="${kak_selection_desc%,*},${selection#*,}";;
+                "["|"<a-[>"|"]"|"<a-]>") selection="${kak_selection_desc#*,},${selection#*,}";;
             esac
             printf 'select %s\n' "$selection"
         fi
