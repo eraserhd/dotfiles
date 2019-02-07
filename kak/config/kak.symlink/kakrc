@@ -289,6 +289,7 @@ define-command -hidden -override -params 2.. tmux-terminal-impl %{
 
 declare-option -hidden str clojure_buffer_contents
 
+# require objectify.kak
 define-command -override -params 1 -docstring %{Clojure element} \
     clojure-select-object %{
     evaluate-commands -draft %{
