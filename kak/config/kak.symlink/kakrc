@@ -289,13 +289,14 @@ define-command -hidden -override -params 2.. tmux-terminal-impl %{
 
 declare-option -hidden str clojure_buffer_contents
 
-define-command -override -params 0 -docstring %{Clojure element} \
-    clojure-select-whole-element %{
+define-command -override -params 1 -docstring %{Clojure element} \
+    clojure-select-object %{
     evaluate-commands -draft %{
         execute-keys '%'
         set-option buffer clojure_buffer_contents %val{selection}
     }
     evaluate-commands -itersel %sh{
+        kind="$1"
         desc="$kak_selection_desc"
         cursor_line="${desc%%.*}"
         desc="${desc#*.}"
@@ -308,7 +309,7 @@ define-command -override -params 0 -docstring %{Clojure element} \
             "<a-i>"|"<a-[>"|"<a-]>"|"<a-{>"|"<a-}>") extent=inside;;
         esac
         selection="$(rep --op=select \
-            --send kind,string,element \
+            --send kind,string,$kind \
             --send extent,string,$extent \
             --send selection-start-line,integer,$cursor_line \
             --send selection-start-column,integer,$cursor_column \
@@ -320,149 +321,18 @@ define-command -override -params 0 -docstring %{Clojure element} \
             --print value,2,%{value}%n \
             "$kak_opt_clojure_buffer_contents" )"
         if [ -n "$selection" ]; then
+            case "$kak_opt_objectify_last_object" in
+                "["|"{"|"<a-[>"|"<a-{>") selection="${cursor_line}.${cursor_column},${selection%,*}";;
+                "]"|"}"|"<a-]>"|"<a-}>") selection="${cursor_line}.${cursor_column},${selection#*,}";;
+            esac
             printf 'select %s\n' "$selection"
         fi
     }
 }
 
-define-command -params 0 -docstring %{Clojure form object
-Expects %reg{s} to be the input selection.  Sets %reg{w} to the whole form and
-%reg{i} to inside the form.} \
-    clojure-form-object %{
-    evaluate-commands -draft %{
-        try %{ execute-keys %{"sz<a-a>c(?:#\?@?\s*|[#@`']\s*)?\(,\)<ret>} %{"wZ} }
-        try %{ execute-keys %{"sz<a-a>c(?:#[^\s()\[\]{}"\\\\%/]+(?:/[^\s()\[\]{}"\\\\%/]+)?\s*)?\[,\]<ret>} %{"w<a-Z>-} }
-        try %{ execute-keys %{"sz<a-a>c(?:} \
-            %{#|} \
-            %{#[^\s()\[\]{}"\\\\%/]+(?:/[^\s()\[\]{}"\\\\%/]+)?\s*} | \
-            %{#:[^\s()\[\]{}"\\\\%/]+\s*} | \
-            %{\^\s*} \
-            %{)?\{,\}<ret>} %{"w<a-Z>-} }
-        try %{
-            execute-keys %{"wz} %{s\A(?:} \
-                %<(?:#\?@?\s*|[#@`']\s*)?\(\K.*(?=\))> | \
-                %<(?:#[^\s()\[\]{}"\\\\%/]+(?:/[^\s()\[\]{}"\\\\%/]+)?\s*)?\[\K.*(?=\])> | \
-                %<(?:#|#[^\s()\[\]{}"\\\\%/]+(?:/[^\s()\[\]{}"\\\\%/]+)?\s*|\^\s*)?\{\K.*(?=\}))> \
-                %{)<ret>} %{"iZ}
-        }
-    }
-}
-
-define-command -hidden clojure-toplevel-form-object-helper %{
-    set-register s %reg{w}
-    clojure-form-object
-    try %{
-        execute-keys -draft '"wz'
-        set-register x %reg{w}
-        set-register j %reg{i}
-        evaluate-commands %sh{
-            if ! [ "$kak_reg_w" = "$kak_reg_s" ]; then
-                echo clojure-toplevel-form-object-helper
-            fi
-        }
-    }
-}
-
-define-command -params 0 -docstring %{Clojure top-level form object
-Expects %reg{s} to be the input selection.  Sets %reg{w} to the whole form and
-%reg{i} to inside the form.} \
-    clojure-toplevel-form-object %{
-    clojure-form-object
-    evaluate-commands -save-regs sxj %{
-        set-register x %reg{w}
-        set-register j %reg{i}
-        clojure-toplevel-form-object-helper
-        set-register w %reg{x}
-        set-register i %reg{j}
-    }
-}
-
-define-command define-object-commands -params 1 %{
-    evaluate-commands %sh{
-        object_command="$1"
-        prefix="${1%%-*}"
-        name="${1%-object}"
-        name="${name#*-}"
-        for method in select extend; do
-            for scope in whole inside; do
-                for ends in start end both; do
-                    cmd="${prefix}-${method}"
-                    if ! [ $ends = both ]; then
-                        cmd="${cmd}-to"
-                    fi
-                    cmd="${cmd}-${scope}-${name}"
-                    if ! [ $ends = both ]; then
-                        cmd="${cmd}-${ends}"
-                    fi
-                    reg=w
-                    if [ $scope = inside ]; then
-                        reg=i
-                    fi
-                    dir='<a-:>'
-                    if [ $ends = start ]; then
-                        dir='<a-:><a-;>'
-                    fi
-                    merge_keys=z
-                    if [ $method = extend ]; then
-                        merge_keys='<a-z>u'
-                    fi
-                    filter=''
-                    if [ $ends = start ]; then
-                        filter="
-                            execute-keys '\"sZ\"oz'
-                            evaluate-commands -itersel -save-regs x %{
-                                execute-keys '\"xZ\"s<a-z>iGk\"x<a-z>i'
-                            }
-                            execute-keys '\"oZ\"sz'
-                        "
-                    elif [ $ends = end ]; then
-                        filter="
-                            execute-keys '\"sZ\"oz'
-                            evaluate-commands -itersel -save-regs x %{
-                                execute-keys '\"xZ\"s<a-z>iGj<a-L>\"x<a-z>i'
-                            }
-                            execute-keys '\"oZ\"sz'
-                        "
-                    fi
-                    printf %s "
-                        define-command -params 0 ${cmd} %{
-                            evaluate-commands -save-regs 'wios' %{
-                                set-register w
-                                set-register i
-                                execute-keys '\"sZ'
-                                ${object_command}
-                                set-register o %reg{${reg}}
-                                ${filter}
-                                execute-keys '\"o${merge_keys}' '${dir}'
-                            }
-                        }
-                        "
-                done
-            done
-        done
-        printf %s "
-            define-command -hidden -params 0 ${object_command}-handler %{ objectify %{
-                '<a-a>' ${prefix}-select-whole-${name}
-                '['     ${prefix}-select-to-whole-${name}-start
-                ']'     ${prefix}-select-to-whole-${name}-end
-                '{'     ${prefix}-extend-to-whole-${name}-start
-                '}'     ${prefix}-extend-to-whole-${name}-end
-                '<a-i>' ${prefix}-select-inside-${name}
-                '<a-[>' ${prefix}-select-to-inside-${name}-start
-                '<a-]>' ${prefix}-select-to-inside-${name}-end
-                '<a-{>' ${prefix}-extend-to-inside-${name}-start
-                '<a-}>' ${prefix}-extend-to-inside-${name}-end
-            } }
-            "
-    }
-}
-
-define-object-commands clojure-form-object
-define-object-commands clojure-toplevel-form-object
-
-hook global WinSetOption filetype=clojure %{
+hook -group clojure-objects global WinSetOption filetype=clojure %{
     set-option window indentwidth 2
-    map -docstring 'Clojure element'        window object e '<esc>: clojure-select-whole-element<ret>'
-    map -docstring 'Clojure form'           window object f '<esc>: clojure-form-object-handler<ret>'
-    map -docstring 'top-level Clojure form' window object t '<esc>: clojure-toplevel-form-object-handler<ret>'
+    map -docstring 'Clojure element'        window object e '<esc>: clojure-select-object element<ret>'
+    map -docstring 'Clojure form'           window object f '<esc>: clojure-select-object form<ret>'
+    map -docstring 'top-level Clojure form' window object t '<esc>: clojure-select-object toplevel<ret>'
 }
