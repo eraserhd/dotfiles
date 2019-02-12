@@ -35,4 +35,3 @@ App Store
 ---------
 
 * Better Snap Tool
-* Wunderlist

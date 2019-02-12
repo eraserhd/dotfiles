@@ -32,7 +32,6 @@ osascript -e '
 daily-due-today
 star-due-tasks
 complete-run-daily
-sync-wunderlist
 
 activate Alacritty
 typing-test
