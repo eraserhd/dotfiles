@@ -341,3 +341,8 @@ hook -group clojure-objects global WinSetOption filetype=clojure %{
     map -docstring 'Clojure form'           window object f '<esc>: clojure-select-object form<ret>'
     map -docstring 'top-level Clojure form' window object t '<esc>: clojure-select-object toplevel<ret>'
 }
+
+define-command rm %{
+    nop %sh{ rm -f "$kak_buffile" }
+    delete-buffer!
+}
