@@ -288,58 +288,63 @@ define-command -hidden -override -params 2.. tmux-terminal-impl %{
 # ‾‾‾‾‾‾‾
 
 declare-option -hidden str clojure_buffer_contents
+declare-option -hidden str-list clojure_selections
 
 # require objectify.kak
-define-command -override -params 1 -docstring %{Clojure element} \
+define-command -override -params 2 -docstring %{Clojure element} \
     clojure-select-object %{
     evaluate-commands -draft %{
         execute-keys '%'
         set-option buffer clojure_buffer_contents %val{selection}
     }
-    evaluate-commands -itersel %sh{
-        kind="$1"
-        desc="$kak_selection_desc"
-        cursor_line="${desc%%.*}"
-        desc="${desc#*.}"
-        cursor_column="${desc%%,*}"
-        desc="${desc#*,}"
-        anchor_line="${desc%%.*}"
-        anchor_column="${desc#*.}"
-        extent=whole
-        case "$kak_opt_objectify_last_object" in
-            "<a-i>"|"<a-[>"|"<a-]>"|"<a-{>"|"<a-}>") extent=inside;;
-        esac
-        selection="$(rep --op=select \
-            --send kind,string,$kind \
-            --send extent,string,$extent \
-            --send selection-start-line,integer,$cursor_line \
-            --send selection-start-column,integer,$cursor_column \
-            --send selection-end-line,integer,$anchor_line \
-            --send selection-end-column,integer,$anchor_column \
-            --print selection-start-line,1,%{selection-start-line}.%{selection-start-column},%{selection-end-line}.%{selection-end-column} \
-            --print out,2,%{out} \
-            --print err,2,%{err} \
-            --print value,2,%{value}%n \
-            "$kak_opt_clojure_buffer_contents" )"
-        # selection is anchor,cursor
-        if [ -n "$selection" ]; then
+    set-option buffer clojure_selections
+    evaluate-commands -itersel %{
+        evaluate-commands %sh{
+            kind="$1"
+            count="${kak_count-1}"
+            desc="$kak_selection_desc"
+            cursor_line="${desc%%.*}"
+            desc="${desc#*.}"
+            cursor_column="${desc%%,*}"
+            desc="${desc#*,}"
+            anchor_line="${desc%%.*}"
+            anchor_column="${desc#*.}"
+            extent=whole
             case "$kak_opt_objectify_last_object" in
-                "["|"<a-[>"|"{"|"<a-{>") selection="${selection#*,},${selection%,*}";; # }} <-- balance braces
+                "<a-i>"|"<a-[>"|"<a-]>"|"<a-{>"|"<a-}>") extent=inside;;
             esac
-            case "$kak_opt_objectify_last_object" in
-                "{"|"<a-{>"|"}"|"<a-}>") selection="${kak_selection_desc%,*},${selection#*,}";;
-                "["|"<a-[>"|"]"|"<a-]>") selection="${kak_selection_desc#*,},${selection#*,}";;
-            esac
-            printf 'select %s\n' "$selection"
-        fi
+            selection="$(rep --op=select \
+                --send kind,string,$kind \
+                --send count,integer,$count \
+                --send extent,string,$extent \
+                --send cursor-line,integer,$cursor_line \
+                --send cursor-column,integer,$cursor_column \
+                --send anchor-line,integer,$anchor_line \
+                --send anchor-column,integer,$anchor_column \
+                --print cursor-line,1,%{cursor-line}.%{cursor-column},%{anchor-line}.%{anchor-column} \
+                --print out,2,%{out} \
+                --print err,2,%{err} \
+                --print value,2,%{value}%n \
+                "$kak_opt_clojure_buffer_contents" )"
+            if [ -n "$selection" ]; then
+                case "$kak_opt_objectify_last_object" in
+                    "["|"<a-[>"|"{"|"<a-{>") selection="${selection#*,},${selection%,*}";; # }} <-- balance braces
+                esac
+                case "$kak_opt_objectify_last_object" in
+                    "{"|"<a-{>"|"}"|"<a-}>") selection="${kak_selection_desc%,*},${selection#*,}";;
+                    "["|"<a-[>"|"]"|"<a-]>") selection="${kak_selection_desc#*,},${selection#*,}";;
+                esac
+                printf 'select %s\n' "$selection"
+            fi
+        }
     }
 }
 
 hook -group clojure-objects global WinSetOption filetype=clojure %{
     set-option window indentwidth 2
-    map -docstring 'Clojure element'        window object e '<esc>: clojure-select-object element<ret>'
-    map -docstring 'Clojure form'           window object f '<esc>: clojure-select-object form<ret>'
-    map -docstring 'top-level Clojure form' window object t '<esc>: clojure-select-object toplevel<ret>'
+    map -docstring 'Clojure element'        window object e '<a-;> clojure-select-object element %val{count}<ret>'
+    map -docstring 'Clojure form'           window object f '<a-;> clojure-select-object form %val{count}<ret>'
+    map -docstring 'top-level Clojure form' window object t '<a-;> clojure-select-object toplevel %val{count}<ret>'
 }
 
 define-command rm %{
