@@ -6,6 +6,9 @@ set-option global grepcmd 'ag --column'
 
 hook global BufWritePre .* %{ nop %sh{ mkdir -p $(dirname "$kak_hook_param") }}
 
+alias global gn grep-next-match
+alias global gp grep-previous-match
+
 # Appearance
 # ‾‾‾‾‾‾‾‾‾‾
 
