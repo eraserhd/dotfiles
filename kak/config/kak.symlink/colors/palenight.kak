@@ -70,7 +70,7 @@ evaluate-commands %sh{
     face global MenuForeground     $black,$purple
 
     # completion menu info
-    face global MenuInfo           $purple,$menu_grey
+    face global MenuInfo           $black,$white+i
 
     # assistant, [+]
     face global Information        $white,$visual_grey
