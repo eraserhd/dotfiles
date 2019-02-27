@@ -50,7 +50,7 @@ face global list   rgb:ffcb6b
 # Builtin
 # fg,bg+attributes # 36,40,56
 # face global Default default,rgb:292d3e <- change the terminal bg color instead
-face global Default            rgb:bfc7d5,rgb:000030
+face global Default            rgb:bfc7d5,rgb:313348
 
 face global PrimarySelection   rgb:292d3e,rgb:ffffff+fg
 face global SecondarySelection rgb:292d3e,rgb:bfc7d5

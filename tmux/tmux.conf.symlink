@@ -28,10 +28,10 @@ bind -Tcopy-mode-vi v send-keys -X begin-selection
 bind -Tcopy-mode-vi y send-keys -X copy-selection-and-cancel
 bind -Tcopy-mode-vi o send-keys -X copy-pipe-and-cancel 'xargs -0 open'
 
-# Make Shift+Arrow work
 set -s focus-events on
-set -g terminal-overrides "xterm*:kLFT5=\eOD:kRIT5=\eOC:kUP5=\eOA:kDN5=\eOB:smkx@:rmkx@"
-set -sa terminal-overrides ",screen-256color:Tc"
+
+# Make Shift+Arrow work
+set -sa terminal-overrides ",xterm*:kLFT5=\eOD:kRIT5=\eOC:kUP5=\eOA:kDN5=\eOB:smkx@:rmkx@"
 setw -g xterm-keys on
 
 ##### Window/Pane Management #####
@@ -136,9 +136,9 @@ bind -Tpane-menu C-w send-keys C-w
 bind -Tpane-menu r select-pane -t '{bottom-right}'
 bind -Tpane-menu , send-keys -t '{bottom-right}' C-p Enter
 
-##### Colors #####
-# Ensure we're using 256 colors
-set -g default-terminal "screen-256color"
+# Support true color in Alacritty
+set -sa terminal-overrides ",xterm-256color:Tc"
+set -g default-terminal "tmux-256color"
 
 # Pane borders
 set -g pane-border-status bottom
