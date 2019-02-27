@@ -29,8 +29,9 @@ bind -Tcopy-mode-vi y send-keys -X copy-selection-and-cancel
 bind -Tcopy-mode-vi o send-keys -X copy-pipe-and-cancel 'xargs -0 open'
 
 # Make Shift+Arrow work
-set -g focus-events on
+set -s focus-events on
 set -g terminal-overrides "xterm*:kLFT5=\eOD:kRIT5=\eOC:kUP5=\eOA:kDN5=\eOB:smkx@:rmkx@"
+set -sa terminal-overrides ",screen-256color:Tc"
 setw -g xterm-keys on
 
 ##### Window/Pane Management #####
