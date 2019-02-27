@@ -58,19 +58,19 @@ evaluate-commands %sh{
     face global PrimaryCursor      white,$purple+bfg
     face global SecondaryCursor    $black,$purple+fg
 
-    face global PrimaryCursorEol   black,$green+fg
-    face global SecondaryCursorEol black,$green+fg
+    face global PrimaryCursorEol   $black,$green+fg
+    face global SecondaryCursorEol $black,$green+fg
 
     face global LineNumbers        $gutter_fg_grey
     face global LineNumberCursor   $yellow,default+b
 
     # Bottom menu:
     # text + background
-    face global MenuBackground     black,$white+b
+    face global MenuBackground     $black,$white
     face global MenuForeground     $black,$purple
 
     # completion menu info
-    face global MenuInfo           white,rgb:445599
+    face global MenuInfo           $purple,$menu_grey
 
     # assistant, [+]
     face global Information        $white,$visual_grey
@@ -79,14 +79,14 @@ evaluate-commands %sh{
     face global StatusLine         $white,$black
 
     # Status line
-    face global StatusLineMode     $black,$purple # insert, prompt, enter key ...
+    face global StatusLineMode     $black,$purple      # insert, prompt, enter key ...
     face global StatusLineInfo     $white,$visual_grey # 1 sel
     face global StatusLineValue    $visual_grey,$green # param=value, reg=value. ex: \"ey
     face global StatusCursor       white,$purple+bg
 
     face global Prompt             $purple,$black # :
-    face global MatchingChar       $red+b       # (), {}
-    face global BufferPadding      $blue,$black # EOF tildas (~)
+    face global MatchingChar       $red+b         # (), {}
+    face global BufferPadding      $gutter_fg_grey,$black   # EOF tildas (~)
 
     # Whitespace characters
     face global Whitespace         $gutter_fg_grey,$black+fg
