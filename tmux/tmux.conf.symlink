@@ -30,9 +30,10 @@ bind -Tcopy-mode-vi o send-keys -X copy-pipe-and-cancel 'xargs -0 open'
 
 set -s focus-events on
 
-# Make Shift+Arrow work
-set -sa terminal-overrides ",xterm*:kLFT5=\eOD:kRIT5=\eOC:kUP5=\eOA:kDN5=\eOB:smkx@:rmkx@"
 setw -g xterm-keys on
+set -sa terminal-overrides ",xterm*:kLFT5=\eOD:kRIT5=\eOC:kUP5=\eOA:kDN5=\eOB:smkx@:rmkx@" # Shift+Arrow
+
+set -sa terminal-overrides ',xterm*:sitm=\E[3m' # italics
 
 ##### Window/Pane Management #####
 

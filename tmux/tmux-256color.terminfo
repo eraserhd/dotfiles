@@ -1,4 +1,5 @@
-tmux-256color|tmux with 256 color and palette setting,
+tmux-256color|tmux with 256 color and palette and italic setting,
 	use=screen-256color,
 	ccc,
 	initc=\E]4;%p1%d;rgb\:%p2%{255}%*%{1000}%/%2.2X/%p3%{255}%*%{1000}%/%2.2X/%p4%{255}%*%{1000}%/%2.2X\E\\,
+        ritm=\E[23m, rmso=\E[27m, sitm=\E[3m, smso=\E[7m,
