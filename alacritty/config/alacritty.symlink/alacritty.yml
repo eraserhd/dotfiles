@@ -93,8 +93,8 @@ custom_cursor_colors: true
 colors:
   # Default colors
   primary:
-    background: '0x000000'
-    foreground: '0xeaeaea'
+    background: '0x292d3e'
+    foreground: '0xbfc7d5'
 
     # (Optional) Bright and Dim foreground colors
     #
@@ -107,30 +107,30 @@ colors:
 
   # Colors the cursor will use if `custom_cursor_colors` is true
   cursor:
-    text: '0x000000'
-    cursor: '0xfa9815'
+    text: '0x292d3e'
+    cursor: '0xc782ea'
 
   # Normal colors
   normal:
-    black:   '0x000000'
-    red:     '0x990000'
-    green:   '0x00a600'
-    yellow:  '0x999900'
-    blue:    '0x0000b2'
-    magenta: '0xb200b2'
-    cyan:    '0x00a6b2'
-    white:   '0xbfbfbf'
+    black:   '0x292d3e'
+    red:     '0xff5370'
+    green:   '0xc3e88d'
+    yellow:  '0xffcb6b'
+    blue:    '0x82b1ff'
+    magenta: '0xc792ea'
+    cyan:    '0x89ddff'
+    white:   '0xbfc7d5'
 
   # Bright colors
   bright:
-    black:   '0x666666'
-    red:     '0xe50000'
-    green:   '0x00d900'
-    yellow:  '0xe5e500'
-    blue:    '0x0000ff'
-    magenta: '0xe500e5'
-    cyan:    '0x00e5e5'
-    white:   '0xffffff'
+    black:   '0x292d3e'
+    red:     '0xff5370'
+    green:   '0xc3e88d'
+    yellow:  '0xffcb6b'
+    blue:    '0x82b1ff'
+    magenta: '0xc792ea'
+    cyan:    '0x89ddff'
+    white:   '0xbfc7d5'
 
 # Visual Bell
 #

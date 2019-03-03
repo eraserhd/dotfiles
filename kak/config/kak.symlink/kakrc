@@ -20,7 +20,6 @@ add-highlighter global/matching show-matching
 
 set-face global LineNumbersWrapped black
 
-set-face global Whitespace rgb:333333+f
 add-highlighter global/whitespace show-whitespaces -spc ' ' -tab '➤' -lf '↩'
 
 hook global WinSetOption filetype=(?!tmux-copy).* %{
