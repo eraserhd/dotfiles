@@ -317,7 +317,17 @@ define-command -override -params 1 -docstring %{Clojure element} \
             case "|${kak_object_flags}|" in
                 *"|inner|"*) extent=inside;;
             esac
-            selection="$(rep --op=select \
+            if [ $cursor_line -lt $anchor_line ]; then
+                dir=forward
+            elif [ $cursor_line -eq $anchor_line ] && [ $cursor_column -lt $anchor_column ]; then
+                dir=forward
+            fi
+            if [ "$dir" = forward ]; then
+                cursor_column=$(( cursor_column - 1 ))
+            else
+                anchor_column=$(( anchor_column - 1 ))
+            fi
+            eval "$(rep --op=select \
                 --send kind,string,$kind \
                 --send count,integer,$count \
                 --send extent,string,$extent \
@@ -325,20 +335,39 @@ define-command -override -params 1 -docstring %{Clojure element} \
                 --send cursor-column,integer,$cursor_column \
                 --send anchor-line,integer,$anchor_line \
                 --send anchor-column,integer,$anchor_column \
-                --print cursor-line,1,%{cursor-line}.%{cursor-column},%{anchor-line}.%{anchor-column} \
+                --print cursor-line,1,ok=yes%ncursor_line=%{cursor-line}%ncursor_column=%{cursor-column}%nanchor_line=%{anchor-line}%nanchor_column=%{anchor-column}%n \
                 --print out,2,%{out} \
                 --print err,2,%{err} \
                 --print value,2,%{value}%n \
                 "$kak_opt_clojure_buffer_contents" )"
-            if [ -n "$selection" ]; then
+            if [ "$ok" = "yes" ]; then
                 case "${kak_object_flags}" in
                     *to_begin*to_end*|*to_end*to_begin*) ;;
-                    *to_begin*) selection="${selection#*,},${selection%,*}";;
+                    *to_begin*)
+                        tmp_line=$cursor_line; cursor_line=$anchor_line; anchor_line=$tmp_line
+                        tmp_column=$cursor_column; cursor_column=$anchor_column; anchor_column=$tmp_column
+                        ;;
                 esac
+                if [ $cursor_line -lt $anchor_line ]; then
+                    dir=forward
+                elif [ $cursor_line -eq $anchor_line ] && [ $cursor_column -lt $anchor_column ]; then
+                    dir=forward
+                fi
+                if [ "$dir" = forward ]; then
+                    cursor_column=$(( cursor_column + 1 ))
+                else
+                    anchor_column=$(( anchor_column + 1 ))
+                fi
                 case "|${kak_object_flags}|${kak_select_mode}" in
-                    *to_begin*to_end*|*to_end*to_begin*) ;;
-                    *extend) selection="${kak_selection_desc%,*},${selection#*,}";;
-                    *replace) selection="${kak_selection_desc#*,},${selection#*,}";;
+                    *to_begin*to_end*|*to_end*to_begin*)
+                        selection="${cursor_line}.${cursor_column},${anchor_line}.${anchor_column}"
+                        ;;
+                    *extend)
+                        selection="${kak_selection_desc%,*},${anchor_line}.${anchor_column}"
+                        ;;
+                    *replace)
+                        selection="${kak_selection_desc#*,},${anchor_line}.${anchor_column}"
+                        ;;
                 esac
                 printf 'select %s\n' "$selection"
             fi
