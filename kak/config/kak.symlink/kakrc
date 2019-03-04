@@ -232,7 +232,10 @@ define-command update-client-options %{
     }
 }
 
-hook -group client-tracker global NormalIdle .* update-client-options
+hook -group client-tracker global FocusIn .* update-client-options
+hook -group client-tracker global WinCreate .* update-client-options
+hook -group client-tracker global WinClose .* update-client-options
+hook -group client-tracker global WinResize .* update-client-options
 
 # Open Nearest Link
 # ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
