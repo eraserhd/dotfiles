@@ -11,3 +11,4 @@ alfred/license.txt filter=git-crypt diff=git-crypt
 ssh/files/id_rsa-centralpark-server-dev-1 filter=git-crypt diff=git-crypt
 ssh/files/id_rsa-centralpark-server-prod-1 filter=git-crypt diff=git-crypt
 weechat/weechat.symlink/sec.conf filter=git-crypt diff=git-crypt
+clojure/lein.symlink/profiles.clj filter=git-crypt diff=git-crypt
