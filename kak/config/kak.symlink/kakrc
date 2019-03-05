@@ -307,15 +307,21 @@ define-command -override -params 1 -docstring %{Clojure element} \
             kind="$1"
             count="${kak_count-1}"
             desc="$kak_selection_desc"
-            cursor_line="${desc%%.*}"
-            desc="${desc#*.}"
-            cursor_column="${desc%%,*}"
-            desc="${desc#*,}"
             anchor_line="${desc%%.*}"
-            anchor_column="${desc#*.}"
+            desc="${desc#*.}"
+            anchor_column="${desc%%,*}"
+            desc="${desc#*,}"
+            cursor_line="${desc%%.*}"
+            cursor_column="${desc#*.}"
             extent=whole
             case "|${kak_object_flags}|" in
                 *"|inner|"*) extent=inside;;
+            esac
+            direction=''
+            case "${kak_object_flags}" in
+                *to_begin*to_end*|*to_end*to_begin*) direction='';;
+                *to_begin*) direction=to_begin;;
+                *to_end*) direction=to_end;;
             esac
             if [ $cursor_line -lt $anchor_line ]; then
                 dir=forward
@@ -327,9 +333,12 @@ define-command -override -params 1 -docstring %{Clojure element} \
             else
                 anchor_column=$(( anchor_column - 1 ))
             fi
+            echo "mode = $kak_select_mode" >&2
             eval "$(rep --op=select \
                 --send kind,string,$kind \
                 --send count,integer,$count \
+                --send combine,string,$kak_select_mode \
+                --send direction,string,$direction \
                 --send extent,string,$extent \
                 --send cursor-line,integer,$cursor_line \
                 --send cursor-column,integer,$cursor_column \
@@ -341,13 +350,7 @@ define-command -override -params 1 -docstring %{Clojure element} \
                 --print value,2,%{value}%n \
                 "$kak_opt_clojure_buffer_contents" )"
             if [ "$ok" = "yes" ]; then
-                case "${kak_object_flags}" in
-                    *to_begin*to_end*|*to_end*to_begin*) ;;
-                    *to_begin*)
-                        tmp_line=$cursor_line; cursor_line=$anchor_line; anchor_line=$tmp_line
-                        tmp_column=$cursor_column; cursor_column=$anchor_column; anchor_column=$tmp_column
-                        ;;
-                esac
+                dir=''
                 if [ $cursor_line -lt $anchor_line ]; then
                     dir=forward
                 elif [ $cursor_line -eq $anchor_line ] && [ $cursor_column -lt $anchor_column ]; then
@@ -358,17 +361,7 @@ define-command -override -params 1 -docstring %{Clojure element} \
                 else
                     anchor_column=$(( anchor_column + 1 ))
                 fi
-                case "|${kak_object_flags}|${kak_select_mode}" in
-                    *to_begin*to_end*|*to_end*to_begin*)
-                        selection="${cursor_line}.${cursor_column},${anchor_line}.${anchor_column}"
-                        ;;
-                    *extend)
-                        selection="${kak_selection_desc%,*},${anchor_line}.${anchor_column}"
-                        ;;
-                    *replace)
-                        selection="${kak_selection_desc#*,},${anchor_line}.${anchor_column}"
-                        ;;
-                esac
+                selection="${anchor_line}.${anchor_column},${cursor_line}.${cursor_column}"
                 printf 'select %s\n' "$selection"
             fi
         }
