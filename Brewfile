@@ -6,6 +6,7 @@ tap 'caskroom/fonts'
 cask 'font-mononoki'
 
 cask '1password'
+cask 'alacritty'
 cask 'alfred'
 cask 'anki'
 cask 'docker'
