@@ -24,13 +24,14 @@ ELI_ENV=corp-tech-jfelice
 GOPATH=~/src/go
 IRCNICK=eraserhd
 IRCSERVER=irc.freenode.net
-PATH=~/.cargo/bin:~/.local/bin:$GOPATH/bin:~/.cabal/bin:"$PATH"
+PLAN9=/usr/local/plan9
+PATH=~/.cargo/bin:~/.local/bin:$GOPATH/bin:~/.cabal/bin:"$PATH":$PLAN9/bin
 PS1='[\u@\h \W$(__git_ps1 "(%s)")]$ '
 VAULT_ADDR=https://vault.prod.2u.com:8200/
 VAULT_CACERT=$HOME/src/ops-terraform/consul-vpc/policies/vault-ca.pem
 
 export CDPATH CLICOLOR EDITOR ELI_ENV GOPATH IRCNICK IRCSERVER
-export PATH PS1 VAULT_ADDR VAULT_CACERT
+export PLAN9 PATH PS1 VAULT_ADDR VAULT_CACERT
 
 alias vi=$EDITOR
 alias vim=$EDITOR
