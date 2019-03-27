@@ -101,7 +101,7 @@ bind -Tpane-menu N run-shell 'tmux set-buffer -b copy-pane-id "#D"' \; \
     new-window -n copy-mode -d '\
       pane_id="$(tmux show-buffer -b copy-pane-id)" ;\
       file=$(mktemp) ;\
-      tmux capture-pane -t "${pane_id}" -S- -E- -J -e -p >"$file" ;\
+      tmux capture-pane -t "${pane_id}" -S- -E- -J -e -p |sed -e "s/[ 	][ 	]*$//" >"$file" ;\
       cursor_y=$(tmux display-message -t "${pane_id}" -p "#{cursor_y}") ;\
       cursor_x=$(tmux display-message -t "${pane_id}" -p "#{cursor_x}") ;\
       pane_height=$(tmux display-message -t "${pane_id}" -p "#{pane_height}") ;\
