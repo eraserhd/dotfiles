@@ -1,0 +1,8 @@
+#!/usr/bin/env clj
+(require '[clojure.string :as s])
+
+(let [text (s/join \space *command-line-args*)
+      url (java.net.URL. (str (System/getenv "ZAPIER_ADD_TASK_URL")
+                              "?note="
+                              (java.net.URLEncoder/encode text)))]
+  (println (slurp (.openStream url))))

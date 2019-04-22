@@ -1,18 +1,11 @@
 #!/usr/bin/env clj
-(require '[clojure.string :as s])
 (require '[clojure.java.shell :refer [sh]])
 
 (defn- accounts-to-reconcile []
   (read-string (slurp (str (System/getProperty "user.home") "/src/data/accounts.edn"))))
 
-(def now (let [fmt (java.text.SimpleDateFormat. "yyyy-mm-dd")]
-           (.format fmt (java.util.Date.))))
-(def list-id (s/trimr (:out (sh "/bin/sh" "-c" "wl lists -j |jq '.[] |select(.title == \"inbox\") |.id'"))))
-
 (doseq [{:keys [:bank-account/name]} (accounts-to-reconcile)]
-  (sh "/bin/sh" "-c" (format "wl create-task --listID=\"%s\" --starred=true --dueDate=\"%s\" --title=\"Reconcile %s\""
-                             list-id
-                             now
-                             name)))
+  (sh (str (System/getProperty "user.home") "/src/dotfiles/bin/todo")
+      (format "Reconcile %s" name)))
 
 (System/exit 0)

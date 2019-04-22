@@ -58,9 +58,6 @@ brew 'weechat', args: ['with-python@2']
 brew 'wget'
 brew 'z'
 
-tap 'robdimsdale/tap'
-brew 'wl'
-
 brew 'ul/kak-lsp/kak-lsp'
 
 # ErgoDox environment

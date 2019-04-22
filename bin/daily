@@ -29,10 +29,5 @@ osascript -e '
   git push origin develop || true
 )
 
-daily-due-today
-star-due-tasks
-complete-run-daily
-
 activate Alacritty
 typing-test
-
