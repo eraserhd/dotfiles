@@ -72,3 +72,13 @@ man() {
         return $?
     fi
 }
+
+ssh() {
+    if [[ "$TERM" = "tmux-256color" ]]; then
+        TERM=screen command ssh "$@"
+        return $?
+    else
+        command ssh "$@"
+        return $?
+    fi
+}
