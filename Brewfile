@@ -53,6 +53,7 @@ brew 'the_silver_searcher'
 brew 'tmate'
 brew 'tmux'
 brew 'vault'
+brew 'vdirsyncer'
 brew 'vim', args: ['HEAD']
 brew 'weechat', args: ['with-python@2']
 brew 'wget'
