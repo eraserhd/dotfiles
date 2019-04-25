@@ -1,1 +1,4 @@
 Include ~/src/centralpark/script/ssh_config
+Host *
+    ForwardAgent yes
+
