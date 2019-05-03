@@ -48,6 +48,8 @@
     awscli
     bash
     bash-completion
+    docker
+    docker-compose
     git
     git-crypt
     gnupg
@@ -62,6 +64,7 @@
     plan9port
     rlwrap
     terraform
+    texlive.combined.scheme-tetex
     tmux
     vault
     vdirsyncer
