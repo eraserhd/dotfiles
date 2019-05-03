@@ -3,5 +3,6 @@ git@github.com:maitria/avi.git
 git@github.com:2uinc/centralpark.git
 git@github.com:eraserhd/ehk.git
 git@github.com:eraserhd/git-zeal.git
+git@github.com:mawww/kakoune.git
+git@github.com:eraserhd/parinfer-rust.git
 git@github.com:eraserhd/qmk_firmware.git
-git@github.com:eraserhd/suggest-commit.git
