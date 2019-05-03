@@ -3,7 +3,14 @@
     myPackages = pkgs.buildEnv {
       name = "my-packages";
       paths = [
+        ag
         asciidoc
+        autossh
+        awscli
+        bash-completion
+        clojure
+        rlwrap
+        wget
       ];
     };
   };

@@ -20,6 +20,8 @@ git submodule update
 
 ./script/make-links
 
+nix-env -i my-packages
+
 if [ "$(uname -s)" == "Darwin" ]
 then
   if ! command -v brew >/dev/null

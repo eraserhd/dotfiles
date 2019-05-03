@@ -42,12 +42,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    ag
-    asciidoc
-    autossh
-    awscli
+    my-packages
     bash
-    bash-completion
     docker
     docker-compose
     git
@@ -63,14 +59,12 @@
     nodejs
     plan9port
     python27Packages.websocket_client
-    rlwrap
     terraform
     texlive.combined.scheme-tetex
     tmux
     vault
     vdirsyncer
     weechat
-    wget
   ];
 
   services.openssh.enable = true;
