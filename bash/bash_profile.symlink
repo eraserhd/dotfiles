@@ -26,7 +26,7 @@ IRCNICK=eraserhd
 IRCSERVER=irc.freenode.net
 PLAN9=/usr/local/plan9
 PATH=~/.cargo/bin:~/.local/bin:$GOPATH/bin:~/.cabal/bin:/usr/local/bin:"$PATH":$PLAN9/bin
-PS1='[\u@\h \W$(__git_ps1 "(%s)")]$ '
+PS1='\e[1;32m[\u@\h \W$(__git_ps1 "(%s)")]\$\e[0m '
 VAULT_ADDR=https://vault.prod.2u.com:8200/
 VAULT_CACERT=$HOME/src/ops-terraform/consul-vpc/policies/vault-ca.pem
 
