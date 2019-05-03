@@ -9,7 +9,13 @@
         awscli
         bash-completion
         clojure
+        jq
+        kakoune
+        leiningen
+        nodejs
+        plan9port
         rlwrap
+        tmux
         wget
       ];
     };

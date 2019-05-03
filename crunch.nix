@@ -51,16 +51,10 @@
     graphviz
     gtypist
     ii
-    jq
-    kakoune
     khal
-    leiningen
-    nodejs
-    plan9port
     python27Packages.websocket_client
     terraform
     texlive.combined.scheme-tetex
-    tmux
     vault
     vdirsyncer
     weechat
