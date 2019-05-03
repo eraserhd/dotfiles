@@ -62,6 +62,7 @@
     leiningen
     nodejs
     plan9port
+    python27Packages.websocket_client
     rlwrap
     terraform
     texlive.combined.scheme-tetex
