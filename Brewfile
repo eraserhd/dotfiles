@@ -22,7 +22,6 @@ cask 'spotify'
 brew 'python'
 brew 'python@2'
 
-brew 'asciidoc'
 brew 'autossh'
 brew 'awscli'
 brew 'bash-completion'
