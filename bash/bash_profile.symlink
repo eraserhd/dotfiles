@@ -1,10 +1,11 @@
-
 source_if_exists() {
   if [[ -f "$1" ]]
   then
     source "$1"
   fi
 }
+
+source_if_exists ~/.nix-profile/etc/profile.d/nix.sh
 
 brew_prefix="$(command -v brew 2>/dev/null)"
 brew_prefix="${brew_prefix%/bin/brew}"

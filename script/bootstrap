@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 #
 # bootstrap installs things.
 
@@ -6,6 +6,14 @@ set -e
 cd "$(dirname "$0")/.."
 
 echo ''
+
+if [ "$(uname -s)" = "Darwin" ]
+then
+    if ! command -v nix >/dev/null
+    then
+        curl https://nixos.org/nix/install | sh
+    fi
+fi
 
 git submodule init
 git submodule update
