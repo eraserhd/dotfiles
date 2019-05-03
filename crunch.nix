@@ -42,9 +42,31 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    ag
+    asciidoc
+    autossh
+    awscli
+    bash
+    bash-completion
     git
     git-crypt
     gnupg
+    graphviz
+    gtypist
+    ii
+    jq
+    kakoune
+    khal
+    leiningen
+    nodejs
+    plan9port
+    rlwrap
+    terraform
+    tmux
+    vault
+    vdirsyncer
+    weechat
+    wget
   ];
 
   services.openssh.enable = true;
