@@ -28,6 +28,9 @@ pkgs.buildEnv {
     vault
     (weechat.override {
       configure = {availablePlugins, ...}: {
+        scripts = with pkgs.weechatScripts; [
+          wee-slack
+        ];
         plugins = with availablePlugins; [
           (python.withPackages (ps: with ps; [ websocket_client ]))
         ];
