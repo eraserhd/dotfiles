@@ -20,5 +20,5 @@ pkgs.buildEnv {
     rlwrap
     tmux
     wget
-  ];
+  ] ++ darwinPackages;
 }
