@@ -30,9 +30,7 @@ brew 'gnupg'
 brew 'hub'
 brew 'kubernetes-cli'
 brew 'rustup-init'
-brew 'vdirsyncer'
 brew 'vim', args: ['HEAD']
-brew 'weechat', args: ['with-python@2']
 
 brew 'ul/kak-lsp/kak-lsp'
 

@@ -17,7 +17,6 @@ pkgs.buildEnv {
     gtypist
     jq
     kakoune
-    khal
     leiningen
     nodejs
     plan9port
@@ -27,6 +26,13 @@ pkgs.buildEnv {
     tmate
     tmux
     vault
+    (weechat.override {
+      configure = {availablePlugins, ...}: {
+        plugins = with availablePlugins; [
+          (python.withPackages (ps: with ps; [ websocket_client ]))
+        ];
+      };
+    })
     wget
   ] ++ darwinPackages;
 }

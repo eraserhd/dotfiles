@@ -51,7 +51,6 @@
     ii
     python27Packages.websocket_client
     texlive.combined.scheme-tetex
-    vdirsyncer
     weechat
   ];
 
