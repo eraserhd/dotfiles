@@ -9,7 +9,7 @@ stdenv.mkDerivation rec {
     repo = "kakoune";
     owner = "eraserhd";
     rev = "eraserhd";
-    sha256 = "1skbp65272nx9llh2m9bc1hgwvp5wf4cwqszawp4m06a3dcgb4gm";
+    sha256 = "1szmzxb36k6ay5mhr2ipninmx6bxpskzzbdg2b49wciqqccx6gj0";
   };
   nativeBuildInputs = [ pkgconfig ];
   buildInputs = [ ncurses asciidoc docbook_xsl libxslt ];
