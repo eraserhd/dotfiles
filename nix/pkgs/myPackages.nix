@@ -11,6 +11,7 @@ pkgs.buildEnv {
     autossh
     awscli
     bash-completion
+    chez
     clojure
     graphviz
     gtypist

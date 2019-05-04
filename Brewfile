@@ -24,7 +24,6 @@ brew 'python'
 brew 'python@2'
 
 brew 'brew-pip'
-brew 'chezscheme'
 brew 'git'
 brew 'git-crypt'
 brew 'gnupg'
