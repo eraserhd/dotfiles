@@ -1,4 +1,10 @@
-with import <nixpkgs> {};
+with import <nixpkgs> {
+  config = {
+    packageOverrides = pkgs: {
+      kakoune = pkgs.callPackage ./kakoune.nix {};
+    };
+  };
+};
 
 pkgs.buildEnv {
   name = "my-packages";
