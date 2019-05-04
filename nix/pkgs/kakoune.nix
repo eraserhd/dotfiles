@@ -7,9 +7,9 @@ stdenv.mkDerivation rec {
   version = "eraserhd";
   src = fetchFromGitHub {
     repo = "kakoune";
-    owner = "eraserhd";
-    rev = "eraserhd";
-    sha256 = "1szmzxb36k6ay5mhr2ipninmx6bxpskzzbdg2b49wciqqccx6gj0";
+    owner = "mawww";
+    rev = "92972bed4fb4ff6dffd32169bc437de34acac6a9";
+    sha256 = "1cn32qyp0zki392200zxzp0mjikalrc92g1anav3xwplh1zlv1ks";
   };
   nativeBuildInputs = [ pkgconfig ];
   buildInputs = [ ncurses asciidoc docbook_xsl libxslt ];
