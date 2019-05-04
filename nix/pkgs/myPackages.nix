@@ -12,12 +12,16 @@ pkgs.buildEnv {
     awscli
     bash-completion
     clojure
+    graphviz
+    gtypist
     jq
     kakoune
     leiningen
     nodejs
     plan9port
     rlwrap
+    terraform
+    tmate
     tmux
     wget
   ] ++ darwinPackages;

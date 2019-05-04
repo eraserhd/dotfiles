@@ -48,12 +48,9 @@
     git
     git-crypt
     gnupg
-    graphviz
-    gtypist
     ii
     khal
     python27Packages.websocket_client
-    terraform
     texlive.combined.scheme-tetex
     vault
     vdirsyncer
