@@ -28,11 +28,8 @@ brew 'git'
 brew 'git-crypt'
 brew 'gnupg'
 brew 'hub'
-brew 'khal'
 brew 'kubernetes-cli'
 brew 'rustup-init'
-brew 'sassc'
-brew 'vault'
 brew 'vdirsyncer'
 brew 'vim', args: ['HEAD']
 brew 'weechat', args: ['with-python@2']

@@ -49,10 +49,8 @@
     git-crypt
     gnupg
     ii
-    khal
     python27Packages.websocket_client
     texlive.combined.scheme-tetex
-    vault
     vdirsyncer
     weechat
   ];

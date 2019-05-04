@@ -17,13 +17,16 @@ pkgs.buildEnv {
     gtypist
     jq
     kakoune
+    khal
     leiningen
     nodejs
     plan9port
     rlwrap
+    sassc
     terraform
     tmate
     tmux
+    vault
     wget
   ] ++ darwinPackages;
 }
