@@ -16,6 +16,7 @@ pkgs.buildEnv {
     clojure
     docker-compose
     graphviz
+    gitAndTools.hub
     gtypist
     ii
     jq

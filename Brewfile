@@ -26,7 +26,6 @@ brew 'python@2'
 brew 'git'
 brew 'git-crypt'
 brew 'gnupg'
-brew 'hub'
 brew 'kubernetes-cli'
 brew 'rustup-init'
 
