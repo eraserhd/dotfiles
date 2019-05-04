@@ -42,16 +42,10 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    bash
     docker
-    docker-compose
     git
     git-crypt
     gnupg
-    ii
-    python27Packages.websocket_client
-    texlive.combined.scheme-tetex
-    weechat
   ];
 
   services.openssh.enable = true;

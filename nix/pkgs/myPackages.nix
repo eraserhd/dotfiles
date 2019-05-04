@@ -2,19 +2,22 @@ with import <nixpkgs> {};
 
 pkgs.buildEnv {
   name = "my-packages";
-  paths = let darwinPackages = if stdenv.isDarwin
-                               then [ reattach-to-user-namespace ]
-                               else [];
+  paths = let osPackages = if stdenv.isDarwin
+                           then [ reattach-to-user-namespace ]
+                           else [ texlive.combined.scheme-tetex ];
   in [
     ag
     asciidoc
     autossh
     awscli
+    bash
     bash-completion
     chez
     clojure
+    docker-compose
     graphviz
     gtypist
+    ii
     jq
     kakoune
     leiningen
@@ -37,5 +40,5 @@ pkgs.buildEnv {
       };
     })
     wget
-  ] ++ darwinPackages;
+  ] ++ osPackages;
 }
