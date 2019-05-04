@@ -23,14 +23,12 @@ cask 'xquartz'
 brew 'python'
 brew 'python@2'
 
-brew 'brew-pip'
 brew 'git'
 brew 'git-crypt'
 brew 'gnupg'
 brew 'hub'
 brew 'kubernetes-cli'
 brew 'rustup-init'
-brew 'vim', args: ['HEAD']
 
 brew 'ul/kak-lsp/kak-lsp'
 

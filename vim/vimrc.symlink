@@ -37,43 +37,6 @@ function! SendToREPL(command)
 endfunction
 command! -nargs=1 -complete=shellcmd R call SendToREPL(<q-args>)
 
-" Fzf
-nnoremap <C-P> :<C-U>GFiles<CR>
-
-" Configure vim-angry so that ca, and ci, change arguments, rather than caa
-" and cia -- that's intuitive to me and I imagine that aa could be useful
-" elsewhere.
-let g:angry_disable_maps = 1
-vmap <silent> a, <Plug>AngryOuterPrefix
-omap <silent> a, <Plug>AngryOuterPrefix
-vmap <silent> i, <Plug>AngryInnerPrefix
-omap <silent> i, <Plug>AngryInnerPrefix
-
-" Projectionist
-let g:projectionist_heuristics = {
-  \ "test/&src/&project.clj": {
-  \   "src/*.clj": {
-  \     "type": "clj",
-  \     "alternate": "test/{}_test.clj"
-  \   },
-  \   "src/*.cljc": {
-  \     "type": "cljc",
-  \     "alternate": "test/{}_test.clj"
-  \   },
-  \   "src/*.cljs": {
-  \     "type": "cljs",
-  \     "alternate": "test/{}_test.clj"
-  \   },
-  \   "test/*_test.clj": {
-  \     "type": "test",
-  \     "alternate": [
-  \       "src/{}.cljc",
-  \       "src/{}.clj",
-  \       "src/{}.cljs"
-  \     ]
-  \   }
-  \ }}
-
 " vim-sexp
 let g:sexp_enable_insert_mode_mappings = 0
 
@@ -87,19 +50,9 @@ let g:airline_theme = 'base16_grayscale'
 
 " File types
 
-let g:haddock_browser = "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
-function! HaskellBuffer()
-  " Same as Idris
-  nmap <buffer> <Bslash>t :GhcModType<CR>
-  nmap <buffer> <Bslash>r :GhcModCheck<CR>
-  nmap <buffer> <Bslash>c :GhcModSplitFunCase<CR>
-  nmap <buffer> <Bslash>d :GhcModSigCodegen<CR>
-  nmap <buffer> K :execute "HoogleInfo " . expand("<cWORD>")<CR>
-endfunction
 augroup Haskell
   autocmd!
   autocmd FileType haskell set sts=2 sw=2 ai et
-  autocmd FileType haskell call HaskellBuffer()
 augroup end
 
 augroup JavaScript

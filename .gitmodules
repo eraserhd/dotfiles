@@ -7,81 +7,21 @@
 [submodule "neovim/config/nvim.symlink/bundle/vim-surround"]
 	path = vim/vim.symlink/bundle/vim-surround
 	url = git@github.com:tpope/vim-surround.git
-[submodule "neovim/config/nvim.symlink/bundle/vim-fugitive"]
-	path = vim/vim.symlink/bundle/vim-fugitive
-	url = git@github.com:tpope/vim-fugitive.git
-[submodule "neovim/config/nvim.symlink/bundle/idris-vim"]
-	path = vim/vim.symlink/bundle/idris-vim
-	url = git@github.com:Idris-hackers/idris-vim.git
-[submodule "neovim/config/nvim.symlink/bundle/vim-terraform"]
-	path = vim/vim.symlink/bundle/vim-terraform
-	url = git@github.com:hashivim/vim-terraform.git
 [submodule "neovim/config/nvim.symlink/bundle/vim-repeat"]
 	path = vim/vim.symlink/bundle/vim-repeat
 	url = git@github.com:tpope/vim-repeat.git
-[submodule "neovim/config/nvim.symlink/bundle/vim-hoogle"]
-	path = vim/vim.symlink/bundle/vim-hoogle
-	url = git@github.com:Twinside/vim-hoogle.git
-[submodule "neovim/config/nvim.symlink/bundle/vim-nix"]
-	path = vim/vim.symlink/bundle/vim-nix
-	url = git@github.com:LnL7/vim-nix.git
-[submodule "neovim/config/nvim.symlink/bundle/markdorg-vim"]
-	path = vim/vim.symlink/bundle/markdorg-vim
-	url = git@github.com:eraserhd/markdorg-vim.git
 [submodule "neovim/config/nvim.symlink/bundle/git-zeal-vim"]
 	path = vim/vim.symlink/bundle/git-zeal-vim
 	url = git@github.com:eraserhd/git-zeal-vim.git
-[submodule "vim/vim.symlink/bundle/vim-abolish"]
-	path = vim/vim.symlink/bundle/vim-abolish
-	url = git@github.com:tpope/vim-abolish.git
-[submodule "vim/vim.symlink/bundle/vim-angry"]
-	path = vim/vim.symlink/bundle/vim-angry
-	url = git@github.com:b4winckler/vim-angry
-[submodule "vim/vim.symlink/bundle/AnsiEsc.vim"]
-	path = vim/vim.symlink/bundle/AnsiEsc.vim
-	url = git@github.com:vim-scripts/AnsiEsc.vim
-[submodule "vim/vim.symlink/bundle/vim-projectionist"]
-	path = vim/vim.symlink/bundle/vim-projectionist
-	url = git@github.com:tpope/vim-projectionist.git
 [submodule "vim/vim.symlink/bundle/vim-sexp"]
 	path = vim/vim.symlink/bundle/vim-sexp
 	url = git@github.com:guns/vim-sexp.git
 [submodule "vim/vim.symlink/bundle/vim-sexp-mappings-for-regular-people"]
 	path = vim/vim.symlink/bundle/vim-sexp-mappings-for-regular-people
 	url = git@github.com:tpope/vim-sexp-mappings-for-regular-people.git
-[submodule "vim/vim.symlink/bundle/vim-scriptease"]
-	path = vim/vim.symlink/bundle/vim-scriptease
-	url = git@github.com:tpope/vim-scriptease.git
-[submodule "vim/vim.symlink/bundle/vim-replant"]
-	path = vim/vim.symlink/bundle/vim-replant
-	url = git@github.com:SevereOverfl0w/vim-replant
-[submodule "vim/vim.symlink/bundle/nerdtree"]
-	path = vim/vim.symlink/bundle/nerdtree
-	url = git@github.com:scrooloose/nerdtree
-[submodule "vim/vim.symlink/bundle/vim-pencil"]
-	path = vim/vim.symlink/bundle/vim-pencil
-	url = git@github.com:reedes/vim-pencil
-[submodule "vim/vim.symlink/bundle/vim-rhubarb"]
-	path = vim/vim.symlink/bundle/vim-rhubarb
-	url = git@github.com:tpope/vim-rhubarb
 [submodule "vim/vim.symlink/bundle/vim-airline"]
 	path = vim/vim.symlink/bundle/vim-airline
 	url = git@github.com:vim-airline/vim-airline.git
 [submodule "vim/vim.symlink/bundle/vim-airline-themes"]
 	path = vim/vim.symlink/bundle/vim-airline-themes
 	url = git@github.com:vim-airline/vim-airline-themes.git
-[submodule "vim/vim.symlink/bundle/fzf"]
-	path = vim/vim.symlink/bundle/fzf
-	url = git@github.com:junegunn/fzf.git
-[submodule "vim/vim.symlink/bundle/fzf.vim"]
-	path = vim/vim.symlink/bundle/fzf.vim
-	url = git@github.com:junegunn/fzf.vim.git
-[submodule "vim/vim.symlink/bundle/vim-gitgutter"]
-	path = vim/vim.symlink/bundle/vim-gitgutter
-	url = git@github.com:airblade/vim-gitgutter.git
-[submodule "kak/config/kak.symlink/autoload/kak-ansi"]
-	path = kak/config/kak.symlink/autoload/kak-ansi
-	url = git@github.com:eraserhd/kak-ansi.git
-[submodule "tmux/tmux.symlink/plugins/tpm"]
-	path = tmux/tmux.symlink/plugins/tpm
-	url = git@github.com:tmux-plugins/tpm.git
