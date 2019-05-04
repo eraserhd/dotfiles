@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Stop tracking remote branches which are
 git fetch || exit $?

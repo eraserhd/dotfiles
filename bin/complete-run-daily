@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 run_daily_id=$(wl tasks -j | jq '.[] | select(.title == "Run `daily`") | .id')
 exec wl update-task --completed=true --starred=false $run_daily_id >/dev/null
