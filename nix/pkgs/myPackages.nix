@@ -1,7 +1,15 @@
 with import <nixpkgs> {
   config = {
     packageOverrides = pkgs: {
-      kakoune = pkgs.callPackage ./kakoune.nix {};
+      kakoune = pkgs.kakoune.overrideAttrs (old: rec {
+        version = "92972bed4fb4ff6dffd32169bc437de34acac6a9";
+        src = pkgs.fetchFromGitHub {
+          repo = "kakoune";
+          owner = "mawww";
+          rev = "92972bed4fb4ff6dffd32169bc437de34acac6a9";
+          sha256 = "1cn32qyp0zki392200zxzp0mjikalrc92g1anav3xwplh1zlv1ks";
+        };
+      });
     };
   };
 };
