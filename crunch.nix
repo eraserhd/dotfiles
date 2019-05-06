@@ -46,9 +46,12 @@
     git
     git-crypt
     gnupg
+    zlib # Hack to get binary rep working
   ];
 
   services.openssh.enable = true;
+
+  nixpkgs.config.allowUnfree = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users = let allowedKeys = [

@@ -1,3 +1,8 @@
+# Temporary hack, until nix packages are sorted
+# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+source ~/src/parinfer-rust/rc/parinfer.kak
+source ~/src/rep/rc/rep.kak
+
 # General Settings
 # ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
