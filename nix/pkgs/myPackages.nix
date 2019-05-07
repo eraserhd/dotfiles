@@ -49,9 +49,7 @@ pkgs.buildEnv {
         scripts = with pkgs.weechatScripts; [
           wee-slack
         ];
-        plugins = with availablePlugins; [
-          (python.withPackages (ps: with ps; [ websocket_client ]))
-        ];
+        plugins = with availablePlugins; [ python ];
       };
     })
     wget
