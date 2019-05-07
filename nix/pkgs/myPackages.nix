@@ -1,13 +1,22 @@
-with import <nixpkgs> {
+with import (fetchGit {
+  url = "git@github.com:eraserhd/nixpkgs.git";
+  ref = "eraserhd";
+}) {
   config = {
     packageOverrides = pkgs: {
-      kakoune = pkgs.kakoune.overrideAttrs (old: rec {
+      kakoune = (pkgs.kakoune.withPlugins [ pkgs.parinfer-rust ]).overrideAttrs (old: rec {
         version = "92972bed4fb4ff6dffd32169bc437de34acac6a9";
         src = pkgs.fetchFromGitHub {
           repo = "kakoune";
           owner = "mawww";
           rev = "92972bed4fb4ff6dffd32169bc437de34acac6a9";
           sha256 = "1cn32qyp0zki392200zxzp0mjikalrc92g1anav3xwplh1zlv1ks";
+        };
+      });
+      weechat = (pkgs.weechat.override {
+        configure = {availablePlugins, ...}: {
+          scripts = with pkgs.weechatScripts; [ wee-slack ];
+          plugins = with availablePlugins; [ python ];
         };
       });
     };
@@ -37,6 +46,7 @@ pkgs.buildEnv {
     kakoune
     leiningen
     nodejs
+    parinfer-rust
     plan9port
     rlwrap
     sassc
@@ -44,14 +54,7 @@ pkgs.buildEnv {
     tmate
     tmux
     vault
-    (weechat.override {
-      configure = {availablePlugins, ...}: {
-        scripts = with pkgs.weechatScripts; [
-          wee-slack
-        ];
-        plugins = with availablePlugins; [ python ];
-      };
-    })
+    weechat
     wget
   ] ++ osPackages;
 }
