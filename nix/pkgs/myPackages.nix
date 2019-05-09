@@ -44,6 +44,7 @@ pkgs.buildEnv {
     ii
     jq
     kakoune
+    killall
     leiningen
     nodejs
     parinfer-rust
