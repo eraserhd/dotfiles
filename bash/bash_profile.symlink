@@ -20,7 +20,7 @@ fi
 
 CDPATH=.:~/src:~/src/dotfiles/kak/config/kak.symlink/autoload:~/src/dotfiles/vim/vim.symlink/bundle
 CLICOLOR=1
-EDITOR=/usr/local/bin/kak
+EDITOR=kak
 ELI_ENV=corp-tech-jfelice
 GOPATH=~/src/go
 IRCNICK=eraserhd
