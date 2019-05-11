@@ -50,6 +50,20 @@ ssh() {
     fi
 }
 
+initPlan9() {
+    if ! command -v 9 >/dev/null 2>&1
+    then
+        printf 'no plan9 services.\n' >&2
+        return 1
+    fi
+
+    if [[ -z $NAMESPACE ]];
+    then
+        export NAMESPACE=$XDG_RUNTIME_DIR/plan9/srv
+    fi
+    mkdir -p $NAMESPACE $XDG_RUNTIME_DIR/plan9/log
+}
+
 postService() {
     local srvname="$1"
     local logfile="$XDG_RUNTIME_DIR/plan9/log/$srvname"
@@ -69,20 +83,13 @@ postService() {
     fi
 }
 
-initPlan9() {
-    if ! command -v 9 >/dev/null 2>&1
-    then
-        printf 'no plan9 services.\n' >&2
-        return 1
+startPlan9() {
+    if [[ $(hostname) = crunch ]]; then
+        postService plumb 9 plumber -p ~/.config/plan9/plumbing
+    else
+        local import_path=$(ssh 10.0.0.2 bash -l -c '"9 sh -c \"echo \\\$PLAN9\""')/bin
+        9 import -n /run/user/1000 -s plumb -p "$import_path" 10.0.0.2
     fi
-
-    if [[ -z $NAMESPACE ]];
-    then
-        export NAMESPACE=$XDG_RUNTIME_DIR/plan9/srv
-    fi
-    mkdir -p $NAMESPACE $XDG_RUNTIME_DIR/plan9/log
-
-    postService plumb 9 plumber -p ~/.config/plan9/plumbing
 }
 
 source_if_exists ~/.nix-profile/etc/profile.d/nix.sh
