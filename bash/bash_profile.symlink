@@ -1,48 +1,9 @@
-if [[ -z $XDG_RUNTIME_DIR ]]
-then
-    export XDG_RUNTIME_DIR=~/.run
-    mkdir -p ~/.run
-fi
-
 source_if_exists() {
   if [[ -f "$1" ]]
   then
     source "$1"
   fi
 }
-
-source_if_exists ~/.nix-profile/etc/profile.d/nix.sh
-
-brew_prefix="$(command -v brew 2>/dev/null)"
-brew_prefix="${brew_prefix%/bin/brew}"
-if [ -n "${brew_prefix}" ]; then
-  source_if_exists "${brew_prefix}/etc/bash_completion"
-fi
-
-if ! command -v __git_ps1 >/dev/null
-then
-  __git_ps1() { :; }
-fi
-
-CDPATH=.:~/src:~/src/dotfiles/kak/config/kak.symlink/autoload:~/src/dotfiles/vim/vim.symlink/bundle
-CLICOLOR=1
-EDITOR=kak
-ELI_ENV=corp-tech-jfelice
-GOPATH=~/src/go
-IRCNICK=eraserhd
-IRCSERVER=irc.freenode.net
-PATH=~/.cargo/bin:~/.local/bin:$GOPATH/bin:~/.cabal/bin:/usr/local/bin:"$PATH"
-PS1='\e[1;32m[\u@\h \W$(__git_ps1 "(%s)")]\$\e[0m '
-VAULT_ADDR=https://vault.prod.2u.com:8200/
-VAULT_CACERT=$HOME/src/ops-terraform/consul-vpc/policies/vault-ca.pem
-
-export CDPATH CLICOLOR EDITOR ELI_ENV GOPATH IRCNICK IRCSERVER
-export PATH PS1 VAULT_ADDR VAULT_CACERT
-
-alias vi=$EDITOR
-alias vim=$EDITOR
-
-[[ -f ~/.local/bin/private.sh ]] && source ~/.local/bin/private.sh
 
 want_kak_session() {
     while (( $# != 0 )); do
@@ -88,3 +49,30 @@ ssh() {
         return $?
     fi
 }
+
+source_if_exists ~/.nix-profile/etc/profile.d/nix.sh
+source_if_exists ~/.local/bin/private.sh
+
+if [[ -z $XDG_RUNTIME_DIR ]]
+then
+    export XDG_RUNTIME_DIR=~/.run
+    mkdir -p ~/.run
+fi
+
+export CDPATH=.:~/src:~/src/dotfiles/kak/config/kak.symlink/autoload:~/src/dotfiles/vim/vim.symlink/bundle
+export CLICOLOR=1
+export EDITOR=kak
+export ELI_ENV=corp-tech-jfelice
+export GOPATH=~/src/go
+export PATH=~/.cargo/bin:~/.local/bin:$GOPATH/bin:~/.cabal/bin:/usr/local/bin:"$PATH"
+export PS1='\e[1;32m[\u@\h \W$(__git_ps1 "(%s)")]\$\e[0m '
+export VAULT_ADDR=https://vault.prod.2u.com:8200/
+export VAULT_CACERT=$HOME/src/ops-terraform/consul-vpc/policies/vault-ca.pem
+
+if ! command -v __git_ps1 >/dev/null
+then
+  __git_ps1() { :; }
+fi
+
+alias vi=$EDITOR
+alias vim=$EDITOR
