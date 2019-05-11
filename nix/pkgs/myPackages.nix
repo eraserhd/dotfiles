@@ -33,7 +33,7 @@ pkgs.buildEnv {
     asciidoc
     autossh
     awscli
-    bash
+    bashInteractive
     bash-completion
     chez
     clojure
