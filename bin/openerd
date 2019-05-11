@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+9 9p read plumb/web |while true; do
+    read src
+    read dst
+    read wdir
+    read type
+    read attr
+    read ndata
+    read -N $ndata data
+    osascript -e "
+        on run argv
+            set theUrl to item 1 of argv
+            tell application \"Google Chrome\"
+                set found to false
+                repeat with theWindow in every window
+                    set tabIndex to 1
+                    repeat with theTab in every tab of theWindow
+                        if theTab's URL is theUrl then
+                            set found to true
+                            exit repeat
+                        end if
+                        set tabIndex to tabIndex + 1
+                    end repeat
+                    if found then
+                        exit repeat
+                    end if
+                end repeat
+                if found then
+                    set theWindow's active tab index to tabIndex
+                    set index of theWindow to 1
+                else
+                    tell window 1 to make new tab with properties {URL:theUrl}
+                end if
+                activate
+            end tell
+        end run
+    " "$data"
+done
