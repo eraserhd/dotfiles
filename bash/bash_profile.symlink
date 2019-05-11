@@ -87,8 +87,8 @@ startPlan9() {
     if [[ $(hostname) = crunch ]]; then
         postService plumb 9 plumber -p ~/.config/plan9/plumbing
     else
-        local import_path=$(ssh 10.0.0.2 bash -l -c '"9 sh -c \"echo \\\$PLAN9\""')/bin
-        9 import -n /run/user/1000 -s plumb -p "$import_path" 10.0.0.2
+        local import_path=$(ssh 10.0.0.2 bash -l -c '"9 sh -c \"echo \\\$PLAN9\""')/bin/import
+        9 import -n /run/user/1000/plan9/srv -s plumb -p "$import_path" 10.0.0.2
     fi
 }
 
