@@ -272,7 +272,7 @@ define-command \
     }
 }
 
-nop map global user o ': plumb<ret>'
+map global user o ': plumb<ret>'
 
 # Normal Mode
 # ‾‾‾‾‾‾‾‾‾‾‾
