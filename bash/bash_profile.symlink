@@ -1,3 +1,9 @@
+if [[ -z $XDG_RUNTIME_DIR ]]
+then
+    export XDG_RUNTIME_DIR=~/.run
+    mkdir -p ~/.run
+fi
+
 source_if_exists() {
   if [[ -f "$1" ]]
   then
