@@ -241,26 +241,38 @@ hook -group client-tracker global WinCreate .* update-client-options
 hook -group client-tracker global WinClose .* update-client-options
 hook -group client-tracker global WinResize .* update-client-options
 
-# Open Nearest Link
-# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+# Plumb
+# ‾‾‾‾‾
 
 define-command \
-    -docstring %{open-nearest-link: find a link on or after the cursor and open it} \
-    open-nearest-link %{
-    evaluate-commands -draft %{
+    -docstring %{plumb: send text to the plumber} \
+    plumb %{
+    evaluate-commands -itersel -draft %{
+        # Move forward if on a single whitespace
+        try %{ execute-keys '<a-k>\A\s\z<ret>/[^\s]<ret>' }
         try %{
-            execute-keys '<a-i><a-w><a-k>https?://<ret>'
-            execute-keys '<a-|>xargs open<ret>'
+            # If we have a single-character selection, simulate clicking
+            execute-keys '<a-k>\A[^\s]\z<ret>'
+            execute-keys 'Z[<a-w>"lyz<a-i><a-w>'
+            evaluate-commands %sh{
+                eval set -- "$kak_reg_l"
+                err="$(9 plumb -s kak -a click=$((${#1} - 1)) "$kak_selection" 2>&1)"
+                if [ -n "$err" ]; then
+                    printf 'fail "%s"\n' "$err"
+                fi
+            }
         } catch %{
-            execute-keys '/\bhttps?://[^\s]*<ret>'
-            execute-keys '<a-|>xargs open<ret>'
-        } catch %{
-            echo -markup '{Error}no URL found.'
+            evaluate-commands %sh{
+                err="$(9 plumb -s kak "$kak_selection" 2>&1)"
+                if [ -n "$err" ]; then
+                    printf 'fail "%s"\n' "$err"
+                fi
+            }
         }
     }
 }
 
-map global user o ': open-nearest-link<ret>'
+nop map global user o ': plumb<ret>'
 
 # Normal Mode
 # ‾‾‾‾‾‾‾‾‾‾‾
