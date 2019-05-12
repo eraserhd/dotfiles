@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell -i bash -p bash plan9port
+#! nix-shell -i bash -p bash plan9port reattach-to-user-namespace
 #
 # opener-daemon [options] - daemon to handle plumb/web requests by opening URLs in Chrome
 # Options:
@@ -52,7 +52,7 @@ mainLoop() {
         read attr
         read ndata
         read -N $ndata data
-        osascript -e "
+        reattach-to-user-namespace osascript -e "
             on run argv
                 set theUrl to item 1 of argv
                 tell application \"Google Chrome\"
