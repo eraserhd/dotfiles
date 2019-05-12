@@ -30,7 +30,7 @@ startDaemon() {
     assertNotRunning || exit 1
     assertPlumbAccess || exit 1
     exec <&- >/dev/null 2>&1
-    nohup "${BASH_SOURCE[0]}" --inside-nohup &
+    nohup "${BASH_SOURCE[0]}" --main-loop &
     echo "$!" >"$PIDFILE"
 }
 
@@ -86,17 +86,15 @@ mainLoop() {
 export PIDFILE="$XDG_RUNTIME_DIR/opener-daemon.pid"
 export LOGFILE="$XDG_RUNTIME_DIR/opener-daemon.log"
 
-action=start
+action='startDaemon'
 while (( $# > 0 )); do
     case "$1" in
-        -k|--kill)      action=kill;;
-        --inside-nohup) action=inside_nohup;;
+        -k|--kill)   action='stopDaemon';;
+        --main-loop) action='mainLoop';;
+        --start)     action='startDaemon';;
     esac
     shift
 done
 
-case "$action" in
-    start)        startDaemon; exit $?;;
-    kill)         stopDaemon; exit $?;;
-    inside_nohup) mainLoop;;
-esac
+$action
+exit $?
