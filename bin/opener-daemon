@@ -1,0 +1,102 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -i bash -p bash plan9port
+#
+# opener-daemon [options] - daemon to handle plumb/web requests by opening URLs in Chrome
+# Options:
+#   -k, --kill   kill running instance
+#
+
+assertNotRunning() {
+    if [[ -f $PIDFILE ]]; then
+        old_pid=$(cat $PIDFILE)
+        if ps -p "$old_pid" >/dev/null 2>&1; then
+            printf 'opener-daemon: already running.\n' >&2
+            return 1
+        fi
+        rm -f "$PIDFILE"
+    fi
+    return 0
+}
+
+assertPlumbAccess() {
+    if ! 9 9p stat plumb/web >/dev/null 2>&1; then
+        printf 'opener-daemon: no access to plumb/web.\n' >&2
+        return 1
+    fi
+    return 0
+}
+
+startDaemon() {
+    assertNotRunning || exit 1
+    assertPlumbAccess || exit 1
+    exec <&- >/dev/null 2>&1
+    nohup "${BASH_SOURCE[0]}" --inside-nohup &
+    echo "$!" >"$PIDFILE"
+}
+
+stopDaemon() {
+    kill $(cat $PIDFILE) || exit 1
+    rm -f $PIDFILE
+}
+
+mainLoop() {
+    exec <&- >>"$LOGFILE" 2>&1
+    exec < <(9 9p read plumb/web)
+    read_pid=$!
+    trap 'kill $read_pid' EXIT
+    while true; do
+        read src
+        read dst
+        read wdir
+        read type
+        read attr
+        read ndata
+        read -N $ndata data
+        osascript -e "
+            on run argv
+                set theUrl to item 1 of argv
+                tell application \"Google Chrome\"
+                    set found to false
+                    repeat with theWindow in every window
+                        set tabIndex to 1
+                        repeat with theTab in every tab of theWindow
+                            if theTab's URL is theUrl then
+                                set found to true
+                                exit repeat
+                            end if
+                            set tabIndex to tabIndex + 1
+                        end repeat
+                        if found then
+                            exit repeat
+                        end if
+                    end repeat
+                    if found then
+                        set theWindow's active tab index to tabIndex
+                        set index of theWindow to 1
+                    else
+                        tell window 1 to make new tab with properties {URL:theUrl}
+                    end if
+                    activate
+                end tell
+            end run
+        " "$data"
+    done
+}
+
+export PIDFILE="$XDG_RUNTIME_DIR/opener-daemon.pid"
+export LOGFILE="$XDG_RUNTIME_DIR/opener-daemon.log"
+
+action=start
+while (( $# > 0 )); do
+    case "$1" in
+        -k|--kill)      action=kill;;
+        --inside-nohup) action=inside_nohup;;
+    esac
+    shift
+done
+
+case "$action" in
+    start)        startDaemon; exit $?;;
+    kill)         stopDaemon; exit $?;;
+    inside_nohup) mainLoop;;
+esac
