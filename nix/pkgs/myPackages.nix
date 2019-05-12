@@ -1,10 +1,12 @@
 with import (fetchGit {
   url = "git@github.com:eraserhd/nixpkgs.git";
   ref = "eraserhd";
+  rev = "88965be47d3149e7f3559bb5c37f053d05c43790";
 }) {
   config = {
     packageOverrides = pkgs: rec {
       kakoune = (pkgs.kakoune.withPlugins (with kakounePlugins; [
+        kak-ansi
         parinfer-rust
       ])).overrideAttrs (old: rec {
         version = "92972bed4fb4ff6dffd32169bc437de34acac6a9";
