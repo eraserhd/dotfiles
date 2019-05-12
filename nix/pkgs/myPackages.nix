@@ -3,8 +3,10 @@ with import (fetchGit {
   ref = "eraserhd";
 }) {
   config = {
-    packageOverrides = pkgs: {
-      kakoune = (pkgs.kakoune.withPlugins [ pkgs.parinfer-rust ]).overrideAttrs (old: rec {
+    packageOverrides = pkgs: rec {
+      kakoune = (pkgs.kakoune.withPlugins (with kakounePlugins; [
+        parinfer-rust
+      ])).overrideAttrs (old: rec {
         version = "92972bed4fb4ff6dffd32169bc437de34acac6a9";
         src = pkgs.fetchFromGitHub {
           repo = "kakoune";
@@ -13,6 +15,8 @@ with import (fetchGit {
           sha256 = "1cn32qyp0zki392200zxzp0mjikalrc92g1anav3xwplh1zlv1ks";
         };
       });
+      kakounePlugins = pkgs.kakounePlugins // {
+      };
       weechat = (pkgs.weechat.override {
         configure = {availablePlugins, ...}: {
           scripts = with pkgs.weechatScripts; [ wee-slack ];
