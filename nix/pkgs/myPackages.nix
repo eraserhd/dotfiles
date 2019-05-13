@@ -12,9 +12,9 @@ with import (fetchGit {
         version = "92972bed4fb4ff6dffd32169bc437de34acac6a9";
         src = pkgs.fetchFromGitHub {
           repo = "kakoune";
-          owner = "mawww";
-          rev = "92972bed4fb4ff6dffd32169bc437de34acac6a9";
-          sha256 = "1cn32qyp0zki392200zxzp0mjikalrc92g1anav3xwplh1zlv1ks";
+          owner = "eraserhd";
+          rev = "58a87a18c1a293ef2067d265145d8b42d0e8a911";
+          sha256 = "1dhcnl3i451gxkv533zrbgc8bzv9yjc4rcjn1rfzywikq07i2vz2";
         };
       });
       kakounePlugins = pkgs.kakounePlugins // {
