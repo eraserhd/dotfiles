@@ -19,6 +19,7 @@ with import (fetchGit {
       });
       kakounePlugins = pkgs.kakounePlugins // {
       };
+      kakouneWrapper = pkgs.callPackage ./kakoune-wrapper {};
       weechat = (pkgs.weechat.override {
         configure = {availablePlugins, ...}: {
           scripts = with pkgs.weechatScripts; [ wee-slack ];
@@ -49,7 +50,7 @@ pkgs.buildEnv {
     gtypist
     ii
     jq
-    kakoune
+    kakouneWrapper
     killall
     leiningen
     nodejs
