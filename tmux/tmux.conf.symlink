@@ -63,39 +63,7 @@ bind -r K resize-pane -U 5
 bind -r L resize-pane -R 5
 
 run-shell ~/src/tmux-ctrlw/ctrlw.tmux
-
-# Make our own copy-mode with Kakoune!
-bind -Tpane-menu N run-shell 'tmux set-buffer -b copy-pane-id "#D"' \; \
-    new-window -n copy-mode -d '\
-      pane_id="$(tmux show-buffer -b copy-pane-id)" ;\
-      file=$(mktemp) ;\
-      tmux capture-pane -t "${pane_id}" -S- -E- -J -e -p |sed -e "s/[ 	][ 	]*$//" >"$file" ;\
-      cursor_y=$(tmux display-message -t "${pane_id}" -p "#{cursor_y}") ;\
-      cursor_x=$(tmux display-message -t "${pane_id}" -p "#{cursor_x}") ;\
-      pane_height=$(tmux display-message -t "${pane_id}" -p "#{pane_height}") ;\
-      line_count="$(wc -l "$file" |awk "{print \$1}")" ;\
-      sel_line=$(( line_count - ( pane_height - cursor_y ) + 1 )) ;\
-      printf "sel = %s\n" "$line_count" >>/tmp/debug.log ;\
-      cursor="${sel_line}.${cursor_x},${sel_line}.${cursor_x}" ;\
-      printf "cursor = %s\n" "$cursor" >>/tmp/debug.log ;\
-      command kak -e "\
-         edit $file ;\
-         exec gj ;\
-         try %{\
-            ansi-render ;\
-         } catch %{\
-            exec -draft %{%s\x1B[\d;]+m<ret><a-d>} ;\
-         } ;\
-         write ;\
-         set-option buffer readonly true ;\
-         set-option window filetype tmux-copy ;\
-         rename-buffer *tmux-copy* ;\
-         select $cursor ;\
-         " ; \
-      rm -f "$file" ; \
-      tmux swap-pane -s :copy-mode.0 -t : ; \
-    ' \; \
-    swap-pane -s :copy-mode.0 -t :
+run-shell ~/src/tmux-editor-copy-mode/editor-copy-mode.tmux
 
 # Support true color in Alacritty
 set -sa terminal-overrides ",xterm-256color:Tc"
