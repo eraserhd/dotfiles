@@ -1,7 +1,7 @@
 with import (fetchGit {
   url = "git@github.com:eraserhd/nixpkgs.git";
   ref = "eraserhd";
-  rev = "88965be47d3149e7f3559bb5c37f053d05c43790";
+  rev = "5809c85fbf0a9c6abbc33872875c9d34eaee97ed";
 }) {
   config = {
     packageOverrides = pkgs: rec {
