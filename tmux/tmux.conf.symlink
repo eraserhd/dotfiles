@@ -62,39 +62,7 @@ bind -r J resize-pane -D 5
 bind -r K resize-pane -U 5
 bind -r L resize-pane -R 5
 
-# C-w mode
-bind -Troot C-w switch-client -Tpane-menu
-bind -Tpane-menu = select-layout -E
-bind -Tpane-menu 0 select-pane -t 0
-bind -Tpane-menu 1 select-pane -t 1
-bind -Tpane-menu 2 select-pane -t 2
-bind -Tpane-menu 3 select-pane -t 3
-bind -Tpane-menu 4 select-pane -t 4
-bind -Tpane-menu 5 select-pane -t 5
-bind -Tpane-menu 6 select-pane -t 6
-bind -Tpane-menu 7 select-pane -t 7
-bind -Tpane-menu 8 select-pane -t 8
-bind -Tpane-menu 9 select-pane -t 9
-bind -Tpane-menu a select-window -t 0 \; select-pane -t 0
-bind -Tpane-menu h select-pane -L
-bind -Tpane-menu j select-pane -D
-bind -Tpane-menu k select-pane -U
-bind -Tpane-menu l select-pane -R
-bind -Tpane-menu p select-pane -t !
-
-# C-w s N - swap current with pane N
-bind -Tpane-menu s switch-client -Tswap-pane-menu
-bind -Tswap-pane-menu 0 swap-pane -t 0
-bind -Tswap-pane-menu 1 swap-pane -t 1
-bind -Tswap-pane-menu 2 swap-pane -t 2
-bind -Tswap-pane-menu 3 swap-pane -t 3
-bind -Tswap-pane-menu 4 swap-pane -t 4
-bind -Tswap-pane-menu 5 swap-pane -t 5
-bind -Tswap-pane-menu 6 swap-pane -t 6
-bind -Tswap-pane-menu 7 swap-pane -t 7
-bind -Tswap-pane-menu 8 swap-pane -t 8
-bind -Tswap-pane-menu 9 swap-pane -t 9
-bind -Tswap-pane-menu p swap-pane -t !
+run-shell ~/src/tmux-ctrlw/ctrlw.tmux
 
 # Make our own copy-mode with Kakoune!
 bind -Tpane-menu N run-shell 'tmux set-buffer -b copy-pane-id "#D"' \; \
@@ -128,14 +96,6 @@ bind -Tpane-menu N run-shell 'tmux set-buffer -b copy-pane-id "#D"' \; \
       tmux swap-pane -s :copy-mode.0 -t : ; \
     ' \; \
     swap-pane -s :copy-mode.0 -t :
-
-bind -Tpane-menu . send-keys C-w
-bind -Tpane-menu w send-keys C-w
-bind -Tpane-menu C-w send-keys C-w
-
-## REPLy stuff
-bind -Tpane-menu r select-pane -t '{bottom-right}'
-bind -Tpane-menu , send-keys -t '{bottom-right}' C-p Enter
 
 # Support true color in Alacritty
 set -sa terminal-overrides ",xterm-256color:Tc"
