@@ -39,7 +39,7 @@ set-face global CurWord default,rgb:4a4a4a
 
 hook global NormalIdle .* %{
     eval -draft %{ try %{
-        exec <space><a-i>w <a-k>\A\w+\z<ret>
+        exec <space><a-i>w
         set-option buffer curword "\b\Q%val{selection}\E\b"
     } catch %{
         set-option buffer curword ''
