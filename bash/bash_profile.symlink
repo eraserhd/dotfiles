@@ -5,31 +5,6 @@ source_if_exists() {
   fi
 }
 
-want_kak_session() {
-    while (( $# != 0 )); do
-        case "$1" in
-            -l|-c|-s|-n) return 1;;
-            -e|-E|-p|-f|-i|-ui|-debug) shift;;
-        esac
-        shift
-    done
-    return 0
-}
-
-kak() {
-    if [[ -n "$TMUX_PANE" ]] && want_kak_session "$@"; then
-        local session="$(tmux display -t "$TMUX_PANE" -p '#W')" flag="-s"
-        if command kak -l 2>/dev/null |grep -q "^${session}\$"; then
-            flag="-c"
-        fi
-        command kak "${flag}" "${session}" "$@"
-        return $?
-    else
-        command kak "$@"
-        return $?
-    fi
-}
-
 man() {
     if (( $# == 2 )); then
         kak -e "man $2($1)"
