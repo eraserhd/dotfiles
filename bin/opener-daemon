@@ -44,8 +44,7 @@ mainLoop() {
     exec < <(9 9p read plumb/web)
     read_pid=$!
     trap 'kill $read_pid' EXIT
-    while true; do
-        read src
+    while read src; do
         read dst
         read wdir
         read type
