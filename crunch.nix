@@ -46,8 +46,11 @@
     git
     git-crypt
     gnupg
+    manpages
     zlib # Hack to get binary rep working
   ];
+
+  documentation.dev.enable = true;
 
   services.openssh.enable = true;
 
