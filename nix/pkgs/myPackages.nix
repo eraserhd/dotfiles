@@ -9,12 +9,12 @@ with import (fetchGit {
         kak-ansi
         parinfer-rust
       ])).overrideAttrs (old: rec {
-        version = "92972bed4fb4ff6dffd32169bc437de34acac6a9";
+        version = "478edc0b97b4acefdf228754f26da490bcafd9ba";
         src = pkgs.fetchFromGitHub {
           repo = "kakoune";
           owner = "eraserhd";
-          rev = "58a87a18c1a293ef2067d265145d8b42d0e8a911";
-          sha256 = "1dhcnl3i451gxkv533zrbgc8bzv9yjc4rcjn1rfzywikq07i2vz2";
+          rev = "478edc0b97b4acefdf228754f26da490bcafd9ba";
+          sha256 = "01yfw77q8ppw7m8bscyvf1d5iki8gq3rgiljffx0hxv2b7dvv147";
         };
       });
       kakounePlugins = pkgs.kakounePlugins // {
