@@ -76,7 +76,7 @@ then
     mkdir -p ~/.run
 fi
 
-export CDPATH=.:~/src:~/src/dotfiles/kak/config/kak.symlink/autoload:~/src/dotfiles/vim/vim.symlink/bundle
+export CDPATH=.:~/src:~/src/dotfiles/kak/config/kak.symlink/autoload
 export CLICOLOR=1
 export EDITOR=kak
 export ELI_ENV=corp-tech-jfelice
