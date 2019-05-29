@@ -428,6 +428,9 @@ hook -group clojure-objects global WinSetOption filetype=clojure %{
     map window normal w '<a-a><a-;> clojure-select-object element<ret>'
 }
 
+# Misc
+# ‾‾‾‾
+
 define-command rm %{
     nop %sh{ rm -f "$kak_buffile" }
     delete-buffer!
