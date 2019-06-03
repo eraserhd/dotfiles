@@ -44,6 +44,7 @@ pkgs.buildEnv {
     chez
     clojure
     docker-compose
+    file
     graphviz
     gitAndTools.hub
     gtypist
