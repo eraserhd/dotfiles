@@ -6,7 +6,6 @@ with import (fetchGit {
   config = {
     packageOverrides = pkgs: rec {
       kakoune = (pkgs.kakoune.withPlugins (with kakounePlugins; [
-        kak-ansi
         parinfer-rust
       ])).overrideAttrs (old: rec {
         version = "a0d264ef07c4b5bc5a9d7ff3629eb45e099e96bf";

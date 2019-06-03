@@ -1,6 +1,7 @@
 # Temporary hack, until nix packages are sorted
 # ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 source ~/src/rep/rc/rep.kak
+source ~/src/kak-ansi/rc/ansi.kak
 
 # General Settings
 # ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
