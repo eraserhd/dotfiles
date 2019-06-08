@@ -60,6 +60,7 @@
   users.users = let allowedKeys = [
     (builtins.readFile ./ssh/files/id_rsa.pub)
     (builtins.readFile ./ssh/files/id_dsa.pub)
+    (builtins.readFile ./ssh/files/id_rsa-workingcopy.pub)
   ]; in {
     jfelice = {
       isNormalUser = true;
