@@ -27,7 +27,7 @@
         ];
       };
       nameservers = [ "8.8.8.8" "8.8.4.4" ];
-      firewall.enable = false;
+      firewall.enable = true;
   };
 
   # Select internationalisation properties.
