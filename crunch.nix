@@ -41,17 +41,8 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
       firewall.enable = true;
   };
 
-  # Select internationalisation properties.
-  # i18n = {
-  #   consoleFont = "Lat2-Terminus16";
-  #   consoleKeyMap = "us";
-  #   defaultLocale = "en_US.UTF-8";
-  # };
-
   time.timeZone = "America/New_York";
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
     docker
     git
@@ -73,7 +64,6 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
 
   nixpkgs.config.allowUnfree = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users = let allowedKeys = [
     (builtins.readFile ./ssh/files/id_rsa.pub)
     (builtins.readFile ./ssh/files/id_dsa.pub)
