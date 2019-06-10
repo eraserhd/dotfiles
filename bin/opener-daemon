@@ -54,6 +54,9 @@ mainLoop() {
         reattach-to-user-namespace osascript -e "
             on run argv
                 set theUrl to item 1 of argv
+                tell application \"System Events\"
+                    set activeProcess to first process where it is frontmost
+                end tell
                 tell application \"Google Chrome\"
                     set found to false
                     repeat with theWindow in every window
@@ -74,8 +77,11 @@ mainLoop() {
                         set index of theWindow to 1
                     else
                         tell window 1 to make new tab with properties {URL:theUrl}
+                        set theWindow to window 1
                     end if
-                    activate
+                end tell
+                tell application \"System Events\"
+                    set frontmost of activeProcess to true
                 end tell
             end run
         " "$data"
