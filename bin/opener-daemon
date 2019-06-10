@@ -29,16 +29,16 @@ assertPlumbAccess() {
 }
 
 action_start() {
-    assertNotRunning || exit 1
-    assertPlumbAccess || exit 1
+    assertNotRunning || return $?
+    assertPlumbAccess || return $?
     exec <&- >/dev/null 2>&1
     nohup "${BASH_SOURCE[0]}" --mainLoop &
     echo "$!" >"$PIDFILE"
 }
 
 action_kill() {
-    kill $(cat $PIDFILE) || exit 1
-    rm -f $PIDFILE
+    kill $(cat $PIDFILE) || return $?
+    rm -f $PIDFILE || return $?
 }
 
 action_open() {
@@ -49,8 +49,8 @@ action_open() {
         on run argv
             set theUrl to item 1 of argv
             set theFrontmostPid to item 2 of argv
+            set found to false
             tell application \"Google Chrome\"
-                set found to false
                 repeat with theWindow in every window
                     set tabIndex to 1
                     repeat with theTab in every tab of theWindow
@@ -69,7 +69,6 @@ action_open() {
                     set index of theWindow to 1
                 else
                     tell window 1 to make new tab with properties {URL:theUrl}
-                    set theWindow to window 1
                 end if
             end tell
             tell application \"System Events\"
@@ -77,6 +76,7 @@ action_open() {
             end tell
         end run
     " "$link" "$frontmost_pid"
+    return $?
 }
 
 action_mainLoop() {
@@ -91,11 +91,11 @@ action_mainLoop() {
         read attr
         read ndata
         read -N $ndata data
-        reattach-to-user-namespace "$ARGV0" --open "$data"
+        reattach-to-user-namespace "$SCRIPT_PATH" --open "$data"
     done
 }
 
-export ARGV0="${BASH_SOURCE[0]}"
+export SCRIPT_PATH="${BASH_SOURCE[0]}"
 export PIDFILE="$XDG_RUNTIME_DIR/opener-daemon.pid"
 export LOGFILE="$XDG_RUNTIME_DIR/opener-daemon.log"
 
