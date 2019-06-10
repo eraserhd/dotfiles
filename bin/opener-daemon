@@ -3,7 +3,9 @@
 #
 # opener-daemon [options] - daemon to handle plumb/web requests by opening URLs in Chrome
 # Options:
-#   -k, --kill   kill running instance
+#   --start     Fork daemon
+#   --kill      Kill running instance
+#   --open URL  Open a single URL (does not use daemon)
 #
 
 assertNotRunning() {
@@ -26,27 +28,27 @@ assertPlumbAccess() {
     return 0
 }
 
-startDaemon() {
+action_start() {
     assertNotRunning || exit 1
     assertPlumbAccess || exit 1
     exec <&- >/dev/null 2>&1
-    nohup "${BASH_SOURCE[0]}" --main-loop &
+    nohup "${BASH_SOURCE[0]}" --mainLoop &
     echo "$!" >"$PIDFILE"
 }
 
-stopDaemon() {
+action_kill() {
     kill $(cat $PIDFILE) || exit 1
     rm -f $PIDFILE
 }
 
-openLink() {
+action_open() {
     local link="$1"
+    local frontmost_pid=$(lsappinfo info -only pid $(lsappinfo front))
+    frontmost_pid="${frontmost_pid##*=}"
     osascript -e "
         on run argv
             set theUrl to item 1 of argv
-            tell application \"System Events\"
-                set activeProcess to first process where it is frontmost
-            end tell
+            set theFrontmostPid to item 2 of argv
             tell application \"Google Chrome\"
                 set found to false
                 repeat with theWindow in every window
@@ -71,13 +73,13 @@ openLink() {
                 end if
             end tell
             tell application \"System Events\"
-                set frontmost of activeProcess to true
+                set frontmost of every process whose unix id is theFrontmostPid to true
             end tell
         end run
-    " "$link"
+    " "$link" "$frontmost_pid"
 }
 
-mainLoop() {
+action_mainLoop() {
     exec <&- >>"$LOGFILE" 2>&1
     exec < <(9 9p read plumb/web)
     read_pid=$!
@@ -97,14 +99,12 @@ export ARGV0="${BASH_SOURCE[0]}"
 export PIDFILE="$XDG_RUNTIME_DIR/opener-daemon.pid"
 export LOGFILE="$XDG_RUNTIME_DIR/opener-daemon.log"
 
-action='startDaemon'
+action='start'
 case "$1" in
-    -k|--kill)   action='stopDaemon';;
-    --main-loop) action='mainLoop';;
-    --start)     action='startDaemon';;
-    --open)      action='openLink';;
+    --*)
+        action="${1#--}"
+        shift;;
 esac
-shift
 
-$action "$@"
+"action_${action}" "$@"
 exit $?
