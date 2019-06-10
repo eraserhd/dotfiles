@@ -20,18 +20,16 @@ alias global gp grep-previous-match
 colorscheme palenight
 
 set-option global ui_options ncurses_assistant=none ncurses_status_on_top=true ncurses_set_title=false
-
-add-highlighter global/matching show-matching
-
 set-face global LineNumbersWrapped black
-
-add-highlighter global/whitespace show-whitespaces -spc ' ' -tab '➤' -lf '↩'
+add-highlighter global/matching show-matching
 
 hook global WinSetOption filetype=(?!tmux-copy).* %{
     try %{ add-highlighter window/number number-lines }
+    try %{ add-highlighter window/whitespace show-whitespaces -spc ' ' -tab '➤' -lf '↩' }
 }
 hook global WinSetOption filetype=tmux-copy %{
     try %{ remove-highlighter window/number }
+    try %{ remove-highlighter window/whitespace }
 }
 
 # Stolen from mawww
