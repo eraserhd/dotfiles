@@ -39,6 +39,44 @@ stopDaemon() {
     rm -f $PIDFILE
 }
 
+openLink() {
+    local link="$1"
+    osascript -e "
+        on run argv
+            set theUrl to item 1 of argv
+            tell application \"System Events\"
+                set activeProcess to first process where it is frontmost
+            end tell
+            tell application \"Google Chrome\"
+                set found to false
+                repeat with theWindow in every window
+                    set tabIndex to 1
+                    repeat with theTab in every tab of theWindow
+                        if theTab's URL is theUrl then
+                            set found to true
+                            exit repeat
+                        end if
+                        set tabIndex to tabIndex + 1
+                    end repeat
+                    if found then
+                        exit repeat
+                    end if
+                end repeat
+                if found then
+                    set theWindow's active tab index to tabIndex
+                    set index of theWindow to 1
+                else
+                    tell window 1 to make new tab with properties {URL:theUrl}
+                    set theWindow to window 1
+                end if
+            end tell
+            tell application \"System Events\"
+                set frontmost of activeProcess to true
+            end tell
+        end run
+    " "$link"
+}
+
 mainLoop() {
     exec <&- >>"$LOGFILE" 2>&1
     exec < <(9 9p read plumb/web)
@@ -51,55 +89,22 @@ mainLoop() {
         read attr
         read ndata
         read -N $ndata data
-        reattach-to-user-namespace osascript -e "
-            on run argv
-                set theUrl to item 1 of argv
-                tell application \"System Events\"
-                    set activeProcess to first process where it is frontmost
-                end tell
-                tell application \"Google Chrome\"
-                    set found to false
-                    repeat with theWindow in every window
-                        set tabIndex to 1
-                        repeat with theTab in every tab of theWindow
-                            if theTab's URL is theUrl then
-                                set found to true
-                                exit repeat
-                            end if
-                            set tabIndex to tabIndex + 1
-                        end repeat
-                        if found then
-                            exit repeat
-                        end if
-                    end repeat
-                    if found then
-                        set theWindow's active tab index to tabIndex
-                        set index of theWindow to 1
-                    else
-                        tell window 1 to make new tab with properties {URL:theUrl}
-                        set theWindow to window 1
-                    end if
-                end tell
-                tell application \"System Events\"
-                    set frontmost of activeProcess to true
-                end tell
-            end run
-        " "$data"
+        reattach-to-user-namespace "$ARGV0" --open "$data"
     done
 }
 
+export ARGV0="${BASH_SOURCE[0]}"
 export PIDFILE="$XDG_RUNTIME_DIR/opener-daemon.pid"
 export LOGFILE="$XDG_RUNTIME_DIR/opener-daemon.log"
 
 action='startDaemon'
-while (( $# > 0 )); do
-    case "$1" in
-        -k|--kill)   action='stopDaemon';;
-        --main-loop) action='mainLoop';;
-        --start)     action='startDaemon';;
-    esac
-    shift
-done
+case "$1" in
+    -k|--kill)   action='stopDaemon';;
+    --main-loop) action='mainLoop';;
+    --start)     action='startDaemon';;
+    --open)      action='openLink';;
+esac
+shift
 
-$action
+$action "$@"
 exit $?
