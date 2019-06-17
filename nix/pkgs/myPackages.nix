@@ -8,12 +8,12 @@ with import (fetchGit {
       kakoune = (pkgs.kakoune.withPlugins (with kakounePlugins; [
         parinfer-rust
       ])).overrideAttrs (old: rec {
-        version = "a0d264ef07c4b5bc5a9d7ff3629eb45e099e96bf";
+        version = "5888e23e020ac3fd56a93c75682a216bd7085593";
         src = pkgs.fetchFromGitHub {
           repo = "kakoune";
-          owner = "eraserhd";
-          rev = "a0d264ef07c4b5bc5a9d7ff3629eb45e099e96bf";
-          sha256 = "0jxy86p54s940lqwialbh0r29ljdchfaww7pcxwfyfk06ibjwxf6";
+          owner = "mawww";
+          rev = "5888e23e020ac3fd56a93c75682a216bd7085593";
+          sha256 = "1m0g7y7565zayfjrd44v9lwjs8ni70n57h9cs6ygjvjw4cmcj268";
         };
       });
       kakounePlugins = pkgs.kakounePlugins // {
