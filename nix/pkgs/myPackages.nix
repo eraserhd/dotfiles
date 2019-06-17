@@ -1,13 +1,15 @@
 with import (fetchGit {
   url = "git@github.com:eraserhd/nixpkgs.git";
   ref = "eraserhd";
-  rev = "5809c85fbf0a9c6abbc33872875c9d34eaee97ed";
+  rev = "9123e8762a93a99b88c7f863d2b9496c4edf21a3";
 }) {
   config = {
     packageOverrides = pkgs: rec {
-      kakoune = (pkgs.kakoune.withPlugins (with kakounePlugins; [
-        parinfer-rust
-      ])).overrideAttrs (old: rec {
+      kakoune = (pkgs.kakoune.override {
+        configure = {
+          plugins = with kakounePlugins; [ parinfer-rust ];
+        };
+      }).overrideAttrs (old: rec {
         version = "5888e23e020ac3fd56a93c75682a216bd7085593";
         src = pkgs.fetchFromGitHub {
           repo = "kakoune";
