@@ -2,23 +2,19 @@ with import (fetchGit {
   url = "git@github.com:eraserhd/nixpkgs.git";
   ref = "eraserhd";
   rev = "9123e8762a93a99b88c7f863d2b9496c4edf21a3";
-}) {
+})
+{
   config = {
     packageOverrides = pkgs: rec {
-      kakoune = (pkgs.kakoune.override {
-        configure = {
-          plugins = with kakounePlugins; [ parinfer-rust ];
-        };
-      }).overrideAttrs (old: rec {
-        version = "5888e23e020ac3fd56a93c75682a216bd7085593";
-        src = pkgs.fetchFromGitHub {
-          repo = "kakoune";
-          owner = "mawww";
-          rev = "5888e23e020ac3fd56a93c75682a216bd7085593";
-          sha256 = "1m0g7y7565zayfjrd44v9lwjs8ni70n57h9cs6ygjvjw4cmcj268";
-        };
+      kakoune-unwrapped = let ver = builtins.fromJSON (builtins.readFile ./kakoune-version.json);
+      in pkgs.kakoune-unwrapped.overrideAttrs (old: rec {
+        version = ver.rev;
+        src = pkgs.fetchFromGitHub ver;
       });
-      kakounePlugins = pkgs.kakounePlugins // {
+      kakoune = pkgs.kakoune.override {
+        configure = {
+          plugins = with pkgs.kakounePlugins; [ parinfer-rust ];
+        };
       };
       kakouneWrapper = pkgs.callPackage ./kakoune-wrapper {};
       weechat = (pkgs.weechat.override {
