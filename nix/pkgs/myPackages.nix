@@ -1,7 +1,7 @@
 with import (fetchGit {
   url = "git@github.com:eraserhd/nixpkgs.git";
   ref = "eraserhd";
-  rev = "9123e8762a93a99b88c7f863d2b9496c4edf21a3";
+  rev = "847cad637fa1d224f4e4f8b31f485c6334ede650";
 })
 {
   config = {
@@ -13,7 +13,10 @@ with import (fetchGit {
       });
       kakoune = pkgs.kakoune.override {
         configure = {
-          plugins = with pkgs.kakounePlugins; [ parinfer-rust ];
+          plugins = with pkgs.kakounePlugins; [
+            kak-ansi
+            parinfer-rust
+          ];
         };
       };
       kakouneWrapper = pkgs.callPackage ./kakoune-wrapper {};
