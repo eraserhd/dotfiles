@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+rev=$(cd ../kakoune && git rev-parse HEAD)
+nix-shell -p nix-prefetch-github --command "nix-prefetch-github --rev $rev eraserhd kakoune > ./nix/pkgs/kakoune-wrapper.json"
