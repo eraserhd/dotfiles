@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+crunch_NAMESPACE=$(ssh crunch.eraserhead.net /bin/sh -c 'echo $NAMESPACE')
+
+autossh -M 0 -f -F \
+    -o 'ServerAliveInterval 30' \
+    -o 'ServerAliveCountMax 3' \
+    -o 'ExitOnForwardFailure yes' \
+    -L8080:localhost:8080 \
+    -L3447:localhost:3447 \
+    -R${crunch_NAMESPACE}/snarf:${NAMESPACE}/snarf \
+    -L${NAMESPACE}/plumb:${crunch_NAMESPACE}/plumb \
+    -T -N crunch.eraserhead.net
