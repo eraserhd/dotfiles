@@ -1,13 +1,24 @@
 #!/usr/bin/env bash
 
-crunch_NAMESPACE=$(ssh crunch.eraserhead.net /bin/sh -c 'echo $NAMESPACE')
+crunchNamespace=/run/user/1000/plan9/srv
+localPlan9Services=( snarf )
+remotePlan9Services=( plumb )
 
-autossh -M 0 -f -F \
+extraArgs=()
+for svc in "${localPlan9Services[@]}"; do
+    ssh crunch.eraserhead.net rm -f "${crunchNamespace}/${svc}"
+    extraArgs+=( "-R${crunchNamespace}/${svc}:${NAMESPACE}/${svc}" )
+done
+for svc in "${remotePlan9Services[@]}"; do
+    rm -f "${NAMESPACE}/${svc}"
+    extraArgs+=( "-L${NAMESPACE}/${svc}:${crunchNamespace}/${svc}" )
+done
+
+autossh -M 0 -f \
     -o 'ServerAliveInterval 30' \
     -o 'ServerAliveCountMax 3' \
     -o 'ExitOnForwardFailure yes' \
     -L8080:localhost:8080 \
     -L3447:localhost:3447 \
-    -R${crunch_NAMESPACE}/snarf:${NAMESPACE}/snarf \
-    -L${NAMESPACE}/plumb:${crunch_NAMESPACE}/plumb \
+    "${extraArgs[@]}" \
     -T -N crunch.eraserhead.net
