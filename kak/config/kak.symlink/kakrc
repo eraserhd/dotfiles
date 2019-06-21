@@ -296,6 +296,13 @@ define-command -hidden -override -params 2.. tmux-terminal-impl %{
     }
 }
 
+# Nix
+# ‾‾‾
+
+hook global WinSetOption filetype=nix %{
+    set-option window indentwidth 2
+}
+
 # Clojure
 # ‾‾‾‾‾‾‾
 
