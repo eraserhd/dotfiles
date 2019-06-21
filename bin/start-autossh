@@ -18,6 +18,7 @@ autossh -M 0 -f \
     -o 'ServerAliveInterval 30' \
     -o 'ServerAliveCountMax 3' \
     -o 'ExitOnForwardFailure yes' \
+    -L8820:localhost:8820 \
     -L8080:localhost:8080 \
     -L3447:localhost:3447 \
     "${extraArgs[@]}" \
