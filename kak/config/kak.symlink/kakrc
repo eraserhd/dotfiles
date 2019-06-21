@@ -49,18 +49,10 @@ add-highlighter global/ dynregex '%opt{curword}' 0:CurWord
 
 # System clipboard handling
 # ─────────────────────────
-
-evaluate-commands %sh{
-    case $(uname) in
-        Linux) copy="xclip -i"; paste="xclip -o" ;;
-        Darwin)  copy="pbcopy"; paste="pbpaste" ;;
-    esac
-
-    printf "map global user -docstring 'paste (after) from clipboard' p '!%s<ret>'\n" "$paste"
-    printf "map global user -docstring 'paste (before) from clipboard' P '<a-!>%s<ret>'\n" "$paste"
-    printf "map global user -docstring 'yank to clipboard' y '<a-|>%s<ret>:echo -markup %%{{Information}copied selection to system clipboard}<ret>'\n" "$copy"
-    printf "map global user -docstring 'replace from clipboard' R '|%s<ret>'\n" "$paste"
-}
+map global user -docstring 'paste (after) from clipboard' p '!9 9p read snarf/snarf<ret>'
+map global user -docstring 'paste (before) from clipboard' P '<a-!>9 9p read snarf/snarf<ret>'
+map global user -docstring 'yank to clipboard' y '<a-|>9 9p write  snarf/snarf<ret>:echo -markup %{{Information}copied selection to system clipboard}<ret>'
+map global user -docstring 'replace from clipboard' R '|9 9p read snarf/snarf<ret>'
 
 # Soft tabs
 # ‾‾‾‾‾‾‾‾‾
