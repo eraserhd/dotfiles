@@ -50,6 +50,7 @@ pkgs.buildEnv {
     gitAndTools.hub
     gtypist
     ii
+    jbake
     jq
     kakouneWrapper
     killall
