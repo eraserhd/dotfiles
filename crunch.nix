@@ -68,6 +68,7 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
     (builtins.readFile ./ssh/files/id_rsa.pub)
     (builtins.readFile ./ssh/files/id_dsa.pub)
     (builtins.readFile ./ssh/files/id_rsa-workingcopy.pub)
+    ("COMMAND=\"/bin/false\" " + (builtins.readFile ./ssh/files/id_rsa-macbook.pub))
   ]; in {
     jfelice = {
       isNormalUser = true;
