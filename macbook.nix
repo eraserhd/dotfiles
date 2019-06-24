@@ -4,7 +4,7 @@
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages =
-    [ pkgs.autossh
+    [ 
     ];
 
   # Use a custom configuration.nix location.
@@ -19,6 +19,12 @@
   programs.bash.enable = true;
   # programs.zsh.enable = true;
   # programs.fish.enable = true;
+
+  # System settings
+  system.defaults.dock.autohide = true;
+  system.defaults.NSGlobalDomain.AppleKeyboardUIMode = 3;
+  system.defaults.NSGlobalDomain.InitialKeyRepeat = 20;
+  system.defaults.NSGlobalDomain.KeyRepeat = 1;
 
   services.autossh.sessions = [ {
     name = "crunch";
