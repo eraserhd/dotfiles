@@ -25,6 +25,8 @@
     user = "jfelice";
     extraArguments = let key = ./ssh/files/id_rsa-macbook;
                      in " -i ${key}" +
+                        " -o 'StreamLocalBindUnlink yes'" +
+                        " -o 'ExitOnForwardFailure yes'" +
                         " -L8820:localhost:8820" +
                         " -L8080:localhost:8080" +
                         " -L3447:localhost:3447" +
