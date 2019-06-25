@@ -5,7 +5,6 @@
 # Options:
 #   --start     Fork daemon
 #   --kill      Kill running instance
-#   --open URL  Open a single URL (does not use daemon)
 #
 
 assertNotRunning() {
@@ -41,11 +40,11 @@ action_kill() {
     rm -f $PIDFILE || return $?
 }
 
-action_open() {
+openURL() {
     local link="$1"
-    local frontmost_pid=$(lsappinfo info -only pid $(lsappinfo front))
+    local frontmost_pid=$(reattach-to-user-namespace lsappinfo info -only pid $(reattach-to-user-namespace lsappinfo front))
     frontmost_pid="${frontmost_pid##*=}"
-    osascript -e "
+    reattach-to-user-namespace osascript -e "
         on run argv
             set theUrl to item 1 of argv
             set theFrontmostPid to item 2 of argv
@@ -91,11 +90,10 @@ action_mainLoop() {
         read attr
         read ndata
         read -N $ndata data
-        reattach-to-user-namespace "$SCRIPT_PATH" --open "$data"
+        openURL "$data"
     done
 }
 
-export SCRIPT_PATH="${BASH_SOURCE[0]}"
 export PIDFILE="$XDG_RUNTIME_DIR/opener-daemon.pid"
 export LOGFILE="$XDG_RUNTIME_DIR/opener-daemon.log"
 
