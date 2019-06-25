@@ -14,3 +14,4 @@ weechat/weechat.symlink/sec.conf filter=git-crypt diff=git-crypt
 clojure/lein.symlink/profiles.clj filter=git-crypt diff=git-crypt
 vdirsyncer/config/vdirsyncer.symlink/config filter=git-crypt diff=git-crypt
 ssh/files/id_rsa-macbook filter=git-crypt diff=git-crypt
+2u/vpn/ipsec.secrets filter=git-crypt diff=git-crypt

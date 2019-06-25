@@ -18,6 +18,7 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
   imports =
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
+      ./2u/vpn
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -62,6 +63,8 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
         "*/5 * * * *    jfelice  ${updateDNSScript}/bin/update-dns"
     ];
   };
+
+  services."2u".vpn.enable = true;
 
   nixpkgs.config.allowUnfree = true;
 
