@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-exec ssh crunch.eraserhead.net /bin/sh -c "'
-  tmux run-shell \"ln -sf $SSH_AUTH_SOCK \$SSH_AUTH_SOCK\"
+exec ssh -t crunch.eraserhead.net /bin/sh -c "'
+  set -e
+  ln_cmd=\"ln -sf \$SSH_AUTH_SOCK \\\$SSH_AUTH_SOCK\"
+  tmux run-shell \"\$ln_cmd\"
   tmux attach
 '"
