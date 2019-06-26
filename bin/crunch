@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+exec ssh crunch.eraserhead.net /bin/sh -c "'
+  tmux run-shell \"ln -sf $SSH_AUTH_SOCK \$SSH_AUTH_SOCK\"
+  tmux attach
+'"
