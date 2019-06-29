@@ -1,4 +1,4 @@
-with import (fetchGit {
+import (fetchGit {
   url = "git@github.com:eraserhd/nixpkgs.git";
   ref = "eraserhd";
   rev = "665e7de81ed378b5420fc2005017268df7290c7d";
@@ -20,6 +20,7 @@ with import (fetchGit {
         };
       };
       kakouneWrapper = pkgs.callPackage ./kakoune-wrapper {};
+      my-packages = pkgs.callPackage ./my-packages.nix {};
       weechat = (pkgs.weechat.override {
         configure = {availablePlugins, ...}: {
           scripts = with pkgs.weechatScripts; [ wee-slack ];
@@ -28,43 +29,4 @@ with import (fetchGit {
       });
     };
   };
-};
-
-pkgs.buildEnv {
-  name = "my-packages";
-  paths = let osPackages = if stdenv.isDarwin
-                           then [ reattach-to-user-namespace ]
-                           else [ texlive.combined.scheme-tetex ];
-  in [
-    ag
-    asciidoc
-    autossh
-    awscli
-    bashInteractive
-    bash-completion
-    chez
-    clojure
-    docker-compose
-    file
-    graphviz
-    gitAndTools.hub
-    gtypist
-    ii
-    jbake
-    jq
-    kakouneWrapper
-    killall
-    leiningen
-    nodejs
-    parinfer-rust
-    plan9port
-    rlwrap
-    sassc
-    terraform
-    tmate
-    tmux
-    vault
-    weechat
-    wget
-  ] ++ osPackages;
 }
