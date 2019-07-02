@@ -15,10 +15,8 @@
   # services.nix-daemon.enable = true;
   # nix.package = pkgs.nix;
 
-  # Create /etc/bashrc that loads the nix-darwin environment.
   programs.bash.enable = true;
-  # programs.zsh.enable = true;
-  # programs.fish.enable = true;
+  programs.bash.enableCompletion = true;
 
   # System settings
   system.defaults.dock.autohide = true;
