@@ -1,8 +1,8 @@
 # Temporary hack, until nix packages are sorted
 # ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-source ~/src/rep/rc/rep.kak
-source ~/src/kak-plumb/rc/plumb.kak
-source ~/src/kak-open/rc/open.kak
+try %{ source ~/src/rep/rc/rep.kak }
+try %{ source ~/src/kak-plumb/rc/plumb.kak }
+try %{ source ~/src/kak-open/rc/open.kak }
 
 # General Settings
 # ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
