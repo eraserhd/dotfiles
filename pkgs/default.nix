@@ -10,6 +10,7 @@ import (fetchGit {
       in pkgs.kakoune-unwrapped.overrideAttrs (old: rec {
         version = ver.rev;
         src = pkgs.fetchFromGitHub ver;
+        patches = pkgs.stdenv.lib.optional pkgs.stdenv.isDarwin [ ./kakoune/revert-uncaught-exceptions.patch ];
       });
       kakoune = pkgs.kakoune.override {
         configure = {
