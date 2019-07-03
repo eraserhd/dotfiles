@@ -1,7 +1,7 @@
 import (fetchGit {
   url = "git@github.com:eraserhd/nixpkgs.git";
   ref = "eraserhd";
-  rev = "665e7de81ed378b5420fc2005017268df7290c7d";
+  rev = "a8e16f35a3dfaa4724542fd643fbafb18c1f6dbf";
 })
 {
   config = {
@@ -10,7 +10,6 @@ import (fetchGit {
       in pkgs.kakoune-unwrapped.overrideAttrs (old: rec {
         version = ver.rev;
         src = pkgs.fetchFromGitHub ver;
-        patches = [ ./kakoune/revert-uncaught-exceptions.patch ];
       });
       kakoune = pkgs.kakoune.override {
         configure = {
