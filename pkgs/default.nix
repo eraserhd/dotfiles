@@ -1,17 +1,11 @@
 import (fetchGit {
   url = "git@github.com:eraserhd/nixpkgs.git";
   ref = "eraserhd";
-  rev = "a8e16f35a3dfaa4724542fd643fbafb18c1f6dbf";
+  rev = "c05c72b0041165b60fa5df5d4f50c251dd4bcb86";
 })
 {
   config = {
     packageOverrides = pkgs: rec {
-      kakoune-unwrapped = let ver = builtins.fromJSON (builtins.readFile ./kakoune-version.json);
-      in pkgs.kakoune-unwrapped.overrideAttrs (old: rec {
-        version = ver.rev;
-        src = pkgs.fetchFromGitHub ver;
-        patches = pkgs.stdenv.lib.optional pkgs.stdenv.isDarwin [ ./kakoune/revert-uncaught-exceptions.patch ];
-      });
       kakoune = pkgs.kakoune.override {
         configure = {
           plugins = with pkgs.kakounePlugins; [
