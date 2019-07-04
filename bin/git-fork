@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+#
+# Wrapper around hub to unsure that we work from `origin` and PR to
+# `upstream`.
+#
+
+set -e
+
+exec 3< <(git remote)
+declare -A remotes=( ["origin"]=false ["upstream"]=false )
+while read -u 3 remoteName; do
+    remotes+=( [$remoteName]=true )
+done
+exec 3>&-
+
+if ${remotes["origin"]} && ${remotes["upstream"]}; then
+    printf 'git-fork: we already have origin and upstream.\n' >&2
+    exit 1
+fi
+
+if ${remotes["origin"]}; then
+    git remote rename origin upstream
+fi
+
+exec hub fork --remote-name origin "$@"
