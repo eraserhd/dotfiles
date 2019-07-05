@@ -33,7 +33,6 @@ pkgs.buildEnv {
     terraform
     tmate
     tmux
-    vault
     weechat
     wget
   ] ++ osPackages;

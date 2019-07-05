@@ -80,8 +80,6 @@ export ELI_ENV=corp-tech-jfelice
 export GOPATH=~/src/go
 export PATH=~/.cargo/bin:~/.local/bin:$GOPATH/bin:~/.cabal/bin:/usr/local/bin:"$PATH"
 export PS1='\e[1;32m[\u@\h \W$(__git_ps1 "(%s)")]\$\e[0m '
-export VAULT_ADDR=https://vault.prod.2u.com:8200/
-export VAULT_CACERT=$HOME/src/ops-terraform/consul-vpc/policies/vault-ca.pem
 
 if ! command -v __git_ps1 >/dev/null
 then
