@@ -25,3 +25,6 @@
 [submodule "vim/vim.symlink/bundle/vim-airline-themes"]
 	path = vim/vim.symlink/bundle/vim-airline-themes
 	url = git@github.com:vim-airline/vim-airline-themes.git
+[submodule "2u"]
+	path = 2u
+	url = git@github.com:2uinc/nix-2u.git
