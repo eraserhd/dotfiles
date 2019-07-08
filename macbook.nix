@@ -43,6 +43,7 @@
 
   services."2u".vault.enable = true;
   services."2u".kubectl.enable = true;
+  services."2u".kubectl.namespaces = [ "implementation" ];
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
