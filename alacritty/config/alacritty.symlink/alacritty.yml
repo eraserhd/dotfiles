@@ -38,8 +38,7 @@ window:
   #     - buttonless: Title bar, transparent background, but no title bar buttons
   decorations: buttonless
 
-  # When true, alacritty starts maximized.
-  start_maximized: true
+  startup_mode: Maximized
 
 scrolling:
   # Maximum number of lines in the scrollback buffer.
@@ -111,12 +110,6 @@ font:
   # for retina displays, but for non-retina you probably want this set to
   # false.
   use_thin_strokes: false
-
-# Should display the render timer
-render_timer: false
-
-# Keep the log file after quitting Alacritty.
-persistent_logging: false
 
 # When true, bold text is drawn using the bright variant of colors.
 draw_bold_text_with_bright_colors: true
@@ -276,6 +269,11 @@ shell:
 
 # Send ESC (\x1b) before characters when alt is pressed.
 alt_send_esc: true
+
+debug:
+  # Keep the log file after quitting Alacritty.
+  persistent_logging: false
+
 
 # Key bindings
 #

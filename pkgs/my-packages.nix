@@ -2,9 +2,17 @@
 
 pkgs.buildEnv {
   name = "my-packages";
-  paths = let osPackages = if stdenv.isDarwin
-                           then [ pkgs.reattach-to-user-namespace ]
-                           else [ pkgs.texlive.combined.scheme-tetex ];
+  paths = let
+    darwinPackages = with pkgs; [
+      alacritty
+      reattach-to-user-namespace
+    ];
+    linuxPackages = with pkgs; [
+      texlive.combined.scheme-tetex
+    ];
+    osPackages = if stdenv.isDarwin
+                 then darwinPackages
+                 else linuxPackages;
   in with pkgs; [
     ag
     asciidoc
