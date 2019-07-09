@@ -29,16 +29,15 @@
   services.autossh.sessions = [ {
     name = "crunch";
     user = "jfelice";
-    extraArguments = let key = ./ssh/files/id_rsa-macbook;
-                     in " -i ${key}" +
-                        " -o 'StreamLocalBindUnlink yes'" +
-                        " -o 'ExitOnForwardFailure yes'" +
-                        " -L8820:localhost:8820" +
-                        " -L8080:localhost:8080" +
-                        " -L3447:localhost:3447" +
-                        " -R/run/user/1000/plan9/srv/snarf:/Users/jfelice/.run/plan9/srv/snarf" +
-                        " -L/Users/jfelice/.run/plan9/srv/plumb:/run/user/1000/plan9/srv/plumb" +
-                        " -T -N crunch.eraserhead.net";
+    extraArguments = " -i ${toString ./ssh/files/id_rsa-macbook}" +
+                     " -o 'StreamLocalBindUnlink yes'" +
+                     " -o 'ExitOnForwardFailure yes'" +
+                     " -L8820:localhost:8820" +
+                     " -L8080:localhost:8080" +
+                     " -L3447:localhost:3447" +
+                     " -R/run/user/1000/plan9/srv/snarf:/Users/jfelice/.run/plan9/srv/snarf" +
+                     " -L/Users/jfelice/.run/plan9/srv/plumb:/run/user/1000/plan9/srv/plumb" +
+                     " -T -N jfelice@crunch.eraserhead.net";
   } ];
 
   services."2u".vault.enable = true;
