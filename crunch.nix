@@ -18,7 +18,6 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
   imports =
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
-      ./2u/vpn
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -46,7 +45,6 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
   time.timeZone = "America/New_York";
 
   environment.systemPackages = with pkgs; [
-    docker
     git
     git-crypt
     gnupg
@@ -55,6 +53,7 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
   ];
 
   documentation.dev.enable = true;
+  virtualisation.docker.enable = true;
 
   services.openssh.enable = true;
   services.cron = {
@@ -63,8 +62,6 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
         "*/5 * * * *    jfelice  ${updateDNSScript}/bin/update-dns"
     ];
   };
-
-  services."2u".vpn.enable = true;
 
   nixpkgs.config.allowUnfree = true;
 
@@ -76,7 +73,7 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
   ]; in {
     jfelice = {
       isNormalUser = true;
-      extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+      extraGroups = [ "docker" "wheel" ]; # Enable ‘sudo’ for the user.
       openssh.authorizedKeys.keys = allowedKeys;
     };
     root.openssh.authorizedKeys.keys = allowedKeys;
