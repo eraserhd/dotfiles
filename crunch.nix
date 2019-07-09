@@ -56,6 +56,10 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
   virtualisation.docker.enable = true;
 
   services.openssh.enable = true;
+  services.openssh.extraConfig = ''
+    StreamLocalBindUnlink yes
+  '';
+
   services.cron = {
     enable = true;
     systemCronJobs = [
