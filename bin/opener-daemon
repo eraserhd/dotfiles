@@ -1,5 +1,4 @@
-#! /usr/bin/env nix-shell
-#! nix-shell -i bash -p bash plan9port reattach-to-user-namespace
+#! /usr/bin/env bash
 #
 # opener-daemon [options] - daemon to handle plumb/web requests by opening URLs in Chrome
 # Options:
