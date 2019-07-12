@@ -8,7 +8,7 @@
 	<string>on alfred_script(q)
     if {q starts with "$"} then
       set theCommand to characters 2 thru -1 of q as string
-      do shell script "open -n -a Alacritty.app --args -e " &amp; theCommand &amp; " &gt;/dev/null 2&gt;&amp;1" 
+      do shell script "open -n -a ~/.nix-profile/Applications/Alacritty.app --args -e " &amp; theCommand &amp; " &gt;/dev/null 2&gt;&amp;1"
     else
       do shell script "source /etc/profile; tmux new-window " &amp; (quoted form of q) &amp; " &gt;/dev/null 2&gt;&amp;1"
     end if
