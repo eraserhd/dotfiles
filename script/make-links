@@ -103,20 +103,10 @@ install_dotfiles () {
   done
 }
 
-install_bins () {
-  info 'installing bin links'
-  mkdir -p ~/.local/bin
-  for bin_script in "$(pwd)/bin"/*
-  do
-    link_file "$bin_script" ~/.local/bin/"${bin_script##*/}"
-  done
-}
-
 overwrite_all=false
 backup_all=false
 skip_all=false
 
 install_dotfiles
-install_bins
 
 echo ''
