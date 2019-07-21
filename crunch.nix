@@ -18,6 +18,7 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
   imports =
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
+      ./common.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
