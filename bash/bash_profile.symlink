@@ -73,7 +73,6 @@ then
     mkdir -p ~/.run
 fi
 
-export CLICOLOR=1
 export EDITOR=kak
 export ELI_ENV=corp-tech-jfelice
 export PATH=~/.cargo/bin:~/.local/bin:~/.cabal/bin:/usr/local/bin:"$PATH"

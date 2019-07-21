@@ -19,6 +19,8 @@
 
   programs.bash.enable = true;
   programs.bash.enableCompletion = true;
+  
+  environment.variables.CLICOLOR = "1";
 
   # System settings
   system.defaults.dock.autohide = true;
