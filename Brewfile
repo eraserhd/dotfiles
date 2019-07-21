@@ -19,12 +19,6 @@ cask 'slack'
 cask 'spotify'
 cask 'xquartz'
 
-brew 'git'
-brew 'git-crypt'
-brew 'gnupg'
-brew 'kubernetes-cli'
-brew 'rustup-init'
-
 # ErgoDox environment
 tap 'osx-cross/avr'
 tap 'PX4/homebrew-px4'
