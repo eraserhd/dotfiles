@@ -73,7 +73,6 @@ then
     mkdir -p ~/.run
 fi
 
-export CDPATH=.:~/src:~/src/dotfiles/tmux/tmux.symlink/plugins:~/src/dotfiles/kak/config/kak.symlink/autoload
 export CLICOLOR=1
 export EDITOR=kak
 export ELI_ENV=corp-tech-jfelice
