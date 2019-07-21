@@ -85,7 +85,4 @@ then
   __git_ps1() { :; }
 fi
 
-alias vi=$EDITOR
-alias vim=$EDITOR
-
 initPlan9
