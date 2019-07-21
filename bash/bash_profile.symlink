@@ -77,8 +77,7 @@ export CDPATH=.:~/src:~/src/dotfiles/tmux/tmux.symlink/plugins:~/src/dotfiles/ka
 export CLICOLOR=1
 export EDITOR=kak
 export ELI_ENV=corp-tech-jfelice
-export GOPATH=~/src/go
-export PATH=~/.cargo/bin:~/.local/bin:$GOPATH/bin:~/.cabal/bin:/usr/local/bin:"$PATH"
+export PATH=~/.cargo/bin:~/.local/bin:~/.cabal/bin:/usr/local/bin:"$PATH"
 export PS1='\[\e[1;32m\][\u@\h \W$(__git_ps1 "(%s)")]\$\[\e[0m\] '
 
 if ! command -v __git_ps1 >/dev/null
