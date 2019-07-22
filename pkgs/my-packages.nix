@@ -40,7 +40,6 @@ pkgs.buildEnv {
     sassc
     terraform
     tmate
-    tmux
     weechat
     wget
   ] ++ osPackages;
