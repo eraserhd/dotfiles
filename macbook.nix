@@ -19,6 +19,7 @@
 
   programs.bash.enable = true;
   programs.bash.enableCompletion = true;
+  environment.loginShell = "${pkgs.bashInteractive}/bin/bash -l";
   
   environment.variables.CLICOLOR = "1";
 
