@@ -4,11 +4,6 @@ set -e
 
 [ $(uname -s) != Darwin ] && exit
 
-defaults write com.apple.finder AppleShowAllFiles NO || exit $?
-
-# Keyboard (Needs relogin to take effect)
-defaults write -g com.apple.keyboard.fnState -boolean true # F-keys are F-keys on external keyboards
-
 # Why would I ever want a single-button mouse?
 defaults write com.apple.AppleMultitouchMouse MouseButtonMode TwoButton
 defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode TwoButton
