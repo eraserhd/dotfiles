@@ -4,24 +4,22 @@ import (fetchGit {
   rev = "c05c72b0041165b60fa5df5d4f50c251dd4bcb86";
 })
 {
-  config = {
-    packageOverrides = pkgs: rec {
-      kakoune = pkgs.kakoune.override {
-        configure = {
-          plugins = with pkgs.kakounePlugins; [
-            kak-ansi
-            parinfer-rust
-          ];
-        };
+  overlays = [ (self: super: { 
+    kakoune = super.kakoune.override {
+      configure = {
+        plugins = with self.kakounePlugins; [
+          kak-ansi
+          parinfer-rust
+        ];
       };
-      kakouneWrapper = pkgs.callPackage ./kakoune-wrapper {};
-      my-packages = pkgs.callPackage ./my-packages.nix {};
-      weechat = (pkgs.weechat.override {
-        configure = {availablePlugins, ...}: {
-          scripts = with pkgs.weechatScripts; [ wee-slack ];
-          plugins = with availablePlugins; [ python ];
-        };
-      });
     };
-  };
+    kakouneWrapper = super.callPackage ./kakoune-wrapper {};
+    my-packages = super.callPackage ./my-packages.nix {};
+    weechat = (super.weechat.override {
+      configure = {availablePlugins, ...}: {
+        scripts = with self.weechatScripts; [ wee-slack ];
+        plugins = with availablePlugins; [ python ];
+      };
+    });
+  }) ];
 }
