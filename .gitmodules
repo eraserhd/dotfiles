@@ -31,3 +31,6 @@
 [submodule "tmux/tmux.symlink/plugins/tpm"]
 	path = tmux/tmux.symlink/plugins/tpm
 	url = git@github.com:tmux-plugins/tpm.git
+[submodule "nixpkgs"]
+	path = nixpkgs
+	url = git@github.com:eraserhd/nixpkgs.git
