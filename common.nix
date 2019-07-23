@@ -95,6 +95,6 @@
     environment.systemPath = [ (toString ./bin) ];
   }
   // lib.mkIf (!pkgs.stdenv.isDarwin) {
-    environment.variables = [ (toString ./bin) ];
+    environment.variables.PATH = [ (toString ./bin) ];
   };
 }
