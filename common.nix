@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, lib, ... }:
 
 {
   config = {
@@ -10,8 +10,6 @@
       ];
     };
     
-    environment.systemPath = [ (toString ./bin) ];
-
     programs.tmux.enable = true;
     programs.tmux.tmuxConfig = ''
       #### Use C-a as prefix ####
@@ -92,5 +90,11 @@
 
       run -b '~/.tmux/plugins/tpm/tpm'
     '';
+  }
+  // lib.mkIf pkgs.stdenv.isDarwin {
+    environment.systemPath = [ (toString ./bin) ];
+  }
+  // lib.mkIf (!pkgs.stdenv.isDarwin) {
+    environment.variables = [ (toString ./bin) ];
   };
 }
