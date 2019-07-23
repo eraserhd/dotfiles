@@ -13,6 +13,13 @@
   # $ darwin-rebuild switch -I darwin-config=$HOME/src/dotfiles/macbook.nix
   environment.darwinConfig = "$HOME/src/dotfiles/macbook.nix";
 
+  nix.nixPath = [ {
+    nixpkgs = "$HOME/src/dotfiles/nixpkgs";
+    nixpkgs-overlays = "$HOME/src/dotfiles/overlays";
+    darwin = "$HOME/src/dotfiles/nix-darwin";
+    darwin-config = "$HOME/src/dotfiles/macbook.nix";
+  } ];
+
   # Auto upgrade nix package and the daemon service.
   # services.nix-daemon.enable = true;
   # nix.package = pkgs.nix;
