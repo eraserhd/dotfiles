@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./modules/tmux.nix 
+    ./tmux
   ];
 
   config = {

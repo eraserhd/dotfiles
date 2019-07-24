@@ -28,9 +28,6 @@
 [submodule "2u"]
 	path = 2u
 	url = git@github.com:2uinc/nix-2u.git
-[submodule "tmux/tmux.symlink/plugins/tpm"]
-	path = tmux/tmux.symlink/plugins/tpm
-	url = git@github.com:tmux-plugins/tpm.git
 [submodule "nixpkgs"]
 	path = nixpkgs
 	url = git@github.com:eraserhd/nixpkgs.git

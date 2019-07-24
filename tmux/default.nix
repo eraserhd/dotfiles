@@ -79,8 +79,6 @@
       set -g @plugin 'tmux-plugins/tmux-sensible'
       set -g @plugin 'eraserhd/tmux-ctrlw'
       set -g @plugin 'eraserhd/tmux-editor-copy-mode'
-
-      run -b '~/.tmux/plugins/tpm/tpm'
     '';
   };
 }
