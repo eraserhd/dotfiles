@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   config = {
@@ -76,7 +76,7 @@
 
       #### Plugins ####
 
-      set -g @plugin 'tmux-plugins/tmux-sensible'
+      run -b ${pkgs.tmuxPlugins.sensible}/share/tmux-plugins/sensible/sensible.tmux
       set -g @plugin 'eraserhd/tmux-ctrlw'
       set -g @plugin 'eraserhd/tmux-editor-copy-mode'
     '';
