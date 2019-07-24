@@ -1,11 +1,15 @@
 #!/usr/bin/env bash
 
-set -e
+set -ex
 
-project_directory() {
+projectDirectory() {
     local project="$1" cdpath_dirs cdpath
     IFS=: read -ra cdpath_dirs <<< "$CDPATH"
     for cdpath in "${cdpath_dirs[@]}"; do
+        if [[ $cdpath = "." ]]; then
+            continue
+        fi
+        cdpath=$(eval cd $cdpath && pwd)
         if [[ -d "$cdpath/$project" ]]; then
             printf '%s/%s\n' "$cdpath" "$project"
             return 0
@@ -14,7 +18,7 @@ project_directory() {
     return 1
 }
 
-project_todo() {
+projectTodo() {
     printf '%s\n' ~/src/data/"$1"-todo.edn
 }
 
@@ -24,7 +28,7 @@ if [[ -z "$project" ]]; then
     exit 1
 fi
 
-project_dir="$(project_directory "$project")"
+project_dir="$(projectDirectory "$project")"
 if [[ -z $project_dir ]]; then
     printf 'p: could not find project directory.\n' >&2
     exit 1
@@ -43,7 +47,7 @@ else
 
     tmux split-window -h -c "${project_dir}" reattach-to-user-namespace bash -l 
 
-    todo="$(project_todo "$project")"
+    todo="$(projectTodo "$project")"
     if [[ ! -f $todo ]]; then
         printf '#net.eraserhead.productivity/task-list\n[]\n' >"$todo"
     fi
