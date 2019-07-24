@@ -9,6 +9,9 @@
         "~/src/dotfiles/kak/config/kak.symlink/autoload"
       ];
     };
+
+    environment.systemPath = lib.mkIf pkgs.stdenv.isDarwin [ (toString ./bin) ];
+    environment.variables.PATH = lib.mkIf (!pkgs.stdenv.isDarwin) [ (toString ./bin) ];
     
     programs.tmux.enable = true;
     programs.tmux.tmuxConfig = ''
@@ -90,11 +93,5 @@
 
       run -b '~/.tmux/plugins/tpm/tpm'
     '';
-  }
-  // lib.mkIf pkgs.stdenv.isDarwin {
-    environment.systemPath = [ (toString ./bin) ];
-  }
-  // lib.mkIf (!pkgs.stdenv.isDarwin) {
-    environment.variables.PATH = [ (toString ./bin) ];
   };
 }
