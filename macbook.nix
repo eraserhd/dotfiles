@@ -26,9 +26,11 @@
 
   programs.bash.enable = true;
   programs.bash.enableCompletion = true;
-  environment.loginShell = "${pkgs.bashInteractive}/bin/bash -l";
   
   environment.variables.CLICOLOR = "1";
+
+  # This seems to be only used by tmux
+  environment.loginShell = "${pkgs.bashInteractive}/bin/bash -l";
 
   # System settings
   system.defaults.dock.autohide = true;
