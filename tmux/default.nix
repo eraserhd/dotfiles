@@ -77,7 +77,7 @@
       #### Plugins ####
 
       run -b ${pkgs.tmuxPlugins.sensible}/share/tmux-plugins/sensible/sensible.tmux
-      set -g @plugin 'eraserhd/tmux-ctrlw'
+      run -b ${pkgs.tmuxPlugins.ctrlw}/share/tmux-plugins/ctrlw/ctrlw.tmux
       set -g @plugin 'eraserhd/tmux-editor-copy-mode'
     '';
   };
