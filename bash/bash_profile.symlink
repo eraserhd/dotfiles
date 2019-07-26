@@ -74,7 +74,6 @@ fi
 
 export EDITOR=kak
 export ELI_ENV=corp-tech-jfelice
-export PS1='\[\e[1;32m\][\u@\h \W$(__git_ps1 "(%s)")]\$\[\e[0m\] '
 
 if ! command -v __git_ps1 >/dev/null
 then

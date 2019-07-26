@@ -24,6 +24,8 @@
   # services.nix-daemon.enable = true;
   # nix.package = pkgs.nix;
 
+  local.systemDisplayName = "macbook";
+
   programs.bash.enable = true;
   programs.bash.enableCompletion = true;
   

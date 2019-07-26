@@ -27,6 +27,8 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.cleanTmpDir = true;
 
+  local.systemDisplayName = "crunch";
+
   networking = {
       hostName = "crunch";
       useDHCP = false;

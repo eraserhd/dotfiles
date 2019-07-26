@@ -1,6 +1,16 @@
-{ ... }:
+{ config, lib, ... }:
 
+with lib;
 {
+  options = {
+    local.systemDisplayName = mkOption {
+      type = types.string;
+      description = ''
+        System name to display in prompts (can be different from hostname).
+      '';
+    };
+  };
+
   config = {
     programs.bash.interactiveShellInit = ''
       :r() {
@@ -17,6 +27,8 @@
       }
 
       source ${toString ../bin/private.sh}
+
+      export PS1='\[\e[1;32m\][\u@${config.local.systemDisplayName} \W$(__git_ps1 "(%s)")]\$\[\e[0m\] '
     '';
   };
 }
