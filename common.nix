@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./bash
     ./tmux
   ];
 
