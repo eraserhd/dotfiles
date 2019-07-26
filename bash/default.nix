@@ -28,7 +28,21 @@ with lib;
 
       source ${toString ../bin/private.sh}
 
-      export PS1='\[\e[1;32m\][\u@${config.local.systemDisplayName} \W$(__git_ps1 "(%s)")]\$\[\e[0m\] '
+      bashPromptCommand() {
+        local exitCode=$? exitCodeStr="" exitColor='\[\e[1;32m\]'
+        if (( exitCode != 0 )); then
+           exitColor='\[\e[1;31m\]'
+           exitCodeStr="[$exitCode] "
+        fi
+        PS1="$exitColor$exitCodeStr"'[\u@${config.local.systemDisplayName} \W$(__git_ps1 "(%s)")]\$\[\e[0m\] '
+      }
+      export PROMPT_COMMAND=bashPromptCommand
     '';
+
+    environment.variables = {
+      GIT_PS1_SHOWDIRTYSTATE = "1";
+      GIT_PS1_SHOWUNTRACKEDFILES = "1";
+      GIT_PS1_SHOWUPSTREAM = "auto";
+    };
   };
 }
