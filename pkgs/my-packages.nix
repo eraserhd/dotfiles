@@ -18,14 +18,11 @@ pkgs.buildEnv {
     asciidoc
     autossh
     awscli
-    bashInteractive
-    bash-completion
     chez
     clojure
     docker-compose
     file
     graphviz
-    gitAndTools.hub
     gtypist
     ii
     jbake

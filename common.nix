@@ -3,6 +3,7 @@
 {
   imports = [
     ./bash
+    ./git
     ./tmux
   ];
 
