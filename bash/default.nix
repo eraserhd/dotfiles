@@ -7,6 +7,8 @@
         unset __NIX_DARWIN_SET_ENVIRONMENT_DONE __ETC_BASHRC_SOURCED
         exec $SHELL -l
       }
+
+      source ${toString ../bin/private.sh}
     '';
   };
 }
