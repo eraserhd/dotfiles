@@ -21,8 +21,15 @@ with lib;
             darwin-rebuild switch || return $?
           fi
           popd >/dev/null
+        elif command -v nixos-rebuild >/dev/null; then
+          pushd ~/src/dotfiles >/dev/null
+          nixos-rebuild build || return $?
+          if [[ $(readlink /run/current-system) != $(readlink ./result) ]]; then
+            sudo nixos-rebuild switch || return $?
+          fi
+          popd >/dev/null
         fi
-        unset __NIX_DARWIN_SET_ENVIRONMENT_DONE __ETC_BASHRC_SOURCED
+        unset __NIX_DARWIN_SET_ENVIRONMENT_DONE __ETC_BASHRC_SOURCED __ETC_PROFILE_SOURCED __ETC_PROFILE_DONE
         exec $SHELL -l
       }
 
