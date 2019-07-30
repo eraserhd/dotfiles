@@ -81,11 +81,13 @@ let
 in
 {
   config = {
-    programs.tmux.enable = true;
-  }
-  // (if (builtins.hasAttr "tmuxConfig" options.programs.tmux) then {
-    programs.tmux.tmuxConfig = tmuxConfig;
-  } else {
-    programs.tmux.extraTmuxConf = tmuxConfig;
-  });
+    programs.tmux = {
+      enable = true;
+    }
+    // (if (builtins.hasAttr "tmuxConfig" options.programs.tmux) then {
+      tmuxConfig = tmuxConfig;
+    } else {
+      extraTmuxConf = tmuxConfig;
+    });
+  };
 }
