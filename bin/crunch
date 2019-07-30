@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 
-exec ssh -t crunch.eraserhead.net /bin/sh -c "'
+hostname=crunch.eraserhead.net
+while (( $# > 0 )); do
+    case "$1" in
+        -l|--local) hostname=10.0.0.2;;
+    esac
+    shift
+done
+
+exec ssh -t "$hostname" /bin/sh -c "'
   set -e
   ln_cmd=\"ln -sf \$SSH_AUTH_SOCK \\\$SSH_AUTH_SOCK\"
   tmux run-shell \"\$ln_cmd\"
