@@ -394,6 +394,16 @@ hook -group clojure-objects global WinSetOption filetype=clojure %{
     map window normal w '<a-a><a-;> clojure-select-object element<ret>'
 }
 
+# Stub out a Clojure namespace
+hook -group clojure global BufNewFile '.*\.clj(c|s|x)?' %{
+    execute-keys 'i(ns ' "%val{bufname}" ')<esc>gi'
+    evaluate-commands -draft %{
+        execute-keys 'xs\.clj[csx]?<ret><a-d>'
+        execute-keys 'xs (src/|test/|dev/)<ret><a-c> <esc>'
+        execute-keys 'xs/<ret>r.'
+    }
+}
+
 # Misc
 # ‾‾‾‾
 
