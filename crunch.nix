@@ -17,8 +17,8 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
 {
   imports =
     [ # Include the results of the hardware scan.
-      /etc/nixos/hardware-configuration.nix
       ./common.nix
+      /etc/nixos/hardware-configuration.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -70,6 +70,12 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
         "*/5 * * * *    jfelice  ${updateDNSScript}/bin/update-dns"
     ];
   };
+
+  nix.nixPath = [
+    "nixpkgs=/home/jfelice/src/dotfiles/nixpkgs"
+    "nixpkgs-overlays=/home/jfelice/src/dotfiles/overlays"
+    "nixos-config=/home/jfelice/src/dotfiles/crunch.nix"
+  ];
 
   nixpkgs.config.allowUnfree = true;
 
