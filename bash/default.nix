@@ -29,7 +29,8 @@ with lib;
           fi
           popd >/dev/null
         fi
-        unset __NIX_DARWIN_SET_ENVIRONMENT_DONE __ETC_BASHRC_SOURCED __ETC_PROFILE_SOURCED __ETC_PROFILE_DONE
+        unset __NIX_DARWIN_SET_ENVIRONMENT_DONE __NIXOS_SET_ENVIRONMENT_DONE
+        unset __ETC_BASHRC_SOURCED __ETC_PROFILE_SOURCED __ETC_PROFILE_DONE
         exec $SHELL -l
       }
 
