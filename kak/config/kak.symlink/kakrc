@@ -401,3 +401,29 @@ define-command rm %{
     nop %sh{ rm -f "$kak_buffile" }
     delete-buffer!
 }
+
+define-command \
+    -override \
+    -docstring %{mv <target>: move this file to <target> dir or file} \
+    -shell-script-candidates %{ag -l -f} \
+    -params 1 \
+    mv %{
+    evaluate-commands %sh{
+        target="$1"
+        if $kak_modified; then
+            printf 'fail "mv: buffer is modified."\n'
+            exit
+        fi
+        if [ -d "$target" ]; then
+            target="${target}/$(basename "$kak_buffile")"
+        fi
+        mkdir -p "$(dirname "$target")"
+        mv "$kak_buffile" "$target"
+        if [ $? -ne 0 ]; then
+            printf 'fail "mv: unable to move file."\n'
+            exit
+        fi
+        printf 'delete-buffer\n'
+        printf 'edit %%{%s}\n' "$target"
+    }
+}
