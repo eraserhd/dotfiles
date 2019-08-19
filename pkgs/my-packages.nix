@@ -14,18 +14,12 @@ pkgs.buildEnv {
                  then darwinPackages
                  else linuxPackages;
   in with pkgs; [
-    ag
-    asciidoc
     autossh
     awscli
     chez
     clojure
     docker-compose
-    file
-    graphviz
     gtypist
-    ii
-    jbake
     jq
     kakouneWrapper
     killall
@@ -33,11 +27,7 @@ pkgs.buildEnv {
     nodejs
     parinfer-rust
     plan9port
-    rlwrap
-    sassc
     terraform
-    tmate
     weechat
-    wget
   ] ++ osPackages;
 }

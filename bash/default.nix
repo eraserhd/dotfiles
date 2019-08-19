@@ -49,7 +49,13 @@ with lib;
       eval "$(${pkgs.direnv}/bin/direnv hook bash)"
     '';
 
-    environment.systemPackages = [ pkgs.direnv ];
+    environment.systemPackages = with pkgs; [
+      ag
+      direnv
+      file
+      rlwrap
+      wget
+    ];
 
     environment.variables = {
       GIT_PS1_SHOWDIRTYSTATE = "1";
