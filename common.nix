@@ -5,6 +5,7 @@ with lib;
   imports = [
     ./bash
     ./git
+    ./kak
     ./tmux
     ./weechat
   ];

@@ -18,7 +18,6 @@ pkgs.buildEnv {
     clojure
     gtypist
     jq
-    kakouneWrapper
     leiningen
     parinfer-rust
     plan9port
