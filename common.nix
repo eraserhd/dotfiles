@@ -4,6 +4,7 @@ with lib;
 {
   imports = [
     ./alacritty
+    ./aws
     ./bash
     ./clojure
     ./git

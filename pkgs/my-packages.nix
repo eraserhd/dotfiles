@@ -9,7 +9,5 @@ pkgs.buildEnv {
     osPackages = if stdenv.isDarwin
                  then []
                  else linuxPackages;
-  in with pkgs; [
-    awscli
-  ] ++ osPackages;
+  in osPackages;
 }
