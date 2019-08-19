@@ -3,7 +3,7 @@
 {
   config = lib.mkIf (!pkgs.stdenv.isDarwin) {
     environment.systemPackages = [
-      pkgs.texlive.combined.schema-tetex
+      pkgs.texlive.combined.scheme-tetex
     ];
   };
 }
