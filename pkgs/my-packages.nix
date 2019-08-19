@@ -14,7 +14,6 @@ pkgs.buildEnv {
                  then darwinPackages
                  else linuxPackages;
   in with pkgs; [
-    autossh
     awscli
     chez
     clojure
@@ -22,12 +21,10 @@ pkgs.buildEnv {
     gtypist
     jq
     kakouneWrapper
-    killall
     leiningen
     nodejs
     parinfer-rust
     plan9port
-    terraform
     weechat
   ] ++ osPackages;
 }

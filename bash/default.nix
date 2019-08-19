@@ -53,6 +53,7 @@ with lib;
       ag
       direnv
       file
+      killall
       rlwrap
       wget
     ];
