@@ -25,6 +25,5 @@ pkgs.buildEnv {
     nodejs
     parinfer-rust
     plan9port
-    weechat
   ] ++ osPackages;
 }

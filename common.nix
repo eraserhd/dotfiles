@@ -6,6 +6,7 @@ with lib;
     ./bash
     ./git
     ./tmux
+    ./weechat
   ];
 
   config = mkMerge [
