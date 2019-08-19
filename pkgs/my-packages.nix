@@ -15,14 +15,11 @@ pkgs.buildEnv {
                  else linuxPackages;
   in with pkgs; [
     awscli
-    chez
     clojure
-    docker-compose
     gtypist
     jq
     kakouneWrapper
     leiningen
-    nodejs
     parinfer-rust
     plan9port
   ] ++ osPackages;
