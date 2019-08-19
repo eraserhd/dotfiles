@@ -4,6 +4,7 @@ with lib;
 {
   imports = [
     ./bash
+    ./clojure
     ./git
     ./kak
     ./tmux

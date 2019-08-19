@@ -15,11 +15,8 @@ pkgs.buildEnv {
                  else linuxPackages;
   in with pkgs; [
     awscli
-    clojure
     gtypist
     jq
-    leiningen
-    parinfer-rust
     plan9port
   ] ++ osPackages;
 }
