@@ -15,7 +15,6 @@ pkgs.buildEnv {
                  else linuxPackages;
   in with pkgs; [
     awscli
-    gtypist
     jq
     plan9port
   ] ++ osPackages;

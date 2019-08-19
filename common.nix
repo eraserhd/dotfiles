@@ -6,6 +6,7 @@ with lib;
     ./bash
     ./clojure
     ./git
+    ./gtypist
     ./kak
     ./tmux
     ./weechat
