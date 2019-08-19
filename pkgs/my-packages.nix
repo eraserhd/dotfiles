@@ -3,15 +3,11 @@
 pkgs.buildEnv {
   name = "my-packages";
   paths = let
-    darwinPackages = with pkgs; [
-      alacritty
-      reattach-to-user-namespace
-    ];
     linuxPackages = with pkgs; [
       texlive.combined.scheme-tetex
     ];
     osPackages = if stdenv.isDarwin
-                 then darwinPackages
+                 then []
                  else linuxPackages;
   in with pkgs; [
     awscli
