@@ -11,6 +11,7 @@ with lib;
     ./gtypist
     ./kak
     ./plan9
+    ./tex
     ./tmux
     ./weechat
   ];
