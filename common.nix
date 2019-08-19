@@ -8,6 +8,7 @@ with lib;
     ./git
     ./gtypist
     ./kak
+    ./plan9
     ./tmux
     ./weechat
   ];

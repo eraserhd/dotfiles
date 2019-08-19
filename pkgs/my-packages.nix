@@ -15,6 +15,5 @@ pkgs.buildEnv {
                  else linuxPackages;
   in with pkgs; [
     awscli
-    plan9port
   ] ++ osPackages;
 }
