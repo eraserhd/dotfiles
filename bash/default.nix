@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 {
@@ -45,7 +45,11 @@ with lib;
         PS1="$exitColor$exitCodeStr"'[\u@${config.local.systemDisplayName} \W$(__git_ps1 "(%s)")]\$\[\e[0m\] '
       }
       export PROMPT_COMMAND=bashPromptCommand
+
+      eval "$(${pkgs.direnv}/bin/direnv hook bash)"
     '';
+
+    environment.systemPackages = [ pkgs.direnv ];
 
     environment.variables = {
       GIT_PS1_SHOWDIRTYSTATE = "1";
