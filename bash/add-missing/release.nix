@@ -18,6 +18,7 @@ in rec {
     grep -q '^<nixpkgs>$' nixpkgs.nix
     grep -q '^/result' .gitignore
     grep -q '^= empty-dir$' README.adoc
+    grep -q '^use nix$' .envrc
 
     testCase gitignore-no-result
     printf '/foo\n' >.gitignore

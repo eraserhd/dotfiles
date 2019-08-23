@@ -15,3 +15,5 @@ fi
 if [ ! -f README.* ] && [[ ! -f README ]]; then
     printf '= %s\n' "$packageName" >>README.adoc
 fi
+
+printf 'use nix\n' >.envrc
