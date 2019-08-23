@@ -7,19 +7,28 @@ in rec {
   test = pkgs.runCommandNoCC "add-missing-test" {} ''
     set -x
 
-    mkdir -p $out/empty-dir
-    cd $out/empty-dir
+    testCase() {
+      mkdir -p "$out/$1"
+      cd "$out/$1"
+      return $?
+    }
+
+    testCase empty-dir
     ${add-missing}/bin/add-missing
     grep -q '^<nixpkgs>$' nixpkgs.nix
     grep -q '^/result' .gitignore
     grep -q '^= empty-dir$' README.adoc
 
-    mkdir -p $out/gitignore-no-result
-    cd $out/gitignore-no-result
+    testCase gitignore-no-result
     printf '/foo\n' >.gitignore
     ${add-missing}/bin/add-missing
     grep -q '^/foo$' .gitignore
     grep -q '^/result$' .gitignore
+
+    testCase has-README-md
+    touch README.md
+    ${add-missing}/bin/add-missing
+    [[ ! -f README.adoc ]]
 
     set +x
   '';
