@@ -16,6 +16,17 @@ if [[ ! -f overlay.nix ]]; then
   ) >overlay.nix
 fi
 
+(
+  printf 'let\n'
+  printf '  nixpkgs = import ./nixpkgs.nix;\n'
+  printf '  pkgs = import nixpkgs {\n'
+  printf '    config = {};\n'
+  printf '    overlays = [ (import ./overlay.nix) ];\n'
+  printf '  };\n'
+  printf '\n'
+  printf 'in pkgs.%s\n' "$packageName"
+) >default.nix
+
 if [[ ! -f .gitignore ]] || ! grep -q '^/result$' .gitignore; then
     printf '/result\n' >>.gitignore
 fi
