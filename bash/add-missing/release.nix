@@ -30,6 +30,11 @@ in rec {
     ${add-missing}/bin/add-missing
     [[ ! -f README.adoc ]]
 
+    testCase bare-REDME
+    touch README
+    ${add-missing}/bin/add-missing
+    [[ ! -f README.adoc ]]
+
     set +x
   '';
 }
