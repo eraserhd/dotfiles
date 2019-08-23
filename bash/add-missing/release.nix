@@ -49,6 +49,11 @@ in rec {
     ${add-missing}/bin/add-missing
     (( 0 == $(grep -c '^use nix$' .envrc) ))
 
+    testCase has-overlay-nix
+    printf 'xxx\n' >overlay.nix
+    ${add-missing}/bin/add-missing
+    [[ xxx = $(cat overlay.nix) ]]
+
     set +x
   '';
 }
