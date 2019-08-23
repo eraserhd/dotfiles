@@ -41,6 +41,11 @@ in rec {
     ${add-missing}/bin/add-missing
     [[ ! -f README.adoc ]]
 
+    testCase has-envrc
+    touch .envrc
+    ${add-missing}/bin/add-missing
+    (( 0 == $(grep -c '^use nix$' .envrc) ))
+
     set +x
   '';
 }
