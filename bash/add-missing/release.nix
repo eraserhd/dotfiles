@@ -8,6 +8,6 @@ in rec {
     mkdir -p $out
     cd $out
     ${add-missing}/bin/add-missing
-    [[ -f nixpkgs.nix ]]
+    grep -q '^<nixpkgs>$' nixpkgs.nix
   '';
 }
