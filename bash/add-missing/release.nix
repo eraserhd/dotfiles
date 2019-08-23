@@ -19,6 +19,9 @@ in rec {
     grep -q '^/result' .gitignore
     grep -q '^= empty-dir$' README.adoc
     grep -q '^use nix$' .envrc
+    [[ $(cat overlay.nix) = 'self: super: {
+  empty-dir = super.callPackage ./derivation.nix {};
+}' ]]
 
     testCase gitignore-no-result
     printf '/foo\n' >.gitignore

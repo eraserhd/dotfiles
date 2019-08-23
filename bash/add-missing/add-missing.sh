@@ -8,6 +8,12 @@ if [[ ! -f nixpkgs.nix ]]; then
     printf '<nixpkgs>\n' >nixpkgs.nix
 fi
 
+(
+  printf 'self: super: {\n'
+  printf '  %s = super.callPackage ./derivation.nix {};\n' "$packageName"
+  printf '}\n'
+) >overlay.nix
+
 if [[ ! -f .gitignore ]] || ! grep -q '^/result$' .gitignore; then
     printf '/result\n' >>.gitignore
 fi
