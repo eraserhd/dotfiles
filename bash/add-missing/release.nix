@@ -25,6 +25,11 @@ in rec {
     grep -q '^/foo$' .gitignore
     grep -q '^/result$' .gitignore
 
+    testCase gitignore-yes-result
+    printf '/result\n' >.gitgnore
+    ${add-missing}/bin/add-missing
+    (( 1 == $(grep -c '^/result$' .gitignore) ))
+
     testCase has-README-md
     touch README.md
     ${add-missing}/bin/add-missing
