@@ -49,7 +49,12 @@ with lib;
       eval "$(${pkgs.direnv}/bin/direnv hook bash)"
     '';
 
+    nixpkgs.overlays = [
+      (import ./add-missing/overlay.nix)
+    ];
+
     environment.systemPackages = with pkgs; [
+      add-missing
       ag
       direnv
       file
