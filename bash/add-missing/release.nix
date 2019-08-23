@@ -62,6 +62,11 @@ in pkgs.empty-dir' ]]
     ${add-missing}/bin/add-missing
     [[ xxx = $(cat overlay.nix) ]]
 
+    testCase has-default-nix
+    printf 'xyz\n' >default.nix
+    ${add-missing}/bin/add-missing
+    [[ xyz = $(cat default.nix) ]]
+
     set +x
   '';
 }
