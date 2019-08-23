@@ -12,6 +12,7 @@ in rec {
     ${add-missing}/bin/add-missing
     grep -q '^<nixpkgs>$' nixpkgs.nix
     grep -q '^/result' .gitignore
+    grep -q '^= empty-dir$' README.adoc
 
     mkdir -p $out/gitignore-no-result
     cd $out/gitignore-no-result
