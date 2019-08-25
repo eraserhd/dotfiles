@@ -71,6 +71,9 @@ fi
 if [ ! -f ChangeLog* ] && [ ! -f CHANGELOG* ]; then
   (
     printf '= Changes\n'
+    printf '\n'
+    printf '== Unreleased\n'
+    printf '\n'
   ) >CHANGELOG.adoc
 fi
 
