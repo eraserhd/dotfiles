@@ -37,7 +37,8 @@ if [ ! -f README.* ] && [[ ! -f README ]]; then
     printf '= %s\n' "$packageName" >>README.adoc
 fi
 
-cat >UNLICENSE <<EOF
+if [ ! -f LICENSE* ]; then
+  cat >UNLICENSE <<EOF
 This is free and unencumbered software released into the public domain.
 
 Anyone is free to copy, modify, publish, use, compile, sell, or
@@ -63,6 +64,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <http://unlicense.org/>
 EOF
+fi
 
 if [[ ! -f .envrc ]]; then
     printf 'use nix\n' >.envrc

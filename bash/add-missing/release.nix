@@ -68,6 +68,11 @@ in pkgs.empty-dir' ]]
     ${add-missing}/bin/add-missing
     [[ xyz = $(cat default.nix) ]]
 
+    testCase has-LICENSE
+    printf 'xyz\n' >LICENSE.md
+    ${add-missing}/bin/add-missing
+    [[ ! -f UNLICENSE ]]
+
     set +x
   '';
 }
