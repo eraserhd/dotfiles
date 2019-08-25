@@ -1,4 +1,4 @@
-{ stdenv, bash, ... }:
+{ stdenv, bash, git, ... }:
 
 stdenv.mkDerivation {
   pname = "add-missing";
@@ -8,7 +8,8 @@ stdenv.mkDerivation {
   installPhase = ''
     mkdir -p $out/bin
     substitute add-missing.sh $out/bin/add-missing \
-      --subst-var-by bash '${bash}'
+      --subst-var-by bash '${bash}' \
+      --subst-var-by git '${git}'
     chmod a+x $out/bin/add-missing
   '';
 }

@@ -2,6 +2,8 @@
 
 set -e
 
+export PATH="@git@/bin:$PATH"
+
 packageName=$(basename "$(pwd)")
 
 if [[ ! -f nixpkgs.nix ]]; then
@@ -74,4 +76,8 @@ fi
 
 if [[ ! -f .envrc ]]; then
     printf 'use nix\n' >.envrc
+fi
+
+if [[ ! -d $(git rev-parse --git-dir) ]]; then
+  git init
 fi

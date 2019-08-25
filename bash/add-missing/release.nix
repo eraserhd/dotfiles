@@ -2,6 +2,7 @@
 let
   pkgs = import nixpkgs { config = {}; };
   add-missing = pkgs.callPackage ./derivation.nix {};
+  git = pkgs.git;
 
 in rec {
   test = pkgs.runCommandNoCC "add-missing-test" {} ''
@@ -32,6 +33,7 @@ in rec {
 in pkgs.empty-dir' ]]
     grep -q 'http://unlicense.org/' UNLICENSE
     grep -q '^= Changes$' CHANGELOG.adoc
+    ${git}/bin/git rev-parse --git-dir >/dev/null
 
     testCase gitignore-no-result
     printf '/foo\n' >.gitignore
@@ -93,6 +95,11 @@ in pkgs.empty-dir' ]]
     printf 'xyz\n' >CHANGELOG.md
     ${add-missing}/bin/add-missing
     [[ ! -f CHANGELOG.adoc ]]
+
+    testCase has-git-dir
+    ${git}/bin/git init
+    ${add-missing}/bin/add-missing >$out/log 2>&1
+    if grep -q 'Reinitialized' $out/log; then false; fi
 
     set +x
   '';
