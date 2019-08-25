@@ -36,6 +36,7 @@ in pkgs.empty-dir' ]]
     ${add-missing}/bin/add-missing
     grep -q '^/foo$' .gitignore
     grep -q '^/result$' .gitignore
+    grep -q 'http://unlicense.org/' UNLICENSE
 
     testCase gitignore-yes-result
     printf '/result\n' >.gitgnore
