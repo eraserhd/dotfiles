@@ -18,6 +18,27 @@ if [[ ! -f overlay.nix ]]; then
   ) >overlay.nix
 fi
 
+if [[ ! -f derivation.nix ]]; then
+  (
+    printf '{ stdenv, ... }:\n'
+    printf '\n'
+    printf 'stdenv.mkDerivation {\n'
+    printf '  pname = "%s";\n' "$packageName"
+    printf '  version = "0.1.0";\n'
+    printf '\n'
+    printf '  src = ./.;\n'
+    printf '\n'
+    printf '  meta = with stdenv.lib; {\n'
+    printf '    description = "TODO: fill me in";\n'
+    printf '    homepage = https://github.com/eraserhd/%s;\n' "$packageName"
+    printf '    license = licenses.publicDomain;\n'
+    printf '    platforms = platforms.all;\n'
+    printf '    maintainers = [ maintainers.eraserhd ];\n'
+    printf '  };\n'
+    printf '}\n'
+  ) >derivation.nix
+fi
+
 if [[ ! -f default.nix ]]; then
   (
     printf 'let\n'

@@ -37,6 +37,22 @@ in pkgs.empty-dir' ]]
     grep -q '^= Changes$' CHANGELOG.adoc
     [[ -n $(git rev-parse --git-dir) ]]
     git remote -v |grep -q '^origin	git@github.com:eraserhd/empty-dir.git (fetch)$'
+    [[ $(cat derivation.nix) = '{ stdenv, ... }:
+
+stdenv.mkDerivation {
+  pname = "empty-dir";
+  version = "0.1.0";
+
+  src = ./.;
+
+  meta = with stdenv.lib; {
+    description = "TODO: fill me in";
+    homepage = https://github.com/eraserhd/empty-dir;
+    license = licenses.publicDomain;
+    platforms = platforms.all;
+    maintainers = [ maintainers.eraserhd ];
+  };
+}' ]]
 
     testCase gitignore-no-result
     printf '/foo\n' >.gitignore
