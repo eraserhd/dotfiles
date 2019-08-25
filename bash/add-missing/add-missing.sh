@@ -81,6 +81,6 @@ if [[ ! -f .envrc ]]; then
     printf 'use nix\n' >.envrc
 fi
 
-if [[ ! -d $(git rev-parse --git-dir) ]]; then
+if [[ ! -d $(git rev-parse --git-dir 2>/dev/null) ]]; then
   git init
 fi
