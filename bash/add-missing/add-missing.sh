@@ -84,3 +84,7 @@ fi
 if [[ ! -d $(git rev-parse --git-dir 2>/dev/null) ]]; then
   git init
 fi
+
+if ! git remote |grep -q '^origin$'; then
+  git remote add origin git@github.com:eraserhd/$packageName.git
+fi

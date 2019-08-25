@@ -36,6 +36,7 @@ in pkgs.empty-dir' ]]
     grep -q 'http://unlicense.org/' UNLICENSE
     grep -q '^= Changes$' CHANGELOG.adoc
     [[ -n $(git rev-parse --git-dir) ]]
+    git remote -v |grep -q '^origin	git@github.com:eraserhd/empty-dir.git (fetch)$'
 
     testCase gitignore-no-result
     printf '/foo\n' >.gitignore
