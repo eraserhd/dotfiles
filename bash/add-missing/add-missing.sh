@@ -37,7 +37,7 @@ if [ ! -f README.* ] && [[ ! -f README ]]; then
     printf '= %s\n' "$packageName" >>README.adoc
 fi
 
-if [ ! -f LICENSE* ]; then
+if [ ! -f LICENSE* ] && [ ! -f COPYING* ]; then
   cat >UNLICENSE <<EOF
 This is free and unencumbered software released into the public domain.
 

@@ -73,6 +73,11 @@ in pkgs.empty-dir' ]]
     ${add-missing}/bin/add-missing
     [[ ! -f UNLICENSE ]]
 
+    testCase has-COPYING
+    printf 'xyz\n' >COPYING
+    ${add-missing}/bin/add-missing
+    [[ ! -f UNLICENSE ]]
+
     set +x
   '';
 }
