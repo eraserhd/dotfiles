@@ -30,13 +30,14 @@ in rec {
   };
 
 in pkgs.empty-dir' ]]
+    grep -q 'http://unlicense.org/' UNLICENSE
+    grep -q '^= Changes$' CHANGELOG.adoc
 
     testCase gitignore-no-result
     printf '/foo\n' >.gitignore
     ${add-missing}/bin/add-missing
     grep -q '^/foo$' .gitignore
     grep -q '^/result$' .gitignore
-    grep -q 'http://unlicense.org/' UNLICENSE
 
     testCase gitignore-yes-result
     printf '/result\n' >.gitgnore
@@ -77,6 +78,21 @@ in pkgs.empty-dir' ]]
     printf 'xyz\n' >COPYING
     ${add-missing}/bin/add-missing
     [[ ! -f UNLICENSE ]]
+
+    testCase has-ChangeLog
+    printf 'xyz\n' >ChangeLog
+    ${add-missing}/bin/add-missing
+    [[ ! -f CHANGELOG.adoc ]]
+
+    testCase has-CHANGELOG-adoc
+    printf 'xyz\n' >CHANGELOG.adoc
+    ${add-missing}/bin/add-missing
+    [[ $(cat CHANGELOG.adoc) = xyz ]]
+
+    testCase has-CHANGELOG-md
+    printf 'xyz\n' >CHANGELOG.md
+    ${add-missing}/bin/add-missing
+    [[ ! -f CHANGELOG.adoc ]]
 
     set +x
   '';

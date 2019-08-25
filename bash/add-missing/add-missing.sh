@@ -66,6 +66,12 @@ For more information, please refer to <http://unlicense.org/>
 EOF
 fi
 
+if [ ! -f ChangeLog* ] && [ ! -f CHANGELOG* ]; then
+  (
+    printf '= Changes\n'
+  ) >CHANGELOG.adoc
+fi
+
 if [[ ! -f .envrc ]]; then
     printf 'use nix\n' >.envrc
 fi
