@@ -52,6 +52,20 @@ if [[ ! -f default.nix ]]; then
   ) >default.nix
 fi
 
+if [[ ! -f release.nix ]]; then
+  (
+    printf '{ nixpkgs ? (import ./nixpkgs.nix), ... }:\n'
+    printf 'let\n'
+    printf '  pkgs = import nixpkgs { config = {}; };\n'
+    printf '  %s = pkgs.callPackage ./derivation.nix {};\n' "$packageName"
+    printf 'in {\n'
+    printf '  test = pkgs.runCommandNoCC "%s-test" {} %s\n' "$packageName" "''"
+    printf '    true\n'
+    printf '  %s;\n' "''"
+    printf '}'
+  ) >release.nix
+fi
+
 if [[ ! -f .gitignore ]] || ! grep -q '^/result$' .gitignore; then
     printf '/result\n' >>.gitignore
 fi

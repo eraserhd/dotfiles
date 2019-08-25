@@ -5,7 +5,7 @@ let
   git = pkgs.git;
 
 in rec {
-  test = pkgs.runCommandNoCC "add-missing-test" {} ''
+  test = pkgs.runCommandNoCC "add-missing-test" {} (''
     set -x
 
     export PATH="${add-missing}/bin:${git}/bin:$PATH"
@@ -52,6 +52,15 @@ stdenv.mkDerivation {
     platforms = platforms.all;
     maintainers = [ maintainers.eraserhd ];
   };
+}' ]]
+    [[ $(cat release.nix) = '{ nixpkgs ? (import ./nixpkgs.nix), ... }:
+let
+  pkgs = import nixpkgs { config = {}; };
+  empty-dir = pkgs.callPackage ./derivation.nix {};
+in {
+  test = pkgs.runCommandNoCC "empty-dir-test" {} '"${"''"}"'
+    true
+  '"${"''"}"';
 }' ]]
 
     testCase gitignore-no-result
@@ -120,6 +129,11 @@ stdenv.mkDerivation {
     add-missing >$out/log 2>&1
     if grep -q 'Reinitialized' $out/log; then false; fi
 
+    testCase has-release-nix
+    printf 'xyz\n' >release.nix
+    add-missing
+    [[ $(cat release.nix) = xyz ]]
+
     set +x
-  '';
+  '');
 }
