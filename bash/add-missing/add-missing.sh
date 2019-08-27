@@ -123,3 +123,17 @@ fi
 if ! git remote |grep -q '^origin$'; then
   git remote add origin git@github.com:eraserhd/$packageName.git
 fi
+
+firstCommit=false
+if ! git log >/dev/null 2>&1; then
+    firstCommit=true
+fi
+
+if [[ -n $(git status --porcelain) ]]; then
+    git add -A
+    if $firstCommit; then
+        git commit -m "Initial commit"
+    else
+        git commit -m "Update project structure"
+    fi
+fi

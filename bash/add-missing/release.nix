@@ -9,6 +9,8 @@ in rec {
     set -x
 
     export PATH="${add-missing}/bin:${git}/bin:$PATH"
+    export GIT_AUTHOR_NAME="Foo Bar" GIT_COMMITTER_NAME="Foo Bar"
+    export GIT_AUTHOR_EMAIL="foo@example.com" GIT_COMMITTER_EMAIL="foo@example.com"
 
     testCase() {
       mkdir -p "$out/$1"
@@ -62,6 +64,7 @@ in {
     true
   '"${"''"}"';
 }' ]]
+    [[ -z $(git status --porcelain) ]]
 
     testCase gitignore-no-result
     printf '/foo\n' >.gitignore
