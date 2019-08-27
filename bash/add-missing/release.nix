@@ -65,6 +65,7 @@ in {
   '"${"''"}"';
 }' ]]
     [[ -z $(git status --porcelain) ]]
+    [[ $(git rev-parse --abbrev-ref HEAD) = develop ]]
 
     testCase gitignore-no-result
     printf '/foo\n' >.gitignore
