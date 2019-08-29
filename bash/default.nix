@@ -37,12 +37,11 @@ with lib;
       source ${toString ../bin/private.sh}
 
       bashPromptCommand() {
-        local exitCode=$? exitCodeStr="" exitColor='\[\e[1;32m\]'
+        local exitCode=$? exitColor='\[\e[1;32m\]'
         if (( exitCode != 0 )); then
            exitColor='\[\e[1;31m\]'
-           exitCodeStr="[$exitCode] "
         fi
-        PS1="$exitColor$exitCodeStr"'[\u@${config.local.systemDisplayName} \W$(__git_ps1 "(%s)")]\$\[\e[0m\] '
+        PS1='\n'"$exitColor"'\t \u@${config.local.systemDisplayName} \W $(__git_ps1 "(%s)")\n\$\[\e[0m\] '
       }
       export PROMPT_COMMAND=bashPromptCommand
 
