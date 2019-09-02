@@ -18,6 +18,7 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
   imports =
     [ # Include the results of the hardware scan.
       ./common.nix
+      ./home-manager/nixos
       /etc/nixos/hardware-configuration.nix
     ];
 

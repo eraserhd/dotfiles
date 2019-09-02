@@ -1,7 +1,11 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./2u ./common.nix ];
+  imports = [
+    ./2u
+    ./common.nix
+    ./home-manager/nix-darwin
+  ];
 
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget

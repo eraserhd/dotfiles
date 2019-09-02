@@ -34,3 +34,6 @@
 [submodule "nix-darwin"]
 	path = nix-darwin
 	url = git@github.com:eraserhd/nix-darwin.git
+[submodule "home-manager"]
+	path = home-manager
+	url = git@github.com:rycee/home-manager.git
