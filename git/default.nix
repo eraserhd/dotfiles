@@ -6,5 +6,9 @@
       gitFull
       gitAndTools.hub
     ];
+
+    home-manager.users.jfelice = { pkgs, ... }: {
+      home.file.".gitconfig".source = ./gitconfig;
+    };
   };
 }
