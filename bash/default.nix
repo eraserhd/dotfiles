@@ -59,7 +59,6 @@ with lib;
       file
       jq
       killall
-      rlwrap
       wget
     ];
 
