@@ -2,7 +2,7 @@ bin/private.sh filter=git-crypt diff=git-crypt
 1password/backup.zip filter=git-crypt diff=git-crypt
 aws/boto.symlink filter=git-crypt diff=git-crypt
 aws/aws/credentials.symlink filter=git-crypt diff=git-crypt
-npm/npmrc.symlink filter=git-crypt diff=git-crypt
+npm/npmrc filter=git-crypt diff=git-crypt
 ssh/files/id_rsa filter=git-crypt diff=git-crypt
 ssh/files/id_dsa filter=git-crypt diff=git-crypt
 ssh/files/id_rsa-aws-idris filter=git-crypt diff=git-crypt

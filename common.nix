@@ -10,6 +10,7 @@ with lib;
     ./git
     ./gtypist
     ./kak
+    ./npm
     ./plan9
     ./rlwrap
     ./tex
