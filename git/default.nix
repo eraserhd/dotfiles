@@ -9,6 +9,7 @@
 
     home-manager.users.jfelice = { pkgs, ... }: {
       home.file.".gitconfig".source = ./gitconfig;
+      home.file.".gitignore_global".source = ./gitignore_global;
     };
   };
 }
