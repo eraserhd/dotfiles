@@ -7,7 +7,9 @@ with lib;
     ./aws
     ./bash
     ./clojure
+    ./emacs
     ./git
+    ./gnupg
     ./gtypist
     ./kak
     ./npm
