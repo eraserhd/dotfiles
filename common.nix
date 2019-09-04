@@ -18,6 +18,7 @@ with lib;
     ./rlwrap
     ./tex
     ./tmux
+    ./vim
     ./weechat
   ];
 
