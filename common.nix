@@ -12,6 +12,7 @@ with lib;
     ./gnupg
     ./gtypist
     ./kak
+    ./karabiner
     ./npm
     ./plan9
     ./rlwrap
