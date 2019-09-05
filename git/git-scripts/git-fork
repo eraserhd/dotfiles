@@ -1,10 +1,12 @@
-#!/usr/bin/env bash
+#!@bash@/bin/bash
 #
 # Wrapper around hub to unsure that we work from `origin` and PR to
 # `upstream`.
 #
 
 set -e
+
+export PATH="@git@/bin:@hub@/bin:$PATH"
 
 exec 3< <(git remote)
 declare -A remotes=( ["origin"]=false ["upstream"]=false )
