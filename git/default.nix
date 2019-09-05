@@ -1,21 +1,18 @@
 { pkgs, ... }:
 
-let
-  localGitScripts = pkgs.stdenv.mkDerivation {
-    name = "local-git-scripts-2019.09.05";
-    src = ./.;
-    installPhase = ''
-      mkdir -p $out/bin
-      cp git-cleanup git-fork git-l $out/bin/
-    '';
-  };
-in {
+{
   config = {
     environment.systemPackages = with pkgs; [
       gitFull
       gitAndTools.hub
-      localGitScripts
+      local.git-scripts
     ];
+
+    nixpkgs.overlays = [ (self: super: {
+      local = (super.local or {}) // {
+        git-scripts = super.callPackage ./git-scripts {};
+      };
+    }) ];
 
     home-manager.users.jfelice = { pkgs, ... }: {
       home.file.".config/hub".source = ./hub;
