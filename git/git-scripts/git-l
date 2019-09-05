@@ -8,4 +8,4 @@ SUBJECT="%s"
 
 FORMAT="%<|(21)$HASH%<|(33,trunc)$RELATIVE_TIME %<|(50,trunc)$AUTHOR$REFS $SUBJECT"
 
-exec git log --graph --pretty="tformat:$FORMAT" "$@"
+exec @git@/bin/git log --graph --pretty="tformat:$FORMAT" "$@"
