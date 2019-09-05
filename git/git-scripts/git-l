@@ -1,4 +1,4 @@
-#!/bin/sh
+#!@bash@/bin/bash
 
 HASH="%C(yellow)%h%C(reset)"
 RELATIVE_TIME="%C(green)%ar%C(reset)"

@@ -1,4 +1,6 @@
-#!/usr/bin/env bash
+#!@bash@/bin/bash
+
+export PATH="@git@/bin:$PATH"
 
 # Stop tracking remote branches which are
 git fetch || exit $?
