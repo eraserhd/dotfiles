@@ -1,30 +1,3 @@
-[submodule "vim/vim.symlink/bundle/vim-clojure-static"]
-	path = vim/vim.symlink/bundle/vim-clojure-static
-	url = git@github.com:guns/vim-clojure-static.git
-[submodule "vim/vim.symlink/bundle/vim-fireplace"]
-	path = vim/vim.symlink/bundle/vim-fireplace
-	url = git@github.com:tpope/vim-fireplace.git
-[submodule "neovim/config/nvim.symlink/bundle/vim-surround"]
-	path = vim/vim.symlink/bundle/vim-surround
-	url = git@github.com:tpope/vim-surround.git
-[submodule "neovim/config/nvim.symlink/bundle/vim-repeat"]
-	path = vim/vim.symlink/bundle/vim-repeat
-	url = git@github.com:tpope/vim-repeat.git
-[submodule "neovim/config/nvim.symlink/bundle/git-zeal-vim"]
-	path = vim/vim.symlink/bundle/git-zeal-vim
-	url = git@github.com:eraserhd/git-zeal-vim.git
-[submodule "vim/vim.symlink/bundle/vim-sexp"]
-	path = vim/vim.symlink/bundle/vim-sexp
-	url = git@github.com:guns/vim-sexp.git
-[submodule "vim/vim.symlink/bundle/vim-sexp-mappings-for-regular-people"]
-	path = vim/vim.symlink/bundle/vim-sexp-mappings-for-regular-people
-	url = git@github.com:tpope/vim-sexp-mappings-for-regular-people.git
-[submodule "vim/vim.symlink/bundle/vim-airline"]
-	path = vim/vim.symlink/bundle/vim-airline
-	url = git@github.com:vim-airline/vim-airline.git
-[submodule "vim/vim.symlink/bundle/vim-airline-themes"]
-	path = vim/vim.symlink/bundle/vim-airline-themes
-	url = git@github.com:vim-airline/vim-airline-themes.git
 [submodule "2u"]
 	path = 2u
 	url = git@github.com:2uinc/nix-2u.git
