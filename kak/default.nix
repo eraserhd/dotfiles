@@ -21,6 +21,8 @@
 
     environment.systemPackages = [ pkgs.kakouneWrapper ];
 
+    environment.variables.EDITOR = "kak";
+
     home-manager.users.jfelice = { pkgs, ... }: {
       home.file.".config/kak/kakrc".source = ./kakrc;
     };
