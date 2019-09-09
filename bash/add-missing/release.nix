@@ -61,7 +61,8 @@ let
   empty-dir = pkgs.callPackage ./derivation.nix {};
 in {
   test = pkgs.runCommandNoCC "empty-dir-test" {} '"${"''"}"'
-    true
+    mkdir -p $out
+    : ''${empty-dir}
   '"${"''"}"';
 }' ]]
     [[ -z $(git status --porcelain) ]]

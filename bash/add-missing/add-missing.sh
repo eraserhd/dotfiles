@@ -60,7 +60,8 @@ if [[ ! -f release.nix ]]; then
     printf '  %s = pkgs.callPackage ./derivation.nix {};\n' "$packageName"
     printf 'in {\n'
     printf '  test = pkgs.runCommandNoCC "%s-test" {} %s\n' "$packageName" "''"
-    printf '    true\n'
+    printf '    mkdir -p $out\n'
+    printf '    : ${%s}\n' "$packageName"
     printf '  %s;\n' "''"
     printf '}'
   ) >release.nix
