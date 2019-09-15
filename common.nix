@@ -16,6 +16,7 @@ with lib;
     ./npm
     ./plan9
     ./rlwrap
+    ./ssh
     ./tex
     ./tmux
     ./vim

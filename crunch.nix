@@ -81,19 +81,13 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
 
   nixpkgs.config.allowUnfree = true;
 
-  users.users = let allowedKeys = [
-    (builtins.readFile ./ssh/files/id_rsa.pub)
-    (builtins.readFile ./ssh/files/id_dsa.pub)
-    (builtins.readFile ./ssh/files/id_rsa-workingcopy.pub)
-    (builtins.readFile ./ssh/files/id_rsa-terminus-iphone.pub)
-    ("COMMAND=\"#{pkgs.coreutils}/bin/false\" " + (builtins.readFile ./ssh/files/id_rsa-macbook.pub))
-  ]; in {
+  users.users = {
     jfelice = {
       isNormalUser = true;
       extraGroups = [ "docker" "wheel" ]; # Enable ‘sudo’ for the user.
-      openssh.authorizedKeys.keys = allowedKeys;
+      openssh.authorizedKeys.keys = config.local.authorizedKeys;
     };
-    root.openssh.authorizedKeys.keys = allowedKeys;
+    root.openssh.authorizedKeys.keys = config.local.authorizedKeys;
   };
 
   home-manager.verbose = true;
