@@ -98,4 +98,5 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
   # should.
   system.stateVersion = "19.03";
 
+  local.plan9.cpu.enable = true;
 }

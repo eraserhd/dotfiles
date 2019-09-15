@@ -55,6 +55,8 @@
   services."2u".kubernetes-clients.enable = true;
   services."2u".kubernetes-clients.namespaces = [ "implementation" ];
 
+  local.plan9.terminal.enable = true;
+
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
