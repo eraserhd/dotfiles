@@ -7,12 +7,6 @@
     ./home-manager/nix-darwin
   ];
 
-  # List packages installed in system profile. To search by name, run:
-  # $ nix-env -qaP | grep wget
-  environment.systemPackages =
-    [ 
-    ];
-
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/src/dotfiles/macbook.nix
   environment.darwinConfig = "$HOME/src/dotfiles/macbook.nix";
@@ -31,7 +25,6 @@
   local.systemDisplayName = "macbook";
 
   programs.bash.enable = true;
-  programs.bash.enableCompletion = true;
   
   # This seems to be only used by tmux
   environment.loginShell = "${pkgs.bashInteractive}/bin/bash -l";

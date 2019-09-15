@@ -12,6 +12,7 @@ with lib;
   };
 
   config = {
+    programs.bash.enableCompletion = true;
     programs.bash.interactiveShellInit = ''
       source_if_exists() {
         if [[ -f "$1" ]]
