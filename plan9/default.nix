@@ -11,8 +11,8 @@ in {
 
   config = mkMerge [
     (mkIf (cfg.cpu.enable || cfg.terminal.enable) {
-      environment.systemPackages = [
-        pkgs.plan9port
+      environment.systemPackages = with pkgs; [
+        plan9port osxsnarf
       ] ++ lib.optional pkgs.stdenv.isDarwin pkgs.osxfuse;
     })
     (mkIf cfg.terminal.enable {
