@@ -12,8 +12,11 @@ in {
   config = mkMerge [
     (mkIf (cfg.cpu.enable || cfg.terminal.enable) {
       environment.systemPackages = with pkgs; [
-        plan9port osxsnarf
-      ] ++ lib.optional pkgs.stdenv.isDarwin pkgs.osxfuse;
+        plan9port
+      ] ++ optionals pkgs.stdenv.isDarwin with pkgs; [
+        osxfuse
+        osxsnarf
+      ]
     })
     (mkIf cfg.terminal.enable {
       home-manager.users.jfelice = { pkgs, ... }: {
