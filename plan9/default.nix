@@ -4,6 +4,10 @@ with lib;
 let
   cfg = config.local.plan9;
 in {
+  imports = [
+    ./osxsnarf.nix
+  ];
+
   options = {
     local.plan9.terminal.enable = mkEnableOption "Plan9 terminal";
     local.plan9.cpu.enable = mkEnableOption "Plan9 CPU";
@@ -11,12 +15,11 @@ in {
 
   config = mkMerge [
     (mkIf (cfg.cpu.enable || cfg.terminal.enable) {
-      environment.systemPackages = with pkgs; [
+      environment.systemPackages = (with pkgs; [
         plan9port
-      ] ++ optionals pkgs.stdenv.isDarwin with pkgs; [
+      ]) ++ optionals pkgs.stdenv.isDarwin (with pkgs; [
         osxfuse
-        osxsnarf
-      ]
+      ]);
     })
     (mkIf cfg.terminal.enable {
       home-manager.users.jfelice = { pkgs, ... }: {
