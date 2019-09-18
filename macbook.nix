@@ -47,13 +47,14 @@
                      " -L8080:localhost:8080" +
                      " -L3447:localhost:3447" +
                      " -R/run/user/1000/plan9/srv/snarf:/Users/jfelice/.run/plan9/srv/snarf" +
-                     " -L/Users/jfelice/.run/plan9/srv/plumb:/run/user/1000/plan9/srv/plumb" +
+                     " -R/run/user/1000/plan9/srv/plumb:/Users/jfelice/.run/plan9/srv/plumb" +
                      " -T -N jfelice@crunch.eraserhead.net";
   } ];
 
-  services."2u".vault.enable = true;
-  services."2u".kubernetes-clients.enable = true;
-  services."2u".kubernetes-clients.namespaces = [ "implementation" ];
+# FIXME: Vault package
+#  services."2u".vault.enable = true;
+#  services."2u".kubernetes-clients.enable = true;
+#  services."2u".kubernetes-clients.namespaces = [ "implementation" ];
 
   local.plan9.terminal.enable = true;
 
