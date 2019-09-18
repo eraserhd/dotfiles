@@ -20,7 +20,6 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
       ./common.nix
       ./home-manager/nixos
       /etc/nixos/hardware-configuration.nix
-      ./nixpkgs/nixos/modules/profiles/headless.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
