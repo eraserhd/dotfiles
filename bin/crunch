@@ -10,7 +10,7 @@ done
 
 exec ssh -t "$hostname" /bin/sh -c "'
   set -e
-  ln_cmd=\"ln -sf \$SSH_AUTH_SOCK \\\$SSH_AUTH_SOCK\"
+  ln_cmd=\"mkdir -p \\\$(dirname \\\$SSH_AUTH_SOCK) ; ln -sf \$SSH_AUTH_SOCK \\\$SSH_AUTH_SOCK\"
   tmux run-shell \"\$ln_cmd\"
   tmux attach
 '"
