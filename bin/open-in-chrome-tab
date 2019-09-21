@@ -1,45 +1,6 @@
 #! /usr/bin/env bash
-#
-# opener-daemon [options] - daemon to handle plumb/web requests by opening URLs in Chrome
-# Options:
-#   --start     Fork daemon
-#   --kill      Kill running instance
-#
 
-assertNotRunning() {
-    if [[ -f $PIDFILE ]]; then
-        old_pid=$(cat $PIDFILE)
-        if ps -p "$old_pid" >/dev/null 2>&1; then
-            printf 'opener-daemon: already running.\n' >&2
-            return 1
-        fi
-        rm -f "$PIDFILE"
-    fi
-    return 0
-}
-
-assertPlumbAccess() {
-    if ! 9 9p stat plumb/web >/dev/null 2>&1; then
-        printf 'opener-daemon: no access to plumb/web.\n' >&2
-        return 1
-    fi
-    return 0
-}
-
-action_start() {
-    assertNotRunning || return $?
-    assertPlumbAccess || return $?
-    exec <&- >/dev/null 2>&1
-    nohup "${BASH_SOURCE[0]}" --mainLoop &
-    echo "$!" >"$PIDFILE"
-}
-
-action_kill() {
-    kill $(cat $PIDFILE) || return $?
-    rm -f $PIDFILE || return $?
-}
-
-openURL() {
+openInChromeTab() {
     local link="$1"
     local frontmost_pid=$(reattach-to-user-namespace lsappinfo info -only pid $(reattach-to-user-namespace lsappinfo front))
     frontmost_pid="${frontmost_pid##*=}"
@@ -77,31 +38,5 @@ openURL() {
     return $?
 }
 
-action_mainLoop() {
-    exec <&- >>"$LOGFILE" 2>&1
-    exec < <(9 9p read plumb/web)
-    read_pid=$!
-    trap 'kill $read_pid' EXIT
-    while read src; do
-        read dst
-        read wdir
-        read type
-        read attr
-        read ndata
-        read -N $ndata data
-        openURL "$data"
-    done
-}
-
-export PIDFILE="$XDG_RUNTIME_DIR/opener-daemon.pid"
-export LOGFILE="$XDG_RUNTIME_DIR/opener-daemon.log"
-
-action='start'
-case "$1" in
-    --*)
-        action="${1#--}"
-        shift;;
-esac
-
-"action_${action}" "$@"
+openInChromeTab "$1"
 exit $?
