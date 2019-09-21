@@ -19,10 +19,6 @@ canSpecifySession() {
 }
 
 findSessionName() {
-    if [[ -n $TMUX_PANE ]]; then
-        tmux display -t "$TMUX_PANE" -p '#W'
-        return $?
-    fi
     printf 'kakoune\n'
 }
 
