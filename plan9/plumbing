@@ -23,7 +23,7 @@ plumb start web $data
 type is text
 data matches '(https?|ftp|file|gopher|mailto|news|nntp|telnet|wais|prospero)://[a-zA-Z0-9_@\-]+([.:][a-zA-Z0-9_@\-]+)*/?[a-zA-Z0-9_?,%#~&/\-+=]+([:.][a-zA-Z0-9_?,%#~&/\-+=]+)*'
 plumb to web
-plumb start web $0
+plumb start open-in-chrome-tab $0
 
 # doc and rtf files go to wdoc2txt
 type is text
