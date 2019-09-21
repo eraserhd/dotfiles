@@ -27,8 +27,16 @@ findSessionName() {
 }
 
 sessionExists() {
-    local session="$1"
-    if "$kak" -l 2>/dev/null |grep -q "${session}\$"; then
+    local session="$1" exists=false name=''
+    exec 3< <("$kak" -l 2>/dev/null)
+    while read -u 3 name; do
+        if [[ $name = $session ]]; then
+            exists=true
+            break
+        fi
+    done
+    exec 3<&-
+    if [[ $exists = true ]]; then
         return 0
     else
         return 1
