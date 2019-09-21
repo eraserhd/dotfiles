@@ -41,14 +41,6 @@ with lib;
           fi
       }
 
-      initPlan9() {
-          if [[ -z $NAMESPACE ]];
-          then
-              export NAMESPACE=$XDG_RUNTIME_DIR/plan9/srv
-          fi
-          mkdir -p $NAMESPACE $XDG_RUNTIME_DIR/plan9/log
-      }
-
       :r() {
         if command -v darwin-rebuild >/dev/null; then
           pushd ~/src/dotfiles >/dev/null
@@ -86,14 +78,6 @@ with lib;
         PS1='\n'"$exitColor"'\t \u@${config.local.systemDisplayName} \W $(__git_ps1 "(%s)")\n\$\[\e[0m\] '
       }
       export PROMPT_COMMAND=bashPromptCommand
-
-      if [[ -z $XDG_RUNTIME_DIR ]]
-      then
-          export XDG_RUNTIME_DIR=~/.run
-          mkdir -p ~/.run
-      fi
-
-      initPlan9
 
       eval "$(${pkgs.direnv}/bin/direnv hook bash)"
     '';

@@ -20,6 +20,16 @@ in {
       ]) ++ optionals pkgs.stdenv.isDarwin (with pkgs; [
         osxfuse
       ]);
+
+      programs.bash.interactiveShellInit = ''
+        if [[ -z $XDG_RUNTIME_DIR ]]; then
+            export XDG_RUNTIME_DIR=~/.run
+        fi
+        if [[ -z $NAMESPACE ]]; then
+            export NAMESPACE=$XDG_RUNTIME_DIR/plan9/srv
+        fi
+        mkdir -p $NAMESPACE $XDG_RUNTIME_DIR/plan9/log
+      '';
     })
     (mkIf cfg.terminal.enable {
       home-manager.users.jfelice = { pkgs, ... }: {
