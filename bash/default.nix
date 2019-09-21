@@ -42,42 +42,11 @@ with lib;
       }
 
       initPlan9() {
-          if ! command -v 9 >/dev/null 2>&1
-          then
-              printf 'no plan9 services.\n' >&2
-              return 1
-          fi
-
           if [[ -z $NAMESPACE ]];
           then
               export NAMESPACE=$XDG_RUNTIME_DIR/plan9/srv
           fi
           mkdir -p $NAMESPACE $XDG_RUNTIME_DIR/plan9/log
-      }
-
-      postService() {
-          local srvname="$1"
-          local logfile="$XDG_RUNTIME_DIR/plan9/log/$srvname"
-          shift
-          local ok=no
-          if [[ -S $NAMESPACE/$srvname ]]
-          then
-              if 9 9p stat $srvname/. 1>/dev/null 2>&1
-              then
-                  ok=yes
-              fi
-          fi
-          if [[ $ok = no ]]
-          then
-              rm -f $NAMESPACE/$srvname
-              "$@" >"$logfile" 2>&1
-          fi
-      }
-
-      startPlan9() {
-          if [[ $(hostname) = crunch ]]; then
-              postService plumb 9 plumber -p ~/.config/plan9/plumbing
-          fi
       }
 
       :r() {
