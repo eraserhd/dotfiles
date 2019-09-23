@@ -51,10 +51,9 @@
                      " -T -N jfelice@crunch.eraserhead.net";
   } ];
 
-# FIXME: Vault package
-#  services."2u".vault.enable = true;
-#  services."2u".kubernetes-clients.enable = true;
-#  services."2u".kubernetes-clients.namespaces = [ "implementation" ];
+  services."2u".vault.enable = true;
+  services."2u".kubernetes-clients.enable = true;
+  services."2u".kubernetes-clients.namespaces = [ "implementation" ];
 
   local.plan9.terminal.enable = true;
 
