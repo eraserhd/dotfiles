@@ -15,11 +15,9 @@ in {
 
   config = mkMerge [
     (mkIf (cfg.cpu.enable || cfg.terminal.enable) {
-      environment.systemPackages = (with pkgs; [
-        plan9port
-      ]) ++ optionals pkgs.stdenv.isDarwin (with pkgs; [
-        osxfuse
-      ]);
+      environment.systemPackages = [ pkgs.plan9port ]
+        ++ optional pkgs.stdenv.isDarwin pkgs.osxfuse
+        ++ optional (!pkgs.stdenv.isDarwin) pkgs.fusePackages.fuse_3;
 
       programs.bash.interactiveShellInit = ''
         if [[ -z $XDG_RUNTIME_DIR ]]; then
