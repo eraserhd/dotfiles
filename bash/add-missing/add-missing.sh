@@ -20,7 +20,7 @@ fi
 
 if [[ ! -f derivation.nix ]]; then
   (
-    printf '{ stdenv, ... }:\n'
+    printf '{ stdenv, fetchFromGitHub, ... }:\n'
     printf '\n'
     printf 'stdenv.mkDerivation rec {\n'
     printf '  pname = "%s";\n' "$packageName"
