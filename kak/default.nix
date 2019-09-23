@@ -11,6 +11,7 @@
           configure = {
             plugins = with self.kakounePlugins; [
               kak-ansi
+              kak-plumb
               parinfer-rust
             ];
           };
