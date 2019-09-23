@@ -41,7 +41,7 @@ in pkgs.empty-dir' ]]
     git remote -v |grep -q '^origin	git@github.com:eraserhd/empty-dir.git (fetch)$'
     [[ $(cat derivation.nix) = '{ stdenv, ... }:
 
-stdenv.mkDerivation {
+stdenv.mkDerivation rec {
   pname = "empty-dir";
   version = "0.1.0";
 

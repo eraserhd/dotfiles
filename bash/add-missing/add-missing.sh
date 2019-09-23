@@ -22,7 +22,7 @@ if [[ ! -f derivation.nix ]]; then
   (
     printf '{ stdenv, ... }:\n'
     printf '\n'
-    printf 'stdenv.mkDerivation {\n'
+    printf 'stdenv.mkDerivation rec {\n'
     printf '  pname = "%s";\n' "$packageName"
     printf '  version = "0.1.0";\n'
     printf '\n'
