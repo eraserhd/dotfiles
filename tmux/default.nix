@@ -14,7 +14,7 @@ let
     ##### Basic Usage #####
 
     # Reduce the command delay time to something a bit shorter
-    set -sg escape-time 1
+    set -sg escape-time 25
     # Extend the repeat interval for repeatable commands (e.g., resize-pane)
     set -sg repeat-time 1000
 
