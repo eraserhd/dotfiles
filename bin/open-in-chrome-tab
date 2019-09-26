@@ -35,8 +35,6 @@ openInChromeTab() {
             end tell
         end run
     " "$link" "$frontmost_pid"
-    return $?
 }
 
 openInChromeTab "$1"
-exit $?
