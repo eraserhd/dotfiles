@@ -1,0 +1,15 @@
+/* Dracula theme – https://draculatheme.com */
+
+.primary-selection {
+  --primary-selection-color: hsl(326, 100%, 74%); /* Pink */
+  outline: var(--primary-selection-color) solid medium !important;
+}
+
+.secondary-selection {
+  --secondary-selection-color: hsl(265, 89%, 78%); /* Purple */
+  outline: var(--secondary-selection-color) dotted thin !important;
+}
+
+:root.primary-selection {
+  border: thin solid var(--primary-selection-color) !important;
+}
