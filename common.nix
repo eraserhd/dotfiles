@@ -15,9 +15,9 @@ with lib;
     ./karabiner
     ./lib
     ./mail
+    ./networking/plan9
     ./networking/update-dns
     ./npm
-    ./plan9
     ./rlwrap
     ./ssh
     ./tex
