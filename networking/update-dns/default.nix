@@ -31,6 +31,7 @@ in {
   }
   else {
     assertions = [ {
+      assertion = false;
       message = "local.updateDNS.enable is not supported on this system";
     } ];
   });
