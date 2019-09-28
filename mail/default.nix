@@ -12,6 +12,6 @@ with lib;
       useTLS = true;
       useSTARTTLS = true;
       root = "jason.m.felice@gmail.com";
-    } // import ./crunch.nix;
+    } // import ./ses-user.nix;
   };
 }
