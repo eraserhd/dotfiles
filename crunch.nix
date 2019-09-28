@@ -112,4 +112,5 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
   system.stateVersion = "19.03";
 
   local.plan9.cpu.enable = true;
+  local.sendOutgoingMailWithSES = true;
 }

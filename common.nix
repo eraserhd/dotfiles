@@ -13,6 +13,7 @@ with lib;
     ./gtypist
     ./kak
     ./karabiner
+    ./mail
     ./npm
     ./plan9
     ./rlwrap
