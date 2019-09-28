@@ -73,6 +73,8 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
     enable = true;
     ports = [ 22 443 ];
     extraConfig = ''
+      ClientAliveCountMax 3
+      ClientAliveInterval 10
       StreamLocalBindUnlink yes
     '';
   };
