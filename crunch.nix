@@ -47,7 +47,7 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
       firewall.enable = true;
 
       defaultMailServer = {
-        hostName = "email-smtp.us-west-2.amazonaws.com";
+        hostName = "email-smtp.us-west-2.amazonaws.com:587";
         directDelivery = true;
         domain = "crunch.eraserhead.net";
         useTLS = true;
