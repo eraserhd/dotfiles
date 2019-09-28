@@ -43,6 +43,8 @@
     extraArguments = " -i ${toString ./ssh/files/id_rsa-macbook}" +
                      " -o 'StreamLocalBindUnlink yes'" +
                      " -o 'ExitOnForwardFailure yes'" +
+                     " -o 'ServerAliveCountMax 3'" +
+                     " -o 'ServerAliveInterval 10'" +
                      " -L8820:localhost:8820" +
                      " -L8080:localhost:8080" +
                      " -L3449:localhost:3449" +
