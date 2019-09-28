@@ -13,6 +13,7 @@ with lib;
     ./gtypist
     ./kak
     ./karabiner
+    ./lib
     ./mail
     ./networking/update-dns
     ./npm
