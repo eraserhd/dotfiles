@@ -1,10 +1,14 @@
 { lib, config, options, ... }:
 
 with lib;
-{
-  options.local.sendOutgoingMailWithSES = mkEnableOption "SES";
+let
+  cfg = config.local.sendOutgoingMailWithSES;
+in {
+  options = {
+    local.sendOutgoingMailWithSES.enable = mkEnableOption "SES";
+  };
 
-  config = mkIf config.local.sendOutgoingMailWithSES
+  config = mkIf cfg.enable
   (if (builtins.hasAttr "defaultMailServer" options.networking)
   then {
     networking.defaultMailServer = {
