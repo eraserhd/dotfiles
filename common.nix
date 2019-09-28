@@ -14,6 +14,7 @@ with lib;
     ./kak
     ./karabiner
     ./mail
+    ./networking/update-dns
     ./npm
     ./plan9
     ./rlwrap
