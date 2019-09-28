@@ -45,6 +45,15 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
       };
       nameservers = [ "8.8.8.8" "8.8.4.4" ];
       firewall.enable = true;
+
+      defaultMailServer = {
+        hostName = "email-smtp.us-west-2.amazonaws.com";
+        directDelivery = true;
+        domain = "crunch.eraserhead.net";
+        useTLS = true;
+        useSTARTTLS = true;
+        root = "jason.m.felice@gmail.com";
+      } // import ./mail/crunch.nix;
   };
 
   time.timeZone = "America/New_York";

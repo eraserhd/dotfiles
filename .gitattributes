@@ -13,3 +13,4 @@ weechat/config/sec.conf filter=git-crypt diff=git-crypt
 clojure/profiles.clj filter=git-crypt diff=git-crypt
 ssh/files/id_rsa-macbook filter=git-crypt diff=git-crypt
 2u/vpn/ipsec.secrets filter=git-crypt diff=git-crypt
+mail/crunch.nix filter=git-crypt diff=git-crypt
