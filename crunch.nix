@@ -69,10 +69,13 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
   documentation.dev.enable = true;
   virtualisation.docker.enable = true;
 
-  services.openssh.enable = true;
-  services.openssh.extraConfig = ''
-    StreamLocalBindUnlink yes
-  '';
+  services.openssh = {
+    enable = true;
+    ports = [ 22 443 ];
+    extraConfig = ''
+      StreamLocalBindUnlink yes
+    '';
+  };
 
   services.cron = {
     enable = true;
