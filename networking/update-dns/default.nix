@@ -10,7 +10,7 @@ let
 
     exec ${pkgs.curl}/bin/curl -s -X PUT -H "Content-Type: application/json" \
       -H "Authorization: Bearer $DIGITALOCEAN_API_TOKEN" \
-      -d '{"data": "'"$(curl -s http://ipinfo.io/ip)"'"}' \
+      -d '{"data": "'"$(${pkgs.curl}/bin/curl -s http://ipinfo.io/ip)"'"}' \
       "https://api.digitalocean.com/v2/domains/eraserhead.net/records/73014284" \
       >/dev/null
   '';
