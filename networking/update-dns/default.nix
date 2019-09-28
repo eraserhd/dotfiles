@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, options, pkgs, ... }:
 
 with lib;
 let
@@ -6,7 +6,7 @@ let
   updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
     #!${pkgs.bash}/bin/bash
 
-    ${builtins.readFile ../bin/private.sh}
+    ${builtins.readFile ../../bin/private.sh}
 
     exec ${pkgs.curl}/bin/curl -s -X PUT -H "Content-Type: application/json" \
       -H "Authorization: Bearer $DIGITALOCEAN_API_TOKEN" \
@@ -19,12 +19,19 @@ in {
     local.updateDNS.enable = mkEnableOption "update DNS";
   };
 
-  config = mkIf cfg.enable {
+  config = mkIf cfg.enable (
+  if (builtins.hasAttr "cron" options.services)
+  then {
     services.cron = {
       enable = true;
       systemCronJobs = [
           "*/5 * * * *    jfelice  ${updateDNSScript}/bin/update-dns"
       ];
     };
-  };
+  }
+  else {
+    assertions = [ {
+      message = "local.updateDNS.enable is not supported on this system";
+    } ];
+  });
 }

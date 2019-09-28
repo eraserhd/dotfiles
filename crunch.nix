@@ -3,17 +3,6 @@
 
 { config, pkgs, ... }:
 
-let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
-  #!${pkgs.bash}/bin/bash
-
-  ${builtins.readFile ./bin/private.sh}
-
-  exec ${pkgs.curl}/bin/curl -s -X PUT -H "Content-Type: application/json" \
-    -H "Authorization: Bearer $DIGITALOCEAN_API_TOKEN" \
-    -d '{"data": "'"$(curl -s http://ipinfo.io/ip)"'"}' \
-    "https://api.digitalocean.com/v2/domains/eraserhead.net/records/73014284" \
-    >/dev/null
-''; in
 {
   imports =
     [ # Include the results of the hardware scan.
@@ -70,13 +59,6 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
     '';
   };
 
-  services.cron = {
-    enable = true;
-    systemCronJobs = [
-        "*/5 * * * *    jfelice  ${updateDNSScript}/bin/update-dns"
-    ];
-  };
-
   nix.nixPath = [
     "nixpkgs=/home/jfelice/src/dotfiles/nixpkgs"
     "nixpkgs-overlays=/home/jfelice/src/dotfiles/overlays"
@@ -104,4 +86,5 @@ let updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
 
   local.plan9.cpu.enable = true;
   local.sendOutgoingMailWithSES = true;
+  local.updateDNS.enable = true;
 }
