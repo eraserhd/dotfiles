@@ -1,16 +1,20 @@
 #!/usr/bin/env bash
 
-hostname=crunch.eraserhead.net
-while (( $# > 0 )); do
-    case "$1" in
-        -l|--local) hostname=10.0.0.2;;
-    esac
-    shift
-done
+tryConnect() {
+    ssh -t "$@" /bin/sh -c "'
+      set -e
+      ln_cmd=\"mkdir -p \\\$(dirname \\\$SSH_AUTH_SOCK) ; ln -sf \$SSH_AUTH_SOCK \\\$SSH_AUTH_SOCK\"
+      tmux run-shell \"\$ln_cmd\"
+      tmux attach
+    '"
+}
 
-exec ssh -t "$hostname" /bin/sh -c "'
-  set -e
-  ln_cmd=\"mkdir -p \\\$(dirname \\\$SSH_AUTH_SOCK) ; ln -sf \$SSH_AUTH_SOCK \\\$SSH_AUTH_SOCK\"
-  tmux run-shell \"\$ln_cmd\"
-  tmux attach
-'"
+tryConnect -p 22 -o 'ConnectTimeout 5' jfelice@10.0.0.2
+if [[ $? -ne 255 ]]; then
+    exit
+fi
+tryConnect -p 443 -o 'ConnectTimeout 30' jfelice@crunch.eraserhead.net
+if [[ $? -ne 255 ]]; then
+    exit
+fi
+tryConnect -p 22 -o 'ConnectTimeout 30' jfelice@crunch.eraserhead.net
