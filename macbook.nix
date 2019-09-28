@@ -45,7 +45,7 @@
                      " -o 'ExitOnForwardFailure yes'" +
                      " -L8820:localhost:8820" +
                      " -L8080:localhost:8080" +
-                     " -L3447:localhost:3447" +
+                     " -L3449:localhost:3449" +
                      " -R/run/user/1000/plan9/srv/snarf:/Users/jfelice/.run/plan9/srv/snarf" +
                      " -R/run/user/1000/plan9/srv/plumb:/Users/jfelice/.run/plan9/srv/plumb" +
                      " -T -N jfelice@crunch.eraserhead.net";
