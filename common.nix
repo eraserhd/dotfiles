@@ -16,10 +16,10 @@ with lib;
     ./lib
     ./networking/plan9
     ./networking/ses-email
+    ./networking/ssh
     ./networking/update-dns
     ./npm
     ./rlwrap
-    ./ssh
     ./tex
     ./tmux
     ./vim
