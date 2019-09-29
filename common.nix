@@ -14,6 +14,7 @@ with lib;
     ./kak
     ./karabiner
     ./lib
+    ./networking/nagios
     ./networking/plan9
     ./networking/ses-email
     ./networking/ssh
