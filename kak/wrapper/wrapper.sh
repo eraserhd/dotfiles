@@ -10,8 +10,8 @@ declare -a extraArgs=()
 canSpecifySession() {
     while (( $# != 0 )); do
         case "$1" in
-            -l|-c|-s|-n) return 1;;
-            -e|-E|-p|-f|-i|-ui|-debug) shift;;
+            -l|-c|-s|-n|-p) return 1;;
+            -e|-E|-f|-i|-ui|-debug) shift;;
         esac
         shift
     done
