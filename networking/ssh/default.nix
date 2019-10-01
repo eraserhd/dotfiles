@@ -5,7 +5,7 @@ with lib;
   options = {
     local.authorizedKeys = mkOption {
       description = "List of public SSH keys to allow for me";
-      type = types.listOf types.string;
+      type = types.listOf types.str;
     };
   };
 
