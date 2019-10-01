@@ -5,9 +5,6 @@ try %{ source ~/src/rep/rc/rep.kak }
 # General Settings
 # ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-# If we are running a version that supports kakfs!!
-try mount
-
 set-option global autoreload yes
 set-option global grepcmd 'ag --column'
 
