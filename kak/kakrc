@@ -76,6 +76,11 @@ hook global WinSetOption filetype=makefile keep-tabs
 
 define-command -docstring 'Find a file' -params 1 -shell-script-candidates %{ag -l -f} -menu find %{ edit %arg{@} }
 
+define-command -override -params 1 -shell-script-candidates %{
+  dir="$(pwd)"
+  locate "${dir}/" |sed -e 's,^'"${dir}"'/,,'
+} -menu f %{edit %arg{@}}
+
 # Project
 # ‾‾‾‾‾‾‾
 
