@@ -25,66 +25,28 @@ data matches '(https?|ftp|file|gopher|mailto|news|nntp|telnet|wais|prospero)://[
 plumb to web
 plumb start open-in-chrome-tab $0
 
-# doc and rtf files go to wdoc2txt
-type is text
-data matches '[a-zA-Z¡-￿0-9_\-./]+'
-data matches '([a-zA-Z¡-￿0-9_\-./]+)\.(doc|rtf)'
-arg isfile	$0
-plumb to msword
-plumb start wdoc2txt $file
-
-# start rule for microsoft word documents without .doc suffix
-type is text
-dst is msword
-plumb to msword
-plumb start wdoc2txt $file
-
-# image files go to page
-type is text
-data matches '[a-zA-Z¡-￿0-9_\-./@]+'
-data matches '([a-zA-Z¡-￿0-9_\-./@]+)\.(jpe?g|JPE?G|gif|GIF|tiff?|TIFF?|ppm|bit|png|PNG)'
-arg isfile	$0
-plumb to image
-plumb start 9 page $file
-
-# postscript/pdf/dvi go to page but not over the a plumb port
-# the port is here for reference but is unused
-type is text
-data matches '[a-zA-Z¡-￿0-9_\-./@]+'
-data matches '([a-zA-Z¡-￿0-9_\-./@]+)\.(ps|PS|eps|EPS|pdf|PDF|dvi|DVI)'
-arg isfile	$0
-plumb to postscript
-plumb start 9 page $file
-
-# open office - s[xt][cdigmw], doc, xls, ppt
-data matches '[a-zA-Z¡-￿0-9_\-./@]+'
-data matches '([a-zA-Z¡-￿0-9_\-./@]+)\.([Ss][XxTt][CcDdIiGgMmWw]|[Dd][Oo][Cc]|[Xx][Ll][Ss]|[Pp][Pp][Tt])'
-arg isfile	$0
-plumb to openoffice
-plumb start openoffice $file
-
 # existing files tagged by line number:columnumber or linenumber.columnumber, twice, go to editor
+#arg isfile     $1
 type is text
 data matches '([.a-zA-Z¡-￿0-9_/\-@]*[a-zA-Z¡-￿0-9_/\-])':$twocolonaddr,$twocolonaddr
-arg isfile     $1
 data set       $file
 attr add       addr=$2-#0+#$3-#1,$4-#0+#$5-#1
 plumb to edit
 plumb client $editor
 
 # existing files tagged by line number:columnumber or linenumber.columnumber, twice, go to editor
+#arg isfile     $1
 type is text
 data matches '([.a-zA-Z¡-￿0-9_/\-@]*[a-zA-Z¡-￿0-9_/\-])':$twocolonaddr
-arg isfile     $1
 data set       $file
 attr add       addr=$2-#0+#$3-#1
 plumb to edit
 plumb client $editor
 
 # existing files, possibly tagged by line number, go to editor
+#arg isfile	$1
 type is text
 data matches '([.a-zA-Z¡-￿0-9_/\-@]*[a-zA-Z¡-￿0-9_/\-])('$addr')?'
-arg isfile	$1
 data set	$file
 attr add	addr=$3
 plumb to edit
