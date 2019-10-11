@@ -42,19 +42,33 @@
         set -e
         export NAMESPACE="$XDG_RUNTIME_DIR/plan9/srv"
         9 9p read plumb/edit |while true; do
-          read src
-          read dst
-          read wdir
-          read type
-          read attr
-          read ndata
+          read -r src
+          read -r dst
+          read -r wdir
+          read -r type
+          read -r attrs
+          read -r ndata
           read -N $ndata data
 
+          client='%opt{jumpclient}'
+          evaluate=""
+          session=""
+          eval set -- "$attrs"
+          while [ $# -ne 0 ]; do
+            case "$1" in
+              client=*)   client="''${1#client=}";;
+              evaluate=*) evaluate="''${1#evaluate=}";;
+              session=*)  session="''${1#session=}";;
+            esac
+            shift
+          done
+
           printf '
-            evaluate-commands -try-client %%opt{jumpclient} %%{
-              edit -existing "%s"
+            evaluate-commands -try-client %s %%{
+              %s
+              try focus
             }
-          ' "$data" |kak -p kakoune
+          ' "$client" "$evaluate" |kak -p "$session"
         done
       '';
     };
