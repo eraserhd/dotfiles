@@ -86,7 +86,7 @@
   # should.
   system.stateVersion = "19.03";
 
-  local.nagiosServer.enable = true;
+  #local.nagiosServer.enable = true;
   local.plan9.cpu.enable = true;
   local.sendOutgoingMailWithSES.enable = true;
   local.updateDNS.enable = true;
