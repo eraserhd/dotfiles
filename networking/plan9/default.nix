@@ -13,26 +13,19 @@ in {
     local.plan9.cpu.enable = mkEnableOption "Plan9 CPU";
   };
 
-  config = mkMerge [
-    (mkIf (cfg.cpu.enable || cfg.terminal.enable) {
-      environment.systemPackages = [ pkgs.plan9port ]
-        ++ optional pkgs.stdenv.isDarwin pkgs.osxfuse
-        ++ optional (!pkgs.stdenv.isDarwin) pkgs.fusePackages.fuse_3;
+  config = mkIf (cfg.cpu.enable || cfg.terminal.enable) {
+    environment.systemPackages = [ pkgs.plan9port ]
+      ++ optional pkgs.stdenv.isDarwin pkgs.osxfuse
+      ++ optional (!pkgs.stdenv.isDarwin) pkgs.fusePackages.fuse_3;
 
-      programs.bash.interactiveShellInit = ''
-        if [[ -z $XDG_RUNTIME_DIR ]]; then
-            export XDG_RUNTIME_DIR=~/.run
-        fi
-        if [[ -z $NAMESPACE ]]; then
-            export NAMESPACE=$XDG_RUNTIME_DIR/plan9/srv
-        fi
-        mkdir -p $NAMESPACE $XDG_RUNTIME_DIR/plan9/log
-      '';
-    })
-    (mkIf cfg.terminal.enable {
-      home-manager.users.jfelice = { pkgs, ... }: {
-        home.file.".config/plan9/plumbing".source = ./plumbing;
-      };
-    })
-  ];
+    programs.bash.interactiveShellInit = ''
+      if [[ -z $XDG_RUNTIME_DIR ]]; then
+          export XDG_RUNTIME_DIR=~/.run
+      fi
+      if [[ -z $NAMESPACE ]]; then
+          export NAMESPACE=$XDG_RUNTIME_DIR/plan9/srv
+      fi
+      mkdir -p $NAMESPACE $XDG_RUNTIME_DIR/plan9/log
+    '';
+  };
 }
