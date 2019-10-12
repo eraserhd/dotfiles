@@ -299,11 +299,18 @@ define-command -hidden -override -params 2.. tmux-terminal-impl %{
     }
 }
 
-# Nix
-# ‾‾‾
+# Filetypes
+# ‾‾‾‾‾‾‾‾‾
 
 hook global WinSetOption filetype=nix %{
     set-option window indentwidth 2
+}
+
+hook -group wrap global WinSetOption filetype=asciidoc %{
+    add-highlighter window/wrap -word
+}
+hook -group wrap global WinSetOption filetype=(?!asciidoc).* %{
+    remove-highlighter window/wrap
 }
 
 # Clojure
