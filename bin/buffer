@@ -2,7 +2,17 @@
 
 set -e
 
-fifo=$(mktemp /tmp/buffer.XXXXXX)
+if [ $# -gt 0 ]; then
+    bufferName="$1"
+else
+    bufferName="$(pwd)"
+    bufferName="${bufferName##*/}"
+fi
+if [ -z "$bufferName" ]; then
+    bufferName='buffer'
+fi
+
+fifo=$(mktemp "/tmp/buffer-$bufferName.XXXXXX")
 rm -f "${fifo}"
 mkfifo "${fifo}"
 9 plumb "${fifo}"
