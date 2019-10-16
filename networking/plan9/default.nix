@@ -18,6 +18,8 @@ in {
       ++ optional pkgs.stdenv.isDarwin pkgs.osxfuse
       ++ optional (!pkgs.stdenv.isDarwin) pkgs.fusePackages.fuse_3;
 
+    local.browserCommand = "${pkgs.plan9port}/bin/9 plumb";
+
     programs.bash.interactiveShellInit = ''
       if [[ -z $XDG_RUNTIME_DIR ]]; then
           export XDG_RUNTIME_DIR=~/.run

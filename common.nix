@@ -6,6 +6,7 @@ with lib;
     ./alacritty
     ./aws
     ./bash
+    ./browser
     ./clojure
     ./emacs
     ./git

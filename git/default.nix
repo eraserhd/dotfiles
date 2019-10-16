@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   config = {
@@ -9,7 +9,7 @@
     ];
 
     # Needed for `hub browse`
-    environment.variables.BROWSER = "${pkgs.plan9port}/bin/9 plumb";
+    environment.variables.BROWSER = config.local.browserCommand;
 
     nixpkgs.overlays = [ (self: super: {
       local = (super.local or {}) // {
