@@ -316,6 +316,10 @@ hook -group wrap global WinSetOption filetype=(?!asciidoc).* %{
 # Clojure
 # ‾‾‾‾‾‾‾
 
+hook global WinSetOption filetype=(clojure|scheme|racket) %{
+    parinfer-enable-window -smart
+}
+
 declare-option -hidden str clojure_buffer_contents
 declare-option -hidden str-list clojure_selections
 

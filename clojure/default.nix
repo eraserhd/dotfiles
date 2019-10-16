@@ -5,6 +5,8 @@
     nixpkgs.overlays = [
       (self: super: {
         jdk = super.jdk11;
+
+        parinfer-rust = super.callPackage ./parinfer-rust {};
       })
     ];
 
