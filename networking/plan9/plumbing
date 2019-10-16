@@ -30,7 +30,7 @@ data matches '/tmp/buffer-([.a-zA-Z¡-￿0-9_\-@]*[a-zA-Z¡-￿0-9_\-])\.......'
 data set     $0
 data set     $file
 attr add     session=kakoune
-attr add     'evaluate=''edit -fifo %§'$file'§ %§'$1'§'''
+attr add     'evaluate=''edit -fifo %§'$file'§ %§'$1'§ ; try %{set-option buffer plumb_wdir %§'$wdir'§}'''
 plumb to edit
 
 # files tagged by line number:columnumber or linenumber.columnumber, twice, go to editor
