@@ -24,6 +24,15 @@ data matches '(https?|ftp|file|gopher|mailto|news|nntp|telnet|wais|prospero)://[
 plumb to web
 plumb start open-in-chrome-tab $0
 
+# fifos in /tmp
+type is text
+data matches '/tmp/buffer\.......'
+data set     $0
+data set     $file
+attr add     session=kakoune
+attr add     'evaluate=''edit -fifo '$file'''
+plumb to edit
+
 # files tagged by line number:columnumber or linenumber.columnumber, twice, go to editor
 #arg isfile     $1
 type is text

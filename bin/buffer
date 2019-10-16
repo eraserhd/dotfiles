@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+set -e
+
+fifo=$(mktemp /tmp/buffer.XXXXXX)
+rm -f "${fifo}"
+mkfifo "${fifo}"
+9 plumb "${fifo}"
+cat >"${fifo}"
+rm -f "${fifo}"
