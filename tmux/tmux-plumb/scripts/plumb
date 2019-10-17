@@ -1,25 +1,34 @@
 #!/usr/bin/env bash
 
-prefixText="$(tmux \
-    send-keys -X begin-selection \; \
-    send-keys -X previous-space \; \
-    send-keys -X cursor-right \; \
-    send-keys -X copy-selection \; \
-    show-buffer \; \
-    delete-buffer)"
+attrs=''
 
-wholeText="$(tmux \
-    send-keys -X begin-selection \; \
-    send-keys -X next-space \; \
-    send-keys -X -N 2 cursor-left \; \
-    send-keys -X copy-selection \; \
-    show-buffer \; \
-    delete-buffer)"
+haveSelection="$(tmux display-message -p '#{selection_present}')"
+if [[ $haveSelection  = 1 ]]; then
+    wholeText="$(tmux \
+        send-keys -X copy-selection \; \
+        show-buffer \; \
+        delete-buffer)"
+else
+    prefixText="$(tmux \
+        send-keys -X begin-selection \; \
+        send-keys -X previous-space \; \
+        send-keys -X cursor-right \; \
+        send-keys -X copy-selection \; \
+        show-buffer \; \
+        delete-buffer)"
+    wholeText="$(tmux \
+        send-keys -X begin-selection \; \
+        send-keys -X next-space \; \
+        send-keys -X -N 2 cursor-left \; \
+        send-keys -X copy-selection \; \
+        show-buffer \; \
+        delete-buffer)"
+    click="${#prefixText}"
+    click=$(( click - 1 ))
+    attrs="click=${click}"
+fi
 
-click="${#prefixText}"
-click=$(( click - 1 ))
-
-plumbErrors=$(9 plumb -s tmux -a "click=${click}" "$wholeText" 2>&1)
+plumbErrors=$(9 plumb -s tmux -a "$attrs" "$wholeText" 2>&1)
 if (( $? != 0 )); then
     tmux display-message -- "$plumbErrors"
 fi
