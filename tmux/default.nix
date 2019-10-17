@@ -1,6 +1,8 @@
 { pkgs, config, options, ... }:
 
 let
+  tmuxPlumb = pkgs.callPackage ./tmux-plumb {};
+
   tmuxConfig = ''
     #### Use C-a as prefix ####
     set-option -g prefix C-a
@@ -68,6 +70,7 @@ let
 
     run-shell ${pkgs.tmuxPlugins.sensible}/share/tmux-plugins/sensible/sensible.tmux
     run-shell ${pkgs.tmuxPlugins.ctrlw}/share/tmux-plugins/ctrlw/ctrlw.tmux
+    run-shell ${tmuxPlumb}/share/tmux-plugins/plumb/plumb.tmux
   '';
 in
 {
