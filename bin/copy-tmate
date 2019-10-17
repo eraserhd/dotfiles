@@ -1,2 +1,0 @@
-#!/bin/sh
-tmate show-messages |grep 'ssh session:' |awk '{printf "ssh %s", $10}' |pbcopy
