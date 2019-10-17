@@ -1,4 +1,4 @@
-{ pkgs, options, ... }:
+{ pkgs, config, options, ... }:
 
 let
   tmuxConfig = ''
@@ -15,8 +15,6 @@ let
 
     # Reduce the command delay time to something a bit shorter
     set -sg escape-time 25
-    # Extend the repeat interval for repeatable commands (e.g., resize-pane)
-    set -sg repeat-time 1000
 
     ##### Scrollback Navigation #####
 
@@ -32,12 +30,6 @@ let
     set -sa terminal-overrides ',xterm*:sitm=\E[3m' # italics
 
     ##### Window/Pane Management #####
-
-    # Split windows more intuitively (except for the fact that tmux doesn't
-    # understand that a horizontal split means the pane should be split down the
-    # middle horizontally, and likewise for a vertical split).
-    bind | split-window -h -c '#{pane_current_path}' # horizontal columns
-    bind - split-window -v -c '#{pane_current_path}' # vertical rows
 
     # Support true color in Alacritty
     set -sa terminal-overrides ",xterm-256color:Tc"
@@ -76,7 +68,6 @@ let
 
     run-shell ${pkgs.tmuxPlugins.sensible}/share/tmux-plugins/sensible/sensible.tmux
     run-shell ${pkgs.tmuxPlugins.ctrlw}/share/tmux-plugins/ctrlw/ctrlw.tmux
-    run-shell ${pkgs.tmuxPlugins.editor-copy-mode}/share/tmux-plugins/editor-copy-mode/editor-copy-mode.tmux
   '';
 in
 {
