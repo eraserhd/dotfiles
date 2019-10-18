@@ -11,6 +11,16 @@
         kakounePlugins = super.kakounePlugins // {
           kak-plumb = super.kakounePlugins.kak-plumb.overrideAttrs (oldAttrs: rec {
             src = super.pkgs.fetchFromGitHub (import ./kak-plumb.nix);
+            # Remove once 0.2.x merged to nixpkgs
+            installPhase = ''
+              mkdir -p $out/bin $out/share/kak/autoload/plugins/
+              substitute rc/plumb.kak $out/share/kak/autoload/plugins/plumb.kak \
+                --replace '9 plumb' '${self.plan9port}/bin/9 plumb'
+              substitute edit-client $out/bin/edit-client \
+                --replace '9 9p' '${self.plan9port}/bin/9 9p' \
+                --replace 'kak -p' '${self.kakoune-unwrapped}/bin/kak -p'
+              chmod +x $out/bin/edit-client
+            '';
           });
         };
 

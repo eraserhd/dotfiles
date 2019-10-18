@@ -1,6 +1,6 @@
 {
   owner = "eraserhd";
   repo = "kak-plumb";
-  rev = "c06707f58554f06ca9b60ae7c726e3de1dcceddb";
-  sha256 = "133fh1k5wgf9sqhww3h6rbw115jxsfw2432q66mrgfiqswyy39b8";
+  rev = "5bba55bc4a23c7fc0e403580e23fb9c4af5c71d7";
+  sha256 = "08s24r62g0ihj99rz6i8s8x5i40rky6blxjns0k0ilw5zwcb1lmi";
 }
