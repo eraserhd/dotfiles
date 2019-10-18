@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-rev="$(cd ~/src/nixpkgs && git rev-parse eraserhd)"
-sed -i -e 's/rev = "[a-f0-9]*"/rev = "'"$rev"'"/' pkgs/default.nix
