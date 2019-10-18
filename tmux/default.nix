@@ -1,7 +1,12 @@
 { pkgs, config, options, ... }:
 
 let
-  tmuxPlumb = pkgs.callPackage ./tmux-plumb {};
+  plumbRepo = pkgs.fetchFromGitHub {
+    owner = "eraserhd";
+    repo = "tmux-plumb";
+    rev = "e881071278e10f13e127fd12864d03b199201891";
+    sha256 = "0xwrxyczb8k55g7sc9nz84l4irks0596hk7wk3za7r8yd6x295s4";
+  };
 
   tmuxConfig = ''
     #### Use C-a as prefix ####
@@ -70,11 +75,19 @@ let
 
     run-shell ${pkgs.tmuxPlugins.sensible}/share/tmux-plugins/sensible/sensible.tmux
     run-shell ${pkgs.tmuxPlugins.ctrlw}/share/tmux-plugins/ctrlw/ctrlw.tmux
-    run-shell ${tmuxPlumb}/share/tmux-plugins/plumb/plumb.tmux
+    run-shell ${pkgs.tmuxPlugins.plumb}/share/tmux-plugins/plumb/plumb.tmux
   '';
 in
 {
   config = {
+    nixpkgs.overlays = [
+      (self: super: {
+        tmuxPlugins = super.tmuxPlugins // {
+          plumb = super.callPackage "${plumbRepo}/derivation.nix" {};
+        };
+      })
+    ];
+
     programs.tmux = {
       enable = true;
     }
