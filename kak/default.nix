@@ -6,9 +6,6 @@ with lib;
     {
       nixpkgs.overlays = [
         (self: super: {
-          kakoune-unwrapped = super.kakoune-unwrapped.overrideAttrs (oldAttrs: {
-            src = super.pkgs.fetchFromGitHub (builtins.fromJSON (builtins.readFile ./version.json));
-          });
           kakoune = super.wrapKakoune self.kakoune-unwrapped {
             configure = {
               plugins = with self.kakounePlugins; [
