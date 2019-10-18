@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -e
+
+rev=$(git rev-parse HEAD)
+owner=eraserhd
+repo=$(pwd)
+repo=${repo##*/}
+
+nix-shell -p nix-prefetch-github --command "nix-prefetch-github --nix --rev $rev $owner $repo" |
+    sed -n -e '/fetchFromGitHub {/,/}/{
+        s/^.*fetchFromGitHub //
+        s/  //
+        p
+    }' > ~/src/dotfiles/dogfood/"$repo".nix
