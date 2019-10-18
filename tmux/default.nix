@@ -73,6 +73,20 @@ let
 in
 {
   config = {
+    nixpkgs.overlays = [
+      (self: super: {
+        tmux = super.tmux.overrideAttrs (old: {
+          buildInputs = old.buildInputs ++ [ self.bison3 ];
+          src = super.fetchFromGitHub {
+            owner = "tmux";
+            repo = "tmux";
+            rev = "fb7ce5b5d509db244111e130224f366ced28b228";
+            sha256 = "0h4m3qsbnw1xl3vf3n08fjfm5m979fh1l9nbl44rr64k8ks0nfnr";
+          };
+        });
+      })
+    ];
+
     programs.tmux = {
       enable = true;
     }
