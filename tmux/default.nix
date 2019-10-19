@@ -75,14 +75,17 @@ let
     ### Default Session ###
 
     new-session -c ~/src -n 'main' -s '${sessionName}'
-    split-window -h -l 25% -c ~/src
-    split-window -h -l 25% -c ~/src
-    split-window -h -l 25% -c ~/src
-    split-window -v -l 33% -c ~/src
-    split-window -v -l 33% -c ~/src
+    split-window -h -c ~/src
+    split-window -h -c ~/src
+    split-window -h -c ~/src
+    select-layout -E
+    split-window -v -c ~/src
+    split-window -v -c ~/src
+    select-layout -E
     send-keys -t %1 kak Enter
     send-keys -t %0 weechat Enter
-    run-shell 'sleep 2'
+    # Wait for kak server to initialize
+    run-shell 'sleep 1'
     send-keys -t %2 kak Enter
     send-keys -t %3 'kak -e "edit *debug*"' Enter
   '';
