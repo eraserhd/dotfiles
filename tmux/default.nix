@@ -9,7 +9,7 @@ let
     bind a send-prefix
 
     if-shell 'command -v reattach-to-user-namespace' 'set-option -g default-command "reattach-to-user-namespace -l bash"'
-    set-option -g update-environment ${"''"}
+    set-option -g update-environment '''
 
     ##### Basic Usage #####
 
