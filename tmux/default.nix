@@ -1,6 +1,8 @@
 { pkgs, config, options, ... }:
 
 let
+  sessionName = config.local.systemDisplayName;
+
   tmuxConfig = ''
     #### Use C-a as prefix ####
     set-option -g prefix C-a
@@ -69,6 +71,20 @@ let
     run-shell ${pkgs.tmuxPlugins.sensible}/share/tmux-plugins/sensible/sensible.tmux
     run-shell ${pkgs.tmuxPlugins.ctrlw}/share/tmux-plugins/ctrlw/ctrlw.tmux
     run-shell ${pkgs.tmuxPlugins.plumb}/share/tmux-plugins/plumb/plumb.tmux
+
+    ### Default Session ###
+
+    new-session -c ~/src -n 'main' -s '${sessionName}'
+    split-window -h -l 25% -c ~/src
+    split-window -h -l 25% -c ~/src
+    split-window -h -l 25% -c ~/src
+    split-window -v -l 33% -c ~/src
+    split-window -v -l 33% -c ~/src
+    send-keys -t %1 kak Enter
+    send-keys -t %0 weechat Enter
+    run-shell 'sleep 2'
+    send-keys -t %2 kak Enter
+    send-keys -t %3 'kak -e "edit *debug*"' Enter
   '';
 in
 {
