@@ -66,6 +66,19 @@ let
     setw -g monitor-activity on
     set -g visual-activity on
 
+    ### Kakoune Mode ###
+    bind -Tcopy-mode-vi g switch-client -Tcopy-mode-kakoune-g
+    bind -Tcopy-mode-kakoune-g g send-keys -X history-top
+    bind -Tcopy-mode-kakoune-g k send-keys -X history-top
+    bind -Tcopy-mode-kakoune-g l send-keys -X end-of-line \; send-keys -X cursor-left
+    bind -Tcopy-mode-kakoune-g h send-keys -X start-of-line
+    bind -Tcopy-mode-kakoune-g i send-keys -X back-to-indentation
+    bind -Tcopy-mode-kakoune-g j send-keys -X history-bottom \; send-keys -X start-of-line
+    bind -Tcopy-mode-kakoune-g e send-keys -X history-bottom \; send-keys -X end-of-line \; send-keys -X cursor-left
+    bind -Tcopy-mode-kakoune-g t send-keys -X top-line
+    bind -Tcopy-mode-kakoune-g b send-keys -X bottom-line
+    bind -Tcopy-mode-kakoune-g c send-keys -X middle-line
+
     #### Plugins ####
 
     run-shell ${pkgs.tmuxPlugins.sensible}/share/tmux-plugins/sensible/sensible.tmux
@@ -92,20 +105,6 @@ let
 in
 {
   config = {
-    nixpkgs.overlays = [
-      (self: super: {
-        tmux = super.tmux.overrideAttrs (old: {
-          buildInputs = old.buildInputs ++ [ self.bison3 ];
-          src = super.fetchFromGitHub {
-            owner = "tmux";
-            repo = "tmux";
-            rev = "fb7ce5b5d509db244111e130224f366ced28b228";
-            sha256 = "0h4m3qsbnw1xl3vf3n08fjfm5m979fh1l9nbl44rr64k8ks0nfnr";
-          };
-        });
-      })
-    ];
-
     programs.tmux = {
       enable = true;
     }

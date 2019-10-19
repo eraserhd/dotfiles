@@ -35,6 +35,11 @@
           });
         });
 
+        tmux = super.tmux.overrideAttrs (old: {
+          buildInputs = old.buildInputs ++ [ self.bison3 ];
+          src = super.fetchFromGitHub (import ./tmux.nix);
+        });
+
         tmuxPlugins = super.tmuxPlugins // {
           # Simplify once we get merged to nixpkgs
           plumb = super.tmuxPlugins.mkDerivation {
