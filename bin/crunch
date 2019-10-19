@@ -4,7 +4,7 @@ tryConnect() {
     ssh -t "$@" /bin/sh -c "'
       set -e
       ln_cmd=\"mkdir -p \\\$(dirname \\\$SSH_AUTH_SOCK) ; ln -sf \$SSH_AUTH_SOCK \\\$SSH_AUTH_SOCK\"
-      tmux run-shell \"\$ln_cmd\"
+      tmux run-shell \"\$ln_cmd\" || true
       tmux attach
     '"
 }
