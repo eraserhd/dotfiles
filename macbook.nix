@@ -53,6 +53,9 @@
                      " -T -N jfelice@crunch.eraserhead.net";
   } ];
 
+  # Needed by home-manager
+  users.users.jfelice.name = "jfelice";
+
   services."2u".vault.enable = true;
   services."2u".kubernetes-clients.enable = true;
   services."2u".kubernetes-clients.namespaces = [ "implementation" ];
