@@ -13,7 +13,6 @@ with lib;
     ./gnupg
     ./gtypist
     ./kak
-    ./karabiner
     ./lib
     ./networking/plan9
     ./networking/ses-email
