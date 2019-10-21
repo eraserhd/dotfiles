@@ -12,7 +12,7 @@ with lib;
     ./git
     ./gnupg
     ./gtypist
-    ./kak
+    ./kakoune
     ./lib
     ./networking/plan9
     ./networking/ses-email
