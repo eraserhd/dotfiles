@@ -3,6 +3,10 @@
 let
   sessionName = config.local.systemDisplayName;
 
+  defaultCommand = if pkgs.stdenv.isDarwin
+                   then "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace -l ${pkgs.bashInteractive}/bin/bash"
+                   else "${pkgs.bashInteractive}/bin/bash -l";
+
   tmuxConfig = ''
     #### Use C-a as prefix ####
     set-option -g prefix C-a
@@ -10,7 +14,7 @@ let
     bind C-a send-prefix
     bind a send-prefix
 
-    if-shell 'command -v reattach-to-user-namespace' 'set-option -g default-command "reattach-to-user-namespace -l bash"'
+    set-option -g default-command '${defaultCommand}'
     set-option -g update-environment '''
 
     ##### Basic Usage #####
@@ -109,9 +113,9 @@ in
       enable = true;
     }
     // (if (builtins.hasAttr "tmuxConfig" options.programs.tmux) then {
-      tmuxConfig = tmuxConfig;
+      tmuxConfig = tmuxConfig; # nix-darwin
     } else {
-      extraTmuxConf = tmuxConfig;
+      extraTmuxConf = tmuxConfig; # NixOS
     });
   };
 }
