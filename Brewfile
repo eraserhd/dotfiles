@@ -9,13 +9,10 @@ cask '1password'
 cask 'alfred'
 cask 'anki'
 cask 'docker'
-cask 'duet'
-cask 'karabiner-elements'
 cask 'mactex'
 cask 'osxfuse'
 cask 'slack'
 cask 'spotify'
-cask 'xquartz'
 
 # ErgoDox environment
 tap 'osx-cross/avr'
