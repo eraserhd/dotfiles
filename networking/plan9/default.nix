@@ -6,6 +6,7 @@ let
 in {
   imports = [
     ./osxsnarf.nix
+    ./plumber
   ];
 
   options = {
