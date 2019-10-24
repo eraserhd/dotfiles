@@ -93,6 +93,7 @@ with lib;
       file
       jq
       killall
+      posix_man_pages
       wget
     ];
 
