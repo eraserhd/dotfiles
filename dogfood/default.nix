@@ -41,6 +41,11 @@
         });
 
         tmuxPlugins = super.tmuxPlugins // {
+          copy-mode-kakoune = super.tmuxPlugins.mkDerivation {
+            pluginName = "copy-mode-kakoune";
+            src = super.fetchFromGitHub (import ./tmux-copy-mode-kakoune.nix);
+          };
+
           # Simplify once we get merged to nixpkgs
           plumb = super.tmuxPlugins.mkDerivation {
             pluginName = "plumb";
