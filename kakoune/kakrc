@@ -45,6 +45,10 @@ hook global NormalIdle .* %{
 }
 add-highlighter global/ dynregex '%opt{curword}' 0:CurWord
 
+define-command wrap %{
+    add-highlighter window/wrap wrap -word -width 78
+}
+
 # System clipboard handling
 # ─────────────────────────
 map global user -docstring 'paste (after) from clipboard' p '!9 9p read snarf/snarf<ret>'
