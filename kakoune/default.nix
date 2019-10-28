@@ -40,7 +40,6 @@ with lib;
             RestartSec = 35;
           };
           script = ''
-            export NAMESPACE="$XDG_RUNTIME_DIR/plan9/srv"
             exec ${pkgs.kakounePlugins.kak-plumb}/bin/edit-client
           '';
         };
