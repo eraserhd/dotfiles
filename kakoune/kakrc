@@ -31,6 +31,8 @@ hook global WinSetOption filetype=tmux-copy %{
     try %{ remove-highlighter window/whitespace }
 }
 
+add-highlighter global/trailing-whitespace regex '\h+$' 0:default,rgb:ff5370+g
+
 # Stolen from mawww
 declare-option -hidden regex curword
 set-face global CurWord default,rgb:4a4a4a
