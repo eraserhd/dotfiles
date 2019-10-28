@@ -27,7 +27,7 @@ in {
       if [[ -z $NAMESPACE ]]; then
           export NAMESPACE=$XDG_RUNTIME_DIR/plan9/srv
       fi
-      mkdir -p $NAMESPACE $XDG_RUNTIME_DIR/plan9/log
+      mkdir -p $NAMESPACE
     '';
   };
 }
