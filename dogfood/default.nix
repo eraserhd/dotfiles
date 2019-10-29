@@ -46,6 +46,10 @@
             src = super.fetchFromGitHub (import ./tmux-copy-mode-kakoune.nix);
           };
 
+          ctrlw = super.tmuxPlugins.ctrlw.overrideAttrs (oldAttrs: {
+            src = super.fetchFromGitHub (import ./tmux-ctrlw.nix);
+          });
+
           # Simplify once we get merged to nixpkgs
           plumb = super.tmuxPlugins.mkDerivation {
             pluginName = "plumb";

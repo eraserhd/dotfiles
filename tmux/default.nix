@@ -45,7 +45,7 @@ let
     set -g pane-border-status bottom
     set -g pane-border-style "fg=#181a1f,bg=#292d3e"
     set -g pane-active-border-style "fg=#181a1f,bg=#292d3e"
-    set -g pane-border-format "#[bg=#{?pane_active,#bfc7d5,#292d3e},fg=#292d3e]#[fg=#{?pane_active,#292d3e,#697098}] #P #[fg=#{?pane_active,#bfc7d5,#292d3e},bg=#697098]#[fg=#{?pane_active,#bfc7d5,#292d3e}] #T #[bg=#292d3e,fg=#697098]"
+    set -g pane-border-format "#[bg=#{?pane_active,#bfc7d5,#292d3e},fg=#292d3e]#[fg=#{?@ctrlw_active,#ff5370,#{?pane_active,#292d3e,#697098}}] #P #[fg=#{?pane_active,#bfc7d5,#292d3e},bg=#697098]#[fg=#{?pane_active,#bfc7d5,#292d3e}] #T #[bg=#292d3e,fg=#697098]"
 
     # Command line
     set -g message-style "fg=#bfc7d5,bg=#292d3e,bright"
