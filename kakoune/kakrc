@@ -55,7 +55,7 @@ define-command wrap %{
 # ─────────────────────────
 map global user -docstring 'paste (after) from clipboard' p '!9 9p read snarf/snarf<ret>'
 map global user -docstring 'paste (before) from clipboard' P '<a-!>9 9p read snarf/snarf<ret>'
-map global user -docstring 'yank to clipboard' y '<a-|>9 9p write  snarf/snarf<ret>:echo -markup %{{Information}copied selection to system clipboard}<ret>'
+map global user -docstring 'yank to clipboard' y '<a-|>9 9p write snarf/snarf<ret>:echo -markup %{{Information}copied selection to system clipboard}<ret>'
 map global user -docstring 'replace from clipboard' R '|9 9p read snarf/snarf<ret>'
 
 # Soft tabs
@@ -83,8 +83,12 @@ hook global WinSetOption filetype=makefile keep-tabs
 define-command -docstring 'Find a file' -params 1 -shell-script-candidates %{ag -l -f} -menu find %{ edit %arg{@} }
 
 define-command -override -params 1 -shell-script-candidates %{
-  dir="$(pwd)"
-  locate "${dir}/" |sed -e 's,^'"${dir}"'/,,'
+    dir="$(pwd)"
+    if command -v mdfind >/dev/null; then
+        mdfind -onlyin "${dir}/" / |sed -e 's,^'"${dir}"'/,,'
+    else
+        locate "${dir}/" |sed -e 's,^'"${dir}"'/,,'
+    fi
 } -menu f %{edit %arg{@}}
 
 # Jump
