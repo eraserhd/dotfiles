@@ -87,37 +87,6 @@ define-command -override -params 1 -shell-script-candidates %{
   locate "${dir}/" |sed -e 's,^'"${dir}"'/,,'
 } -menu f %{edit %arg{@}}
 
-# Project
-# ‾‾‾‾‾‾‾
-
-define-command \
-    -override \
-    -docstring 'Switch projects' \
-    -params 1 \
-    -shell-script-candidates %{IFS=:; for p in $CDPATH; do [ "$p" = . ] || ls -1 "$p" 2>/dev/null; done} \
-    -menu \
-    project %{
-    evaluate-commands %sh{
-        findProjectDir() {
-            local IFS=:
-            for p in $CDPATH; do
-                if [ "$p" = . ]; then
-                    continue
-                fi
-                if [ -d "$p/$1" ]; then
-                    echo "$p/$1"
-                    return 0
-                fi
-            done
-            return 1
-        }
-        dir=$(findProjectDir "$@")
-        printf 'cd "%s"\n' "$dir"
-    }
-}
-
-alias global p project
-
 # Jump
 # ‾‾‾‾
 
