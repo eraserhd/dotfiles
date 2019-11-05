@@ -1,4 +1,6 @@
-#! /usr/bin/env bash
+#!/usr/bin/env bash
+
+export PATH="@reattach-to-user-namespace@/bin:$PATH"
 
 openInChromeTab() {
     local link="$1"

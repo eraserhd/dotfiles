@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 with lib;
 {
@@ -8,5 +8,15 @@ with lib;
       type = types.str;
       default = "open";
     };
+  };
+
+  config = {
+    nixpkgs.overlays = [
+      (self: super: {
+        open-in-chrome-tab = super.callPackage ./open-in-chrome-tab {};
+      })
+    ];
+
+    environment.systemPackages = mkIf pkgs.stdenv.isDarwin [ pkgs.open-in-chrome-tab ];
   };
 }
