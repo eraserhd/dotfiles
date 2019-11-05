@@ -33,15 +33,6 @@
           ctrlw = super.tmuxPlugins.ctrlw.overrideAttrs (oldAttrs: {
             src = super.fetchFromGitHub (import ./tmux-ctrlw.nix);
           });
-
-          # Simplify once we get merged to nixpkgs
-          plumb = super.tmuxPlugins.mkDerivation {
-            pluginName = "plumb";
-            postInstall = ''
-              sed -i -e 's,9 plumb,${self.plan9port}/bin/9 plumb,' $target/scripts/plumb
-            '';
-            src = super.fetchFromGitHub (import ./tmux-plumb.nix);
-          };
         };
       })
     ];
