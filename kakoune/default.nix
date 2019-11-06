@@ -19,7 +19,10 @@ with lib;
         })
       ];
 
-      environment.systemPackages = [ pkgs.kakouneWrapper ];
+      environment.systemPackages = with pkgs; [
+        clj-kondo
+        kakouneWrapper
+      ];
 
       environment.variables.EDITOR = "${pkgs.kakouneWrapper}/bin/kak";
       environment.variables.kak_opt_kakfs = "$XDG_RUNTIME_DIR/kakfs/kakoune";

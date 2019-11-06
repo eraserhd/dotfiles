@@ -299,6 +299,14 @@ hook global WinSetOption filetype=(clojure|scheme|racket) %{
     parinfer-enable-window -smart
 }
 
+define-command -hidden -override lint-show-counters %{}
+
+hook global WinSetOption filetype=clojure %{
+    set-option window lintcmd 'clj-kondo --lint'
+    lint-enable
+    hook -group lint-diagnostics window NormalIdle .* %{ lint; lint-show }
+}
+
 declare-option -hidden str clojure_buffer_contents
 declare-option -hidden str-list clojure_selections
 

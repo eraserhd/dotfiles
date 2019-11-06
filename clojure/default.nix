@@ -9,6 +9,7 @@
     ];
 
     environment.systemPackages = with pkgs; [
+      clj-kondo
       clojure
       leiningen
       parinfer-rust
