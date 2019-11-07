@@ -4,6 +4,11 @@
   config = {
     nixpkgs.overlays = [
       (self: super: {
+        # fop doesn't like my jdk11 override
+        fop = super.fop.override {
+          jdk = self.jdk8;
+        };
+
         kakoune-unwrapped = super.kakoune-unwrapped.overrideAttrs (oldAttrs: {
           src = super.pkgs.fetchFromGitHub (import ./kakoune.nix);
         });
@@ -18,6 +23,13 @@
             outputHash = "0i5wy15w985nxwl4b6rzb06hchzjwph6ygzjkkmigm9diw9jcycn";
           });
         });
+
+        rep = self.callPackage ("${super.fetchFromGitHub {
+          owner = "eraserhd";
+          repo = "rep";
+          rev = "1951df780fdd2781644f934dfc36ee394460effb";
+          sha256 = "0x7872ia59m6wxksv8c5b41yz2crl10ikgapk2m2q91gkh8fagr4";
+        }}/derivation.nix") {};
 
         tmux = super.tmux.overrideAttrs (old: {
           buildInputs = old.buildInputs ++ [ self.bison3 ];

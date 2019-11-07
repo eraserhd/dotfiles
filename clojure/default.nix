@@ -13,6 +13,7 @@
       clojure
       leiningen
       parinfer-rust
+      rep
     ];
 
     home-manager.users.jfelice = { pkgs, ... }: {

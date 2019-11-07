@@ -1,7 +1,3 @@
-# Temporary hack, until nix packages are sorted
-# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-try %{ source ~/src/rep/rc/rep.kak }
-
 # General Settings
 # ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
