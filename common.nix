@@ -20,6 +20,7 @@ with lib;
     ./networking/update-dns
     ./npm
     ./rlwrap
+    ./taskwarrior
     ./tex
     ./tmux
     ./vim
