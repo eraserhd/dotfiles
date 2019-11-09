@@ -13,6 +13,12 @@
           src = super.pkgs.fetchFromGitHub (import ./kakoune.nix);
         });
 
+        kakounePlugins = super.kakounePlugins // {
+          kak-plumb = super.kakounePlugins.kak-plumb.overrideAttrs (oldAttrs: {
+            src = super.pkgs.fetchFromGitHub (import ./kak-plumb.nix);
+          });
+        };
+
         parinfer-rust = super.parinfer-rust.overrideAttrs (oldAttrs: rec {
           # Remove once we get 0.4.x merged to nixpkgs
           buildInputs = [ self.llvmPackages.libclang self.llvmPackages.clang ];
