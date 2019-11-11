@@ -12,7 +12,6 @@ with lib;
                 kak-ansi
                 kak-plumb
                 parinfer-rust
-                pkgs.rep
               ];
             };
           };
@@ -21,7 +20,6 @@ with lib;
       ];
 
       environment.systemPackages = with pkgs; [
-        clj-kondo
         kakouneWrapper
       ];
 

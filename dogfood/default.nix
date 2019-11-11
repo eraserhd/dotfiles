@@ -5,9 +5,13 @@
     nixpkgs.overlays = [
       (self: super: {
         # fop doesn't like my jdk11 override
-        fop = super.fop.override {
+        fop = (super.fop.override {
           jdk = self.jdk8;
-        };
+        }).overrideAttrs (oldAttrs: {
+          meta = oldAttrs.meta // {
+            platforms = oldAttrs.meta.platforms ++ super.stdenv.lib.platforms.darwin;
+          };
+        });
 
         kakoune-unwrapped = super.kakoune-unwrapped.overrideAttrs (oldAttrs: {
           src = super.pkgs.fetchFromGitHub (import ./kakoune.nix);
@@ -18,6 +22,10 @@
             src = super.pkgs.fetchFromGitHub (import ./kak-plumb.nix);
           });
         };
+
+        lilypond = super.lilypond.overrideAttrs (oldAttrs: {
+          meta = builtins.removeAttrs oldAttrs.meta [ "broken" ];
+        });
 
         parinfer-rust = super.parinfer-rust.overrideAttrs (oldAttrs: rec {
           # Remove once we get 0.4.x merged to nixpkgs
@@ -36,6 +44,12 @@
           rev = "1951df780fdd2781644f934dfc36ee394460effb";
           sha256 = "0x7872ia59m6wxksv8c5b41yz2crl10ikgapk2m2q91gkh8fagr4";
         }}/derivation.nix") {};
+
+        tasksh = super.tasksh.overrideAttrs (oldAttrs: {
+          meta = oldAttrs.meta // (with super.stdenv.lib; {
+            platforms = platforms.linux ++ platforms.darwin;
+          });
+        });
 
         tmux = super.tmux.overrideAttrs (old: {
           buildInputs = old.buildInputs ++ [ self.bison3 ];
