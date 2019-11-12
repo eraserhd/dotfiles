@@ -313,11 +313,11 @@ define-command -override -params 1 -docstring %{Clojure element} \
         set-option buffer clojure_buffer_contents %val{selection}
     }
     set-option buffer clojure_selections
-    evaluate-commands -itersel %{
-        evaluate-commands %sh{
-            kind="$1"
-            count="${kak_count-1}"
-            desc="$kak_selection_desc"
+    evaluate-commands %sh{
+        kind="$1"
+        count="${kak_count-1}"
+        result_selections=''
+        for desc in $kak_selections_char_desc; do
             anchor_line="${desc%%.*}"
             desc="${desc#*.}"
             anchor_column="${desc%%,*}"
@@ -371,10 +371,10 @@ define-command -override -params 1 -docstring %{Clojure element} \
                 else
                     anchor_column=$(( anchor_column + 1 ))
                 fi
-                selection="${anchor_line}.${anchor_column},${cursor_line}.${cursor_column}"
-                printf 'select %s\n' "$selection"
+                result_selections="${result_selections} ${anchor_line}.${anchor_column},${cursor_line}.${cursor_column}"
             fi
-        }
+        done
+        printf 'select -codepoint %s\n' "$result_selections"
     }
 }
 
