@@ -1,3 +1,8 @@
+# Kakfs
+# ‾‾‾‾‾
+
+mount
+
 # General Settings
 # ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
@@ -122,38 +127,20 @@ Takes all the same switches as edit.} \
 # Layout
 # ‾‾‾‾‾‾
 
-declare-option -hidden str-list tmux_client_info
-
-define-command -hidden tmux-visit-client %{
-    evaluate-commands %sh{
-        if [ -n "${kak_client_env_TMUX}" ] && [ -n "${kak_client_env_TMUX_PANE}" ]; then
-            printf 'set-option -add global tmux_client_info %%{%s} %%{%s} %%{%s}\n' "${kak_client}" "${kak_client_env_TMUX}" "${kak_client_env_TMUX_PANE}"
-        fi
-    }
-}
-
-define-command -hidden tmux-collect-client-info %{
-    set-option global tmux_client_info
-    evaluate-commands %sh{
-        for client in ${kak_client_list}; do
-            printf 'evaluate-commands -client "%s" tmux-visit-client\n' "${client}"
-        done
-    }
-}
-
 define-command update-client-options %{
-    tmux-collect-client-info
     evaluate-commands %sh{
         toolsclient=
         toolsclient_left=-1
         toolsclient_top=999999
 
         # Best client for tools client is upper-righthand corner
-        eval set -- "${kak_opt_tmux_client_info}"
-        while [ $# -gt 0 ]; do
-            client="$1"; shift
-            TMUX="$1"; shift
-            TMUX_PANE="$1"; shift
+        for window_dir in "$kak_opt_kakfs/windows"/*; do
+            if [ ! -f "$window_dir/client_env_TMUX" -o ! -f "$window_dir/client_env_TMUX_PANE" ]; then
+                continue
+            fi
+            client="${window_dir##*/}"
+            TMUX="$(cat "$window_dir/client_env_TMUX")"
+            TMUX_PANE="$(cat "$window_dir/client_env_TMUX_PANE")"
             export TMUX TMUX_PANE
 
             pane_position=$(tmux display-message -t "${TMUX_PANE}" -p -F '#{pane_top}.#{pane_left}')
@@ -179,11 +166,13 @@ define-command update-client-options %{
         jumpclient_top=999999
 
         # Best client for jumpclient is just to left of toolsclient
-        eval set -- "${kak_opt_tmux_client_info}"
-        while [ $# -gt 0 ]; do
-            client="$1"; shift
-            TMUX="$1"; shift
-            TMUX_PANE="$1"; shift
+        for window_dir in "$kak_opt_kakfs/windows"/*; do
+            if [ ! -f "$window_dir/client_env_TMUX" -o ! -f "$window_dir/client_env_TMUX_PANE" ]; then
+                continue
+            fi
+            client="${window_dir##*/}"
+            TMUX="$(cat "$window_dir/client_env_TMUX")"
+            TMUX_PANE="$(cat "$window_dir/client_env_TMUX_PANE")"
             export TMUX TMUX_PANE
 
             pane_position=$(tmux display-message -t "${TMUX_PANE}" -p -F '#{pane_top}.#{pane_left}')
