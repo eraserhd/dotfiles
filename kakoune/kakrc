@@ -248,32 +248,6 @@ hook -group client-tracker global WinResize .* update-client-options
 map global normal * '<a-i>w"/yn'
 map global normal <a-*> '<a-i>w"/y<a-n>'
 
-# tmux
-# ‾‾‾‾
-
-try %{ require-module tmux }
-define-command -hidden -override -params 2.. tmux-terminal-impl %{
-    evaluate-commands %sh{
-        tmux=${kak_client_env_TMUX:-$TMUX}
-        if [ -z "$tmux" ]; then
-            echo "fail 'This command is only available in a tmux session'"
-            exit
-        fi
-        tmux_args="$1"
-        shift
-        # ideally we should escape single ';' to stop tmux from interpreting it as a new command
-        # but that's probably too rare to care
-        keys=""
-        while [ $# -gt 0 ]; do
-            keys="$keys '$(printf %s "$1" |sed -e "s/\'/\'\\\'\'/g")'"
-            shift
-        done
-        keys="$keys ; exit 0
-"
-        TMUX=$tmux tmux $tmux_args env TMPDIR="$TMPDIR" ${kak_client_env_SHELL:-/bin/sh} -l \; send-keys -l "$keys"
-    }
-}
-
 # Filetypes
 # ‾‾‾‾‾‾‾‾‾
 
