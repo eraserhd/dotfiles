@@ -1,6 +1,6 @@
 {
   owner = "eraserhd";
   repo = "tmux-copy-mode-kakoune";
-  rev = "ceec2aa65a04db980fbc05fa0bfdc2de90e1e286";
-  sha256 = "1cb51ch4sm3axsgg7yja7cg6im65ik78jjpmahlpd4vn269s7xvi";
+  rev = "a349932dd3978336bce00774d0ae0908c496119a";
+  sha256 = "1d0hp9b5v3gxcmsp8dch80m9jhr7bnbiwklx5gpd3r7alwmbvfga";
 }
