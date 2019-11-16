@@ -55,9 +55,9 @@ define-command wrap %{
 # System clipboard handling
 # ─────────────────────────
 
-define-command -hidden copy-snarf-to-dquote %{
+define-command -override -hidden copy-snarf-to-dquote %{
     evaluate-commands %sh{
-        snarf="$(9 9p read snarf/snarf 2>/dev/null && printf x)"
+        snarf="$(9 9p read snarf/snarf && printf x)"
         if [ $? -ne 0 ]; then
             exit
         fi
@@ -67,18 +67,34 @@ define-command -hidden copy-snarf-to-dquote %{
         fi
         if [ ! "$snarf" = "$dquote" ]; then
             printf "set-register dquote '"
-            printf "${snarf#x}" |sed -e "s/'/''/g"
+            printf %s "${snarf%x}" |sed -e "s/'/''/g"
+            printf "'\n"
+        fi
+    }
+}
+
+declare-option -hidden str snarf_last_dquote
+define-command -override -hidden copy-dquote-to-snarf %{
+    evaluate-commands %sh{
+        dquote="$(cat $kak_opt_kakfs/windows/$kak_client/main_reg_dquote && printf x)"
+        if [ $? -ne 0 ]; then
+            exit
+        fi
+        last_dquote="$(cat $kak_opt_kakfs/global/opt_snarf_last_dquote && printf x)"
+        if [ $? -ne 0 ]; then
+            exit
+        fi
+        if [ ! "$dquote" = "$last_dquote" ]; then
+            printf %s "${dquote%x}" |9 9p write snarf/snarf
+            printf "set-option global snarf_last_dquote '"
+            printf %s "${dquote%x}" |sed -e "s/'/''/g"
             printf "'\n"
         fi
     }
 }
 
 hook -group snarf global FocusIn .* copy-snarf-to-dquote
-
-map global user -docstring 'paste (after) from clipboard' p '<a-!>9 9p read snarf/snarf<ret>'
-map global user -docstring 'paste (before) from clipboard' P '!9 9p read snarf/snarf<ret>'
-map global user -docstring 'yank to clipboard' y '<a-|>9 9p write snarf/snarf<ret>:echo -markup %{{Information}copied selection to system clipboard}<ret>'
-map global user -docstring 'replace from clipboard' R '|9 9p read snarf/snarf<ret>'
+hook -group snarf global NormalIdle .* copy-dquote-to-snarf
 
 # Soft tabs
 # ‾‾‾‾‾‾‾‾‾
