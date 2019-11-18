@@ -7,10 +7,6 @@
         # fop doesn't like my jdk11 override
         fop = (super.fop.override {
           jdk = self.jdk8;
-        }).overrideAttrs (oldAttrs: {
-          meta = oldAttrs.meta // {
-            platforms = oldAttrs.meta.platforms ++ super.stdenv.lib.platforms.darwin;
-          };
         });
 
         kakoune-unwrapped = super.kakoune-unwrapped.overrideAttrs (oldAttrs: {
