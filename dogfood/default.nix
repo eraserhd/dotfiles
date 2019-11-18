@@ -41,12 +41,6 @@
           sha256 = "0x7872ia59m6wxksv8c5b41yz2crl10ikgapk2m2q91gkh8fagr4";
         }}/derivation.nix") {};
 
-        tasksh = super.tasksh.overrideAttrs (oldAttrs: {
-          meta = oldAttrs.meta // (with super.stdenv.lib; {
-            platforms = platforms.linux ++ platforms.darwin;
-          });
-        });
-
         tmux = super.tmux.overrideAttrs (old: {
           buildInputs = old.buildInputs ++ [ self.bison3 ];
           src = super.fetchFromGitHub (import ./tmux.nix);
