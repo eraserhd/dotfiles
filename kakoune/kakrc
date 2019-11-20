@@ -80,7 +80,7 @@ define-command -override -hidden copy-dquote-to-snarf %{
         if [ $? -ne 0 ]; then
             exit
         fi
-        last_dquote="$(cat $kak_opt_kakfs/global/opt_snarf_last_dquote && printf x)"
+        eval last_dquote="$(cat $kak_opt_kakfs/global/opt_snarf_last_dquote && printf x)"
         if [ $? -ne 0 ]; then
             exit
         fi
