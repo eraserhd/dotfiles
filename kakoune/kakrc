@@ -32,15 +32,23 @@ hook global WinSetOption filetype=tmux-copy %{
     try %{ remove-highlighter window/whitespace }
 }
 
-hook global WinSetOption filetype=.* %{
-    try %{ remove-highlighter window/trailing-whitespace }
+# Works around #1872, no $kak_client on WinSetOption
+define-command highlight-trailing-whitespace %{
     evaluate-commands %sh{
+        if [ -z "$kak_client" ]; then
+            exit
+        fi
+        printf %s\\n 'try %{ remove-highlighter window/trailing-whitespace }'
         eval filetype="$(cat $kak_opt_kakfs/windows/$kak_client/opt_filetype)"
         case "$filetype" in
         diff) printf %s\\n 'add-highlighter window/trailing-whitespace regex '"'"'^[^\n]+?\K\h+$'"'"' 0:default,rgb:ff5370+g' ;;
         *)    printf %s\\n 'add-highlighter window/trailing-whitespace regex '"'"'\h+$'"'"' 0:default,rgb:ff5370+g' ;;
         esac
     }
+}
+
+hook global WinSetOption filetype=.* %{
+    hook -once NormalIdle .* highlight-trailing-whitespace
 }
 
 # Stolen from mawww
