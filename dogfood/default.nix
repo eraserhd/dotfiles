@@ -14,6 +14,9 @@
         });
 
         kakounePlugins = super.kakounePlugins // {
+          kak-ansi = super.kakounePlugins.kak-ansi.overrideAttrs (oldAttrs: {
+            src = super.pkgs.fetchFromGitHub (import ./kak-ansi.nix);
+          });
           kak-plumb = super.kakounePlugins.kak-plumb.overrideAttrs (oldAttrs: {
             src = super.pkgs.fetchFromGitHub (import ./kak-plumb.nix);
           });
