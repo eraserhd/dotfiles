@@ -16,10 +16,14 @@
 	<false/>
 	<key>Default Bookmark Guid</key>
 	<string>B35C4CC6-488B-479E-9ECA-491A2CCDC08B</string>
+	<key>DisableFullscreenTransparency</key>
+	<true/>
 	<key>EnableDivisionView</key>
 	<true/>
 	<key>HapticFeedbackForEsc</key>
 	<false/>
+	<key>HideMenuBarInFullscreen</key>
+	<true/>
 	<key>HideScrollbar</key>
 	<true/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
@@ -73,10 +77,12 @@
 		<key>TB Is Shown</key>
 		<integer>1</integer>
 	</dict>
+	<key>NSWindow Frame SUStatusFrame</key>
+	<string>492 1883 400 129 -1028 900 3440 1417 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>382 1668 620 392 -1028 900 3440 1417 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 0 1440 877 0 0 1440 877 </string>
+	<string>-1028 900 3440 1417 -1028 900 3440 1417 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>-1028 1155 3007 1162 -1028 900 3440 1417 </string>
 	<key>New Bookmarks</key>
@@ -407,6 +413,8 @@
 			<real>1</real>
 			<key>Idle Code</key>
 			<integer>0</integer>
+			<key>Initial Use Transparency</key>
+			<false/>
 			<key>Jobs to Ignore</key>
 			<array>
 				<string>rlogin</string>
@@ -791,27 +799,37 @@
 	<array>
 		<string>3.2.6</string>
 		<string>3.3.6</string>
+		<string>3.3.7</string>
 	</array>
 	<key>NoSyncBFPRecents</key>
 	<array>
+		<string>AppleGothic</string>
+		<string>Helvetica</string>
 		<string>mononoki</string>
 		<string>Monaco</string>
 	</array>
-	<key>NoSyncFrame_SharedPreferences</key>
+	<key>NoSyncFrame_SessionsPreferences</key>
 	<dict>
 		<key>screenFrame</key>
 		<string>{{0, 0}, {1440, 900}}</string>
 		<key>topLeft</key>
-		<string>{332, 822}</string>
+		<string>{417, 804}</string>
+	</dict>
+	<key>NoSyncFrame_SharedPreferences</key>
+	<dict>
+		<key>screenFrame</key>
+		<string>{{-1028, 900}, {3440, 1440}}</string>
+		<key>topLeft</key>
+		<string>{-68, 1707}</string>
 	</dict>
 	<key>NoSyncHaveWarnedAboutPasteConfirmationChange</key>
 	<true/>
 	<key>NoSyncInstallationId</key>
 	<string>A8239E2C-F519-40B4-8795-C387E68A01EF</string>
 	<key>NoSyncLastTipTime</key>
-	<real>593384391.349823</real>
+	<real>596383251.72926998</real>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>2</integer>
+	<integer>4</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -1528,11 +1546,50 @@
 			</dict>
 		</array>
 	</dict>
+	<key>NoSyncSearchHistory2</key>
+	<array>
+		<string>[kkkk((</string>
+		<string>[kkk((</string>
+		<string>[kk((</string>
+		<string>[k((</string>
+	</array>
+	<key>NoSyncSuppressClipboardAccessDeniedWarning</key>
+	<true/>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
 	<real>565972623.51140296</real>
 	<key>NoSyncTipsToNotShow</key>
 	<array>
+		<string>0010</string>
+		<string>0026</string>
+		<string>0015</string>
+		<string>0004</string>
+		<string>0009</string>
+		<string>0024</string>
+		<string>0013</string>
+		<string>0002</string>
+		<string>0018</string>
+		<string>0007</string>
+		<string>0022</string>
+		<string>0011</string>
+		<string>0000</string>
+		<string>0027</string>
+		<string>0016</string>
+		<string>0005</string>
+		<string>0020</string>
+		<string>0025</string>
+		<string>0014</string>
+		<string>0003</string>
+		<string>0019</string>
+		<string>0008</string>
+		<string>0023</string>
+		<string>0012</string>
+		<string>0001</string>
 		<string>000</string>
+		<string>0017</string>
+		<string>0006</string>
+		<string>0028</string>
+		<string>0021</string>
+		<string>0029</string>
 	</array>
 	<key>PointerActions</key>
 	<dict>
@@ -1578,13 +1635,21 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2019-10-21T20:44:11Z</date>
+	<date>2019-11-26T04:09:53Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
+	<key>SUUpdateRelaunchingMarker</key>
+	<false/>
+	<key>ShowFullScreenTabBar</key>
+	<true/>
 	<key>SoundForEsc</key>
 	<false/>
+	<key>StretchTabsToFillBar</key>
+	<false/>
 	<key>TabStyleWithAutomaticOption</key>
-	<integer>5</integer>
+	<integer>6</integer>
+	<key>TabViewType</key>
+	<integer>0</integer>
 	<key>UseBorder</key>
 	<false/>
 	<key>UseLionStyleFullscreen</key>
@@ -1596,10 +1661,12 @@
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
 	<key>iTerm Version</key>
-	<string>3.3.6</string>
+	<string>3.3.7</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
+	<false/>
+	<key>metalMaximizeThroughput</key>
 	<false/>
 </dict>
 </plist>
