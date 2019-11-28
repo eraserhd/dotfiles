@@ -1,6 +1,6 @@
 {
   owner = "eraserhd";
   repo = "tmux-ctrlw";
-  rev = "ad1b43ede9796660fd6ec1053ed94019ff33e94a";
-  sha256 = "0z6q5kz18kd229d0mn7rvffkc9m8wvvr3c3sphj50m16ypqgh5kp";
+  rev = "383de623efe85977aa410232110089803bdb5819";
+  sha256 = "04s372gyb40lmdg810k1rk6d42a9xbh8pzvsxjcgw06jv4xlp0g9";
 }
