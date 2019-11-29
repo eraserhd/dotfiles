@@ -315,7 +315,7 @@ hook global WinSetOption filetype=(clojure|scheme|racket) %{
 define-command -hidden -override lint-show-counters %{}
 
 hook global WinSetOption filetype=clojure %{
-    set-option window lintcmd 'clj-kondo --lint'
+    set-option window lintcmd 'cd "$(dirname "$kak_bufname")" && clj-kondo --lint'
     lint-enable
     hook -group lint-diagnostics window NormalIdle .* %{ lint; lint-show }
 }
