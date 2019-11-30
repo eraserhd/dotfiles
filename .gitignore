@@ -1,3 +1,5 @@
 /result
 /old-dotfiles
 /neovim/config/nvim.symlink/.netrwhist
+/.terraform
+/terraform.tfstate.backup
