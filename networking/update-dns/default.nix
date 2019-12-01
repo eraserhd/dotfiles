@@ -3,16 +3,40 @@
 with lib;
 let
   cfg = config.local.updateDNS;
+
   updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
-    #!${pkgs.bash}/bin/bash
+    current_ip="$(${pkgs.curl}/bin/curl -s http://ipinfo.io/ip)"
+    dns_ip="$(${pkgs.host}/bin/host -t A crunch.eraserhead.net ns-112.awsdns-14.com |awk '$3 == "address"{print $4}')"
+    if [[ $current_ip = $dns_ip ]]; then
+        exit 0
+    fi
 
-    ${builtins.readFile ../../bin/private.sh}
+    (
+      printf 'Subject: crunch IP change\n'
+      printf 'From: jfelice@crunch.eraserhead.net\n'
+      printf '\n'
+      printf 'Current IP: %s\n' "$current_ip"
+      printf '    DNS IP: %s\n' "$dns_ip"
+      printf '\n'
 
-    exec ${pkgs.curl}/bin/curl -s -X PUT -H "Content-Type: application/json" \
-      -H "Authorization: Bearer $DIGITALOCEAN_API_TOKEN" \
-      -d '{"data": "'"$(${pkgs.curl}/bin/curl -s http://ipinfo.io/ip)"'"}' \
-      "https://api.digitalocean.com/v2/domains/eraserhead.net/records/73014284" \
-      >/dev/null
+      AWS_PROFILE=jason.m.felice \
+      ${pkgs.awscli}/bin/aws route53 change-resource-record-sets \
+          --hosted-zone-id Z1035EO77EJRBA \
+          --change-batch '{
+          "Comment": "update-dns automatic update",
+          "Changes": [ {
+              "Action": "UPSERT",
+              "ResourceRecordSet": {
+                  "Name": "crunch.eraserhead.net",
+                  "Type": "A",
+                  "TTL": 300,
+                  "ResourceRecords": [ { "Value": "'"$current_ip"'" } ]
+              }
+          } ]
+      }'
+
+      printf '\n'
+    ) 2>&1 |sendmail jason.m.felice@gmail.com
   '';
 in {
   options = {

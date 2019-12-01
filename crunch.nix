@@ -46,6 +46,7 @@
   environment.systemPackages = with pkgs; [
     git
     git-crypt
+    glib
     gnupg
     manpages
     zlib # Hack to get binary rep working
@@ -53,6 +54,9 @@
 
   documentation.dev.enable = true;
   virtualisation.docker.enable = true;
+
+  services.gnome3.tracker.enable = true;
+  services.gnome3.tracker-miners.enable = true;
 
   services.openssh = {
     enable = true;
