@@ -7,6 +7,10 @@ let
                    then "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace -l ${pkgs.bashInteractive}/bin/bash"
                    else "${pkgs.bashInteractive}/bin/bash -l";
 
+  paneZeroCommand = if sessionName == "crunch"
+                    then "weechat"
+                    else "sleep 2; kak";
+
   tmuxConfig = ''
     #### Use C-a as prefix ####
     set-option -g prefix C-a
@@ -90,11 +94,9 @@ let
     split-window -v -c ~/src
     select-layout -E
     send-keys -t %1 kak Enter
-    send-keys -t %0 weechat Enter
-    # Wait for kak server to initialize
-    run-shell 'sleep 1'
-    send-keys -t %2 kak Enter
-    send-keys -t %3 'kak -e "edit *debug*"' Enter
+    send-keys -t %0 '${paneZeroCommand}' Enter
+    send-keys -t %2 'sleep 2; kak' Enter
+    send-keys -t %3 'sleep 2; kak -e "edit *debug*"' Enter
   '';
 in
 {
