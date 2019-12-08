@@ -57,6 +57,9 @@
 
   services.gnome3.tracker.enable = true;
   services.gnome3.tracker-miners.enable = true;
+  systemd.user.targets.default.wants = [
+    "tracker-miner-fs.service"
+  ];
 
   services.openssh = {
     enable = true;
