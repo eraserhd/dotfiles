@@ -23,6 +23,7 @@ with lib;
     ./taskwarrior
     ./tex
     ./tmux
+    ./tracker
     ./vim
     ./weechat
   ];
