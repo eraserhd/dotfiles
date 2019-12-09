@@ -1,15 +1,12 @@
-{ pkgs, config, options, ... }:
+{ lib, pkgs, config, options, ... }:
 
+with lib;
 let
   sessionName = config.local.systemDisplayName;
 
   defaultCommand = if pkgs.stdenv.isDarwin
                    then "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace -l ${pkgs.bashInteractive}/bin/bash"
                    else "${pkgs.bashInteractive}/bin/bash -l";
-
-  paneZeroCommand = if sessionName == "crunch"
-                    then "weechat"
-                    else "sleep 2; kak";
 
   tmuxConfig = ''
     #### Use C-a as prefix ####
@@ -94,12 +91,21 @@ let
     split-window -v -c ~/src
     select-layout -E
     send-keys -t %1 kak Enter
-    send-keys -t %0 '${paneZeroCommand}' Enter
+    send-keys -t %0 '${config.local.tmux.paneZeroCommand}' Enter
     send-keys -t %2 'sleep 2; kak' Enter
     send-keys -t %3 'sleep 2; kak -e "edit *debug*"' Enter
   '';
 in
 {
+  options = {
+    local.tmux.paneZeroCommand = mkOption {
+      type = types.str;
+      description = ''
+        Command to run in leftmost pane on start.
+      '';
+      default = "sleep 2; kak";
+    };
+  };
   config = {
     programs.tmux = {
       enable = true;
