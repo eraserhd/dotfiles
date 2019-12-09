@@ -47,6 +47,8 @@
                      " -L8820:localhost:8820" +
                      " -L8080:localhost:8080" +
                      " -L3449:localhost:3449" +
+                     " -R14242:localhost:14242" + # CP dev repl
+                     " -R24242:localhost:24242" + # CP prod repl
                      " -R/run/user/1000/plan9/srv/snarf:/Users/jfelice/.run/plan9/srv/snarf" +
                      " -R/run/user/1000/plan9/srv/plumb:/Users/jfelice/.run/plan9/srv/plumb" +
                      " -T -N jfelice@crunch.eraserhead.net";
