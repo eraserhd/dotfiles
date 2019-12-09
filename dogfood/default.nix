@@ -54,10 +54,6 @@
             pluginName = "copy-mode-kakoune";
             src = super.fetchFromGitHub (import ./tmux-copy-mode-kakoune.nix);
           };
-
-          ctrlw = super.tmuxPlugins.ctrlw.overrideAttrs (oldAttrs: {
-            src = super.fetchFromGitHub (import ./tmux-ctrlw.nix);
-          });
         };
       })
     ];
