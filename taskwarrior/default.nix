@@ -40,8 +40,8 @@
         color.recurring=
         color.scheduled=white on green
         color.until=
-        color.blocked=black on white
-        color.blocking=black on bright white
+        color.blocked=black on color54
+        color.blocking=black on color52
 
         # Project
         color.project.none=
