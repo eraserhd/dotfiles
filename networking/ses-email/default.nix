@@ -9,14 +9,14 @@ in {
   };
 
   config = mkIf cfg.enable
-  (if (builtins.hasAttr "defaultMailServer" options.networking)
+  (if (builtins.hasAttr "ssmtp" options.services)
   then {
-    networking.defaultMailServer = {
-      hostName = "email-smtp.us-west-2.amazonaws.com:587";
-      directDelivery = true;
-      domain = "${config.networking.hostName}.eraserhead.net";
+    services.ssmtp = {
+      enable = true;
       useTLS = true;
       useSTARTTLS = true;
+      hostName = "email-smtp.us-west-2.amazonaws.com:587";
+      domain = "${config.networking.hostName}.eraserhead.net";
       root = "jason.m.felice@gmail.com";
     } // import ./ses-user.nix;
   }
