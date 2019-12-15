@@ -3,7 +3,9 @@
 {
   config = {
     nixpkgs.overlays = [
-      (self: super: {
+      (self: super: let
+         rep = self.callPackage ("${super.fetchFromGitHub (import ./rep.nix)}/derivation.nix") {};
+       in {
         # fop doesn't like my jdk11 override
         fop = (super.fop.override {
           jdk = self.jdk8;
@@ -20,6 +22,7 @@
           kak-plumb = super.kakounePlugins.kak-plumb.overrideAttrs (oldAttrs: {
             src = super.pkgs.fetchFromGitHub (import ./kak-plumb.nix);
           });
+          rep = rep;
         };
 
         lilypond = super.lilypond.overrideAttrs (oldAttrs: {
@@ -37,12 +40,7 @@
           });
         });
 
-        rep = self.callPackage ("${super.fetchFromGitHub {
-          owner = "eraserhd";
-          repo = "rep";
-          rev = "1951df780fdd2781644f934dfc36ee394460effb";
-          sha256 = "0x7872ia59m6wxksv8c5b41yz2crl10ikgapk2m2q91gkh8fagr4";
-        }}/derivation.nix") {};
+        rep = rep;
 
         tmux = super.tmux.overrideAttrs (old: {
           buildInputs = old.buildInputs ++ [ self.bison3 ];
