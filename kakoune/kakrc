@@ -364,7 +364,8 @@ define-command -override -params 1 -docstring %{Clojure element} \
             else
                 anchor_column=$(( anchor_column - 1 ))
             fi
-            eval "$(rep --op=select \
+            eval "$(rep --port="@.nrepl-port@${kak_buffile-.}" \
+                --op=select \
                 --send kind,string,$kind \
                 --send count,integer,$count \
                 --send combine,string,$kak_select_mode \
