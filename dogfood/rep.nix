@@ -1,6 +1,6 @@
 {
   owner = "eraserhd";
   repo = "rep";
-  rev = "b007294874b5858d0c3374626fa2103042885ebb";
-  sha256 = "04f7ilmsih1fliga1nmg8ymp56hj52jywahn91454fma8pfgklj5";
+  rev = "2a8638a442714b2670ce014c4cffa4273be2826f";
+  sha256 = "10nv6pad5pjpn7sm18yjlrai0g16k3v83avaf4k71p3zh8wf3r30";
 }
