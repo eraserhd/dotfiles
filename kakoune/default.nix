@@ -12,8 +12,9 @@ with lib;
                 kak-ansi
                 kak-plumb
                 parinfer-rust
-                rep
-              ];
+              ]
+              # Remove this hack when Graal is on MacOS
+              ++ lib.optional (!pkgs.stdenv.isDarwin) rep;
             };
           };
           kakouneWrapper = super.callPackage ./wrapper {};

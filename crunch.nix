@@ -49,7 +49,6 @@
     glib
     gnupg
     manpages
-    zlib # Hack to get binary rep working
   ];
 
   documentation.dev.enable = true;
