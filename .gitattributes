@@ -15,3 +15,4 @@ networking/ssh/files/id_rsa filter=git-crypt diff=git-crypt
 networking/ssh/files/id_rsa-macbook filter=git-crypt diff=git-crypt
 weechat/config/sec.conf filter=git-crypt diff=git-crypt
 terraform.tfstate filter=git-crypt diff=git-crypt
+bin/checkpw filter=git-crypt diff=git-crypt
