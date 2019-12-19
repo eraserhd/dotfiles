@@ -54,19 +54,49 @@ hook global WinSetOption filetype=.* %{
     hook -once NormalIdle .* highlight-trailing-whitespace
 }
 
-# Stolen from mawww
+# Stolen from mawww (and heavily modified!)
 declare-option -hidden regex curword
+declare-option -hidden regex curword_word_class
 set-face global CurWord default,rgb:4a4a4a
-
-hook global NormalIdle .* %{
-    eval -draft %{ try %{
-        exec <space><a-i>w
-        set-option buffer curword "\b\Q%val{selection}\E\b"
-    } catch %{
-        set-option buffer curword ''
-    } }
-}
 add-highlighter global/ dynregex '%opt{curword}' 0:CurWord
+
+define-command -override -hidden highlight-curword %{
+    eval -draft %{
+        try %{
+            execute-keys <space><a-i>w
+            set-option buffer curword "(?<!%opt{curword_word_class})\Q%val{selection}\E(?!%opt{curword_word_class})"
+        } catch %{
+            set-option buffer curword ''
+        }
+    }
+}
+define-command -override -hidden make-curword-word-class %{
+    evaluate-commands %sh{
+        eval set -- "$kak_quoted_opt_extra_word_chars"
+        word_class='['
+        while [ $# -ne 0 ]; do
+            case "$1" in
+                -) word_class="$word_class-";;
+            esac
+            shift
+        done
+        word_class="$word_class"'\w'
+        eval set -- "$kak_quoted_opt_extra_word_chars"
+        while [ $# -ne 0 ]; do
+            case "$1" in
+                "-") ;;
+                "]") word_class="$word_class"'\]';;
+                "'") word_class="$word_class''";;
+                *)   word_class="$word_class$1";;
+            esac
+            shift
+        done
+        word_class="$word_class]"
+        printf "set-option window curword_word_class '%s'\\n" "$word_class"
+    }
+}
+hook -group highlight-curword global NormalIdle .* highlight-curword
+hook -group highlight-curword window WinSetOption extra_word_chars=.* make-curword-word-class
 
 define-command wrap %{
     add-highlighter window/wrap wrap -word -width 78
