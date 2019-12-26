@@ -7,6 +7,7 @@ with lib;
     ./bash
     ./browser
     ./clojure
+    ./coq
     ./dogfood
     ./emacs
     ./git
