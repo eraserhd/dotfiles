@@ -11,6 +11,7 @@ with lib;
               plugins = with self.kakounePlugins; [
                 kak-ansi
                 kak-plumb
+                kak-proof
                 parinfer-rust
               ]
               # Remove this hack when Graal is on MacOS
