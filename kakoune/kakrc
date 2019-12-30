@@ -442,6 +442,13 @@ hook -group clojure-objects global WinSetOption filetype=clojure %{
     map window normal w '<a-a><a-;> clojure-select-object element<ret>'
 }
 
+# Scheme
+# ‾‾‾‾‾‾
+
+hook -group scheme global WinSetOption filetype=scheme %{
+    set-option window indentwidth 2
+}
+
 # Misc
 # ‾‾‾‾
 
