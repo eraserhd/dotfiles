@@ -1,6 +1,6 @@
 {
   owner = "eraserhd";
   repo = "kak-proof";
-  rev = "76c59e613799e1735967045cef6bb6b9432efad6";
-  sha256 = "09jvlvpc46x66ckqbkvn5iw5j3f1ib39zhjy81chnkfgvhyfb1x9";
+  rev = "38a20146bd03c2a0f4ccdceccccfb27e90ac2dbf";
+  sha256 = "0nanskrhmc6lz6ijbv82cwnx5sjj7fqqaaxsib6kb49c7z0sa2sj";
 }
