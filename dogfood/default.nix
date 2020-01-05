@@ -30,17 +30,6 @@
           meta = builtins.removeAttrs oldAttrs.meta [ "broken" ];
         });
 
-        parinfer-rust = super.parinfer-rust.overrideAttrs (oldAttrs: rec {
-          # Remove once we get 0.4.x merged to nixpkgs
-          buildInputs = [ self.llvmPackages.libclang self.llvmPackages.clang ];
-          LIBCLANG_PATH = "${self.llvmPackages.libclang}/lib";
-          src = super.pkgs.fetchFromGitHub (import ./parinfer-rust.nix);
-          cargoDeps = oldAttrs.cargoDeps.overrideAttrs (_: {
-            inherit src;
-            outputHash = "0i5wy15w985nxwl4b6rzb06hchzjwph6ygzjkkmigm9diw9jcycn";
-          });
-        });
-
         rep = rep;
 
         tmux = super.tmux.overrideAttrs (old: {
