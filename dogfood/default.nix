@@ -13,6 +13,7 @@
 
         kakoune-unwrapped = super.kakoune-unwrapped.overrideAttrs (oldAttrs: {
           src = super.pkgs.fetchFromGitHub (import ./kakoune.nix);
+          enableParallelBuilding = true;
         });
 
         kakounePlugins = super.kakounePlugins // {
