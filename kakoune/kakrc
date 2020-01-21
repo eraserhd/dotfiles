@@ -340,9 +340,10 @@ hook -group wrap global WinSetOption filetype=(?!asciidoc).* %{
 
 # Clojure
 # ‾‾‾‾‾‾‾
-
 hook global WinSetOption filetype=(clojure|scheme|racket) %{
     parinfer-enable-window -smart
+    require-module clojure
+    set-option window clojure_source_directories '(?:[^/.][^/]*)(?:/src|/test|/dev)'
 }
 
 define-command -hidden -override lint-show-counters %{}
