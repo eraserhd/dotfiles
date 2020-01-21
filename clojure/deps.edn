@@ -9,14 +9,16 @@
 ;; For all attributes other than :paths, these config files are merged left to right.
 ;; Only the last :paths is kept and others are dropped.
 {:aliases
- {:nrepl
-  {:extra-deps {cider/cider-nrepl           {:mvn/version "RELEASE"}
-                nrepl                       {:mvn/version "RELEASE"}
-                net.eraserhead/select-nrepl {:mvn/version "RELEASE"}}
-   :main-opts ["-m" "nrepl.cmdline"
-               "--middleware" "cider.nrepl/cider-middleware"
-               "--middleware" "select-nrepl.core/wrap-select"
-               "-i"]}
+ {:dev
+  {:extra-paths ["test"]
+   :extra-deps  {cider/cider-nrepl           {:mvn/version "RELEASE"}
+                 nrepl                       {:mvn/version "RELEASE"}
+                 net.eraserhead/select-nrepl {:mvn/version "RELEASE"}
+                 org.clojure/tools.namespace {:mvn/version "RELEASE"}}
+   :main-opts   ["-m" "nrepl.cmdline"
+                 "--middleware" "cider.nrepl/cider-middleware"
+                 "--middleware" "select-nrepl.core/wrap-select"
+                 "-i"]}
   :zprint
   {:extra-deps {zprint {:mvn/version "0.4.13"}}
-   :main-opts ["-m" "zprint.main"]}}}
+   :main-opts  ["-m" "zprint.main"]}}}
