@@ -42,8 +42,7 @@ define-command highlight-trailing-whitespace %{
             exit
         fi
         printf %s\\n 'try %{ remove-highlighter window/trailing-whitespace }'
-        eval filetype="$(cat $kak_opt_kakfs/windows/$kak_client/opt_filetype)"
-        case "$filetype" in
+        case "$kak_opt_filetype" in
         diff) printf %s\\n 'add-highlighter window/trailing-whitespace regex '"'"'^[^\n]+?\K\h+$'"'"' 0:default,rgb:ff5370+g' ;;
         *)    printf %s\\n 'add-highlighter window/trailing-whitespace regex '"'"'\h+$'"'"' 0:default,rgb:ff5370+g' ;;
         esac
