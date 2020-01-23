@@ -110,11 +110,7 @@ define-command -override -hidden copy-snarf-to-dquote %{
         if [ $? -ne 0 ]; then
             exit
         fi
-        dquote="$(cat $kak_opt_kakfs/windows/$kak_client/main_reg_dquote && printf x)"
-        if [ $? -ne 0 ]; then
-            exit
-        fi
-        if [ ! "$snarf" = "$dquote" ]; then
+        if [ ! "$snarf" = "${kak_main_reg_dquote}x" ]; then
             printf "set-register dquote '"
             printf %s "${snarf%x}" |sed -e "s/'/''/g"
             printf "'\n"
@@ -125,18 +121,10 @@ define-command -override -hidden copy-snarf-to-dquote %{
 declare-option -hidden str snarf_last_dquote
 define-command -override -hidden copy-dquote-to-snarf %{
     evaluate-commands %sh{
-        dquote="$(cat $kak_opt_kakfs/windows/$kak_client/main_reg_dquote && printf x)"
-        if [ $? -ne 0 ]; then
-            exit
-        fi
-        eval last_dquote="$(cat $kak_opt_kakfs/global/opt_snarf_last_dquote && printf x)"
-        if [ $? -ne 0 ]; then
-            exit
-        fi
-        if [ ! "$dquote" = "$last_dquote" ]; then
-            printf %s "${dquote%x}" |9 9p write snarf/snarf
+        if [ ! "$kak_main_reg_dquote" = "$kak_opt_snarf_last_dquote" ]; then
+            printf %s "$kak_main_reg_dquote" |9 9p write snarf/snarf
             printf "set-option global snarf_last_dquote '"
-            printf %s "${dquote%x}" |sed -e "s/'/''/g"
+            printf %s "$kak_main_reg_dquote" |sed -e "s/'/''/g"
             printf "'\n"
         fi
     }
