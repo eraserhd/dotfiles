@@ -5,6 +5,7 @@
     environment.systemPackages = with pkgs; [
       tasksh
       taskwarrior
+      taskwarrior-review
     ];
 
     home-manager.users.jfelice = { pkgs, ... }: {
