@@ -20,6 +20,10 @@
         report._reviewed.sort=reviewed+,modified+
         report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING )
 
+        # Urgency
+        urgency.annotations.coefficient=0
+        urgency.project.coefficient=0
+
         # Colors
         rule.precedence.color=deleted,completed,active,keyword.,tag.,project.,overdue,scheduled,due.today,due,blocked,blocking,recurring,tagged,uda.
 
