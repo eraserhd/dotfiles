@@ -11,6 +11,7 @@
       home.file.".taskrc".text = ''
         data.location=~/src/data/tasks
         reserved.lines=2
+        confirmation=no
 
         # tasksh Review
         uda.reviewed.type=date
