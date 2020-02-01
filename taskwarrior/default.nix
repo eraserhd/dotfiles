@@ -20,6 +20,11 @@
         report._reviewed.sort=reviewed+,modified+
         report._reviewed.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING )
 
+        report.review.description=Weekly review
+        report.review.columns=id,project,description.combined
+        report.review.sort=project+
+        report.review.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING ) and recur.none:
+
         # Urgency
         urgency.annotations.coefficient=0
         urgency.project.coefficient=0
