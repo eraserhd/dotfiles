@@ -33,8 +33,6 @@
 
         rep = rep;
 
-        taskwarrior-review = super.callPackage ("${super.fetchFromGitHub (import ./taskwarrior-review.nix)}/derivation.nix") {};
-
         tmux = super.tmux.overrideAttrs (old: {
           buildInputs = old.buildInputs ++ [ self.bison3 ];
           src = super.fetchFromGitHub (import ./tmux.nix);
