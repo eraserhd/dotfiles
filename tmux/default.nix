@@ -3,10 +3,11 @@
 with lib;
 let
   sessionName = config.local.systemDisplayName;
+  shellPackage = config.local.loginShell.package;
 
   defaultCommand = if pkgs.stdenv.isDarwin
-                   then "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace -l ${pkgs.zsh}/bin/zsh"
-                   else "${pkgs.zsh}/bin/zsh -l";
+    then "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace -l ${shellPackage}${shellPackage.shellPath}"
+    else "${shellPackage}${shellPackage.shellPath} -l";
 
   tmuxConfig = ''
     #### Use C-a as prefix ####
