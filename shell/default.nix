@@ -39,6 +39,33 @@ in {
         unset __ETC_ZSHENV_SOURCED __ETC_ZSHRC_SOURCED
         exec '${cfg.package}${cfg.package.shellPath}' -l
       }
+
+      source_if_exists() {
+        if [ -f "$1" ]
+        then
+          source "$1"
+        fi
+      }
+
+      man() {
+          if (( $# == 2 )); then
+              kak -e "man $2($1)"
+              return $?
+          else
+              kak -e "man $*"
+              return $?
+          fi
+      }
+
+      ssh() {
+          if [[ "$TERM" = "tmux-256color" ]]; then
+              TERM=screen command ssh "$@"
+              return $?
+          else
+              command ssh "$@"
+              return $?
+          fi
+      }
     '';
   };
 }

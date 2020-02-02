@@ -14,36 +14,6 @@ with lib;
   config = {
     programs.bash.enableCompletion = true;
     programs.bash.interactiveShellInit = ''
-      source_if_exists() {
-        if [[ -f "$1" ]]
-        then
-          source "$1"
-        fi
-      }
-
-      man() {
-          if (( $# == 2 )); then
-              kak -e "man $2($1)"
-              return $?
-          else
-              kak -e "man $*"
-              return $?
-          fi
-      }
-
-      ssh() {
-          if [[ "$TERM" = "tmux-256color" ]]; then
-              TERM=screen command ssh "$@"
-              return $?
-          else
-              command ssh "$@"
-              return $?
-          fi
-      }
-
-      source_if_exists ~/.nix-profile/etc/profile.d/nix.sh
-      source ${toString ../bin/private.sh}
-
       if ! command -v __git_ps1 >/dev/null
       then
         __git_ps1() { :; }
