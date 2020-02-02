@@ -59,6 +59,7 @@ with lib;
         fi
         unset __NIX_DARWIN_SET_ENVIRONMENT_DONE __NIXOS_SET_ENVIRONMENT_DONE
         unset __ETC_BASHRC_SOURCED __ETC_PROFILE_SOURCED __ETC_PROFILE_DONE
+        unset __ETC_ZSHENV_SOURCED __ETC_ZSHRC_SOURCED
         exec $SHELL -l
       }
 

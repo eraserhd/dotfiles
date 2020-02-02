@@ -5,8 +5,8 @@ let
   sessionName = config.local.systemDisplayName;
 
   defaultCommand = if pkgs.stdenv.isDarwin
-                   then "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace -l ${pkgs.bashInteractive}/bin/bash"
-                   else "${pkgs.bashInteractive}/bin/bash -l";
+                   then "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace -l ${pkgs.zsh}/bin/zsh"
+                   else "${pkgs.zsh}/bin/zsh -l";
 
   tmuxConfig = ''
     #### Use C-a as prefix ####

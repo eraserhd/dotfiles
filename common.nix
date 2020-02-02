@@ -28,6 +28,7 @@ with lib;
     ./tracker
     ./vim
     ./weechat
+    ./zsh
   ];
 
   config = mkMerge [
