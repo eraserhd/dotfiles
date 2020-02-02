@@ -11,6 +11,8 @@
           jdk = self.jdk8;
         });
 
+        add-missing = self.callPackage ("${super.fetchFromGitHub (import ./add-missing.nix)}/derivation.nix") {};
+
         kakoune-unwrapped = super.kakoune-unwrapped.overrideAttrs (oldAttrs: {
           src = super.pkgs.fetchFromGitHub (import ./kakoune.nix);
           enableParallelBuilding = true;

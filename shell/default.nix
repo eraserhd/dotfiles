@@ -70,8 +70,20 @@ in {
       source_if_exists ~/.nix-profile/etc/profile.d/nix.sh
       source ${toString ../bin/private.sh}
     '';
+
     environment.variables = {
       CLICOLOR = "1";
     };
+
+    environment.systemPackages = with pkgs; [
+      add-missing
+      ag
+      direnv
+      file
+      jq
+      killall
+      posix_man_pages
+      wget
+    ];
   };
 }
