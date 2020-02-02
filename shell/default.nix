@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ options, config, lib, pkgs, ... }:
 
 with lib;
 let
@@ -22,7 +22,6 @@ in {
   };
 
   config = {
-    users.defaultUserShell = cfg.package;
     environment.interactiveShellInit = ''
       :r() {
         if command -v darwin-rebuild >/dev/null; then
@@ -91,5 +90,10 @@ in {
       posix_man_pages
       wget
     ];
-  };
+  } // (if (builtins.hasAttr "defaultUserShell" options.users)
+  then {
+    users.defaultUserShell = cfg.package;
+  }
+  else {
+  });
 }
