@@ -4,7 +4,6 @@ with lib;
 {
   imports = [
     ./aws
-    ./bash
     ./browser
     ./clojure
     ./coq

@@ -5,6 +5,12 @@ let
   cfg = config.local.loginShell;
 in {
   options = {
+    local.systemDisplayName = mkOption {
+      type = types.str;
+      description = ''
+        System name to display in prompts (can be different from hostname).
+      '';
+    };
     local.loginShell.package = mkOption {
       type = types.package;
       default = pkgs.bashInteractive;
