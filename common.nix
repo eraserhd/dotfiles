@@ -21,6 +21,7 @@ with lib;
     ./networking/update-dns
     ./npm
     ./rlwrap
+    ./shell
     ./skhd
     ./taskwarrior
     ./tex

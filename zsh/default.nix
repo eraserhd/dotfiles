@@ -2,9 +2,9 @@
 
 {
   config = {
+    local.loginShell.package = pkgs.zsh;
     programs.zsh.enable = true;
     programs.zsh.enableCompletion = true;
-    users.defaultUserShell = pkgs.zsh;
     programs.zsh.interactiveShellInit = ''
       :r() {
         if command -v darwin-rebuild >/dev/null; then
