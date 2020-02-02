@@ -66,6 +66,12 @@ in {
               return $?
           fi
       }
+
+      source_if_exists ~/.nix-profile/etc/profile.d/nix.sh
+      source ${toString ../bin/private.sh}
     '';
+    environment.variables = {
+      CLICOLOR = "1";
+    };
   };
 }

@@ -28,6 +28,8 @@ with lib;
       }
       export PROMPT_COMMAND=bashPromptCommand
 
+      export CDPATH='.:~/src'
+
       eval "$(${pkgs.direnv}/bin/direnv hook bash)"
     '';
 
@@ -47,7 +49,6 @@ with lib;
     ];
 
     environment.variables = {
-      CLICOLOR = "1";
       GIT_PS1_SHOWDIRTYSTATE = "1";
       GIT_PS1_SHOWUNTRACKEDFILES = "1";
       GIT_PS1_SHOWUPSTREAM = "auto";

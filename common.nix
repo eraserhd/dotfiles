@@ -33,15 +33,6 @@ with lib;
   ];
 
   config = mkMerge [
-    {
-      environment.variables = {
-        CDPATH = [
-          "."
-          "~/src"
-          "~/src/dotfiles/kak/config/kak.symlink/autoload"
-        ];
-      };
-    }
     (if (builtins.hasAttr "systemPath" options.environment) then {
       environment.systemPath = [ (toString ./bin) ];
     } else {
