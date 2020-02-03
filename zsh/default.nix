@@ -13,5 +13,10 @@ in {
 
       eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
     '';
+    programs.zsh.promptInit = ''
+      export PROMPT='
+      %(?.%F{green}.%F{red}[%?] )%n@%m %1d
+      $%f '
+    '';
   };
 }
