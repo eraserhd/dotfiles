@@ -36,7 +36,7 @@
         rep = rep;
 
         tmux = super.tmux.overrideAttrs (old: {
-          buildInputs = old.buildInputs ++ [ self.bison3 ];
+          buildInputs = old.buildInputs ++ [ self.bison ];
           src = super.fetchFromGitHub (import ./tmux.nix);
         });
 
