@@ -11,6 +11,8 @@ in {
       setopt auto_cd
       cdpath=(~/src)
 
+      setopt nonomatch
+
       eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
     '';
     programs.zsh.promptInit = ''
