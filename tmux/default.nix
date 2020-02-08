@@ -114,7 +114,7 @@ in
     // (if (builtins.hasAttr "tmuxConfig" options.programs.tmux) then {
       tmuxConfig = tmuxConfig; # nix-darwin
     } else {
-      extraTmuxConf = tmuxConfig; # NixOS
+      extraConfig = tmuxConfig; # NixOS
     });
   };
 }
