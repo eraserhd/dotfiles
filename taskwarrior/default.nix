@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, options, ... }:
 
 {
   config = {
@@ -99,5 +99,28 @@
       '';
 
     };
-  };
+  } // (if (builtins.hasAttr "systemd" options)
+  then {
+    systemd.services.task-backup = {
+      script = ''
+        ${pkgs.su}/bin/su -s "${pkgs.bash}/bin/bash" -c '
+            cd /home/jfelice/src/data
+            ${pkgs.git}/bin/git add -A tasks/
+            ${pkgs.git}/bin/git commit -m 'Task backup' tasks/
+            ${pkgs.git}/bin/git push
+        ' jfelice
+      '';
+    };
+
+    systemd.timers.task-backup = {
+      description = "Commit task updates hourly";
+      partOf      = [ "task-backup.service" ];
+      wantedBy    = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "hourly";
+        Persistent = true;
+      };
+    };
+  } else {
+  });
 }
