@@ -21,6 +21,7 @@ with lib;
     ./npm
     ./rlwrap
     ./scheme
+    ./senzia
     ./shell
     ./skhd
     ./taskwarrior
