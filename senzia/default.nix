@@ -8,9 +8,24 @@ in {
   config = mkIf cfg.enable {
     services.couchdb = {
       enable = true;
-      bindAddress = "0.0.0.0";
       package = pkgs.couchdb2;
+      extraConfig = ''
+      '';
     };
-    networking.firewall.allowedTCPPorts = [ 5984 6984 ];
+    services.haproxy = {
+      enable = true;
+      config = ''
+        frontend https-in
+          bind *:6984
+          default_backend couchdb
+
+        backend couchdb
+          timeout connect 5000ms
+          timeout client 50000ms
+          timeout server 50000ms
+          server couchdb1 127.0.0.1:5984 check inter 5s
+      '';
+    };
+    networking.firewall.allowedTCPPorts = [ 6984 ];
   };
 }
