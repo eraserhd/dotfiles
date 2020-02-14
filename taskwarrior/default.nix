@@ -103,11 +103,10 @@
   then {
     systemd.services.task-backup = {
       script = ''
-        ${pkgs.su}/bin/su -s "${pkgs.bash}/bin/bash" -c '
+        ${pkgs.su}/bin/su -s "${pkgs.bash}/bin/bash" -l -c '
             cd /home/jfelice/src/data
             ${pkgs.git}/bin/git add -A tasks/
-            ${pkgs.git}/bin/git commit -m 'Task backup' tasks/
-            ${pkgs.git}/bin/git push
+            ${pkgs.git}/bin/git commit -m "Task backup" tasks/
         ' jfelice
       '';
     };
