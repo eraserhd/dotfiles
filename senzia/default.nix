@@ -3,20 +3,24 @@
 with lib;
 let
   cfg = config.local.senzia;
+
+  pemFile = pkgs.writeText "certificate.pem" ''
+    ${builtins.readFile ./couchdb.crt}
+    ${builtins.readFile ./couchdb.key}
+  '';
+
 in {
   options.local.senzia.enable = mkEnableOption "Senzia services";
   config = mkIf cfg.enable {
     services.couchdb = {
       enable = true;
       package = pkgs.couchdb2;
-      extraConfig = ''
-      '';
     };
     services.haproxy = {
       enable = true;
       config = ''
         frontend https-in
-          bind *:6984
+          bind *:6984 ssl crt ${pemFile}
           default_backend couchdb
 
         backend couchdb
