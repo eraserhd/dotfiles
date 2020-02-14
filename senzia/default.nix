@@ -1,4 +1,4 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 
 with lib;
 let
@@ -8,6 +8,8 @@ in {
   config = mkIf cfg.enable {
     services.couchdb = {
       enable = true;
+      bindAddress = "0.0.0.0";
+      package = pkgs.couchdb2;
     };
   };
 }
