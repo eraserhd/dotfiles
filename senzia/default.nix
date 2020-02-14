@@ -11,5 +11,6 @@ in {
       bindAddress = "0.0.0.0";
       package = pkgs.couchdb2;
     };
+    networking.firewall.allowedTCPPorts = [ 5984 6984 ];
   };
 }
