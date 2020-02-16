@@ -112,6 +112,20 @@ resource "aws_route53_record" "eraserhead_net_txt" {
     records = [ "google-site-verification=YNhAODv80-zKsjPL2kA7uAQDW7BQNmNV1Vyh6ERrtVQ" ]
 }
 
+resource "aws_route53_record" "easerhead_net_mx" {
+    zone_id = aws_route53_zone.eraserhead_net_zone.id
+    name    = "eraserhead.net"
+    type    = "MX"
+    ttl     = 14400
+    records = [
+      "1 aspmx.l.google.com",
+      "5 alt1.aspmx.l.google.com",
+      "5 alt2.aspmx.l.google.com",
+      "10 aspmx2.googlemail.com",
+      "10 aspmx3.googlemail.com",
+    ]
+}
+
 resource "aws_route53_record" "www_eraserhead_net" {
     zone_id = aws_route53_zone.eraserhead_net_zone.id
     name    = "www.eraserhead.net"
