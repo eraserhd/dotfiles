@@ -104,6 +104,14 @@ resource "aws_route53_record" "eraserhead_net" {
     }
 }
 
+resource "aws_route53_record" "eraserhead_net_txt" {
+    zone_id = aws_route53_zone.eraserhead_net_zone.id
+    name    = "eraserhead.net"
+    type    = "TXT"
+    ttl     = 1800
+    records = [ "google-site-verification=YNhAODv80-zKsjPL2kA7uAQDW7BQNmNV1Vyh6ERrtVQ" ]
+}
+
 resource "aws_route53_record" "www_eraserhead_net" {
     zone_id = aws_route53_zone.eraserhead_net_zone.id
     name    = "www.eraserhead.net"
