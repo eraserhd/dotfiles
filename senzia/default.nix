@@ -49,7 +49,7 @@ in {
       partOf      = [ "couchdb-backup.service" ];
       wantedBy    = [ "timers.target" ];
       timerConfig = {
-        OnCalendar = "hourly";
+        OnCalendar = "*:0/5";
         Persistent = true;
       };
     };
