@@ -33,5 +33,25 @@ in {
       '';
     };
     networking.firewall.allowedTCPPorts = [ 6984 ];
+    systemd.services.couchdb-backup = {
+      script = ''
+        set -ex
+        export PATH="${pkgs.gnutar}/bin:${pkgs.gzip}/bin:$PATH"
+        mkdir -p /var/lib/couchdb-backups/
+        timestamp="$(date --iso-8601=seconds |sed -e 's/:/_/g')"
+        cd /var/lib/couchdb/
+        tar czf /var/lib/couchdb-backups/"$timestamp".tgz .
+      '';
+    };
+
+    systemd.timers.couchdb-backup = {
+      description = "Commit couchdb changes";
+      partOf      = [ "couchdb-backup.service" ];
+      wantedBy    = [ "timers.target" ];
+      timerConfig = {
+        OnCalendar = "hourly";
+        Persistent = true;
+      };
+    };
   };
 }
