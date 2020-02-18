@@ -5,7 +5,7 @@ let
   cfg = config.local.senzia;
 
   pemFile = pkgs.writeText "certificate.pem" ''
-    ${builtins.readFile ./couchdb.crt}
+    ${builtins.readFile ../hosts/crunch/ssl.crt}
     ${builtins.readFile ./RapidSSL_TLS_RSA_CA_G1.pem}
     ${builtins.readFile ./DigiCert_Global_Root_G2.pem}
     ${builtins.readFile ./couchdb.key}
