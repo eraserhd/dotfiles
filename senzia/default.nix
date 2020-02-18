@@ -6,8 +6,8 @@ let
 
   pemFile = pkgs.writeText "certificate.pem" ''
     ${builtins.readFile ../hosts/crunch/ssl.crt}
-    ${builtins.readFile ./RapidSSL_TLS_RSA_CA_G1.pem}
-    ${builtins.readFile ./DigiCert_Global_Root_G2.pem}
+    ${builtins.readFile ../hosts/crunch/RapidSSL_TLS_RSA_CA_G1.pem}
+    ${builtins.readFile ../hosts/crunch/DigiCert_Global_Root_G2.pem}
     ${builtins.readFile ./couchdb.key}
   '';
 
