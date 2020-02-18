@@ -1,4 +1,4 @@
-{ lib, config, pkgs, ... }:
+{ lib, config, options, pkgs, ... }:
 
 with lib;
 let
@@ -13,7 +13,8 @@ let
 
 in {
   options.local.senzia.enable = mkEnableOption "Senzia services";
-  config = mkIf cfg.enable {
+  config = mkIf cfg.enable (if (builtins.hasAttr "systemd" options)
+  then {
     services.couchdb = {
       enable = true;
       package = pkgs.couchdb2;
@@ -53,5 +54,13 @@ in {
         Persistent = true;
       };
     };
-  };
+  }
+  else {
+    assertions = [
+      {
+        assertion = false;
+        message = "senzia package cannot be enabled on Darwin";
+      }
+    ];
+  });
 }
