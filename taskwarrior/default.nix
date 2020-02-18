@@ -12,6 +12,8 @@
         reserved.lines=2
         confirmation=no
 
+        uda.reviewed.type=date
+        uda.reviewed.label=Reviewed
         report.review.description=Weekly review
         report.review.columns=id,project,description.combined
         report.review.sort=project+
