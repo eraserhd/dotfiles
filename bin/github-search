@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+tmpfile=$(mktemp)
+
+curl -s \
+    -o "$tmpfile" \
+    -u eraserhd:"$GITHUB_TOKEN" \
+    https://api.github.com/search/code\?q\="$*"+in:file+org:2uinc
+result=$?
+if [[ $result -ne 0 ]]; then
+    exit $result
+fi
+
+if [[ "$(jq '.incomplete_results' <"$tmpfile")" = true ]]; then
+    printf ' ** INCOMPLETE **\n'
+fi
+
+jq -r '.items | .[].html_url' <"$tmpfile"
+rm -f "$tmpfile"
