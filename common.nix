@@ -13,7 +13,6 @@ with lib;
     ./gnupg
     ./gtypist
     ./kakoune
-    ./lib
     ./networking/plan9
     ./networking/ses-email
     ./networking/ssh
