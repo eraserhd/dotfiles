@@ -8,6 +8,16 @@
            ,then)
          ,@else))))
 
+(define-macro (doto x . exprs)
+  (let* ((tmp (gensym))
+         (doto-expr (lambda (expr)
+                     (cond
+                      ((symbol? expr) `(,expr ,tmp))
+                      ((list? expr)   `(,(car expr) ,tmp ,@(cdr expr)))))))
+    `(let ((,tmp ,x))
+       ,@(map doto-expr exprs)
+       ,tmp)))
+
 (define (started? task)
   (not (eq? #f (table-ref task "start" #f))))
 
@@ -15,9 +25,9 @@
   (for-each
     (lambda (annotation)
       (if-let [desc (table-ref annotation "description" #f)]
-        (let ((proc (open-process (list path: "9" arguments: (list "plumb" desc)))))
-          (process-status proc)
-          (close-port proc))))
+        (doto (open-process (list path: "9" arguments: (list "plumb" desc)))
+          (process-status)
+          (close-port))))
     (vector->list (table-ref task "annotations" #()))))
 
 (define (main . args)
@@ -30,4 +40,4 @@
       (plumb-annotations modified-task))
     0))
 
-;(exit (apply main (command-line)))
+(exit (apply main (command-line)))
