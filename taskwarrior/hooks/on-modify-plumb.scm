@@ -1,5 +1,8 @@
 (include "json#.scm")
 
+(define-macro (when test . body)
+  `(if ,test (begin ,@body)))
+
 (define-macro (if-let binding then . else)
   (let ((tmp (gensym)))
     `(let ((,tmp ,(cadr binding)))
@@ -9,7 +12,7 @@
          ,@else))))
 
 (define-macro (when-let binding . body)
-  `(if-let ,binding ,@body))
+  `(if-let ,binding (begin ,@body)))
 
 (define-macro (doto x . exprs)
   (let* ((tmp (gensym))
@@ -38,8 +41,8 @@
         (modified-task (json-read (current-input-port))))
     (json-write modified-task (current-output-port))
     (newline)
-    (if (and (not (started? original-task))
-             (started? modified-task))
+    (when (and (not (started? original-task))
+               (started? modified-task))
       (plumb-annotations modified-task))
     0))
 
