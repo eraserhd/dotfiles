@@ -8,6 +8,9 @@
            ,then)
          ,@else))))
 
+(define-macro (when-let binding . body)
+  `(if-let ,binding ,@body))
+
 (define-macro (doto x . exprs)
   (let* ((tmp (gensym))
          (doto-expr (lambda (expr)
@@ -24,7 +27,7 @@
 (define (plumb-annotations task)
   (for-each
     (lambda (annotation)
-      (if-let [desc (table-ref annotation "description" #f)]
+      (when-let [desc (table-ref annotation "description" #f)]
         (doto (open-process (list path: "9" arguments: (list "plumb" desc)))
           (process-status)
           (close-port))))
