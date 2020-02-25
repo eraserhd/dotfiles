@@ -322,6 +322,8 @@ hook -group client-tracker global WinResize .* update-client-options
 map global normal * '<a-i>w"/yn'
 map global normal <a-*> '<a-i>w"/y<a-n>'
 
+map global user c ': enter-user-mode case<ret>'
+
 # Filetypes
 # ‾‾‾‾‾‾‾‾‾
 

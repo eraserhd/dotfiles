@@ -9,6 +9,7 @@ with lib;
           kakoune = super.wrapKakoune self.kakoune-unwrapped {
             configure = {
               plugins = with self.kakounePlugins; [
+                case-kak
                 kak-ansi
                 kak-plumb
                 kak-proof

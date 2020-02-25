@@ -19,6 +19,7 @@
         });
 
         kakounePlugins = super.kakounePlugins // {
+          case-kak = super.callPackage ../kakoune/case.kak.nix {};
           kak-ansi = super.kakounePlugins.kak-ansi.overrideAttrs (oldAttrs: {
             src = super.pkgs.fetchFromGitHub (import ./kak-ansi.nix);
           });
