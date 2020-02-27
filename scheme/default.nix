@@ -2,6 +2,9 @@
 
 {
   config = {
-    environment.systemPackages = [ pkgs.gambit ];
+    environment.systemPackages = with pkgs; [
+      gambit
+      gerbil
+    ];
   };
 }
