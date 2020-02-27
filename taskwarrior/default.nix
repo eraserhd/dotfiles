@@ -1,12 +1,9 @@
 { lib, config, pkgs, options, ... }:
 
-let
-  taskwarrior-hooks = pkgs.callPackage ./hooks {};
-in {
+{
   config = lib.mkIf config.local.plan9.cpu.enable {
     environment.systemPackages = with pkgs; [
       taskwarrior
-      taskwarrior-hooks
     ];
 
     home-manager.users.jfelice = { pkgs, ... }: {
