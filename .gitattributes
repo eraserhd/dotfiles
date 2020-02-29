@@ -5,7 +5,7 @@ bin/checkpw filter=git-crypt diff=git-crypt
 bin/private.sh filter=git-crypt diff=git-crypt
 clojure/profiles.clj filter=git-crypt diff=git-crypt
 git/hub filter=git-crypt diff=git-crypt
-hosts/crunch/ssl.key filter=git-crypt diff=git-crypt
+networking/tls/*.key filter=git-crypt diff=git-crypt
 networking/ses-email/ses-user.nix filter=git-crypt diff=git-crypt
 networking/ssh/files/id_dsa filter=git-crypt diff=git-crypt
 networking/ssh/files/id_rsa-aws-idris filter=git-crypt diff=git-crypt
