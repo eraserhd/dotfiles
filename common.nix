@@ -16,6 +16,7 @@ with lib;
     ./networking/plan9
     ./networking/ses-email
     ./networking/ssh
+    ./networking/tls
     ./networking/update-dns
     ./npm
     ./rlwrap

@@ -6,8 +6,8 @@ let
 
   pemFile = pkgs.writeText "certificate.pem" ''
     ${builtins.readFile ../networking/tls/crunch.eraserhead.net.crt}
-    ${builtins.readFile ../networking/tls/RapidSSL_TLS_RSA_CA_G1.pem}
-    ${builtins.readFile ../networking/tls/DigiCert_Global_Root_G2.pem}
+    ${builtins.readFile ../networking/tls/RapidSSL_RSA_CA_2018.pem}
+    ${builtins.readFile ../networking/tls/DigiCert_Global_Root_CA.pem}
     ${builtins.readFile ../networking/tls/crunch.eraserhead.net.key}
   '';
 
