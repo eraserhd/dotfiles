@@ -30,7 +30,6 @@ hook global WinSetOption filetype=tmux-copy %{
     try %{ remove-highlighter window/whitespace }
 }
 
-# Works around #1872, no $kak_client on WinSetOption
 define-command highlight-trailing-whitespace %{
     evaluate-commands %sh{
         if [ -z "$kak_client" ]; then
@@ -346,12 +345,12 @@ hook global WinSetOption filetype=(clojure|scheme|racket) %{
     set-option window clojure_source_directories '(?:[^/.][^/]*)(?:/src|/test|/dev)'
 }
 
-#define-command -hidden -override lint-show-counters %{}
+define-command -hidden -override lint-show-counters %{}
 
 hook global WinSetOption filetype=clojure %{
     set-option window lintcmd 'cd "$(dirname "$kak_bufname")" && clj-kondo --lint'
     lint-enable
-#    hook -group lint-diagnostics window NormalIdle .* %{ lint; lint-show }
+    hook -group lint-diagnostics window NormalIdle .* %{ lint; lint-show }
 }
 
 declare-option -hidden str clojure_buffer_contents
