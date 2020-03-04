@@ -1,0 +1,34 @@
+#!/usr/bin/env gxi
+
+(import :std/misc/process)
+
+(define (sh command-line)
+  (display "#")
+  (for-each (lambda (word)
+              (display " ")
+              (display word))
+            command-line)
+  (newline)
+  (run-process command-line stdout-redirection: #f stderr-redirection: #f))
+
+(define (update-branch branch)
+  (sh '("git" "fetch" "upstream"))
+  (sh `("git" "checkout" ,branch))
+  (sh `("git" "reset" "--hard" ,(string-append "upstream/" branch)))
+  (sh `("git" "push" "origin" ,branch)))
+
+(define (update-kakoune)
+  (parameterize ((current-directory "~/src/kakoune"))
+    (update-branch "master")
+    ;; Update dogfood
+    (sh '("git" "checkout" "dogfood"))
+    (sh '("git" "merge" "--no-edit" "master"))
+    (sh '("git" "push" "origin" "dogfood"))
+    (sh '("dogfood"))
+    (sh '("nixos-rebuild" "build"))
+    (sh '("rm" "-f" "result")))
+  (parameterize ((current-directory "~/src/dotfiles"))
+    (sh '("git" "add" "dogfood/kakoune.nix"))
+    (sh '("git" "commit" "-m" "Bump kakoune" "dogfood/kakoune.nix"))))
+
+(define main update-kakoune)
