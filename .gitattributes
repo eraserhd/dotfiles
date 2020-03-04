@@ -9,6 +9,7 @@ networking/tls/*.key filter=git-crypt diff=git-crypt
 networking/ses-email/ses-user.nix filter=git-crypt diff=git-crypt
 networking/ssh/files/id_dsa filter=git-crypt diff=git-crypt
 networking/ssh/files/id_rsa-aws-idris filter=git-crypt diff=git-crypt
+networking/ssh/files/id_rsa-backup filter=git-crypt diff=git-crypt
 networking/ssh/files/id_rsa-centralpark-server-dev-1 filter=git-crypt diff=git-crypt
 networking/ssh/files/id_rsa-centralpark-server-prod-1 filter=git-crypt diff=git-crypt
 networking/ssh/files/id_rsa filter=git-crypt diff=git-crypt
