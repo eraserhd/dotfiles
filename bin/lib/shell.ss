@@ -1,0 +1,11 @@
+(import :std/misc/process)
+(export sh)
+
+(def (sh . command-line)
+  (display "#")
+  (for-each (lambda (word)
+              (display " ")
+              (display word))
+            command-line)
+  (newline)
+  (run-process command-line stdout-redirection: #f stderr-redirection: #f))
