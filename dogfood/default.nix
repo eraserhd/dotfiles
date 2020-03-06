@@ -34,10 +34,6 @@
           meta = builtins.removeAttrs oldAttrs.meta [ "broken" ];
         });
 
-        parinfer-rust = super.parinfer-rust.overrideAttrs (oldAttrs: {
-          src = pkgs.fetchFromGitHub (import ./parinfer-rust.nix);
-        });
-
         rep = rep;
 
         tmux = super.tmux.overrideAttrs (old: {
