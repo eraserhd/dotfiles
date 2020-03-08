@@ -96,7 +96,7 @@ define-command wrap %{
 }
 
 # System clipboard handling
-# ─────────────────────────
+# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
 define-command -override -hidden copy-snarf-to-dquote %{
     evaluate-commands %sh{
