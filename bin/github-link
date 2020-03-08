@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+shopt -s extglob
+
+blobUri() {
+    local file="$1" start_line end_line
+
+    file="${file%:}"
+    if [[ $file == *:+([-0-9]):+([-0-9]) ]]; then
+        file="${file%:*}"
+    fi
+
+    if [[ $file == *:+([-0-9]) ]]; then
+        start_line="${file##*:}"
+        file="${file%:*}"
+        if [[ $start_line == *-* ]]; then
+            end_line=${start_line#*-}
+            start_line=${start_line%-*}
+        else
+            end_line=$start_line
+        fi
+    fi
+}
+
+githubLink() {
+    local file="$1" start_line end_line
+
+    file="${file%:}"
+    if [[ $file == *:+([-0-9]):+([-0-9]) ]]; then
+        file="${file%:*}"
+    fi
+
+    if [[ $file == *:+([-0-9]) ]]; then
+        start_line="${file##*:}"
+        file="${file%:*}"
+        if [[ $start_line == *-* ]]; then
+            end_line=${start_line#*-}
+            start_line=${start_line%-*}
+        else
+            end_line=$start_line
+        fi
+    fi
+
+
+    local dir=$(dirname "$file")
+    cd "$dir"
+
+}
+
+githubLink "$@"
