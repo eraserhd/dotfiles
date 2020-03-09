@@ -30,10 +30,6 @@
           rep = rep;
         };
 
-        lilypond = super.lilypond.overrideAttrs (oldAttrs: {
-          meta = builtins.removeAttrs oldAttrs.meta [ "broken" ];
-        });
-
         rep = rep;
 
         tmux = super.tmux.overrideAttrs (old: {
