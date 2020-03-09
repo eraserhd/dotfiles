@@ -6,11 +6,6 @@
       (self: super: let
          rep = self.callPackage ("${super.fetchFromGitHub (import ./rep.nix)}/derivation.nix") {};
        in {
-        # fop doesn't like my jdk11 override
-        fop = (super.fop.override {
-          jdk = self.jdk8;
-        });
-
         add-missing = self.callPackage ("${super.fetchFromGitHub (import ./add-missing.nix)}/derivation.nix") {};
 
         kakoune-unwrapped = super.kakoune-unwrapped.overrideAttrs (oldAttrs: {
