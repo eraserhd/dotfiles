@@ -4,6 +4,7 @@
   config = {
     local.loginShell.package = pkgs.elvish;
     environment.systemPackages = [ pkgs.elvish ];
+    environment.shells = [ pkgs.elvish ];
 
     home-manager.users.jfelice = { pkgs, ... }: {
       home.file.".elvish/rc.elv".text = ''

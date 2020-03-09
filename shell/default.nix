@@ -42,7 +42,7 @@ in {
         unset __NIX_DARWIN_SET_ENVIRONMENT_DONE __NIXOS_SET_ENVIRONMENT_DONE
         unset __ETC_BASHRC_SOURCED __ETC_PROFILE_SOURCED __ETC_PROFILE_DONE
         unset __ETC_ZSHENV_SOURCED __ETC_ZSHRC_SOURCED
-        exec '${cfg.package}${cfg.package.shellPath}' -l
+        exec '${pkgs.zsh}${pkgs.zsh.shellPath}' -l
       }
 
       source_if_exists() {
