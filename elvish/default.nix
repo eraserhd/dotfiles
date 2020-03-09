@@ -9,6 +9,10 @@
     home-manager.users.jfelice = { pkgs, ... }: {
       home.file.".elvish/rc.elv".text = ''
         use direnv
+
+        edit:insert:binding[Alt-l] = { edit:location:start }
+        edit:insert:binding[Alt-n] = { edit:navigation:start }
+        edit:insert:binding[Ctrl-L] = { clear >/dev/tty }
       '';
       home.file.".elvish/lib/direnv.elv".text = ''
         ## hook for direnv
