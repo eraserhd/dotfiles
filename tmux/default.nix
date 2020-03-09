@@ -7,7 +7,7 @@ let
 
   defaultCommand = if pkgs.stdenv.isDarwin
     then "${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace -l ${shellPackage}${shellPackage.shellPath}"
-    else "${shellPackage}${shellPackage.shellPath} -l";
+    else "${shellPackage}${shellPackage.shellPath}";
 
   tmuxConfig = ''
     #### Use C-a as prefix ####
