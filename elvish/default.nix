@@ -12,6 +12,8 @@
 
         edit:insert:binding[Alt-l] = { edit:location:start }
         edit:insert:binding[Alt-n] = { edit:navigation:start }
+        edit:insert:binding[Ctrl-A] = { edit:move-dot-sol }
+        edit:insert:binding[Ctrl-E] = { edit:move-dot-eol }
         edit:insert:binding[Ctrl-L] = { clear >/dev/tty }
       '';
       home.file.".elvish/lib/direnv.elv".text = ''
