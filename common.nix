@@ -8,6 +8,7 @@ with lib;
     ./clojure
     ./coq
     ./dogfood
+    ./elvish
     ./emacs
     ./git
     ./gnupg
