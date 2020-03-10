@@ -74,8 +74,13 @@
   users.users = {
     jfelice = {
       isNormalUser = true;
-      extraGroups = [ "docker" "wheel" ]; # Enable ‘sudo’ for the user.
+      extraGroups = [ "docker" "wheel" ];
       openssh.authorizedKeys.keys = config.local.authorizedKeys.jfelice;
+    };
+    alex = {
+      isNormalUser = true;
+      extraGroups = [ "docker" "wheel" ];
+      openssh.authorizedKeys.keys = config.local.authorizedKeys.alex;
     };
     root.openssh.authorizedKeys.keys = config.local.authorizedKeys.jfelice;
   };

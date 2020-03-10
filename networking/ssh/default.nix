@@ -11,6 +11,9 @@ with lib;
 
   config = {
     local.authorizedKeys = {
+      alex = [
+        (builtins.readFile ./files/id_rsa.pub-alex)
+      ];
       jfelice = [
         (builtins.readFile ./files/id_rsa.pub)
         (builtins.readFile ./files/id_dsa.pub)
