@@ -14,7 +14,10 @@
         edit:insert:binding[Alt-n] = { edit:navigation:start }
         edit:insert:binding[Ctrl-A] = { edit:move-dot-sol }
         edit:insert:binding[Ctrl-E] = { edit:move-dot-eol }
-        edit:insert:binding[Ctrl-L] = { clear >/dev/tty }
+        edit:insert:binding[Ctrl-L] = {
+          clear >/dev/tty
+          edit:redraw &full=$true
+        }
 
         edit:prompt = {
           put "\n"
