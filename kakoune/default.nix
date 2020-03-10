@@ -29,7 +29,6 @@ with lib;
       ];
 
       environment.variables.EDITOR = "${pkgs.kakouneWrapper}/bin/kak";
-      environment.variables.kak_opt_kakfs = "$XDG_RUNTIME_DIR/kakfs/kakoune";
 
       home-manager.users.jfelice = { pkgs, ... }: {
         home.file.".config/kak/kakrc".source = ./kakrc;

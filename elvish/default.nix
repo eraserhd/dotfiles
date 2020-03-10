@@ -2,7 +2,7 @@
 
 {
   config = {
-    local.loginShell.package = pkgs.elvish;
+    local.loginShell.package = pkgs.bashInteractive;
     environment.systemPackages = [ pkgs.elvish ];
     environment.shells = [ pkgs.elvish ];
 
@@ -15,6 +15,22 @@
         edit:insert:binding[Ctrl-A] = { edit:move-dot-sol }
         edit:insert:binding[Ctrl-E] = { edit:move-dot-eol }
         edit:insert:binding[Ctrl-L] = { clear >/dev/tty }
+
+        edit:prompt = {
+          put "\n"
+          styled (tilde-abbr $pwd) green
+          try {
+            branch = (git describe --all --abbrev=4 2>/dev/null)
+            put ' ('
+            put $branch
+            if (not (eq [] [(git status -s)])) {
+              styled ' *' yellow
+            }
+            put ')'
+          } except _ {
+          }
+          styled "\n$ " green
+        }
       '';
       home.file.".elvish/lib/direnv.elv".text = ''
         ## hook for direnv
