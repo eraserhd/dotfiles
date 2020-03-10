@@ -75,9 +75,9 @@
     jfelice = {
       isNormalUser = true;
       extraGroups = [ "docker" "wheel" ]; # Enable ‘sudo’ for the user.
-      openssh.authorizedKeys.keys = config.local.authorizedKeys;
+      openssh.authorizedKeys.keys = config.local.authorizedKeys.jfelice;
     };
-    root.openssh.authorizedKeys.keys = config.local.authorizedKeys;
+    root.openssh.authorizedKeys.keys = config.local.authorizedKeys.jfelice;
   };
 
   home-manager.verbose = true;
