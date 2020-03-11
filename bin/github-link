@@ -1,23 +1,56 @@
 #!/bin/sh
 #
-# Get a browse link for a file in a GitHub repository
+# Syntax is `github-link FILE POSITION`
 #
 
-fileName=''
-startLine=''
-endLine=''
-
-parseOptions() {
-    arg1="$1"
-    arg2="$2"
-    arg1="${arg1%:}"
-    if [ $(expr "$arg1" : '.*:[[:digit:]][[:digit:]]*$') -ne 0 ]; then
-    fi
-    case "$arg1" in
-    *:*-*)    ;;
-    *:[0-9]*) ;;
-    *)        fileName="$1";;
-    esac
+# True iff $2 is reachable from $1
+isReachable() {
+    [ "$(git merge-base $1 $2)" == "$(git rev-parse --verify $1)" ]
 }
 
-parseOptions "$@"
+
+reachableFromRemote() {
+    head="$1"
+    remote="$2"
+    for branch in $(git branch -r); do
+        case "$branch" in
+        "$remote"/*)
+            if isReachable $head $branch; then
+                return 0
+            fi
+            ;;
+        esac
+    done
+    return 1
+}
+
+httpOrigin() {
+    filename="$1"
+    originalDirectory=$(pwd)
+    cd "$(dirname "$1")"
+    head=$(git rev-parse HEAD)
+
+    bestRemote=''
+    if reachableFromRemote "$head" upstream; then
+        bestRemote=upstream
+    elif reachableFromRemote "$head" origin; then
+        bestRemote=origin
+    else
+        for otherRemote in $(git remote); do
+            if reachableFromRemote "$head" "$otherRemote"; then
+                bestRemote="$otherRemote"
+                break
+            fi
+        done
+    fi
+    if [ -z "$bestRemote" ]; then
+        printf 'Cannot find a reachable remote.\n' >&2
+        exit 1
+    fi
+
+    git remote get-url "$bestRemote"
+
+    cd "$originalDirectory"
+}
+
+httpOrigin "$1"
