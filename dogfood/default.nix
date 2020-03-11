@@ -46,6 +46,10 @@
           };
         };
 
+        gitAndTools = super.gitAndTools // {
+          git-browse-link = super.callPackage ("${super.fetchFromGitHub (import ./git-browse-link.nix)}/derivation.nix") {};
+        };
+
         kakoune-unwrapped = super.kakoune-unwrapped.overrideAttrs (oldAttrs: {
           src = super.pkgs.fetchFromGitHub (import ./kakoune.nix);
           enableParallelBuilding = true;

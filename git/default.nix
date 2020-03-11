@@ -5,6 +5,7 @@
     environment.systemPackages = with pkgs; [
       gitFull
       gitAndTools.hub
+      gitAndTools.git-browse-link
       local.git-scripts
     ];
 
