@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 #
-# Syntax is `github-link FILE POSITION`
+# Syntax is `git browse-link FILE [POSITION]`
 #
+
+PREFERRED_REMOTES='upstream origin'
 
 isReachable() {
     local from="$1" to="$2"
@@ -24,16 +26,8 @@ reachableFromRemote() {
 
 bestRemote() {
     local head="$1"
-    if reachableFromRemote "$head" upstream; then
-        printf upstream\\n
-        return 0
-    fi
-    if reachableFromRemote "$head" origin; then
-        printf origin\\n
-        return 0
-    fi
     local otherRemote
-    for otherRemote in $(git remote); do
+    for otherRemote in $PREFERRED_REMOTES $(git remote); do
         if reachableFromRemote "$head" "$otherRemote"; then
             printf %s\\n "$otherRemote"
             return 0
@@ -59,20 +53,37 @@ originUrl() {
 makeBrowseUrlPrefix() {
     local originUrl="$1"
     printf %s\\n "$originUrl" |sed -e '
-        s/^git@github\.com:\([^/]*\)\/\([^/]*\)\.git$/https:\/\/github.com\/\1\/\2\/blob\//
+        s/^git@github\.com:\([^/]*\)\/\([^/]*\)\.git$/https:\/\/github.com\/\1\/\2\/blob/
     '
 }
 
 makeGitBrowseLink() {
     local filename="$1"
+
+    if [[ ! -e "$filename" ]]; then
+        printf 'git-browse-link: %s: No such file or directory\n' "$filename" >&2
+        return 1
+    fi
+    if [[ -d "$filename" ]]; then
+        printf 'git-browse-link: %s is a directory\n' "$filename" >&2
+        return 1
+    fi
+
     local originalDirectory="$(pwd)"
     cd "$(dirname "$filename")"
 
     local head=$(git rev-parse HEAD)
     local prefix="$(makeBrowseUrlPrefix "$(originUrl "$filename")")"
+    local rootedFilename="$(git ls-files --full-name "$filename")"
     cd "$originalDirectory"
 
-    printf %s%s\\n "$prefix" "$head"
+    if [[ -z "$prefix" ]]; then
+        printf 'git-browse-link: cannot find a remote with commit %s\n' "$head" >&2
+        return 3
+    fi
+
+    printf %s/%s/%s\\n "$prefix" "$head" "$rootedFilename"
 }
 
 makeGitBrowseLink "$1"
+exit $?
