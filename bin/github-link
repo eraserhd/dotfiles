@@ -1,17 +1,15 @@
-#!/bin/sh
+#!/usr/bin/env bash
 #
 # Syntax is `github-link FILE POSITION`
 #
 
-# True iff $2 is reachable from $1
 isReachable() {
-    [ "$(git merge-base $1 $2)" == "$(git rev-parse --verify $1)" ]
+    local from="$1" to="$2"
+    [[ $(git merge-base $from $to) == $(git rev-parse --verify $from) ]]
 }
 
-
 reachableFromRemote() {
-    head="$1"
-    remote="$2"
+    local head="$1" remote="$2" branch
     for branch in $(git branch -r); do
         case "$branch" in
         "$remote"/*)
@@ -24,33 +22,57 @@ reachableFromRemote() {
     return 1
 }
 
-originUrl() {
-    filename="$1"
-    originalDirectory=$(pwd)
-    cd "$(dirname "$1")"
-    head=$(git rev-parse HEAD)
-
-    bestRemote=''
+bestRemote() {
+    local head="$1"
     if reachableFromRemote "$head" upstream; then
-        bestRemote=upstream
-    elif reachableFromRemote "$head" origin; then
-        bestRemote=origin
-    else
-        for otherRemote in $(git remote); do
-            if reachableFromRemote "$head" "$otherRemote"; then
-                bestRemote="$otherRemote"
-                break
-            fi
-        done
+        printf upstream\\n
+        return 0
     fi
-    if [ -z "$bestRemote" ]; then
+    if reachableFromRemote "$head" origin; then
+        printf origin\\n
+        return 0
+    fi
+    local otherRemote
+    for otherRemote in $(git remote); do
+        if reachableFromRemote "$head" "$otherRemote"; then
+            printf %s\\n "$otherRemote"
+            return 0
+        fi
+    done
+    return 1
+}
+
+originUrl() {
+    local filename="$1"
+    local head=$(git rev-parse HEAD)
+
+    local bestRemote=$(bestRemote $head)
+    if [[ -z "$bestRemote" ]]; then
         printf 'Cannot find a reachable remote.\n' >&2
         exit 1
     fi
 
     git remote get-url "$bestRemote"
-
     cd "$originalDirectory"
 }
 
-originUrl "$1"
+makeBrowseUrlPrefix() {
+    local originUrl="$1"
+    printf %s\\n "$originUrl" |sed -e '
+        s/^git@github\.com:\([^/]*\)\/\([^/]*\)\.git$/https:\/\/github.com\/\1\/\2\/blob\//
+    '
+}
+
+makeGitBrowseLink() {
+    local filename="$1"
+    local originalDirectory="$(pwd)"
+    cd "$(dirname "$filename")"
+
+    local head=$(git rev-parse HEAD)
+    local prefix="$(makeBrowseUrlPrefix "$(originUrl "$filename")")"
+    cd "$originalDirectory"
+
+    printf %s%s\\n "$prefix" "$head"
+}
+
+makeGitBrowseLink "$1"
