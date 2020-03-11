@@ -24,7 +24,7 @@ reachableFromRemote() {
     return 1
 }
 
-httpOrigin() {
+originUrl() {
     filename="$1"
     originalDirectory=$(pwd)
     cd "$(dirname "$1")"
@@ -53,4 +53,4 @@ httpOrigin() {
     cd "$originalDirectory"
 }
 
-httpOrigin "$1"
+originUrl "$1"
