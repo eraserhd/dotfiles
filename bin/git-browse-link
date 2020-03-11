@@ -43,11 +43,10 @@ originUrl() {
     local bestRemote=$(bestRemote $head)
     if [[ -z "$bestRemote" ]]; then
         printf 'Cannot find a reachable remote.\n' >&2
-        exit 1
+        exit 2
     fi
 
     git remote get-url "$bestRemote"
-    cd "$originalDirectory"
 }
 
 makeBrowseUrlPrefix() {
@@ -57,8 +56,27 @@ makeBrowseUrlPrefix() {
     '
 }
 
+makePositionAnchor() {
+    local position="$1"
+    if [[ -z "$position" ]]; then
+        return 0
+    fi
+    local startLine=$(printf %s\\n "$position" |sed -ne 's/^\([0-9]*\)\..*$/\1/p')
+    local endLine=$(printf %s\\n "$position" |sed -ne 's/^.*,\([0-9]*\)\..*$/\1/p')
+    if [[ $startLine -eq $endLine ]]; then
+        printf '#L%d\n' "$startLine"
+        return 0
+    fi
+    if [[ $startLine -gt $endLine ]]; then
+        local tmp=$startLine
+        startLine=$endLine
+        endLine=$tmp
+    fi
+    printf '#L%d-L%d\n' "$startLine" "$endLine"
+}
+
 makeGitBrowseLink() {
-    local filename="$1"
+    local filename="$1" position="$2"
 
     if [[ ! -e "$filename" ]]; then
         printf 'git-browse-link: %s: No such file or directory\n' "$filename" >&2
@@ -74,7 +92,7 @@ makeGitBrowseLink() {
 
     local head=$(git rev-parse HEAD)
     local prefix="$(makeBrowseUrlPrefix "$(originUrl "$filename")")"
-    local rootedFilename="$(git ls-files --full-name "$filename")"
+    local rootedFilename="$(git ls-files --full-name "$(basename "$filename")")"
     cd "$originalDirectory"
 
     if [[ -z "$prefix" ]]; then
@@ -82,8 +100,10 @@ makeGitBrowseLink() {
         return 3
     fi
 
-    printf %s/%s/%s\\n "$prefix" "$head" "$rootedFilename"
+    local anchor="$(makePositionAnchor "$position")"
+
+    printf %s/%s/%s%s\\n "$prefix" "$head" "$rootedFilename" "$anchor"
 }
 
-makeGitBrowseLink "$1"
+makeGitBrowseLink "$1" "$2"
 exit $?
