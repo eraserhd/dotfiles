@@ -503,3 +503,7 @@ define-command \
         printf "'\\n"
     }
 }
+
+declare-user-mode git
+map global user g ': enter-user-mode git<ret>'
+map global git b ': git-browse-link<ret>'
