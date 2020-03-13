@@ -88,6 +88,7 @@ in {
       jq
       killall
       posix_man_pages
+      shellcheck
       wget
     ];
   } // (if (builtins.hasAttr "defaultUserShell" options.users)

@@ -1,6 +1,6 @@
 {
   owner = "eraserhd";
   repo = "git-browse-link";
-  rev = "f408d27b3841a5bbbb5ebe564a34b58d81a90515";
-  sha256 = "10m9bim99qzdgzr7gv2l4hipr0kkzf3jrwa3y23w6lbgs2nlnkg0";
+  rev = "9042454990357e27a177d86b2cd4d637d52b62c8";
+  sha256 = "1q0xy9d9i7bh8dqjb4556ax2qxvy7x2aq809880zfp64008hlhzg";
 }
