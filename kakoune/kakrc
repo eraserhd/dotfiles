@@ -429,6 +429,41 @@ define-command -override -params 1 -docstring %{Clojure element} \
     }
 }
 
+define-command -override -params 0 -docstring %{Run all Clojure tests} \
+    clojure-test-all %{
+    evaluate-commands -draft %{
+        send-text "(refresh) (run-tests)
+"
+    }
+}
+
+define-command -override -params 0 -docstring %{Run tests in current Clojure namespace} \
+    clojure-test-ns %{
+    evaluate-commands -draft %{
+        rep-find-namespace
+        send-text "(refresh) (run-tests '%opt{rep_namespace})
+"
+    }
+}
+
+define-command -override -params 0 -docstring %{Run selected Clojure test} \
+    clojure-test-this %{
+    evaluate-commands -draft %{
+        clojure-select-object toplevel
+        execute-keys '<a-:><a-;>e'
+        execute-keys '<a-k>deftest<ret>' # Ensure this is a test
+        execute-keys '\e\b"ty'
+        rep-find-namespace
+        send-text "(refresh) (run-tests '%opt{rep_namespace}/%reg{t})
+"
+    }
+}
+
+declare-user-mode clojure-test
+map -docstring 'Run all tests'         global clojure-test a ': clojure-test-all<ret>'
+map -docstring 'Test this namespace'   global clojure-test n ': clojure-test-ns<ret>'
+map -docstring 'Run test under cursor' global clojure-test t ': clojure-test-this<ret>'
+
 hook -group clojure-objects global WinSetOption filetype=clojure %{
     set-option window indentwidth 2
     map -docstring 'Clojure element'        window object e '<a-;> clojure-select-object element<ret>'
@@ -440,6 +475,8 @@ hook -group clojure-objects global WinSetOption filetype=clojure %{
     map window normal e ']<a-;> clojure-select-object element<ret>'
     map window normal E '}<a-;> clojure-select-object element<ret>'
     map window normal w '<a-a><a-;> clojure-select-object element<ret>'
+
+    map -docstring 'Run tests' window user t ': enter-user-mode clojure-test<ret>'
 }
 
 # Scheme
