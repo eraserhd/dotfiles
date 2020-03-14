@@ -6,8 +6,8 @@ let
   shellPackage = config.local.loginShell.package;
 
   defaultCommand = if pkgs.stdenv.isDarwin
-    then "exec ${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace -l ${pkgs.bash}/bin/bash -l -c \"exec ${pkgs.elvish}/bin/elvish\""
-    else "exec ${pkgs.bash}/bin/bash -l -c \"exec ${pkgs.elvish}/bin/elvish\"";
+    then "exec ${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace -l ${shellPackage}${shellPackage.shellPath}"
+    else "exec ${shellPackage}${shellPackage.shellPath}";
 
   tmuxConfig = ''
     #### Use C-a as prefix ####
