@@ -12,7 +12,6 @@ with lib;
                 case-kak
                 kak-ansi
                 kak-plumb
-                kak-proof
                 parinfer-rust
               ]
               # Remove this hack when Graal is on MacOS

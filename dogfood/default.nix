@@ -30,7 +30,6 @@
           kak-plumb = super.kakounePlugins.kak-plumb.overrideAttrs (oldAttrs: {
             src = super.pkgs.fetchFromGitHub (import ./kak-plumb.nix);
           });
-          kak-proof = super.callPackage ("${super.fetchFromGitHub (import ./kak-proof.nix)}/derivation.nix") {};
           rep = rep;
         };
 
