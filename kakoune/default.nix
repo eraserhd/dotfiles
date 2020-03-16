@@ -10,7 +10,6 @@ with lib;
             configure = {
               plugins = with self.kakounePlugins; [
                 case-kak
-                elvish-kak
                 kak-ansi
                 kak-plumb
                 kak-proof
