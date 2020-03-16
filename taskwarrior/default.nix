@@ -4,7 +4,6 @@
   config = lib.mkIf config.local.plan9.cpu.enable {
     environment.systemPackages = with pkgs; [
       taskwarrior
-      python38Packages.bugwarrior
     ];
 
     home-manager.users.jfelice = { pkgs, ... }: {
@@ -99,17 +98,6 @@
         # Command: undo
         color.undo.after=green
         color.undo.before=red
-      '';
-
-      home.file.".config/bugwarrior/bugwarriorrc".text = ''
-        [general]
-        targets = cp_prs
-        shorten = False
-        inline_links = False
-        annotation_comments = False
-
-        [cp_prs]
-        service = github
       '';
     };
   } // (if (builtins.hasAttr "systemd" options)
