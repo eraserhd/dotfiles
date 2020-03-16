@@ -24,7 +24,6 @@ with lib;
 
       environment.systemPackages = with pkgs; [
         kakouneWrapper
-        kakounePlugins.kak-proof # For testing
       ];
 
       environment.variables.EDITOR = "${pkgs.kakouneWrapper}/bin/kak";
