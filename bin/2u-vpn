@@ -6,7 +6,7 @@ ANYCONNECT_PREFIX=/opt/cisco/anyconnect
 ONELOGIN_ITEM_ID=ok36jmwmuzf6pjjxmzzr64lxby
 
 usage() {
-    printf 'usage: vpn { connect | disconnect }\n'
+    printf '2u vpn: usage: `2u vpn { connect | disconnect }`\n'
     exit 1
 }
 

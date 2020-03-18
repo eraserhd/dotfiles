@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+    printf '2u: usage is `2u subcommand [args ...]`\n' >&2
+    exit 1
+fi
+
+command="$1"
+shift
+exec "2u-$command" "$@"
+
