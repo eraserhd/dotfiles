@@ -5,7 +5,6 @@
     ./2u
     ./common.nix
     ./home-manager/nix-darwin
-    ./nixos-compat/nix-darwin
   ];
 
   # Use a custom configuration.nix location.
