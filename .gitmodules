@@ -10,3 +10,6 @@
 [submodule "home-manager"]
 	path = home-manager
 	url = git@github.com:rycee/home-manager.git
+[submodule "nixos-compat"]
+	path = nixos-compat
+	url = git@github.com:eraserhd/nixos-compat.git
