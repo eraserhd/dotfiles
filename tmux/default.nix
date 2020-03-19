@@ -110,11 +110,7 @@ in
   config = {
     programs.tmux = {
       enable = true;
-    }
-    // (if (builtins.hasAttr "tmuxConfig" options.programs.tmux) then {
-      tmuxConfig = tmuxConfig; # nix-darwin
-    } else {
-      extraConfig = tmuxConfig; # NixOS
-    });
+      extraConfig = tmuxConfig;
+    };
   };
 }
