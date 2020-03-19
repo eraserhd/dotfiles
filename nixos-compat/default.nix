@@ -1,0 +1,7 @@
+{ options, ... }:
+
+{
+  imports = [
+    ./tmux.nix
+  ];
+}
