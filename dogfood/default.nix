@@ -27,6 +27,9 @@
           kak-ansi = super.kakounePlugins.kak-ansi.overrideAttrs (oldAttrs: {
             src = super.pkgs.fetchFromGitHub (import ./kak-ansi.nix);
           });
+          kak-fzf = super.kakounePlugins.kak-fzf.overrideAttrs (oldAttrs: {
+            src = super.pkgs.fetchFromGitHub (import ./fzf.kak.nix);
+          });
           kak-plumb = super.kakounePlugins.kak-plumb.overrideAttrs (oldAttrs: {
             src = super.pkgs.fetchFromGitHub (import ./kak-plumb.nix);
           });
