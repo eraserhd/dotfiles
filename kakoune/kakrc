@@ -312,10 +312,12 @@ map global user c ': enter-user-mode case<ret>'
 # fzf
 # ‾‾‾
 
-hook global ModuleLoaded fzf %{
-    set-option global fzf_file_comand ag
+define-command f %{
+    require-module fzf
+    set-option global fzf_file_command ag
+    fzf-file
 }
-map global user f ': require-module fzf ; fzf-file<ret>'
+map global user f ': f<ret>'
 
 # Filetypes
 # ‾‾‾‾‾‾‾‾‾
