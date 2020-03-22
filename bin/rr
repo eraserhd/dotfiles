@@ -1,0 +1,6 @@
+#!/bin/sh
+
+for task in "$@"; do
+    task $task modify reviewed:now
+done
+task review
