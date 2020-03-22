@@ -74,22 +74,17 @@ in {
 
       source_if_exists ~/.nix-profile/etc/profile.d/nix.sh
       source ${toString ../bin/private.sh}
-
-      if [ -n "$ZSH_VERSION" ]; then
-        eval "$(${pkgs.broot}/bin/broot --print-shell-function zsh)"
-      elif [ -n "$BASH_VERSION" ]; then
-        eval "$(${pkgs.broot}/bin/broot --print-shell-function bash)"
-      fi
     '';
 
     environment.variables = {
       CLICOLOR = "1";
     };
 
+    programs.broot.enable = true;
+
     environment.systemPackages = with pkgs; [
       add-missing
       ag
-      broot
       direnv
       file
       jq
