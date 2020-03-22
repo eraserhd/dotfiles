@@ -1,6 +1,14 @@
 #!/bin/sh
 
+next=''
+case "$1" in
+    -n|--next)
+        next='+next'
+        shift
+        ;;
+esac
+
 for task in "$@"; do
-    task $task modify reviewed:now
+    task $task modify $next reviewed:now
 done
 task review
