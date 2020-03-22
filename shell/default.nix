@@ -80,8 +80,6 @@ in {
       CLICOLOR = "1";
     };
 
-    programs.broot.enable = true;
-
     environment.systemPackages = with pkgs; [
       add-missing
       ag

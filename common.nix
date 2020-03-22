@@ -5,7 +5,6 @@ with lib;
   imports = [
     ./1password
     ./aws
-    ./broot
     ./browser
     ./clojure
     ./coq
