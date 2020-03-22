@@ -87,6 +87,7 @@ in {
       ag
       direnv
       file
+      fzf
       jq
       killall
       posix_man_pages

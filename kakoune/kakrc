@@ -146,20 +146,6 @@ define-command -params 0 keep-tabs %{
 hook global WinSetOption filetype=(?!makefile).* expand-tabs
 hook global WinSetOption filetype=makefile keep-tabs
 
-# Find
-# ‾‾‾‾
-
-define-command -docstring 'Find a file' -params 1 -shell-script-candidates %{ag -l -f} -menu find %{ edit %arg{@} }
-
-define-command -override -params 1 -shell-script-candidates %{
-    dir="$(pwd)"
-    if command -v mdfind >/dev/null; then
-        mdfind -onlyin "${dir}/" / |sed -e 's,^'"${dir}"'/,,'
-    else
-        locate "${dir}/" |sed -e 's,^'"${dir}"'/,,'
-    fi
-} -menu f %{edit %arg{@}}
-
 # Jump
 # ‾‾‾‾
 
@@ -322,6 +308,13 @@ map global normal * '<a-i>w"/yn'
 map global normal <a-*> '<a-i>w"/y<a-n>'
 
 map global user c ': enter-user-mode case<ret>'
+
+# fzf
+# ‾‾‾
+
+require-module fzf
+set-option global fzf_file_command ag
+map global user f ': fzf-file<ret>'
 
 # Filetypes
 # ‾‾‾‾‾‾‾‾‾

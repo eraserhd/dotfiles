@@ -11,6 +11,7 @@ with lib;
               plugins = with self.kakounePlugins; [
                 case-kak
                 kak-ansi
+                kak-fzf
                 kak-plumb
                 parinfer-rust
               ]
