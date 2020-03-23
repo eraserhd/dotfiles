@@ -2,16 +2,31 @@
 
 (import :std/net/request
         :std/sugar
+        :std/text/json
         :gerbil/gambit/hash)
 
-(define graphql-query
-  "{ \"query\": \"query { user(login: \\\"eraserhd\\\") { pullRequests(first: 100, states: OPEN) { nodes { url title } } } }\" }")
+(define query
+  "query {
+     user(login: \"eraserhd\") {
+       pullRequests(first: 100, states: OPEN) {
+         nodes {
+           url
+           title
+         }
+       }
+     }
+   }")
+
+(define (post-data)
+  (let ((table (make-table)))
+    (table-set! table 'query query)
+    (json-object->string table)))
 
 (define (main)
   (let* ((request (http-post
                    "https://api.github.com/graphql"
                    headers: `(("Authorization" . ,(string-append "bearer " (getenv "GITHUB_TOKEN"))))
-                   data: graphql-query))
+                   data: (post-data)))
          (nodes (chain request
                        (request-json <>)
                        (table-ref <> 'data)
