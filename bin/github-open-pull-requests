@@ -1,7 +1,26 @@
-#!/bin/sh
+#!/usr/bin/env gxi
 
-curl -s -H "Authorization: bearer $GITHUB_TOKEN" -X POST -d '
-{
-    "query": "query { user(login: \"eraserhd\") { pullRequests(first: 100, states: OPEN) { nodes { url title } } } }"
-}
-' https://api.github.com/graphql | jq -r '.data.user.pullRequests.nodes[] | .url + "|" + .title' |column -ts '|'
+(import :std/net/request
+        :std/sugar
+        :gerbil/gambit/hash)
+
+(define graphql-query
+  "{ \"query\": \"query { user(login: \\\"eraserhd\\\") { pullRequests(first: 100, states: OPEN) { nodes { url title } } } }\" }")
+
+(define (main)
+  (let* ((request (http-post
+                   "https://api.github.com/graphql"
+                   headers: `(("Authorization" . ,(string-append "bearer " (getenv "GITHUB_TOKEN"))))
+                   data: graphql-query))
+         (nodes (chain request
+                       (request-json <>)
+                       (table-ref <> 'data)
+                       (table-ref <> 'user)
+                       (table-ref <> 'pullRequests)
+                       (table-ref <> 'nodes))))
+    (for-each (lambda (node)
+                (display (table-ref node 'url))
+                (display " ")
+                (display (table-ref node 'title))
+                (newline))
+              nodes)))
