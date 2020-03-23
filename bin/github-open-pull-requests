@@ -1,0 +1,7 @@
+#!/bin/sh
+
+curl -s -H "Authorization: bearer $GITHUB_TOKEN" -X POST -d '
+{
+    "query": "query { user(login: \"eraserhd\") { pullRequests(first: 100, states: OPEN) { nodes { url title } } } }"
+}
+' https://api.github.com/graphql | jq -r '.data.user.pullRequests.nodes[] | .url + "|" + .title' |column -ts '|'
