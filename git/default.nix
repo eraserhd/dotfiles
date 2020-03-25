@@ -6,6 +6,7 @@
       gitFull
       gitAndTools.hub
       gitAndTools.git-browse-link
+      gitAndTools.gitout
       local.git-scripts
     ];
 

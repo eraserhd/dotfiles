@@ -19,6 +19,7 @@
 
         gitAndTools = super.gitAndTools // {
           git-browse-link = super.callPackage ("${super.fetchFromGitHub (import ./git-browse-link.nix)}/derivation.nix") {};
+          gitout = super.callPackage ("${super.fetchFromGitHub (import ./gitout.nix)}/derivation.nix") {};
         };
 
         kakoune-unwrapped = super.kakoune-unwrapped.overrideAttrs (oldAttrs: {
