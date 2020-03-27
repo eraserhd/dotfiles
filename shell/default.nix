@@ -89,6 +89,7 @@ in {
       fzf
       jq
       killall
+      nix-prefetch-github
       posix_man_pages
       shellcheck
       wget
