@@ -17,8 +17,10 @@
           src = super.pkgs.fetchFromGitHub (import ./gerbil.nix);
         });
 
+        # Move into a sub-attribute for gerbil packages
+        clojerbil = self.callPackage "${super.fetchFromGitHub (import ./clojerbil.nix)}/derivation.nix" {};
+
         gitAndTools = super.gitAndTools // {
-          git-browse-link = super.callPackage ("${super.fetchFromGitHub (import ./git-browse-link.nix)}/derivation.nix") {};
           gitout = super.callPackage ("${super.fetchFromGitHub (import ./gitout.nix)}/derivation.nix") {};
         };
 
