@@ -1,6 +1,6 @@
 {
   owner = "eraserhd";
   repo = "clojerbil";
-  rev = "b171a9edd97b50844686b7172a43bca2f359a353";
-  sha256 = "1w22yjphbbdpx3a1bdbf0p3mszgy0bpzvxxnrkj6fg37287ij76q";
+  rev = "61a63008a30f97cc0aea7d231d51ca1f523d39f2";
+  sha256 = "060f2wdrgwd75l6ibf9r86szx1d1yanyjyq73lxycaj2rlddph93";
 }
