@@ -316,7 +316,7 @@ map global user c ': enter-user-mode case<ret>'
 
 define-command f %{
     require-module fzf
-    set-option global fzf_file_command ag
+    set-option global fzf_file_command "ag -l"
     set-option global fzf_highlight_command bat
     fzf-file
 }
