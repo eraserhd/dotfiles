@@ -1,7 +1,8 @@
-{ config, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
+with lib;
 {
-  config = {
+  config = mkIf config.local.plan9.cpu.enable {
     nixpkgs.overlays = [
       (self: super: {
         weechat = (super.weechat.override {
