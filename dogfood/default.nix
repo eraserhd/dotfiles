@@ -5,6 +5,10 @@
     nixpkgs.overlays = [
       (self: super: let
          rep = self.callPackage "${super.fetchFromGitHub (import ./rep.nix)}/derivation.nix" {};
+
+         gerbilPackages = {
+          clojerbil = self.callPackage "${super.fetchFromGitHub (import ./clojerbil.nix)}/derivation.nix" {};
+         };
        in {
         # fop doesn't like my jdk11 override
         fop = (super.fop.override {
@@ -17,11 +21,12 @@
           src = super.pkgs.fetchFromGitHub (import ./gerbil.nix);
         });
 
-        # Move into a sub-attribute for gerbil packages
-        clojerbil = self.callPackage "${super.fetchFromGitHub (import ./clojerbil.nix)}/derivation.nix" {};
+        inherit gerbilPackages;
 
         gitAndTools = super.gitAndTools // {
-          gitout = super.callPackage "${super.fetchFromGitHub (import ./gitout.nix)}/derivation.nix" {};
+          gitout = super.callPackage "${super.fetchFromGitHub (import ./gitout.nix)}/derivation.nix" {
+            inherit gerbilPackages;
+          };
         };
 
         kakoune-unwrapped = super.kakoune-unwrapped.overrideAttrs (oldAttrs: {
