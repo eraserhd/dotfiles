@@ -543,3 +543,15 @@ define-command \
 declare-user-mode git
 map global user g ': enter-user-mode git<ret>'
 map global git b ': git-browse-link<ret>'
+
+# Diff
+# ‾‾‾‾
+
+hook -group diff-text-objects global WinSetOption filetype=diff %{
+    map window -docstring 'diff file' object f '<a-;> diff-select-file<ret>'
+    map window -docstring 'diff hunk' object h '<a-;> diff-select-hunk<ret>'
+    hook -once -always window WinSetOption filetype=.* %{
+        unmap window object f
+        unmap window object h
+    }
+}
