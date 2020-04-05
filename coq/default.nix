@@ -1,7 +1,8 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
+with lib;
 {
-  config = {
+  config = mkIf config.local.plan9.cpu.enable {
     environment.systemPackages = [ pkgs.coq ];
   };
 }
