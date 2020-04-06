@@ -329,11 +329,18 @@ hook global WinSetOption filetype=nix %{
     set-option window indentwidth 2
 }
 
-hook -group wrap global WinSetOption filetype=asciidoc %{
-    add-highlighter window/wrap -word
-}
-hook -group wrap global WinSetOption filetype=(?!asciidoc).* %{
-    remove-highlighter window/wrap
+# Autowrap
+# ‾‾‾‾‾‾‾‾
+
+set-option global autowrap_column 78
+set-option global autowrap_fmtcmd 'fmt -w %c'
+set-option global autowrap_format_paragraph yes
+
+hook -group autowrap global WinSetOption filetype=(asciidoc|markdown) %{
+    autowrap-enable
+    hook -once window WinSetOption filetype=(?!asciidoc)(?!markdown).* %{
+        autowrap-disable
+    }
 }
 
 # Clojure
