@@ -1,6 +1,6 @@
 {
   owner = "eraserhd";
   repo = "gitout";
-  rev = "823107ff6c14af6f3f4ceb10490ce72ef95e0322";
-  sha256 = "1psjqav95wv5wckfwj8vllyqifppian0lvbdadwskcp1qn90f45r";
+  rev = "9e65da479a9c4b50e5bbdbe273cec6f725a986f2";
+  sha256 = "00q20hfpwvvlmqir3c6pq108vmlspc1nb5y0i75za90n56rj1mq8";
 }
