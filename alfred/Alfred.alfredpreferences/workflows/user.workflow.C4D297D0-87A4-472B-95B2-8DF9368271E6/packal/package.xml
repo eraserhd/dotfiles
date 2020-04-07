@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<workflow>
+  <name>Div</name>
+  <version>1.2.0</version>
+  <bundle>com.pawelgrzybek.div</bundle>
+  <updated>1549211476</updated>
+  <file>div.alfredworkflow</file>
+</workflow>
