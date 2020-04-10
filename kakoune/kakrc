@@ -435,6 +435,34 @@ define-command -override -params 1 -docstring %{Clojure element} \
     }
 }
 
+define-command -override centralpark-enable %{
+    hook -group centralpark window WinSetOption curword=.* %{
+        evaluate-commands %sh{
+            cd "$(dirname "$kak_buffile")"
+            curword=$(printf %s "$kak_opt_curword" |sed -e 's/^.*\\Q//' -e 's/\\E.*$//')
+            info="$(rep "(dev/describe-curword \"$curword\")" 2>/dev/null |sed -e '/^nil$/d')"
+            if [ -n "$info" ]; then
+                printf "info '"
+                printf %s "$info" |sed -e "s/'/''/g"
+                printf "'\n"
+            fi
+        }
+    }
+}
+
+define-command -override centralpark-disable %{
+    remove-hooks window centralpark
+}
+
+hook -group centralpark global WinSetOption filetype=clojure %{
+    evaluate-commands %sh{
+        printf 'triggered %s\n' "$kak_buffile" >&2
+        case "$kak_buffile" in
+            */src/centralpark/*) printf 'centralpark-enable\n';;
+        esac
+    }
+}
+
 define-command -override -params 0 -docstring %{Run all Clojure tests} \
     clojure-test-all %{
     evaluate-commands -draft %{
