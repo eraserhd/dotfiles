@@ -26,6 +26,11 @@ in {
         plan9port-wrapper = super.callPackage ./wrapper {
           plan9port = self.plan9port;
         };
+        tmuxPlugins = super.tmuxPlugins.override {
+          pkgs = self.pkgs // {
+            plan9port = self.plan9port-wrapper;
+          };
+        };
       })
     ];
 
