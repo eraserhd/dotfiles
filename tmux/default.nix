@@ -78,7 +78,7 @@ let
     run-shell ${pkgs.tmuxPlugins.ctrlw}/share/tmux-plugins/ctrlw/ctrlw.tmux
     run-shell ${pkgs.tmuxPlugins.plumb}/share/tmux-plugins/plumb/plumb.tmux
 
-    set -g '@copy_mode_kakoune_after_yank' 'tmux show-buffer |${pkgs.plan9port}/bin/9 9p write snarf/snarf'
+    set -g '@copy_mode_kakoune_after_yank' 'tmux show-buffer |${pkgs.plan9port-wrapper}/bin/9 9p write snarf/snarf'
     run-shell ${pkgs.tmuxPlugins.copy-mode-kakoune}/share/tmux-plugins/copy-mode-kakoune/copy-mode-kakoune.tmux
 
     ### Default Session ###

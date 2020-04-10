@@ -15,16 +15,16 @@ in {
   };
 
   config = mkIf (cfg.cpu.enable || cfg.terminal.enable) {
-    environment.systemPackages = [ pkgs.plan9port ]
+    environment.systemPackages = [ pkgs.plan9port-wrapper ]
       ++ optional pkgs.stdenv.isDarwin pkgs.osxfuse
       ++ optional (!pkgs.stdenv.isDarwin) pkgs.fusePackages.fuse_3;
 
-    local.browserCommand = "${pkgs.plan9port}/bin/9 plumb";
+    local.browserCommand = "${pkgs.plan9port-wrapper}/bin/9 plumb";
 
     nixpkgs.overlays = [
       (self: super: {
-        plan9port = super.callPackage ./wrapper {
-          plan9port = super.plan9port;
+        plan9port-wrapper = super.callPackage ./wrapper {
+          plan9port = self.plan9port;
         };
       })
     ];
