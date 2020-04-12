@@ -21,30 +21,26 @@ let
 
     ##### Basic Usage #####
 
-    # Reduce the command delay time to something a bit shorter
-    set -sg escape-time 25
 
     ##### Scrollback Navigation #####
 
-    # Use vi-style navigation in Copy mode (which is also scrollback mode)
-    setw -g mode-keys vi
-    bind -Tcopy-mode-vi Escape send-keys -X cancel
-    bind -Tcopy-mode-vi i send-keys -X cancel
-    bind -Tcopy-mode-vi v send-keys -X begin-selection
-    bind -Tcopy-mode-vi y send-keys -X copy-selection-and-cancel
 
+    # Reduce the command delay time to something a bit shorter
+    set -sg escape-time 25
     setw -g xterm-keys on
     set -sa terminal-overrides ",xterm*:kLFT5=\eOD:kRIT5=\eOC:kUP5=\eOA:kDN5=\eOB:smkx@:rmkx@" # Shift+Arrow
     set -sa terminal-overrides ',xterm*:sitm=\E[3m' # italics
 
     ##### Window/Pane Management #####
 
+    set -g status off
+
     # Support true color in Alacritty
     set -sa terminal-overrides ",xterm-256color:Tc"
     set -g default-terminal "tmux-256color"
 
     # Pane borders
-    set -g pane-border-status bottom
+    set -g pane-border-status top
     set -g pane-border-style "fg=#181a1f,bg=#292d3e"
     set -g pane-active-border-style "fg=#181a1f,bg=#292d3e"
     set -g pane-border-format "#[bg=#{?pane_active,#bfc7d5,#292d3e},fg=#292d3e]#[fg=#{?@ctrlw_active,#ff5370,#{?pane_active,#292d3e,#697098}}] #P #[fg=#{?pane_active,#bfc7d5,#292d3e},bg=#697098]#[fg=#{?pane_active,#bfc7d5,#292d3e}] #T #[bg=#292d3e,fg=#697098]"
@@ -78,6 +74,8 @@ let
     run-shell ${pkgs.tmuxPlugins.ctrlw}/share/tmux-plugins/ctrlw/ctrlw.tmux
     run-shell ${pkgs.tmuxPlugins.plumb}/share/tmux-plugins/plumb/plumb.tmux
 
+    # Is mode-keys-vi necessary?
+    setw -g mode-keys vi
     set -g '@copy_mode_kakoune_after_yank' 'tmux show-buffer |${pkgs.plan9port-wrapper}/bin/9 9p write snarf/snarf'
     run-shell ${pkgs.tmuxPlugins.copy-mode-kakoune}/share/tmux-plugins/copy-mode-kakoune/copy-mode-kakoune.tmux
 
