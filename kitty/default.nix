@@ -1,7 +1,8 @@
 { lib, pkgs, ... }:
 
+with lib;
 {
-  config = mkIf (!config.isDarwin) {
+  config = mkIf (!pkgs.stdenv.isDarwin) {
 
     # Need the terminal type
     environment.systemPackages = [ pkgs.kitty ];
