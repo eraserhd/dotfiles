@@ -57,6 +57,7 @@
         tmuxPlugins = super.tmuxPlugins // {
           copy-mode-kakoune = super.tmuxPlugins.mkDerivation {
             pluginName = "copy-mode-kakoune";
+            version = "unstable-2020-04-12";
             src = super.fetchFromGitHub (import ./tmux-copy-mode-kakoune.nix);
           };
         };
