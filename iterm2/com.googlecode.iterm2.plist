@@ -14,14 +14,20 @@
 	<integer>1</integer>
 	<key>AppleWindowTabbingMode</key>
 	<string>manual</string>
+	<key>BracketedPasteMode</key>
+	<false/>
 	<key>CGFontRenderingFontSmoothingDisabled</key>
 	<false/>
+	<key>ConvertDosNewlines</key>
+	<true/>
 	<key>Default Bookmark Guid</key>
 	<string>B35C4CC6-488B-479E-9ECA-491A2CCDC08B</string>
 	<key>DisableFullscreenTransparency</key>
 	<true/>
 	<key>EnableDivisionView</key>
 	<true/>
+	<key>EscapeShellCharsWithBackslash</key>
+	<false/>
 	<key>GlobalKeyMap</key>
 	<dict>
 		<key>0x19-0x60000</key>
@@ -143,7 +149,7 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>342 1496 700 622 -1028 900 3440 1417 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-935 880 3440 1418 -955 900 3440 1417 </string>
+	<string>-83 927 843 1371 -955 900 3440 1417 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>-1028 1155 3007 1162 -1028 900 3440 1417 </string>
 	<key>New Bookmarks</key>
@@ -883,7 +889,7 @@
 		<key>screenFrame</key>
 		<string>{{-955, 900}, {3440, 1440}}</string>
 		<key>topLeft</key>
-		<string>{388, 1879}</string>
+		<string>{541, 1901}</string>
 	</dict>
 	<key>NoSyncHaveWarnedAboutPasteConfirmationChange</key>
 	<true/>
@@ -1701,6 +1707,16 @@
 		<string>0051</string>
 		<string>0073</string>
 	</array>
+	<key>PasteSpecialChunkDelay</key>
+	<real>0.01</real>
+	<key>PasteSpecialChunkSize</key>
+	<integer>1024</integer>
+	<key>PasteSpecialRegex</key>
+	<string></string>
+	<key>PasteSpecialSubstitution</key>
+	<string></string>
+	<key>PasteSpecialUseRegexSubstitution</key>
+	<false/>
 	<key>PointerActions</key>
 	<dict>
 		<key>Button,1,1,,</key>
