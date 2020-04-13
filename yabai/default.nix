@@ -52,6 +52,12 @@
         # Laptop window
         yabai -m config --space 1 layout float
 
+        # Rules
+        yabai -m rule --add label=kitty app=kitty space=^2
+
+        # Things not to manage
+        yabai -m rule --add label=preferences app='System Preferences' manage=off
+
         echo "yabai configuration loaded.."
       '';
     };

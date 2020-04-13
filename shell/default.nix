@@ -26,9 +26,9 @@ in {
       :r() {
         if command -v darwin-rebuild >/dev/null; then
           pushd ~/src/dotfiles >/dev/null
-          darwin-rebuild build || return $?
+          TERM=xterm darwin-rebuild build || return $?
           if [ "$(readlink /run/current-system)" != "$(readlink ./result)" ]; then
-            darwin-rebuild switch || return $?
+            TERM=xterm darwin-rebuild switch || return $?
           fi
           popd >/dev/null
         elif command -v nixos-rebuild >/dev/null; then
