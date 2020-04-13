@@ -14,6 +14,7 @@ with lib;
     ./gnupg
     ./gtypist
     ./kakoune
+    ./kitty
     ./networking/plan9
     ./networking/ses-email
     ./networking/ssh
