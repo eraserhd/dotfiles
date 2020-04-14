@@ -190,7 +190,7 @@ with lib;
 
           #: Scrollback {{{
 
-          # scrollback_lines 2000
+          scrollback_lines 5000
 
           #: Number of lines of history to keep in memory for scrolling back.
           #: Memory is allocated on demand. Negative numbers are (effectively)
