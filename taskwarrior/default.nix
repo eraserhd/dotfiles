@@ -1,7 +1,7 @@
 { lib, config, pkgs, options, ... }:
 
 {
-  config = lib.mkIf config.local.plan9.cpu.enable {
+  config = lib.mkIf config.local.plan9.terminal.enable {
     environment.systemPackages = with pkgs; [
       taskwarrior
     ];
