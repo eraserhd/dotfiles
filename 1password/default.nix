@@ -3,6 +3,7 @@
 {
   config = {
     nixpkgs.config.allowUnfree = true;
-    environment.systemPackages = [ pkgs._1password ];
+    # killed: 9 :(
+    #environment.systemPackages = [ pkgs._1password ];
   };
 }
