@@ -34,7 +34,7 @@ with lib;
           #:     italic_font      Operator Mono Book Italic
           #:     bold_italic_font Operator Mono Medium Italic
 
-          # font_size 11.0
+          font_size 12.0
 
           #: Font size (in pts)
 
