@@ -16,6 +16,7 @@
       ctrlw < k : yabai -m window --focus north ; skhd -k escape
       ctrlw < l : yabai -m window --focus east ; skhd -k escape
 
+      ctrlw < p : yabai -m window --focus recent ; skhd -k escape
       ctrlw < r : yabai -m window --focus last ; skhd -k escape
 
       ctrlw < 0x1D : yabai -m window --focus $(yabai-window-number 0) ; skhd -k escape
@@ -37,6 +38,7 @@
       swap < k : yabai -m window --swap north ; skhd -k escape
       swap < l : yabai -m window --swap east ; skhd -k escape
 
+      swap < p : yabai -m window --swap recent ; skhd -k escape
       swap < r : yabai -m window --swap last ; skhd -k escape
 
       swap < 0x1D : yabai -m window --swap $(yabai-window-number 0) ; skhd -k escape
