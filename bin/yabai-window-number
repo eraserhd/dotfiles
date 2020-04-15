@@ -30,11 +30,11 @@
          (windows (run-process ["yabai" "-m" "query" "--windows"]
                                coprocess: read-json)))
     (let-hash (focused-window windows)
-      (let ((id (chain windows
-                  (filter (lambda (window)
-                            (equal? .space (hash-ref window 'space)))
-                          <>)
-                  (sort <> window-appears-earlier?)
-                  (nth-window <> n)
-                  (hash-ref <> 'id))))
-        (displayln id)))))
+      (chain windows
+        (filter (lambda (window)
+                  (equal? .space (hash-ref window 'space)))
+                <>)
+        (sort <> window-appears-earlier?)
+        (nth-window <> n)
+        (hash-ref <> 'id)
+        (displayln <>)))))
