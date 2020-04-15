@@ -25,16 +25,20 @@
     (list-ref coll index)
     (last coll)))
 
+(def (in-same-space? a b)
+  (equal? (hash-ref a 'space)
+          (hash-ref b 'space)))
+
 (def (main n-string)
   (let* ((n       (string->number n-string))
          (windows (run-process ["yabai" "-m" "query" "--windows"]
-                               coprocess: read-json)))
-    (let-hash (focused-window windows)
-      (chain windows
-        (filter (lambda (window)
-                  (equal? .space (hash-ref window 'space)))
-                <>)
-        (sort <> window-appears-earlier?)
-        (nth-window <> n)
-        (hash-ref <> 'id)
-        (displayln <>)))))
+                               coprocess: read-json))
+         (focused (focused-window windows)))
+    (chain windows
+      (filter (lambda (window)
+                (in-same-space? window focused))
+              <>)
+      (sort <> window-appears-earlier?)
+      (nth-window <> n)
+      (hash-ref <> 'id)
+      (displayln <>))))
