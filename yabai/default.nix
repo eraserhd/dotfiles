@@ -55,6 +55,9 @@
         # Rules
         yabai -m rule --add label=kitty app=kitty space=^2
 
+        yabai -m rule --add label=Music app=Music space=1
+        yabai -m rule --add label=Spotify app=Spotify space=1
+
         # Things not to manage
         yabai -m rule --add label=preferences app='System Preferences' manage=off
 

@@ -30,6 +30,18 @@
       ctrlw < 8 : yabai -m window --focus $(yabai-window-number 8) ; skhd -k escape
       ctrlw < 9 : yabai -m window --focus $(yabai-window-number 9) ; skhd -k escape
 
+      ctrlw < q : \
+        window_id=$(yabai -m query --windows --window |jq .id) ; \
+        yabai -m window --space 2 ; \
+        yabai -m window --focus $window_id ; \
+        skhd -k escape
+      ctrlw < z : \
+        window_id=$(yabai -m query --windows --window |jq .id) ; \
+        yabai -m window --space 1 ; \
+        yabai -m window --focus $window_id ; \
+        yabai -m window --grid 1:1:0:0:1:1 ; \
+        skhd -k escape
+
       ctrlw < s ; swap
       swap < escape ; default
 

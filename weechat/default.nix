@@ -2,7 +2,7 @@
 
 with lib;
 {
-  config = mkIf config.local.plan9.cpu.enable {
+  config = mkIf config.local.plan9.terminal.enable {
     nixpkgs.overlays = [
       (self: super: {
         weechat = (super.weechat.override {
