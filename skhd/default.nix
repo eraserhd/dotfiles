@@ -18,7 +18,16 @@
 
       ctrlw < r : yabai -m window --focus last ; skhd -k escape
 
-      ctrlw < 0x1D : yabai -m window --focus first ; skhd -k escape
+      ctrlw < 0x1D : yabai -m window --focus $(yabai-window-number 0) ; skhd -k escape
+      ctrlw < 1 : yabai -m window --focus $(yabai-window-number 1) ; skhd -k escape
+      ctrlw < 2 : yabai -m window --focus $(yabai-window-number 2) ; skhd -k escape
+      ctrlw < 3 : yabai -m window --focus $(yabai-window-number 3) ; skhd -k escape
+      ctrlw < 4 : yabai -m window --focus $(yabai-window-number 4) ; skhd -k escape
+      ctrlw < 5 : yabai -m window --focus $(yabai-window-number 5) ; skhd -k escape
+      ctrlw < 6 : yabai -m window --focus $(yabai-window-number 6) ; skhd -k escape
+      ctrlw < 7 : yabai -m window --focus $(yabai-window-number 7) ; skhd -k escape
+      ctrlw < 8 : yabai -m window --focus $(yabai-window-number 8) ; skhd -k escape
+      ctrlw < 9 : yabai -m window --focus $(yabai-window-number 9) ; skhd -k escape
 
       ctrlw < s ; swap
       swap < escape ; default
