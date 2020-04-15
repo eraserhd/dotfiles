@@ -20,6 +20,11 @@
      ((> ax bx) #f)
      (else      (< ay by)))))
 
+(def (nth-window coll index)
+  (if (< -1 index (length coll))
+    (list-ref coll index)
+    (last coll)))
+
 (def (main n-string)
   (let* ((n       (string->number n-string))
          (windows (run-process ["yabai" "-m" "query" "--windows"]
@@ -30,6 +35,6 @@
                             (equal? .space (hash-ref window 'space)))
                           <>)
                   (sort <> window-appears-earlier?)
-                  (list-ref <> n)
+                  (nth-window <> n)
                   (hash-ref <> 'id))))
         (displayln id)))))
