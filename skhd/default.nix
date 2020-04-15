@@ -38,6 +38,17 @@
       swap < l : yabai -m window --swap east ; skhd -k escape
 
       swap < r : yabai -m window --swap last ; skhd -k escape
+
+      swap < 0x1D : yabai -m window --swap $(yabai-window-number 0) ; skhd -k escape
+      swap < 1 : yabai -m window --swap $(yabai-window-number 1) ; skhd -k escape
+      swap < 2 : yabai -m window --swap $(yabai-window-number 2) ; skhd -k escape
+      swap < 3 : yabai -m window --swap $(yabai-window-number 3) ; skhd -k escape
+      swap < 4 : yabai -m window --swap $(yabai-window-number 4) ; skhd -k escape
+      swap < 5 : yabai -m window --swap $(yabai-window-number 5) ; skhd -k escape
+      swap < 6 : yabai -m window --swap $(yabai-window-number 6) ; skhd -k escape
+      swap < 7 : yabai -m window --swap $(yabai-window-number 7) ; skhd -k escape
+      swap < 8 : yabai -m window --swap $(yabai-window-number 8) ; skhd -k escape
+      swap < 9 : yabai -m window --swap $(yabai-window-number 9) ; skhd -k escape
     '';
     environment.systemPackages = [ pkgs.skhd ];
   }
