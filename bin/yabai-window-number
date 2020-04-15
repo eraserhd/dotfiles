@@ -2,7 +2,6 @@
 
 (import :std/misc/process
         :std/sort
-        :std/sugar
         :std/text/json)
 
 (def (focused-window windows)
@@ -30,15 +29,13 @@
           (hash-ref b 'space)))
 
 (def (main n-string)
-  (let* ((n       (string->number n-string))
-         (windows (run-process ["yabai" "-m" "query" "--windows"]
-                               coprocess: read-json))
-         (focused (focused-window windows)))
-    (chain windows
-      (filter (lambda (window)
-                (in-same-space? window focused))
-              <>)
-      (sort <> window-appears-earlier?)
-      (nth-window <> n)
-      (hash-ref <> 'id)
-      (displayln <>))))
+  (let* ((n               (string->number n-string))
+         (windows         (run-process ["yabai" "-m" "query" "--windows"]
+                                       coprocess: read-json))
+         (focused-window  (focused-window windows))
+         (space-windows   (filter (lambda (window)
+                                    (in-same-space? window focused-window))
+                                  windows))
+         (ordered-windows (sort space-windows window-appears-earlier?))
+         (window-n        (nth-window ordered-windows n)))
+    (displayln (hash-ref window-n 'id))))
