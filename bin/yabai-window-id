@@ -1,0 +1,35 @@
+#!/usr/bin/env gxi
+
+(import :std/misc/process
+        :std/sort
+        :std/sugar
+        :std/text/json)
+
+(def (focused-window windows)
+  (def (focused? window)
+    (equal? 1 (hash-ref window 'focused #f)))
+  (find focused? windows))
+
+(def (window-appears-earlier? a b)
+  (let ((ax (hash-ref (hash-ref a 'frame) 'x))
+        (ay (hash-ref (hash-ref a 'frame) 'y))
+        (bx (hash-ref (hash-ref b 'frame) 'x))
+        (by (hash-ref (hash-ref b 'frame) 'y)))
+    (cond
+     ((< ax bx) #t)
+     ((> ax bx) #f)
+     (else      (< ay by)))))
+
+(def (main n-string)
+  (let* ((n       (string->number n-string))
+         (windows (run-process ["yabai" "-m" "query" "--windows"]
+                               coprocess: read-json)))
+    (let-hash (focused-window windows)
+      (let ((id (chain windows
+                  (filter (lambda (window)
+                            (equal? .space (hash-ref window 'space)))
+                          <>)
+                  (sort <> window-appears-earlier?)
+                  (list-ref <> n)
+                  (hash-ref <> 'id))))
+        (displayln id)))))
