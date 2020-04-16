@@ -42,6 +42,9 @@
         yabai -m window --grid 1:1:0:0:1:1 ; \
         skhd -k escape
 
+      ctrlw < 0x2B : kitty @ --to unix:/Users/jfelice/.run/kitty send-text \
+        --match=title:kak_repl_window '\x10\x0d'
+
       ctrlw < s ; swap
       swap < escape ; default
 
