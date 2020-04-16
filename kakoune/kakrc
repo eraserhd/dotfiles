@@ -14,6 +14,12 @@ alias global gp grep-previous-match
 
 colorscheme palenight
 
+set-face global Default       rgb:bfc7d5,default
+set-face global Whitespace    rgb:4b5263,default+fg
+set-face global StatusLine    rgb:bfc7d5,default
+set-face global BufferPadding rgb:4b5263,default
+set-face global Prompt        rgb:c792ea,default
+
 set-face global PrimarySelection default,rgb:8700af+g
 set-face global SecondarySelection default,rgb:5f0087+g
 

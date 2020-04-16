@@ -575,7 +575,7 @@ with lib;
           #: Color scheme {{{
 
           foreground #bfc7d5
-          background #292d3e
+          background #14161f
 
           #: The foreground and background colors
 
