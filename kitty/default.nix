@@ -1,7 +1,19 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
-{
+let
+  environment = let
+    vars = config.environment.variables // (if (hasAttr "systemPath" config.environment)
+    then {
+      PATH = config.environment.systemPath;
+    }
+    else {
+    });
+
+    directives = map (name: "env ${name}=${getAttr name vars}") (attrNames vars);
+  in
+    concatStringsSep "\n" directives;
+in {
   config = mkMerge [
     (mkIf (!pkgs.stdenv.isDarwin) {
 
@@ -756,6 +768,8 @@ with lib;
           #: from controlling kitty.
 
           # env
+
+          ${environment}
 
           #: Specify environment variables to set in all child processes. Note
           #: that environment variables are expanded recursively, so if you
