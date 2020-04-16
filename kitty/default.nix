@@ -257,7 +257,7 @@ with lib;
           #: The modifier keys to press when clicking with the mouse on URLs to
           #: open the URL
 
-          # open_url_with default
+          open_url_with 9 plumb -s kitty
 
           #: The program with which to open URLs that are clicked on. The
           #: special value default means to use the operating system's default
