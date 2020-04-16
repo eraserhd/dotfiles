@@ -53,7 +53,7 @@
         yabai -m config --space 1 layout float
 
         # Rules
-        yabai -m rule --add label=kitty app=kitty space=^2
+        yabai -m rule --add label=kitty app=kitty space=2
 
         yabai -m rule --add label=Music app=Music space=1
         yabai -m rule --add label=Spotify app=Spotify space=1
