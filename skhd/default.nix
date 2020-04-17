@@ -46,6 +46,7 @@
         --match=title:kak_repl_window '\x10\x0d'
 
       ctrlw < 0x18 : yabai -m space --balance
+      ctrlw < 0x2C : yabai -m window --toggle split
 
       ctrlw < s ; swap
       swap < escape ; default
