@@ -27,14 +27,14 @@ in {
         if command -v darwin-rebuild >/dev/null; then
           pushd ~/src/dotfiles >/dev/null
           TERM=xterm darwin-rebuild build || return $?
-          if [ "$(readlink /run/current-system)" != "$(readlink ./result)" ]; then
-            TERM=xterm darwin-rebuild switch || return $?
+          if [ "$(readlink -f /run/current-system)" != "$(readlink -f ./result)" ]; then
+            TERM=xterm VERBOSE=1 darwin-rebuild switch || return $?
           fi
           popd >/dev/null
         elif command -v nixos-rebuild >/dev/null; then
           pushd ~/src/dotfiles >/dev/null
           nixos-rebuild build || return $?
-          if [ "$(readlink /run/current-system)" != "$(readlink ./result)" ]; then
+          if [ "$(readlink -f /run/current-system)" != "$(readlink -f ./result)" ]; then
             sudo nixos-rebuild switch || return $?
           fi
           popd >/dev/null
@@ -84,6 +84,7 @@ in {
       add-missing
       ag
       bat
+      coreutils
       direnv
       file
       fzf
