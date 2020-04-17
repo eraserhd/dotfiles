@@ -45,6 +45,8 @@
       ctrlw < 0x2B : kitty @ --to unix:/Users/jfelice/.run/kitty send-text \
         --match=title:kak_repl_window '\x10\x0d'
 
+      ctrlw < 0x18 : yabai -m space --balance
+
       ctrlw < s ; swap
       swap < escape ; default
 
