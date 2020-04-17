@@ -33,6 +33,8 @@
   system.defaults.NSGlobalDomain.KeyRepeat = 1;
   system.defaults.NSGlobalDomain."com.apple.keyboard.fnState" = true;
 
+  services.nix-daemon.enable = true;
+
   services.autossh.sessions = [ {
     name = "crunch";
     user = "jfelice";
