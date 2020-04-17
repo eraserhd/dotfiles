@@ -30,14 +30,22 @@
       ctrlw < 8 : yabai -m window --focus $(yabai-window-number 8) ; skhd -k escape
       ctrlw < 9 : yabai -m window --focus $(yabai-window-number 9) ; skhd -k escape
 
-      ctrlw < q : \
+      ctrlw < c : yabai -m display --focus 2
+      ctrlw < shift - c : \
         window_id=$(yabai -m query --windows --window |jq .id) ; \
-        yabai -m window --space 2 ; \
+        yabai -m window --space coding ; \
         yabai -m window --focus $window_id ; \
         skhd -k escape
-      ctrlw < z : \
+      ctrlw < m : yabai -m display --focus 2
+      ctrlw < shift - m : \
         window_id=$(yabai -m query --windows --window |jq .id) ; \
-        yabai -m window --space 1 ; \
+        yabai -m window --space meeting ; \
+        yabai -m window --focus $window_id ; \
+        skhd -k escape
+      ctrlw < b : yabai -m display --focus 1
+      ctrlw < shift - b : \
+        window_id=$(yabai -m query --windows --window |jq .id) ; \
+        yabai -m window --space browse ; \
         yabai -m window --focus $window_id ; \
         yabai -m window --grid 1:1:0:0:1:1 ; \
         skhd -k escape

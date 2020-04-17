@@ -51,6 +51,11 @@
 
         # Laptop window
         yabai -m config --space 1 layout float
+        yabai -m space 1 --label browse
+
+        # Monitor
+        yabai -m space 2 --label coding
+        yabai -m space 3 --label meeting
 
         # Rules
         yabai -m rule --add label=kitty app=kitty space=2
