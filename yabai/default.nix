@@ -43,6 +43,18 @@
           yabai -m config mouse_action1                move
           yabai -m config mouse_action2                resize
 
+          # (1) Laptop window
+          yabai -m config --space 1 layout float
+          yabai -m space 1 --label browse
+
+          # (2) Coding
+          yabai -m space 2 --label coding
+          yabai -m config --space 2 layout bsp
+
+          # (3) Meeting
+          yabai -m space 3 --label meeting
+          yabai -m config --space 3 layout bsp
+
           # general space settings
           yabai -m config layout                       bsp
           yabai -m config top_padding                  3
@@ -50,14 +62,6 @@
           yabai -m config left_padding                 3
           yabai -m config right_padding                3
           yabai -m config window_gap                   3
-
-          # Laptop window
-          yabai -m config --space 1 layout float
-          yabai -m space 1 --label browse
-
-          # Monitor
-          yabai -m space 2 --label coding
-          yabai -m space 3 --label meeting
 
           # Rules
           yabai -m rule --add label=kitty app=kitty space=2
