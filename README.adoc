@@ -15,10 +15,16 @@ Manual Installation Steps (Still)
 - gpg --import --allow-secret-key-import private-key.txt # downloaded from 1Password
 - gpg --import public-key.txt # downloaded from 1Password
 - brew install git-crypt
+
 - Had to restart Google Chrome (already installed by IT) for 1Password to work
 - Needed to use SMS for 2FA for 2u Google
 - git crypt unlock (working directory needed to be clean, needed to git reset --hard from failed git submodule update)
+
+- Install Nix multi-user: `sh <(curl -L https://nixos.org/nix/install) --daemon`
+- Install nix-darwin: `nix-build -I darwin-config=macbook.nix -I nixpkgs
+
 - Run ssh/install.sh works!
+
 - Alacritty did not work, because cargo was not installed (rustup doesn't install stable)
 - Run `rustup-init`, select 1) default install.
 - Needed to source ~/.bash_profile to get cargo in the path
