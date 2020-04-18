@@ -26,5 +26,6 @@
       $%f '
       RPS1=""
     '';
+    environment.shells = [ pkgs.zsh ];
   };
 }

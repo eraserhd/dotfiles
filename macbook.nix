@@ -56,14 +56,14 @@
   environment.variables.NIX_IGNORE_SYMLINK_STORE = "1";
 
   # Needed by home-manager
-  users.users.jfelice.name = "jfelice";
+  users.users.jfelice = {
+    name = "jfelice";
+    shell = pkgs.zsh;
+  };
 
   services."2u".vault.enable = true;
   services."2u".kubernetes-clients.enable = true;
   services."2u".kubernetes-clients.namespaces = [ "implementation" ];
-  services.skhd.enable = true;
-  services.skhd.skhdConfig = ''
-  '';
 
   local.plan9.terminal.enable = true;
 
