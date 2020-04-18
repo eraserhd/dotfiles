@@ -53,8 +53,6 @@
                      " -T -N jfelice@crunch.eraserhead.net";
   } ];
 
-  environment.variables.NIX_IGNORE_SYMLINK_STORE = "1";
-
   # Needed by home-manager
   users.users.jfelice = {
     name = "jfelice";
