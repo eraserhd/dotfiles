@@ -15,6 +15,7 @@ with lib;
     ./gtypist
     ./kakoune
     ./kitty
+    ./modules/environment/xdg
     ./networking/plan9
     ./networking/ses-email
     ./networking/ssh

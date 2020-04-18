@@ -53,6 +53,8 @@
                      " -T -N jfelice@crunch.eraserhead.net";
   } ];
 
+  environment.xdgRuntimeDir.enable = true;
+
   # Needed by home-manager
   users.users.jfelice = {
     name = "jfelice";
