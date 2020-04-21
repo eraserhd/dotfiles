@@ -24,17 +24,18 @@ in {
   config = {
     environment.interactiveShellInit = ''
       :r() {
+        local readlink_bin="${pkgs.coreutils}/bin/readlink"
         if command -v darwin-rebuild >/dev/null; then
           pushd ~/src/dotfiles >/dev/null
           TERM=xterm darwin-rebuild build || return $?
-          if [ "$(readlink -f /run/current-system)" != "$(readlink -f ./result)" ]; then
+          if [ "$($readlink_bin -f /run/current-system)" != "$($readlink_bin -f ./result)" ]; then
             TERM=xterm VERBOSE=1 darwin-rebuild switch || return $?
           fi
           popd >/dev/null
         elif command -v nixos-rebuild >/dev/null; then
           pushd ~/src/dotfiles >/dev/null
           nixos-rebuild build || return $?
-          if [ "$(readlink -f /run/current-system)" != "$(readlink -f ./result)" ]; then
+          if [ "$($readlink_bin -f /run/current-system)" != "$($readlink_bin -f ./result)" ]; then
             sudo nixos-rebuild switch || return $?
           fi
           popd >/dev/null
@@ -84,7 +85,6 @@ in {
       add-missing
       ag
       bat
-      coreutils
       direnv
       file
       fzf
