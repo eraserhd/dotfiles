@@ -19,6 +19,10 @@
         report.review.sort=project+
         report.review.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING ) and recur.none:
 
+        # Github
+        uda.github.type=string
+        uda.github.label=GitHub ID
+
         # Urgency
         urgency.annotations.coefficient=0
         urgency.project.coefficient=0
