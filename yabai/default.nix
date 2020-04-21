@@ -43,13 +43,17 @@
           yabai -m config mouse_action1                move
           yabai -m config mouse_action2                resize
 
-          # (1) Laptop window
-          yabai -m config --space 1 layout float
-          yabai -m space 1 --label browse
+          # (1) Coding
+          yabai -m space 1 --label coding
+          yabai -m config --space 1 layout bsp
+          yabai -m rule --add label=kitty app=kitty space=1
 
-          # (2) Coding
-          yabai -m space 2 --label coding
-          yabai -m config --space 2 layout bsp
+          # (2) Laptop window
+          yabai -m config --space 2 layout float
+          yabai -m space 2 --label browse
+          yabai -m rule --add label=Music app=Music space=2
+          yabai -m rule --add label=Spotify app=Spotify space=2
+          yabai -m rule --add label=Anki app=Anki space=2
 
           # (3) Meeting
           yabai -m space 3 --label meeting
@@ -62,12 +66,6 @@
           yabai -m config left_padding                 3
           yabai -m config right_padding                3
           yabai -m config window_gap                   3
-
-          # Rules
-          yabai -m rule --add label=kitty app=kitty space=2
-
-          yabai -m rule --add label=Music app=Music space=1
-          yabai -m rule --add label=Spotify app=Spotify space=1
 
           # Things not to manage
           yabai -m rule --add label=preferences app='System Preferences' manage=off
