@@ -26,6 +26,9 @@
         # Urgency
         urgency.annotations.coefficient=0
         urgency.project.coefficient=0
+        urgency.active.coefficient=25.0
+        urgency.annotations.coefficient=0
+        urgency.due.coefficient=15.0
 
         # Colors
         rule.precedence.color=deleted,completed,active,keyword.,tag.,project.,overdue,scheduled,due.today,due,blocked,blocking,recurring,tagged,uda.
