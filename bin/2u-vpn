@@ -18,7 +18,7 @@ connect() {
     (
         op get item "$ONELOGIN_ITEM_ID" |jq -r '.details.fields[] | select(.designation == "username") | .value'
         op get item "$ONELOGIN_ITEM_ID" |jq -r '.details.fields[] | select(.designation == "password") | .value'
-        op get totp "$ONELOGIN_ITEM_ID"
+        #op get totp "$ONELOGIN_ITEM_ID"
         printf y\\n
     ) | "$ANYCONNECT_PREFIX/bin/vpn" -s connect "2U Corp Network"
 }
