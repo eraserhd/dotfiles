@@ -29,11 +29,14 @@ set-option global ui_options terminal_assistant=none terminal_status_on_top=true
 set-face global LineNumbersWrapped black
 add-highlighter global/matching show-matching
 
-hook global WinSetOption filetype=(?!tmux-copy).* %{
+hook global WinCreate '\*stdin\*' %{
+    set-option window filetype scrollback
+}
+hook global WinSetOption filetype=(?!scrollback).* %{
     try %{ add-highlighter window/number number-lines }
     try %{ add-highlighter window/whitespace show-whitespaces -spc ' ' -tab '➤' -lf '↩' }
 }
-hook global WinSetOption filetype=tmux-copy %{
+hook global WinSetOption filetype=scrollback %{
     try %{ remove-highlighter window/number }
     try %{ remove-highlighter window/whitespace }
 }
@@ -51,7 +54,7 @@ define-command highlight-trailing-whitespace %{
     }
 }
 
-hook global WinSetOption filetype=.* %{
+hook global WinSetOption filetype=(!scrollback).* %{
     hook -once window NormalIdle .* highlight-trailing-whitespace
 }
 
