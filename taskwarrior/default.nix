@@ -23,6 +23,10 @@
         uda.github.type=string
         uda.github.label=GitHub ID
 
+        # Next
+        report.next.columns=id,start.age,entry.age,depends,priority,project,recur,scheduled.countdown,due.relative,until.remaining,description.truncated,urgency
+        report.next.labels=ID,Active,Age,Deps,P,Project,Recur,S,Due,Until,Description,Urg
+
         # Urgency
         urgency.annotations.coefficient=0
         urgency.project.coefficient=0
