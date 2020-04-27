@@ -60,8 +60,9 @@ in {
             exec ${my-kak-plumb}/bin/edit-client
           '';
           serviceConfig = {
-            KeepAlive = true;
             UserName = "jfelice";
+            RunAtLoad = true;
+            KeepAlive = true;
           };
         };
       })
