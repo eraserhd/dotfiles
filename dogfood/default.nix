@@ -21,6 +21,8 @@
           src = super.pkgs.fetchFromGitHub (import ./gerbil.nix);
         });
 
+        gewgaw = super.callPackage "${super.fetchFromGitHub (import ./gewgaw.nix)}/derivation.nix" {};
+
         inherit gerbilPackages;
 
         gitAndTools = super.gitAndTools // {
