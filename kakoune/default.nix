@@ -1,7 +1,11 @@
 { config, options, pkgs, lib, ... }:
 
 with lib;
-{
+let
+  my-kak-plumb = pkgs.kakounePlugins.kak-plumb.override {
+    plan9port = pkgs.plan9port-wrapper;
+  };
+in {
   config = mkMerge [
     {
       nixpkgs.overlays = [
@@ -12,7 +16,7 @@ with lib;
                 case-kak
                 kak-ansi
                 kak-fzf
-                kak-plumb
+                my-kak-plumb
                 parinfer-rust
               ]
               # Remove this hack when Graal is on MacOS
@@ -33,7 +37,7 @@ with lib;
         home.file.".config/kak/kakrc".source = ./kakrc;
       };
     }
-    (mkIf config.local.plan9.cpu.enable
+    (mkIf config.local.plan9.terminal.enable
      (if (builtins.hasAttr "systemd" options)
       then {
         systemd.user.services.plumber-kakoune-client = {
@@ -45,11 +49,21 @@ with lib;
             RestartSec = 35;
           };
           script = ''
-            exec ${pkgs.kakounePlugins.kak-plumb}/bin/edit-client
+            exec ${my-kak-plumb}/bin/edit-client
           '';
         };
       }
       else {
+        launchd.agents.plumber-kakoune-client = {
+          script = ''
+            export XDG_RUNTIME_DIR="${config.environment.variables.XDG_RUNTIME_DIR}"
+            exec ${my-kak-plumb}/bin/edit-client
+          '';
+          serviceConfig = {
+            KeepAlive = true;
+            UserName = "jfelice";
+          };
+        };
       })
     )
   ];
