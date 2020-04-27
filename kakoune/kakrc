@@ -476,3 +476,20 @@ hook -group diff-text-objects global WinSetOption filetype=diff %{
         unmap window object h
     }
 }
+
+# Jumpclient
+# ‾‾‾‾‾‾‾‾‾‾
+
+set-option global jumpclient %val{client}
+hook -group manage-jumpclient global ClientClose .* %{
+    evaluate-commands %sh{
+        if [ "$kak_opt_jumpclient" = "$kak_hook_param" ]; then
+            for client in $kak_client_list; do
+                if [ "$client" != "$kak_hook_param" ]; then
+                    printf 'set-option global jumpclient "%s"\n' "$client"
+                    exit 0
+                fi
+            done
+        fi
+    }
+}
