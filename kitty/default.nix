@@ -1156,6 +1156,7 @@ in {
           #: You can change the font size for all top-level kitty OS windows at
           #: a time or only the current one.
 
+          map cmd+shift+equal       change_font_size all +2.0
           # map kitty_mod+equal     change_font_size all +2.0
           # map cmd+plus            change_font_size all +2.0
           # map kitty_mod+minus     change_font_size all -2.0
