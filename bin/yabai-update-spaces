@@ -6,17 +6,16 @@
 
 (def laptop-display "143ABEAF-FB72-322D-E98C-F6A9BBDF00CA")
 
+(def (yabai-query . args)
+  (run-process ["yabai" "-m" "query" args ...]
+               coprocess: read-json))
+
 (def (get-laptop-display-number)
-  (alet* ((displays (run-process ["yabai" "-m" "query" "--displays"]
-                                 coprocess: read-json))
+  (alet* ((displays (yabai-query "--displays"))
           (display  (find (lambda (display)
                             (string=? (hash-get display 'uuid) laptop-display))
                           displays)))
     (hash-get display 'index)))
-
-(def (get-spaces)
-  (run-process ["yabai" "-m" "query" "--spaces"]
-               coprocess: read-json))
 
 (def (configure-space index key value)
   (run-process ["yabai" "-m" "config" "--space" (number->string index) key value]))
@@ -46,7 +45,7 @@
                     (when (not code-space)
                       (set! code-space .index))
                     (configure-code-space .index)))))
-            (get-spaces))
+            (yabai-query "--spaces"))
   (when code-space
     (label-space code-space "code"))
   (when browse-space
