@@ -6,6 +6,13 @@
 
 (def laptop-display "143ABEAF-FB72-322D-E98C-F6A9BBDF00CA")
 
+(def (yabai . args)
+  (def (->arg x)
+    (if (string? x)
+      x
+      (object->string x)))
+  (run-process ["yabai" (map ->arg args) ...]))
+
 (def (yabai-query . args)
   (run-process ["yabai" "-m" "query" args ...]
                coprocess: read-json))
@@ -18,7 +25,7 @@
     (hash-get display 'index)))
 
 (def (configure-space index key value)
-  (run-process ["yabai" "-m" "config" "--space" (number->string index) key value]))
+  (yabai "-m" "config" "--space" index key value))
 
 (def (configure-laptop-space index)
   (configure-space index "layout" "float"))
@@ -27,7 +34,7 @@
   (configure-space index "layout" "bsp"))
 
 (def (label-space index label)
-  (run-process ["yabai" "-m" "space" (number->string index) "--label" label]))
+  (yabai "-m" "space" index "--label" label))
 
 (def (main)
   (def laptop-display-number (get-laptop-display-number))
