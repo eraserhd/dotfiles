@@ -28,10 +28,25 @@
   (configure-space index "layout" "bsp"))
 
 (def (main)
-  (let ((laptop-display-number (get-laptop-display-number)))
-    (for-each (lambda (space)
-                (let-hash space
-                  (if (= .display laptop-display-number)
-                    (configure-laptop-space .index)
-                    (configure-code-space .index))))
-              (get-spaces))))
+  (def laptop-display-number (get-laptop-display-number))
+  (def code-space #f)
+  (def browse-space #f)
+  (def meeting-space #f)
+  (for-each (lambda (space)
+              (let-hash space
+                (if (= .display laptop-display-number)
+                  (begin
+                    (when (not browse-space)
+                      (set! browse-space .index))
+                    (configure-laptop-space .index))
+                  (begin
+                    (when (not code-space)
+                      (set! code-space .index))
+                    (configure-code-space .index)))))
+            (get-spaces))
+  (when code-space
+    (run-process ["yabai" "-m" "space" (number->string code-space) "--label" "code"]))
+  (when browse-space
+    (run-process ["yabai" "-m" "space" (number->string browse-space) "--label" "browse"]))
+  (when meeting-space
+    (run-process ["yabai" "-m" "space" (number->string meeting-space) "--label" "meeting"])))

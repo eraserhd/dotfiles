@@ -36,13 +36,9 @@
           yabai -m rule --add label=kitty app=kitty space=1
 
           # (2) Laptop window
-          yabai -m space 2 --label browse
           yabai -m rule --add label=Music app=Music space=2
           yabai -m rule --add label=Spotify app=Spotify space=2
           yabai -m rule --add label=Anki app=Anki space=2
-
-          # (3) Meeting
-          yabai -m space 3 --label meeting
 
           yabai-update-spaces
 
