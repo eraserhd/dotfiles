@@ -17,6 +17,9 @@
   (run-process ["yabai" "-m" "query" args ...]
                coprocess: read-json))
 
+(def (yabai-configure option value space: (space #f))
+  (apply yabai "-m" "config" [(if space ["--space" space] []) ... option value]))
+
 (def (get-laptop-display-number)
   (alet* ((displays (yabai-query "--displays"))
           (display  (find (lambda (display)
@@ -24,14 +27,11 @@
                           displays)))
     (hash-get display 'index)))
 
-(def (configure-space index key value)
-  (yabai "-m" "config" "--space" index key value))
-
 (def (configure-laptop-space index)
-  (configure-space index "layout" "float"))
+  (yabai-configure space: index "layout" "float"))
 
 (def (configure-code-space index)
-  (configure-space index "layout" "bsp"))
+  (yabai-configure space: index "layout" "bsp"))
 
 (def (label-space index label)
   (yabai "-m" "space" index "--label" label))
