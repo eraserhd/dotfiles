@@ -1,0 +1,37 @@
+#!/usr/bin/env gxi
+
+(import :std/text/json
+        :std/misc/process
+        :std/sugar)
+
+(def laptop-display "143ABEAF-FB72-322D-E98C-F6A9BBDF00CA")
+
+(def (get-laptop-display-number)
+  (alet* ((displays (run-process ["yabai" "-m" "query" "--displays"]
+                                 coprocess: read-json))
+          (display  (find (lambda (display)
+                            (string=? (hash-get display 'uuid) laptop-display))
+                          displays)))
+    (hash-get display 'index)))
+
+(def (get-spaces)
+  (run-process ["yabai" "-m" "query" "--spaces"]
+               coprocess: read-json))
+
+(def (configure-space index key value)
+  (run-process ["yabai" "-m" "config" "--space" (number->string index) key value]))
+
+(def (configure-laptop-space index)
+  (configure-space index "layout" "float"))
+
+(def (configure-code-space index)
+  (configure-space index "layout" "bsp"))
+
+(def (main)
+  (let ((laptop-display-number (get-laptop-display-number)))
+    (for-each (lambda (space)
+                (let-hash space
+                  (if (= .display laptop-display-number)
+                    (configure-laptop-space .index)
+                    (configure-code-space .index))))
+              (get-spaces))))
