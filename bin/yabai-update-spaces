@@ -27,6 +27,9 @@
 (def (configure-code-space index)
   (configure-space index "layout" "bsp"))
 
+(def (label-space index label)
+  (run-process ["yabai" "-m" "space" (number->string index) "--label" label]))
+
 (def (main)
   (def laptop-display-number (get-laptop-display-number))
   (def code-space #f)
@@ -45,8 +48,8 @@
                     (configure-code-space .index)))))
             (get-spaces))
   (when code-space
-    (run-process ["yabai" "-m" "space" (number->string code-space) "--label" "code"]))
+    (label-space code-space "code"))
   (when browse-space
-    (run-process ["yabai" "-m" "space" (number->string browse-space) "--label" "browse"]))
+    (label-space browse-space "browse"))
   (when meeting-space
-    (run-process ["yabai" "-m" "space" (number->string meeting-space) "--label" "meeting"])))
+    (label-space meeting-space "meeting")))
