@@ -41,6 +41,8 @@
           yabai -m rule --add label=Anki app=Anki space=2
 
           yabai-update-spaces
+          yabai -m signal --add event=display_added action=yabai-update-spaces
+          yabai -m signal --add event=display_removed action=yabai-update-spaces
 
           # general space settings
           yabai -m config layout                       bsp
