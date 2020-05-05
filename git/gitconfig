@@ -5,8 +5,6 @@
 	ci = commit
 	st = status
 	r = "!git l -30"
-[core]
-	excludesfile = ~/.gitignore_global
 [grep]
 	lineNumber = true
 [rebase]
