@@ -84,7 +84,7 @@ in {
     environment.systemPackages = with pkgs; [
       add-missing
       ag
-      #bat Not building on OSX right now
+      bat
       direnv
       file
       fzf
