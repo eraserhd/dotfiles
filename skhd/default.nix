@@ -9,6 +9,8 @@
       :: swap @
 
       ctrl - w ; ctrlw
+      f13 ; ctrlw
+
       ctrlw < escape ; default
 
       ctrlw < h : yabai -m window --focus west ; skhd -k escape
