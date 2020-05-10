@@ -16,6 +16,8 @@ cask 'osxfuse'
 cask 'slack'
 cask 'spotify'
 
+brew 'openscad'
+
 # yabai
 tap 'koekeishiya/formulae'
 brew 'yabai'
