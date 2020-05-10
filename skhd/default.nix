@@ -7,9 +7,9 @@
     services.skhd.skhdConfig = ''
       :: ctrlw @
       :: swap @
+      :: keycommand @
 
       ctrl - w ; ctrlw
-      f13 ; ctrlw
 
       ctrlw < escape ; default
       ctrlw < f14 ; default
@@ -80,6 +80,13 @@
       swap < 7 : yabai -m window --swap $(yabai-window-number 7) ; skhd -k escape
       swap < 8 : yabai -m window --swap $(yabai-window-number 8) ; skhd -k escape
       swap < 9 : yabai -m window --swap $(yabai-window-number 9) ; skhd -k escape
+
+      f13 ; keycommand
+      keycommand < f14 ; default
+      keycommand < h : yabai -m window --focus west
+      keycommand < j : yabai -m window --focus south
+      keycommand < k : yabai -m window --focus north
+      keycommand < l : yabai -m window --focus east
     '';
     environment.systemPackages = [ pkgs.skhd ];
   }
