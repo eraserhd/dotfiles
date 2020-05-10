@@ -12,6 +12,7 @@
       f13 ; ctrlw
 
       ctrlw < escape ; default
+      ctrlw < f14 ; default
 
       ctrlw < h : yabai -m window --focus west ; skhd -k escape
       ctrlw < j : yabai -m window --focus south ; skhd -k escape
