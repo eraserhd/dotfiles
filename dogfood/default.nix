@@ -41,9 +41,9 @@
           kak-fzf = super.kakounePlugins.kak-fzf.overrideAttrs (oldAttrs: {
             src = super.pkgs.fetchFromGitHub (import ./fzf.kak.nix);
           });
-          kak-plumb = super.kakounePlugins.kak-plumb.overrideAttrs (oldAttrs: {
-            src = super.pkgs.fetchFromGitHub (import ./kak-plumb.nix);
-          });
+          kak-plumb = super.callPackage "${super.fetchFromGitHub (import ./kak-plumb.nix)}/derivation.nix" {
+            plan9port = pkgs.plan9port-wrapper;
+          };
           rep = rep;
         };
 
