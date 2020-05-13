@@ -20,7 +20,8 @@
       ctrlw < l : yabai -m window --focus east ; skhd -k escape
 
       ctrlw < p : yabai -m window --focus recent ; skhd -k escape
-      ctrlw < r : yabai -m window --focus last ; skhd -k escape
+      ctrlw < r : kitty @ --to unix:/Users/jfelice/.run/kitty focus-window \
+        --match=title:kak_repl_window ; skhd -k escape
 
       ctrlw < 0x1D : yabai -m window --focus $(yabai-window-number 0) ; skhd -k escape
       ctrlw < 1 : yabai -m window --focus $(yabai-window-number 1) ; skhd -k escape
@@ -54,7 +55,7 @@
         skhd -k escape
 
       ctrlw < 0x2B : kitty @ --to unix:/Users/jfelice/.run/kitty send-text \
-        --match=title:kak_repl_window '\x10\x0d'
+        --match=title:kak_repl_window '\x10\x0d' ; skhd -k escape
 
       ctrlw < 0x18 : yabai -m space --balance
       ctrlw < 0x2C : yabai -m window --toggle split
@@ -87,6 +88,10 @@
       keycommand < j : yabai -m window --focus south
       keycommand < k : yabai -m window --focus north
       keycommand < l : yabai -m window --focus east
+
+      keycommand < n : notification --activate
+      keycommand < m : notification --menu
+      keycommand < i : notification --close
     '';
     environment.systemPackages = [ pkgs.skhd ];
   }
