@@ -1,4 +1,4 @@
-#!/usr/bin/env zsh
+#!/bin/sh
 
 # global settings
 yabai -m config mouse_follows_focus          off
@@ -24,17 +24,19 @@ yabai -m config mouse_modifier               fn
 yabai -m config mouse_action1                move
 yabai -m config mouse_action2                resize
 
-# (1) Coding
-yabai -m rule --add label=kitty app=kitty space=1
-
-# (2) Laptop window
-yabai -m rule --add label=Music app=Music space=2
-yabai -m rule --add label=Spotify app=Spotify space=2
-yabai -m rule --add label=Anki app=Anki space=2
-
 yabai-update-spaces
 yabai -m signal --add event=display_added action=yabai-update-spaces
 yabai -m signal --add event=display_removed action=yabai-update-spaces
+
+# (1) Coding
+yabai -m rule --add label=kitty app=kitty space=code
+
+# (2) Laptop window
+yabai -m rule --add label=Music app=Music space=browse
+yabai -m rule --add label=Spotify app=Spotify space=browse
+yabai -m rule --add label=Anki app=Anki space=browse
+yabai -m rule --add label=Books app=Books space=browse
+yabai -m rule --add label=Messages app=Messages space=browse
 
 # general space settings
 yabai -m config layout                       bsp
