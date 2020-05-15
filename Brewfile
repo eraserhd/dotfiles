@@ -18,10 +18,6 @@ cask 'spotify'
 
 brew 'openscad'
 
-# yabai
-tap 'koekeishiya/formulae'
-brew 'yabai'
-
 # ErgoDox environment
 tap 'osx-cross/avr'
 tap 'PX4/homebrew-px4'

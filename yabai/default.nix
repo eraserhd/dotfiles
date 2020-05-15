@@ -1,14 +1,11 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   config = {
-    home-manager.users.jfelice = { pkgs, ... }: {
-      home.file.".yabairc" = {
-        executable = true;
-        text = ''
-          exec ${pkgs.zsh}/bin/zsh -l -c 'yabai-config'
-        '';
-      };
+    services.yabai = {
+      enable = true;
+      package = pkgs.yabai;
+      extraConfig = "exec ${pkgs.zsh}/bin/zsh -l -c 'yabai-config'";
     };
   };
 }
