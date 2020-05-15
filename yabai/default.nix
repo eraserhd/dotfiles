@@ -1,7 +1,8 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
+with lib;
 {
-  config = {
+  config = mkIf pkgs.stdenv.isDarwin {
     services.yabai = {
       enable = true;
       package = pkgs.yabai;
