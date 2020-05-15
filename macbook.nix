@@ -32,6 +32,7 @@
   system.defaults.NSGlobalDomain.InitialKeyRepeat = 20;
   system.defaults.NSGlobalDomain.KeyRepeat = 1;
   system.defaults.NSGlobalDomain."com.apple.keyboard.fnState" = true;
+  system.defaults.NSGlobalDomain._HIHideMenuBar = true;
 
   services.nix-daemon.enable = true;
 
