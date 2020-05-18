@@ -17,10 +17,6 @@
 
         add-missing = self.callPackage "${super.fetchFromGitHub (import ./add-missing.nix)}/derivation.nix" {};
 
-        gerbil = super.gerbil.overrideAttrs (oldAttrs: {
-          src = super.pkgs.fetchFromGitHub (import ./gerbil.nix);
-        });
-
         inherit gerbilPackages;
 
         gitAndTools = super.gitAndTools // {
