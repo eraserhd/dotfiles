@@ -1,13 +1,11 @@
 #!/usr/bin/env gxi
 
-(import :std/misc/process
+(import :std/iter
+        :std/misc/process
         :std/sort
         :std/text/json)
 
-(def (focused-window windows)
-  (def (focused? window)
-    (equal? 1 (hash-ref window 'focused #f)))
-  (find focused? windows))
+(def workspace-display-uuid "49D1D28D-1A48-5D9A-4EB3-F347611CD9E0")
 
 (def (window-appears-earlier? a b)
   (let ((ax (hash-ref (hash-ref a 'frame) 'x))
@@ -19,23 +17,28 @@
      ((> ax bx) #f)
      (else      (< ay by)))))
 
+(def (ordered-workspace-windows)
+  (def displays      (run-process ["yabai" "-m" "query" "--displays"] coprocess: read-json))
+  (def spaces        (run-process ["yabai" "-m" "query" "--spaces"] coprocess: read-json))
+  (def windows       (run-process ["yabai" "-m" "query" "--windows"] coprocess: read-json))
+  (def space-windows '())
+  (for* ((display displays)
+         (space   spaces)
+         (window  windows)
+         when     (and (equal? (hash-get display 'uuid) workspace-display-uuid)
+                       (equal? 1 (hash-get space 'visible))
+                       (equal? (hash-get display 'index) (hash-get space 'display))
+                       (equal? (hash-get window 'space) (hash-get space 'index))))
+     (set! space-windows (cons window space-windows)))
+  (sort space-windows window-appears-earlier?))
+
 (def (nth-window coll index)
   (if (< -1 index (length coll))
     (list-ref coll index)
     (last coll)))
 
-(def (in-same-space? a b)
-  (equal? (hash-ref a 'space)
-          (hash-ref b 'space)))
-
 (def (main n-string)
   (let* ((n               (string->number n-string))
-         (windows         (run-process ["yabai" "-m" "query" "--windows"]
-                                       coprocess: read-json))
-         (focused-window  (focused-window windows))
-         (space-windows   (filter (lambda (window)
-                                    (in-same-space? window focused-window))
-                                  windows))
-         (ordered-windows (sort space-windows window-appears-earlier?))
+         (ordered-windows (ordered-workspace-windows))
          (window-n        (nth-window ordered-windows n)))
     (displayln (hash-ref window-n 'id))))
