@@ -14,7 +14,6 @@ in {
         "'unix!/Users/jfelice/.run/plan9/srv/snarf'";
       serviceConfig = {
         KeepAlive = true;
-        UserName = "jfelice";
       };
     };
   }
