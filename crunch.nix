@@ -28,9 +28,9 @@
         address = "10.0.0.1";
         interface = "enp4s0";
       };
-      interfaces.enp4s0.ipv4 = {
+      interfaces.wlp65s0.ipv4 = {
         addresses = [ {
-          address =  "10.0.0.2";
+          address = "10.0.0.2";
           prefixLength = 24;
         } ];
         routes = [
@@ -39,6 +39,7 @@
       };
       nameservers = [ "8.8.8.8" "8.8.4.4" ];
       firewall.enable = true;
+      wireless.enable = true;
   };
 
   time.timeZone = "America/New_York";

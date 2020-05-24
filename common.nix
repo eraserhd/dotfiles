@@ -21,6 +21,7 @@ with lib;
     ./networking/ssh
     ./networking/tls
     ./networking/update-dns
+    ./networking/wifi
     ./npm
     ./rlwrap
     ./scheme
