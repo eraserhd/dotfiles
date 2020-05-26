@@ -66,7 +66,6 @@
 
   nix.nixPath = [
     "nixpkgs=/home/jfelice/src/dotfiles/nixpkgs"
-    "nixpkgs-overlays=/home/jfelice/src/dotfiles/overlays"
     "nixos-config=/home/jfelice/src/dotfiles/crunch.nix"
   ];
 
