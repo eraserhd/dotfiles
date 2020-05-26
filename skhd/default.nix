@@ -15,10 +15,10 @@
       ctrlw < escape ; default
       ctrlw < f14 ; default
 
-      ctrlw < h : yabai -m window --focus west ; skhd -k escape
-      ctrlw < j : yabai -m window --focus south ; skhd -k escape
-      ctrlw < k : yabai -m window --focus north ; skhd -k escape
-      ctrlw < l : yabai -m window --focus east ; skhd -k escape
+      ctrlw < h : osascript -e 'activateion application "kitty"' ; yabai -m window --focus west ; skhd -k escape
+      ctrlw < j : osascript -e 'activateion application "kitty"' ; yabai -m window --focus south ; skhd -k escape
+      ctrlw < k : osascript -e 'activateion application "kitty"' ; yabai -m window --focus north ; skhd -k escape
+      ctrlw < l : osascript -e 'activateion application "kitty"' ; yabai -m window --focus east ; skhd -k escape
 
       ctrlw < p : yabai -m window --focus recent ; skhd -k escape
       ctrlw < r : kitty @ --to unix:/Users/jfelice/.run/kitty focus-window \
@@ -102,10 +102,10 @@
 
       f13 ; keycommand
       keycommand < f14 ; default
-      keycommand < h : yabai -m window --focus west
-      keycommand < j : yabai -m window --focus south
-      keycommand < k : yabai -m window --focus north
-      keycommand < l : yabai -m window --focus east
+      keycommand < h : osascript -e 'activate application "kitty"' ; yabai -m window --focus west
+      keycommand < j : osascript -e 'activate application "kitty"' ; yabai -m window --focus south
+      keycommand < k : osascript -e 'activate application "kitty"' ; yabai -m window --focus north
+      keycommand < l : osascript -e 'activate application "kitty"' ; yabai -m window --focus east
 
       keycommand < n : notification --activate
       keycommand < m : notification --menu
