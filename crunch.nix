@@ -26,7 +26,7 @@
       useDHCP = false;
       defaultGateway = {
         address = "10.0.0.1";
-        interface = "enp4s0";
+        interface = "wlp65s0";
       };
       interfaces.wlp65s0.ipv4 = {
         addresses = [ {
