@@ -56,9 +56,9 @@
 
   environment.xdgRuntimeDir.enable = true;
 
-  # Needed by home-manager
   users.users.jfelice = {
-    name = "jfelice";
+    name = "jfelice";        # Needed by home-manager
+    home = "/Users/jfelice";
     shell = pkgs.zsh;
   };
 

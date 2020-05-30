@@ -10,13 +10,13 @@ let
         if (builtins.isNull result)
         then s
         else (fixVariableReferences "${builtins.elemAt result 0}\${${builtins.elemAt result 1}}${builtins.elemAt result 2}");
-    vars = config.environment.variables // (if (hasAttr "systemPath" config.environment)
+    vars = config.environment.variables // {
+      HOME = (builtins.getAttr user config.users.users).home;
+    } // (if (hasAttr "systemPath" config.environment)
     then {
-      HOME = "/Users/${user}";
       PATH = config.environment.systemPath;
     }
     else {
-      HOME = "/home/${user}";
     });
 
     directives = map (name: "env ${name}=${fixVariableReferences (getAttr name vars)}") (attrNames vars);
