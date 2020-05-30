@@ -9,12 +9,12 @@ cask '1password'
 cask 'alfred'
 cask 'anki'
 cask 'caffeine'
-cask 'cura-lulzbot'
 cask 'docker'
 cask 'mactex'
 cask 'osxfuse'
 cask 'slack'
 cask 'spotify'
+cask 'ultimaker-cura'
 
 brew 'openscad'
 
