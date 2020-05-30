@@ -29,7 +29,7 @@ set-option global ui_options terminal_assistant=none terminal_status_on_top=true
 set-face global LineNumbersWrapped black
 add-highlighter global/matching show-matching
 
-hook global WinCreate '\*stdin\*' %{
+hook global WinCreate '\*stdin(?:-\d+)?\*' %{
     set-option window filetype scrollback
 }
 hook global WinSetOption filetype=(?!scrollback).* %{
