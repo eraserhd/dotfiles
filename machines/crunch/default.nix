@@ -5,9 +5,9 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
-      ./common.nix
-      ./home-manager/nixos
+    [
+      ../../common.nix
+      ../../home-manager/nixos
       /etc/nixos/hardware-configuration.nix
     ];
 
@@ -67,7 +67,7 @@
 
   nix.nixPath = [
     "nixpkgs=/home/jfelice/src/dotfiles/nixpkgs"
-    "nixos-config=/home/jfelice/src/dotfiles/crunch.nix"
+    "nixos-config=/home/jfelice/src/dotfiles/machines/crunch/default.nix"
   ];
 
   nixpkgs.config.allowUnfree = true;
