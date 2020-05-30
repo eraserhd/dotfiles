@@ -2,15 +2,24 @@
 
 with lib;
 let
-  environment = let
+  environment = user: let
+    fixVariableReferences = s:
+      let
+        result = builtins.match "(.*)\\$([a-zA-Z0-9_]+)(.*)" s;
+      in
+        if (builtins.isNull result)
+        then s
+        else (fixVariableReferences "${builtins.elemAt result 0}\${${builtins.elemAt result 1}}${builtins.elemAt result 2}");
     vars = config.environment.variables // (if (hasAttr "systemPath" config.environment)
     then {
+      HOME = "/Users/${user}";
       PATH = config.environment.systemPath;
     }
     else {
+      HOME = "/home/${user}";
     });
 
-    directives = map (name: "env ${name}=${getAttr name vars}") (attrNames vars);
+    directives = map (name: "env ${name}=${fixVariableReferences (getAttr name vars)}") (attrNames vars);
   in
     concatStringsSep "\n" directives;
 in {
@@ -769,7 +778,7 @@ in {
 
           # env
 
-          ${environment}
+          ${environment "jfelice"}
 
           #: Specify environment variables to set in all child processes. Note
           #: that environment variables are expanded recursively, so if you
