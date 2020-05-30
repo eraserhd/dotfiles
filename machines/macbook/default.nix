@@ -2,19 +2,19 @@
 
 {
   imports = [
-    ./2u
-    ./common.nix
-    ./home-manager/nix-darwin
+    ../../2u
+    ../../common.nix
+    ../../home-manager/nix-darwin
   ];
 
   # Use a custom configuration.nix location.
-  # $ darwin-rebuild switch -I darwin-config=$HOME/src/dotfiles/macbook.nix
-  environment.darwinConfig = "$HOME/src/dotfiles/macbook.nix";
+  # $ darwin-rebuild switch -I darwin-config=$HOME/src/dotfiles/machines/macbook/default.nix
+  environment.darwinConfig = "$HOME/src/dotfiles/machines/macbook/default.nix";
 
   nix.nixPath = [ {
     nixpkgs = "$HOME/src/dotfiles/nixpkgs";
     darwin = "$HOME/src/dotfiles/nix-darwin";
-    darwin-config = "$HOME/src/dotfiles/macbook.nix";
+    darwin-config = "$HOME/src/dotfiles/machines/macbook/default.nix";
   } ];
 
   # Auto upgrade nix package and the daemon service.
@@ -39,7 +39,7 @@
   services.autossh.sessions = [ {
     name = "crunch";
     user = "jfelice";
-    extraArguments = " -i ${toString ./ssh/files/id_rsa-macbook}" +
+    extraArguments = " -i ${toString ../../networking/ssh/files/id_rsa-macbook}" +
                      " -o 'StreamLocalBindUnlink yes'" +
                      " -o 'ExitOnForwardFailure yes'" +
                      " -o 'ServerAliveCountMax 3'" +
