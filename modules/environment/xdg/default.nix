@@ -12,11 +12,10 @@ in {
       assertion = pkgs.stdenv.isDarwin;
       message = "environment.xdgRuntimeDir.enable is only useful on Darwin";
     }];
-    environment.loginShellInit = ''
-      mkdir -p "$HOME/.run"
+    environment.variables.XDG_RUNTIME_DIR = "\$HOME/.run";
+    system.activationScripts.userLaunchd.text = ''
+      mkdir -p ~/.run
+      launchctl setenv XDG_RUNTIME_DIR ~/.run
     '';
-    environment.variables = {
-      XDG_RUNTIME_DIR = "\$HOME/.run";
-    };
   };
 }
