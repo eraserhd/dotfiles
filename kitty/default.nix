@@ -27,8 +27,10 @@ in {
     {
       environment.systemPackages = [ pkgs.kitty ];
       home-manager.users.jfelice = { pkgs, ... }: {
-        home.file.".config/kitty/macos-launch-services-cmdline".text = ''
-          --listen-on=unix:/Users/jfelice/.run/kitty --single-instance
+        home.file.".config/kitty/macos-launch-services-cmdline".text = let
+          homeDirectory = config.users.users.jfelice.home;
+        in ''
+          --listen-on=unix:/Users/jfelice/.run/kitty --single-instance --directory=${homeDirectory}/src
         '';
         home.file.".config/kitty/kitty.conf".text = ''
           #: Fonts {{{
