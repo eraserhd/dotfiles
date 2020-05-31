@@ -13,8 +13,8 @@ exec kak -e 'hook -once window NormalIdle .* %{
         cursorLine=$(( kak_buf_line_count - scrolledBy - lines + cursorY ))
         printf "select %d.%d,%d.%d\n" "$cursorLine" "$cursorX" "$cursorLine" "$cursorX"
         printf "execute-keys vt\n"
-        if [ $cursorY -gt 1 ]; then
-            printf "execute-keys %dvk\n" $(( cursorY - 1 ))
+        if [ $cursorY -gt 2 ]; then
+            printf "execute-keys %dvk\n" $(( cursorY - 2 ))
         fi
     }
 }'
