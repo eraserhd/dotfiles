@@ -24,12 +24,8 @@ let
     concatStringsSep "\n" directives;
 in {
   config = mkMerge [
-    (mkIf (!pkgs.stdenv.isDarwin) {
-
-      # Need the terminal type
-      environment.systemPackages = [ pkgs.kitty ];
-    })
     {
+      environment.systemPackages = [ pkgs.kitty ];
       home-manager.users.jfelice = { pkgs, ... }: {
         home.file.".config/kitty/macos-launch-services-cmdline".text = ''
           --listen-on=unix:/Users/jfelice/.run/kitty --single-instance
