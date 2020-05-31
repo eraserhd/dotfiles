@@ -1,0 +1,20 @@
+#!/bin/sh
+
+exec kak -e 'hook -once window NormalIdle .* %{
+    evaluate-commands %sh{
+        tmp="$kak_client_env_KITTY_PIPE_DATA"
+        scrolledBy="${tmp%%:*}"
+        tmp="${tmp#*:}"
+        cursorX="${tmp%%,*}"
+        tmp="${tmp#*,}"
+        cursorY="${tmp%%:*}"
+        tmp="${tmp#*:}"
+        lines="${tmp%%,*}"
+        cursorLine=$(( kak_buf_line_count - scrolledBy - lines + cursorY ))
+        printf "select %d.%d,%d.%d\n" "$cursorLine" "$cursorX" "$cursorLine" "$cursorX"
+        printf "execute-keys vt\n"
+        if [ $cursorY -gt 1 ]; then
+            printf "execute-keys %dvk\n" $(( cursorY - 1 ))
+        fi
+    }
+}'

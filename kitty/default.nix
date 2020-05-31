@@ -218,7 +218,7 @@ in {
           #: recommended as it can slow down resizing of the terminal and also
           #: use large amounts of RAM.
 
-          scrollback_pager kak -e 'hook -once window NormalIdle .* %{ execute-keys INPUT_LINE_NUMBER vj }'
+          map shift+ctrl+h launch --stdin-add-formatting --stdin-source=@screen_scrollback --type=overlay kak-scrollback-pager
 
           #: Program with which to view scrollback in a new window. The
           #: scrollback buffer is passed as STDIN to this program. If you change
