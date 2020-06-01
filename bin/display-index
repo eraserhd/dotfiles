@@ -1,0 +1,24 @@
+#!/usr/bin/env gxi
+
+(import :std/misc/process
+        :std/text/json)
+
+(def display-uuids
+  '(("143ABEAF-FB72-322D-E98C-F6A9BBDF00CA" . "laptop")
+    ("49D1D28D-1A48-5D9A-4EB3-F347611CD9E0" . "monitor")))
+
+(def (main name)
+  (def (named? display)
+    (def uuid (hash-get display 'uuid))
+    (alet* ((uuid      (hash-get display 'uuid))
+            (found     (assoc uuid display-uuids))
+            (this-name (cdr found)))
+      (equal? this-name name)))
+  (def displays (run-process ["yabai" "-m" "query" "--displays"]
+                             coprocess: read-json))
+  (def found-display (find named? displays))
+  (if found-display
+    (displayln (hash-get found-display 'index))
+    (begin
+      (displayln "Not found")
+      (exit 1))))
