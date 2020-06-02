@@ -1,6 +1,6 @@
 #!/usr/bin/env gxi
 
-(import :std/iter
+(import :std/amb
         :std/misc/process
         :std/sort
         :std/text/json)
@@ -17,20 +17,23 @@
      ((> ax bx) #f)
      (else      (< ay by)))))
 
+(def (choose xs)
+  (amb-do (map (cut lambda _ <>) xs)))
+
 (def (ordered-workspace-windows)
-  (def displays      (run-process ["yabai" "-m" "query" "--displays"] coprocess: read-json))
-  (def spaces        (run-process ["yabai" "-m" "query" "--spaces"] coprocess: read-json))
-  (def windows       (run-process ["yabai" "-m" "query" "--windows"] coprocess: read-json))
-  (def space-windows '())
-  (for* ((display displays)
-         (space   spaces)
-         (window  windows)
-         when     (and (equal? (hash-get display 'uuid) workspace-display-uuid)
-                       (equal? 1 (hash-get space 'visible))
-                       (equal? (hash-get display 'index) (hash-get space 'display))
-                       (equal? (hash-get window 'space) (hash-get space 'index))))
-     (set! space-windows (cons window space-windows)))
-  (sort space-windows window-appears-earlier?))
+  (def displays (run-process ["yabai" "-m" "query" "--displays"] coprocess: read-json))
+  (def spaces (run-process ["yabai" "-m" "query" "--spaces"] coprocess: read-json))
+  (def windows (run-process ["yabai" "-m" "query" "--windows"] coprocess: read-json))
+  (def (space-window)
+    (def display (choose displays))
+    (def space (choose spaces))
+    (def window (choose windows))
+    (required (equal? (hash-get display 'uuid) workspace-display-uuid))
+    (required (equal? 1 (hash-get space 'visible)))
+    (required (equal? (hash-get display 'index) (hash-get space 'display)))
+    (required (equal? (hash-get window 'space) (hash-get space 'index)))
+    window)
+  (sort (amb-collect (space-window)) window-appears-earlier?))
 
 (def (nth-window coll index)
   (if (< -1 index (length coll))
