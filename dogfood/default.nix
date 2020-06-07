@@ -15,6 +15,10 @@
           jdk = self.jdk8;
         });
 
+        gerbil = super.gerbil.overrideAttrs (oldAttrs: {
+          src = super.pkgs.fetchFromGitHub (import ./gerbil.nix);
+        });
+
         add-missing = self.callPackage "${super.fetchFromGitHub (import ./add-missing.nix)}/derivation.nix" {};
 
         inherit gerbilPackages;
