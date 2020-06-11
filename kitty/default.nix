@@ -424,8 +424,8 @@ in {
           #: layouts in alphabetical order. For a list of available layouts, see
           #: the https://sw.kovidgoyal.net/kitty/index.html#layouts.
 
-          # window_resize_step_cells 2
-          # window_resize_step_lines 2
+          window_resize_step_cells 1
+          window_resize_step_lines 1
 
           #: The step size (in units of cell width/cell height) to use when
           #: resizing windows. The cells value is used for horizontal resizing
@@ -446,7 +446,7 @@ in {
           #: that setting a non-zero window margin overrides this and causes all
           #: borders to be drawn.
 
-          window_margin_width 3.0
+          window_margin_width 5.0
 
           #: The window margin (in pts) (blank area outside the border)
 
