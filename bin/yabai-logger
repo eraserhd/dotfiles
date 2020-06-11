@@ -1,0 +1,88 @@
+#!/usr/bin/env gxi
+(import :std/iter
+        :std/misc/process
+        :std/sugar
+        :std/text/json)
+
+(def yabai-events
+  ["application_launched"
+   "application_terminated"
+   "application_front_switched"
+   "application_activated"
+   "application_deactivated"
+   "application_visible"
+   "application_hidden"
+   "window_created"
+   "window_destroyed"
+   "window_focused"
+   "window_moved"
+   "window_resized"
+   "window_minimized"
+   "window_deminimized"
+   "window_title_changed"
+   "space_changed"
+   "display_added"
+   "display_removed"
+   "display_moved"
+   "display_resized"
+   "display_changed"
+   "mouse_down"
+   "mouse_up"
+   "mouse_dragged"
+   "mouse_moved"
+   "mission_control_enter"
+   "mission_control_check_for_exit"
+   "mission_control_exit"
+   "dock_did_restart"
+   "menu_opened"
+   "menu_bar_hidden_changed"
+   "dock_did_change_pref"
+   "system_woke"
+   "daemon_message"])
+
+(def yabai-variables
+  ["YABAI_BUTTON"
+   "YABAI_DISPLAY_ID"
+   "YABAI_POINT"
+   "YABAI_PROCESS_ID"
+   "YABAI_RECENT_DISPLAY_ID"
+   "YABAI_RECENT_PROCESS_ID"
+   "YABAI_RECENT_SPACE_ID"
+   "YABAI_SPACE_ID"
+   "YABAI_WINDOW_ID"
+   "YABAI_PROCESS_ID"])
+
+(def (remove)
+  (def (remove-signal event)
+    (try
+      (run-process ["yabai" "-m" "signal" "--remove" (string-append "yabai-logger:" event)])
+      (catch _
+        #f)))
+  (def signals (run-process ["yabai" "-m" "signal" "--list"] coprocess: read-json))
+  (for-each remove-signal yabai-events))
+
+(def (install)
+  (def (add-signal event)
+    (def label-spec (string-append "label=yabai-logger:" event))
+    (def action-spec (string-append "action=yabai-logger --log " event))
+    (run-process ["yabai" "-m" "signal" "--add" label-spec (string-append "event=" event) action-spec]))
+  (remove)
+  (for-each add-signal yabai-events))
+
+(def (log-event event)
+  (def message (string-append "yabai: " event ": "))
+  (for* ((var yabai-variables)
+         when (getenv var #f))
+    (set! message (string-append message var "='" (getenv var #f) "'")))
+  (run-process ["logger" message]))
+
+(def (syntax)
+  (displayln "Syntax is `yabai-logger { --install | --remove }`")
+  (exit 1))
+
+(def (main . args)
+  (match args
+    (["--install"]   (install))
+    (["--remove"]    (remove))
+    (["--log" event] (log-event event))
+    (_               (syntax))))
