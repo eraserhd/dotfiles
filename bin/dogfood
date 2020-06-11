@@ -7,6 +7,13 @@ owner=eraserhd
 repo=$(pwd)
 repo=${repo##*/}
 
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -o|--owner) owner="$2"; shift;;
+    esac
+    shift
+done
+
 nix-prefetch-github --nix --rev "$rev" "$owner" "$repo" |
     sed -n -e '/fetchFromGitHub {/,/}/{
         s/^.*fetchFromGitHub //
