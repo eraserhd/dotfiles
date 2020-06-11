@@ -26,13 +26,11 @@
   programs.bash.enable = true;
 
   # System settings
-  system.defaults.dock.autohide = true;
   system.defaults.finder.AppleShowAllExtensions = true;
   system.defaults.NSGlobalDomain.AppleKeyboardUIMode = 3;
   system.defaults.NSGlobalDomain.InitialKeyRepeat = 20;
   system.defaults.NSGlobalDomain.KeyRepeat = 1;
   system.defaults.NSGlobalDomain."com.apple.keyboard.fnState" = true;
-  system.defaults.NSGlobalDomain._HIHideMenuBar = true;
 
   bubbles.enable = true;
 
