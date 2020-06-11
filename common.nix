@@ -16,6 +16,7 @@ with lib;
     ./kakoune
     ./kitty
     ./modules/environment/xdg
+    ./modules/bubbles
     ./networking/plan9
     ./networking/ses-email
     ./networking/ssh

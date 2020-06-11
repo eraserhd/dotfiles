@@ -34,6 +34,8 @@
   system.defaults.NSGlobalDomain."com.apple.keyboard.fnState" = true;
   system.defaults.NSGlobalDomain._HIHideMenuBar = true;
 
+  bubbles.enable = true;
+
   services.nix-daemon.enable = true;
 
   services.autossh.sessions = [ {
