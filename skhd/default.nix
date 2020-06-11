@@ -23,6 +23,8 @@
       ctrlw < p : yabai -m space --focus code ; yabai -m window --focus recent ; skhd -k escape
       ctrlw < r : kitty @ --to unix:/Users/jfelice/.run/kitty focus-window \
         --match=title:kak_repl_window ; skhd -k escape
+      ctrlw < shift - r : kitty @ --to unix:/Users/jfelice/.run/kitty focus-window \
+        --match=title:shell_window ; skhd -k escape
 
       ctrlw < 0x1D : yabai -m window --focus $(yabai-window-number 0) ; skhd -k escape
       ctrlw < 1 : yabai -m window --focus $(yabai-window-number 1) ; skhd -k escape
