@@ -1,12 +1,12 @@
 0	search/1/w	#!/usr/bin/gsi	Scheme script text executable
-!:mime text/x-script.scheme
+!:mime application/x-scheme
 0	search/1/w	#!/usr/bin/env\ gsi	Scheme script text executable
-!:mime text/x-script.scheme
+!:mime application/x-scheme
 0	search/1/w	#!/usr/bin/gsi-script	Scheme script text executable
-!:mime text/x-script.scheme
+!:mime application/x-scheme
 0	search/1/w	#!/usr/bin/env\ gsi-script	Scheme script text executable
-!:mime text/x-script.scheme
+!:mime application/x-scheme
 0	search/1/w	#!/usr/bin/gxi	Scheme script text executable
-!:mime text/x-script.scheme
+!:mime application/x-scheme
 0	search/1/w	#!/usr/bin/env\ gxi	Scheme script text executable
-!:mime text/x-script.scheme
+!:mime application/x-scheme
