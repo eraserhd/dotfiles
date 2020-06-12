@@ -1,5 +1,6 @@
-{ pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
+with lib;
 let
   compiledMagicFile = pkgs.runCommand "compiled-magic" {} ''
     mkdir -p $out
@@ -10,7 +11,7 @@ let
     )
   '';
 in {
-  config = {
+  config = mkIf config.bubbles.enable {
     environment.systemPackages = [ pkgs.file ];
     home-manager.users.jfelice = { pkgs, ... }: {
       home.file.".magic.mgc".source = "${compiledMagicFile}/magic.mgc";
