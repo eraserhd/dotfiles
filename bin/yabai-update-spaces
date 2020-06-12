@@ -31,7 +31,8 @@
   (yabai-configure space: index "layout" "float"))
 
 (def (configure-code-space index)
-  (yabai-configure space: index "layout" "bsp"))
+  (yabai-configure space: index "layout" "bsp")
+  (yabai-configure space: index "bottom_padding" 55))
 
 (def (label-space index label)
   (yabai "-m" "space" index "--label" label))
