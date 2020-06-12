@@ -86,7 +86,6 @@ in {
       ag
       bat
       direnv
-      file
       fzf
       jq
       killall

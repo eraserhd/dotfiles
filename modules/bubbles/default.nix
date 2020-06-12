@@ -4,6 +4,9 @@ with lib;
 let
   cfg = config.bubbles;
 in {
+  imports = [
+    ./file
+  ];
   options = {
     bubbles.enable = mkEnableOption "Bubbles";
   };
