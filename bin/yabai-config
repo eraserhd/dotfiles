@@ -36,7 +36,7 @@ yabai -m rule --add label=Discord app=Discord space=browse
 
 # general space settings
 yabai -m config layout                       bsp
-yabai -m config top_padding                  2
+yabai -m config top_padding                  28
 yabai -m config bottom_padding               2
 yabai -m config left_padding                 2
 yabai -m config right_padding                2
