@@ -6,7 +6,7 @@
     services.yabai = {
       enable = true;
       package = pkgs.yabai;
-      extraConfig = "exec ${pkgs.zsh}/bin/zsh -l -c 'yabai-config'";
+      extraConfig = "exec ${pkgs.zsh}/bin/zsh -l -c 'yabai-config --init'";
     };
   }
   else {
