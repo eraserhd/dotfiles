@@ -1,48 +1,81 @@
-#!/bin/sh
+#!/usr/bin/env gxi
+(import :std/misc/process)
 
-# global settings
-yabai -m config mouse_follows_focus          on
-yabai -m config focus_follows_mouse          off
-yabai -m config window_placement             second_child
-yabai -m config window_topmost               off
-yabai -m config window_opacity               off
-yabai -m config window_opacity_duration      0.0
-yabai -m config active_window_opacity        1.0
-yabai -m config normal_window_opacity        0.90
-yabai -m config split_ratio                  0.50
-yabai -m config auto_balance                 off
-yabai -m config mouse_modifier               fn
-yabai -m config mouse_action1                move
-yabai -m config mouse_action2                resize
+(def (yabai . args)
+  (def (->arg x)
+    (if (string? x)
+      x
+      (object->string x)))
+  (run-process ["yabai" (map ->arg args) ...]))
 
-yabai -m config window_shadow                off
-yabai -m config window_border                on
-yabai -m config active_window_border_color   0xff8c6cff
+(def (yabai-configure option value space: (space #f))
+  (apply yabai "-m" "config" [(if space ["--space" space] []) ... option value]))
 
-yabai-update-spaces
-yabai -m signal --add event=display_added action=yabai-update-spaces
-yabai -m signal --add event=display_removed action=yabai-update-spaces
+(def (yabai-add-rule label: (label #f)
+                     app: (app #f)
+                     space: (space #f)
+                     manage: (manage no-change:))
+  (apply yabai "-m" "rule" "--add" 
+         [(if label
+            [(string-append "label=" label)]
+            []) ...
+          (if app
+            [(string-append "app=" app)]
+            []) ...
+          (if space
+            [(string-append "space=" space)]
+            []) ...
+          (case manage
+            ((no-change:) [])
+            ((#t)         ["manage=on"])
+            ((#f)         ["manage=off"])) ...]))
 
-# (1) Coding
-yabai -m rule --add label=kitty app=kitty space=^code
+(def (yabai-add-signal event: event
+                       action: action)
+  (yabai "-m" "signal" "--add" (string-append "event=" event) (string-append "action=" action)))
 
-# (2) Laptop window
-yabai -m rule --add label=Music app=Music space=browse
-yabai -m rule --add label=Spotify app=Spotify space=browse
-yabai -m rule --add label=Anki app=Anki space=browse
-yabai -m rule --add label=Books app=Books space=browse
-yabai -m rule --add label=Messages app=Messages space=browse
-yabai -m rule --add label=Discord app=Discord space=browse
+(def (main . args)
+  ; global settings
+  (yabai-configure "mouse_follows_focus"        "on")
+  (yabai-configure "focus_follows_mouse"        "off")
+  (yabai-configure "window_placement"           "second_child")
+  (yabai-configure "window_topmost"             "off")
+  (yabai-configure "window_opacity"             "off")
+  (yabai-configure "window_opacity_duration"    "0.0")
+  (yabai-configure "active_window_opacity"      "1.0")
+  (yabai-configure "normal_window_opacity"      "0.90")
+  (yabai-configure "split_ratio"                "0.50")
+  (yabai-configure "auto_balance"               "off")
+  (yabai-configure "mouse_modifier"             "fn")
+  (yabai-configure "mouse_action1"              "move")
+  (yabai-configure "mouse_action2"              "resize")
 
-# general space settings
-yabai -m config layout                       bsp
-yabai -m config top_padding                  28
-yabai -m config bottom_padding               2
-yabai -m config left_padding                 2
-yabai -m config right_padding                2
-yabai -m config window_gap                   2
+  (yabai-configure "window_shadow"              "off")
+  (yabai-configure "window_border"              "on")
+  (yabai-configure "active_window_border_color" "0xff8c6cff")
 
-# Things not to manage
-yabai -m rule --add label=preferences app='System Preferences' manage=off
+  (run-process ["yabai-update-spaces"])
+  (yabai-add-signal event: "display_added" action: "yabai-update-spaces")
+  (yabai-add-signal event: "display_removed" action: "yabai-update-spaces")
 
-echo "yabai configuration loaded.."
+  ; (1) Coding
+  (yabai-add-rule label: "kitty" app: "kitty" space: "^code")
+
+  ; (2) Laptop window
+  (yabai-add-rule label: "Music" app: "Music" space: "browse")
+  (yabai-add-rule label: "Spotify" app: "Spotify" space: "browse")
+  (yabai-add-rule label: "Anki" app: "Anki" space: "browse")
+  (yabai-add-rule label: "Books" app: "Books" space: "browse")
+  (yabai-add-rule label: "Messages" app: "Messages" space: "browse")
+  (yabai-add-rule label: "Discord" app: "Discord" space: "browse")
+
+  ; general space settings
+  (yabai-configure "layout"         "bsp")
+  (yabai-configure "top_padding"    "28")
+  (yabai-configure "bottom_padding" "2")
+  (yabai-configure "left_padding"   "2")
+  (yabai-configure "right_padding"  "2")
+  (yabai-configure "window_gap"     "2")
+
+  ; Things not to manage
+  (yabai-add-rule label: "preferences" app: "System Preferences" manage: #f))
