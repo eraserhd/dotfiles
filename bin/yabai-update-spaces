@@ -30,7 +30,7 @@
 (def (configure-laptop-space index)
   (yabai-configure space: index "layout" "float"))
 
-(def (configure-code-space index)
+(def (configure-monitor-space index)
   (yabai-configure space: index "layout" "bsp")
   (yabai-configure space: index "bottom_padding" 55))
 
@@ -52,7 +52,7 @@
                   (begin
                     (when (not code-space)
                       (set! code-space .index))
-                    (configure-code-space .index)))))
+                    (configure-monitor-space .index)))))
             (yabai-query "--spaces"))
   (when code-space
     (label-space code-space "code"))
