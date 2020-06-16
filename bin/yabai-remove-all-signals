@@ -1,9 +1,0 @@
-#!/usr/bin/env gxi
-(import :std/misc/process
-        :std/text/json)
-
-(def (main)
-  (def (remove-signal n)
-    (run-process ["yabai" "-m" "signal" "--remove" (number->string n)]))
-  (def signals (run-process ["yabai" "-m" "signal" "--list"] coprocess: read-json))
-  (for-each remove-signal (reverse (iota (length signals)))))
