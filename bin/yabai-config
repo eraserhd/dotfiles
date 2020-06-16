@@ -1,5 +1,9 @@
 #!/usr/bin/env gxi
-(import :std/misc/process)
+(import :std/text/json
+        :std/misc/process
+        :std/sugar)
+
+(def laptop-display "143ABEAF-FB72-322D-E98C-F6A9BBDF00CA")
 
 (def (yabai . args)
   (def (->arg x)
@@ -7,6 +11,10 @@
       x
       (object->string x)))
   (run-process ["yabai" (map ->arg args) ...]))
+
+(def (yabai-query . args)
+  (run-process ["yabai" "-m" "query" args ...]
+               coprocess: read-json))
 
 (def (yabai-configure option value space: (space #f))
   (apply yabai "-m" "config" [(if space ["--space" space] []) ... option value]))
@@ -34,7 +42,48 @@
                        action: action)
   (yabai "-m" "signal" "--add" (string-append "event=" event) (string-append "action=" action)))
 
-(def (main . args)
+(def (get-laptop-display-number)
+  (alet* ((displays (yabai-query "--displays"))
+          (display  (find (lambda (display)
+                            (string=? (hash-get display 'uuid) laptop-display))
+                          displays)))
+    (hash-get display 'index)))
+
+(def (configure-laptop-space index)
+  (yabai-configure space: index "layout" "float"))
+
+(def (configure-monitor-space index)
+  (yabai-configure space: index "layout" "bsp")
+  (yabai-configure space: index "bottom_padding" 55))
+
+(def (label-space index label)
+  (yabai "-m" "space" index "--label" label))
+
+(def (update-spaces)
+  (def laptop-display-number (get-laptop-display-number))
+  (def code-space #f)
+  (def browse-space #f)
+  (def meeting-space #f)
+  (for-each (lambda (space)
+              (let-hash space
+                (if (= .display laptop-display-number)
+                  (begin
+                    (when (not browse-space)
+                      (set! browse-space .index))
+                    (configure-laptop-space .index))
+                  (begin
+                    (when (not code-space)
+                      (set! code-space .index))
+                    (configure-monitor-space .index)))))
+            (yabai-query "--spaces"))
+  (when code-space
+    (label-space code-space "code"))
+  (when browse-space
+    (label-space browse-space "browse"))
+  (when meeting-space
+    (label-space meeting-space "meeting")))
+
+(def (reconfigure)
   ; global settings
   (yabai-configure "mouse_follows_focus"        "on")
   (yabai-configure "focus_follows_mouse"        "off")
@@ -54,9 +103,9 @@
   (yabai-configure "window_border"              "on")
   (yabai-configure "active_window_border_color" "0xff8c6cff")
 
-  (run-process ["yabai-update-spaces"])
-  (yabai-add-signal event: "display_added" action: "yabai-update-spaces")
-  (yabai-add-signal event: "display_removed" action: "yabai-update-spaces")
+  (update-spaces)
+  (yabai-add-signal event: "display_added" action: "yabai-config --signal display_added")
+  (yabai-add-signal event: "display_removed" action: "yabai-config --signal display_removed")
 
   ; (1) Coding
   (yabai-add-rule label: "kitty" app: "kitty" space: "^code")
@@ -79,3 +128,14 @@
 
   ; Things not to manage
   (yabai-add-rule label: "preferences" app: "System Preferences" manage: #f))
+
+(def (handle-signal signal-name)
+  (match signal-name
+   ("display_added"   (update-spaces))
+   ("display_removed" (update-spaces))
+   (_                 #f)))
+
+(def (main . args)
+  (match args
+   (["--init"]               (reconfigure))
+   (["--signal" signal-name] (handle-signal signal-name))))
