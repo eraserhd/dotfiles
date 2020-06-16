@@ -145,8 +145,10 @@
                       (set! browse-space .index))
                     (configure-laptop-space .index))
                   (begin
-                    (when (not code-space)
-                      (set! code-space .index))
+                    (cond
+                     ((not code-space)    (set! code-space .index))
+                     ((not meeting-space) (set! meeting-space .index))
+                     (else                #f))
                     (configure-monitor-space .index)))))
             (yabai-query "--spaces"))
   (when code-space
