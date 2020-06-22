@@ -102,8 +102,8 @@
       warp < 8 : yabai -m window --space code ; yabai -m window --warp $(yabai-window-number 8) ; skhd -k escape
       warp < 9 : yabai -m window --space code ; yabai -m window --warp $(yabai-window-number 9) ; skhd -k escape
 
-      f13 ; keycommand
-      keycommand < f14 ; default
+      cmd + shift + alt + ctrl - k ; keycommand
+      keycommand < escape ; default
       keycommand < h : yabai -m space --focus code ; yabai -m window --focus west
       keycommand < j : yabai -m space --focus code ; yabai -m window --focus south
       keycommand < k : yabai -m space --focus code ; yabai -m window --focus north
