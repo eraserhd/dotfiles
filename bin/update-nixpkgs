@@ -12,7 +12,9 @@
   (parameterize ((current-directory "~/src/dotfiles/nixpkgs"))
     (update-branch "master"))
   (parameterize ((current-directory "~/src/dotfiles"))
-    (sh "nixos-rebuild" "build")
+    (if (darwin?)
+      (sh "darwin-rebuild" "build")
+      (sh "nixos-rebuild" "build"))
     (sh "git" "add" "nixpkgs")
     (sh "git" "commit" "-m" "Bump nixpkgs" "nixpkgs")))
 

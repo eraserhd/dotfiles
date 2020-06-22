@@ -1,5 +1,5 @@
 (import :std/misc/process)
-(export sh)
+(export darwin? sh)
 
 (def (sh . command-line)
   (display "#")
@@ -9,3 +9,8 @@
             command-line)
   (newline)
   (run-process command-line stdout-redirection: #f stderr-redirection: #f))
+
+(def darwin?
+  (let (uname (delay (run-process ["uname"])))
+    (lambda ()
+      (string=? "Darwin\n" (force uname)))))
