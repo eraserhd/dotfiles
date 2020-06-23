@@ -111,7 +111,7 @@ type set     $attr
 type matches '.*action=showdata.*'
 type set     text
 attr add     session=kakoune
-attr add     'evaluate=''plumb-showdata ; try %{set-option window plumb_wdir %§'$wdir'§}'''
+attr add     'evaluate=''plumb-showdata ; try %{set-option buffer plumb_wdir %§'$wdir'§}'''
 plumb to edit
 
 # faces -> new mail window for message
