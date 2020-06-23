@@ -1,7 +1,8 @@
 (import :std/iter
         :std/text/json
         :std/misc/process
-        :std/sugar)
+        :std/sugar
+        "yabai")
 (export main)
 
 (def yabai-events
@@ -53,13 +54,6 @@
    "YABAI_PROCESS_ID"])
 
 (def laptop-display "143ABEAF-FB72-322D-E98C-F6A9BBDF00CA")
-
-(def (yabai . args)
-  (def (->arg x)
-    (if (string? x)
-      x
-      (with-output-to-string (cut display x))))
-  (run-process ["yabai" (map ->arg args) ...]))
 
 (def (yabai-query . args)
   (run-process ["yabai" "-m" "query" args ...]
