@@ -1,7 +1,6 @@
 (import :std/amb
-        :std/misc/process
         :std/sort
-        :std/text/json)
+        "yabai")
 (export main)
 
 (def workspace-display-uuid "49D1D28D-1A48-5D9A-4EB3-F347611CD9E0")
@@ -20,9 +19,9 @@
   (amb-do (map (cut lambda _ <>) xs)))
 
 (def (ordered-workspace-windows)
-  (def displays (run-process ["yabai" "-m" "query" "--displays"] coprocess: read-json))
-  (def spaces (run-process ["yabai" "-m" "query" "--spaces"] coprocess: read-json))
-  (def windows (run-process ["yabai" "-m" "query" "--windows"] coprocess: read-json))
+  (def displays (yabai-query "--displays"))
+  (def spaces   (yabai-query "--spaces"))
+  (def windows  (yabai-query "--windows"))
   (begin-amb
     (def display (choose displays))
     (def space (choose spaces))
