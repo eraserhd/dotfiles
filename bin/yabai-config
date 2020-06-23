@@ -194,7 +194,7 @@
 
   ; general space settings
   (yabai-configure "layout"         "bsp")
-  (yabai-configure "top_padding"    "28")
+  (yabai-configure "top_padding"    "2")
   (yabai-configure "bottom_padding" "2")
   (yabai-configure "left_padding"   "2")
   (yabai-configure "right_padding"  "2")
@@ -210,7 +210,13 @@
    ("display_removed" (update-spaces))
    (_                 #f)))
 
+(def (usage)
+  (displayln "yabai-config { --init }")
+  (newline)
+  (exit 1))
+
 (def (main . args)
   (match args
    (["--init"]               (reconfigure))
-   (["--signal" signal-name] (handle-signal signal-name))))
+   (["--signal" signal-name] (handle-signal signal-name))
+   (_                        (usage))))
