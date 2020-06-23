@@ -55,36 +55,6 @@
 
 (def laptop-display "143ABEAF-FB72-322D-E98C-F6A9BBDF00CA")
 
-(def (yabai-query . args)
-  (run-process ["yabai" "-m" "query" args ...]
-               coprocess: read-json))
-
-(def (yabai-configure option value space: (space #f))
-  (apply yabai "-m" "config" [(if space ["--space" space] []) ... option value]))
-
-(def (yabai-add-rule label: (label #f)
-                     app: (app #f)
-                     space: (space #f)
-                     manage: (manage no-change:))
-  (apply yabai "-m" "rule" "--add" 
-         [(if label
-            [(string-append "label=" label)]
-            []) ...
-          (if app
-            [(string-append "app=" app)]
-            []) ...
-          (if space
-            [(string-append "space=" space)]
-            []) ...
-          (case manage
-            ((no-change:) [])
-            ((#t)         ["manage=on"])
-            ((#f)         ["manage=off"])) ...]))
-
-(def (yabai-add-signal event: event
-                       action: action)
-  (yabai "-m" "signal" "--add" (string-append "event=" event) (string-append "action=" action)))
-
 (def (remove)
   (def (remove-signal event)
     (try
