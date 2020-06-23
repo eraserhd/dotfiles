@@ -1,8 +1,8 @@
-#!/usr/bin/env gxi
 (import :std/iter
         :std/text/json
         :std/misc/process
         :std/sugar)
+(export main)
 
 (def yabai-events
   ["application_launched"
@@ -58,7 +58,7 @@
   (def (->arg x)
     (if (string? x)
       x
-      (object->string x)))
+      (with-output-to-string (cut display x))))
   (run-process ["yabai" (map ->arg args) ...]))
 
 (def (yabai-query . args)

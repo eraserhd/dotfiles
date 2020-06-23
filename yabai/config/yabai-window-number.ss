@@ -1,9 +1,8 @@
-#!/usr/bin/env gxi
-
 (import :std/amb
         :std/misc/process
         :std/sort
         :std/text/json)
+(export main)
 
 (def workspace-display-uuid "49D1D28D-1A48-5D9A-4EB3-F347611CD9E0")
 
