@@ -43,8 +43,8 @@
         yabai -m window --space code ; \
         yabai -m window --focus $window_id ; \
         skhd -k escape
-      ctrlw < m : yabai -m space --focus meeting ; skhd -k escape
-      ctrlw < shift - m : \
+      ctrlw < f : yabai -m space --focus meeting ; skhd -k escape
+      ctrlw < shift - f : \
         window_id=$(yabai -m query --windows --window |jq .id) ; \
         yabai -m window --space meeting ; \
         yabai -m window --focus $window_id ; \
