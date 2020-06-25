@@ -1,5 +1,3 @@
-Include ~/src/centralpark/script/ssh_config
 IPQoS=none
 Host *
     ForwardAgent yes
-
