@@ -47,6 +47,10 @@
           rep = rep;
         };
 
+        parinfer-rust = super.parinfer-rust.overrideAttrs (oldAttrs: {
+          src = super.pkgs.fetchFromGitHub (import ./parinfer-rust.nix);
+        });
+
         rep = rep;
 
         yabai = super.yabai.overrideAttrs (oldAttrs: {
