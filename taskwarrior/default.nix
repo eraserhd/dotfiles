@@ -17,7 +17,7 @@
         report.review.description=Weekly review
         report.review.columns=id,project,description.combined
         report.review.sort=project+
-        report.review.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING ) and recur.none and -next:
+        report.review.filter=( reviewed.none: or reviewed.before:now-6days ) and ( +PENDING or +WAITING ) and recur.none and -next
 
         # Github
         uda.github.type=string
