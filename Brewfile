@@ -17,4 +17,3 @@ cask 'spotify'
 cask 'ultimaker-cura'
 
 brew 'openscad'
-brew 'somdoron/formulae/spacebar'
