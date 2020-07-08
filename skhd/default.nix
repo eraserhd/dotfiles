@@ -15,10 +15,10 @@
       ctrlw < escape ; default
       ctrlw < f14 ; default
 
-      ctrlw < h : yabai -m space --focus code ; yabai -m window --focus west ; skhd -k escape
-      ctrlw < j : yabai -m space --focus code ; yabai -m window --focus south ; skhd -k escape
-      ctrlw < k : yabai -m space --focus code ; yabai -m window --focus north ; skhd -k escape
-      ctrlw < l : yabai -m space --focus code ; yabai -m window --focus east ; skhd -k escape
+      ctrlw < h : yabai -m window --focus west ; skhd -k escape
+      ctrlw < j : yabai -m window --focus south ; skhd -k escape
+      ctrlw < k : yabai -m window --focus north ; skhd -k escape
+      ctrlw < l : yabai -m window --focus east ; skhd -k escape
 
       ctrlw < p : yabai -m space --focus code ; yabai -m window --focus recent ; skhd -k escape
       ctrlw < r : kitty @ --to unix:/Users/jfelice/.run/kitty focus-window \
