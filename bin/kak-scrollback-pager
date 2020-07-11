@@ -1,6 +1,8 @@
 #!/bin/sh
 
 exec kak -e 'hook -once window NormalIdle .* %{
+    try %{ declare-option int scrollback_mode_depth 0 }
+    set-option window scrollback_mode_depth 0
     evaluate-commands %sh{
         tmp="$kak_client_env_KITTY_PIPE_DATA"
         scrolledBy="${tmp%%:*}"
@@ -17,4 +19,5 @@ exec kak -e 'hook -once window NormalIdle .* %{
             printf "execute-keys %dvk\n" $(( cursorY - 2 ))
         fi
     }
+    map window normal <esc> ": quit<ret>"
 }'
