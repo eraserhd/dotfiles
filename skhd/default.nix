@@ -15,6 +15,12 @@
       ctrlw < escape ; default
       ctrlw < f14 ; default
 
+      :: ctrlww : skhd -k 'ctrl - w'
+      ctrlw < ctrl - w ; ctrlww
+      ctrlw < w ; ctrlww
+      ctrlw < 0x2F ; ctrlww
+      ctrlww < ctrl - w -> ; default
+
       ctrlw < h : yabai -m window --focus west ; skhd -k escape
       ctrlw < j : yabai -m window --focus south ; skhd -k escape
       ctrlw < k : yabai -m window --focus north ; skhd -k escape
