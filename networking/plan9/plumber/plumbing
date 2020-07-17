@@ -22,7 +22,7 @@ plumb start web $data
 type is text
 data matches '(https?|ftp|file|gopher|mailto|news|nntp|telnet|wais|prospero)://[a-zA-Z0-9_@\-]+([.:][a-zA-Z0-9_@\-]+)*/?[a-zA-Z0-9_?,%#~&/\-+=]+([:.][a-zA-Z0-9_?,%#~&/\-+=]+)*'
 plumb to web
-plumb start open-in-chrome-tab $0
+plumb start /Applications/Firefox.app/Contents/MacOS/firefox -new-tab $0
 
 # files tagged by line number:columnumber or linenumber.columnumber, twice, go to editor
 #arg isfile     $1
