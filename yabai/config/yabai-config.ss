@@ -155,6 +155,7 @@
   (yabai-add-rule label: "Books" app: "Books" space: "browse")
   (yabai-add-rule label: "Messages" app: "Messages" space: "browse")
   (yabai-add-rule label: "Discord" app: "Discord" space: "browse")
+  (yabai-add-rule label: "Firefox" app: "Firefox" space: "browse")
 
   ; general space settings
   (yabai-configure "layout"         "bsp")
