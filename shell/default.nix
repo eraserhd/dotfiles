@@ -92,6 +92,7 @@ in {
       nix-prefetch-github
       posix_man_pages
       shellcheck
+      tree
       wget
     ];
   } // (if (builtins.hasAttr "defaultUserShell" options.users)
