@@ -220,7 +220,7 @@ in {
           #: recommended as it can slow down resizing of the terminal and also
           #: use large amounts of RAM.
 
-          map shift+ctrl+h launch --stdin-add-formatting --stdin-source=@screen_scrollback --type=overlay kak-scrollback-pager
+          map shift+ctrl+h launch --stdin-add-formatting --stdin-source=@screen_scrollback --cwd=current --type=overlay kak-scrollback-pager
 
           #: Program with which to view scrollback in a new window. The
           #: scrollback buffer is passed as STDIN to this program. If you change

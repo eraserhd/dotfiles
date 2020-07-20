@@ -18,6 +18,7 @@ exec kak -e 'hook -once window NormalIdle .* %{
         if [ $cursorY -gt 2 ]; then
             printf "execute-keys %dvk\n" $(( cursorY - 2 ))
         fi
+        printf "set-option buffer plumb_wdir %%{%s}\n" "'"$(pwd)"'"
     }
     map window normal <esc> ": quit<ret>"
 }'
