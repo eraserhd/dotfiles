@@ -136,7 +136,7 @@ define-command -override -hidden copy-dquote-to-snarf %{
 }
 
 hook -group snarf global FocusIn .* copy-snarf-to-dquote
-hook -group snarf global NormalIdle .* copy-dquote-to-snarf
+hook -group snarf global RegisterModified '"' copy-dquote-to-snarf
 
 # Soft tabs
 # ‾‾‾‾‾‾‾‾‾
