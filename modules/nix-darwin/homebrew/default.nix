@@ -6,7 +6,7 @@ let
 
   caskAppdirStatement = if (isNull cfg.cask_args.appdir)
                         then ""
-                        else "cask_args: appdir: '${cfg.cask_args.appdir}'";
+                        else "cask_args appdir: '${cfg.cask_args.appdir}'";
 
   statements = word: values: (concatMapStrings (value: "${word} '${value}'\n") values);
 
