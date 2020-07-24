@@ -1,9 +1,15 @@
 { pkgs, lib, ... }:
 
+with lib;
 {
-  config = lib.mkIf (!pkgs.stdenv.isDarwin) {
-    environment.systemPackages = [
-      pkgs.texlive.combined.scheme-tetex
-    ];
-  };
+  config = mkMerge [
+    (mkIf pkgs.stdenv.isDarwin {
+      homebrew.casks = [ "mactex" ];
+    })
+    (mkIf (!pkgs.stdenv.isDarwin) {
+      environment.systemPackages = [
+        pkgs.texlive.combined.scheme-tetex
+      ];
+    })
+  ];
 }
