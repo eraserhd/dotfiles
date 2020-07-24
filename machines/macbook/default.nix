@@ -27,6 +27,7 @@
   programs.bash.enable = true;
 
   homebrew.enable = true;
+  homebrew.cask_args.appdir = /Applications;
 
   # System settings
   system.defaults.finder.AppleShowAllExtensions = true;
