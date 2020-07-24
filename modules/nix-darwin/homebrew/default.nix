@@ -59,7 +59,7 @@ in {
     homebrew.taps = [ "homebrew/bundle" ];
 
     system.activationScripts.extraUserActivation.text = ''
-      HOMEBREW_NO_AUTO_UPDATE=1 /usr/local/bin/brew bundle --file="${brewfile}"
+      PATH="/usr/local/bin:$PATH" HOMEBREW_NO_AUTO_UPDATE=1 brew bundle --no-lock --file="${brewfile}"
     '';
   };
 }

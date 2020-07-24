@@ -5,7 +5,6 @@ tap 'homebrew/bundle'
 tap 'homebrew/cask-fonts'
 cask 'font-mononoki'
 
-cask '1password'
 cask 'alfred'
 cask 'anki'
 cask 'caffeine'

@@ -1,9 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
-  config = {
-    nixpkgs.config.allowUnfree = true;
-    # killed: 9 :(
-    #environment.systemPackages = [ pkgs._1password ];
+  config = lib.mkIf pkgs.stdenv.isDarwin {
+    homebrew.casks = [ "1password" ];
   };
 }
