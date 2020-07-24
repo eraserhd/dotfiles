@@ -13,7 +13,6 @@ cask 'docker'
 cask 'mactex'
 cask 'osxfuse'
 cask 'slack'
-cask 'spotify'
 cask 'ultimaker-cura'
 
 brew 'openscad'
