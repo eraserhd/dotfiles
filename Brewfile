@@ -2,7 +2,7 @@ cask_args appdir: '/Applications'
 
 tap 'homebrew/bundle'
 
-tap 'caskroom/fonts'
+tap 'homebrew/cask-fonts'
 cask 'font-mononoki'
 
 cask '1password'
