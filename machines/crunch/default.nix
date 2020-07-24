@@ -8,6 +8,7 @@
     [
       ../../common.nix
       ../../home-manager/nixos
+      ../../modules/nixos
       /etc/nixos/hardware-configuration.nix
     ];
 

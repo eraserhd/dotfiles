@@ -5,6 +5,7 @@
     ../../2u
     ../../common.nix
     ../../home-manager/nix-darwin
+    ../../modules/nix-darwin
   ];
 
   # Use a custom configuration.nix location.
@@ -24,6 +25,8 @@
   local.systemDisplayName = "macbook";
 
   programs.bash.enable = true;
+
+  homebrew.enable = true;
 
   # System settings
   system.defaults.finder.AppleShowAllExtensions = true;
