@@ -487,6 +487,9 @@ hook -group diff-text-objects global WinSetOption filetype=diff %{
     }
 }
 
+add-highlighter shared/diff/comment regex '^#[^\n]*' 0:comment
+add-highlighter shared/diff/feedback regex '^>[^\n]*' 0:title
+
 # Jumpclient
 # ‾‾‾‾‾‾‾‾‾‾
 
