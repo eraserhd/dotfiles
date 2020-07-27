@@ -24,7 +24,7 @@ let
     concatStringsSep "\n" directives;
 in {
   config = {
-    environment.systemPackages = with pkgs; [ kitty mononoki ];
+    environment.systemPackages = with pkgs; [ kitty ];
     home-manager.users.jfelice = { pkgs, ... }: {
       home.file.".config/kitty/macos-launch-services-cmdline".text = let
         homeDirectory = config.users.users.jfelice.home;

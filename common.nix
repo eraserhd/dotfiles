@@ -10,6 +10,7 @@ with lib;
     ./coq
     ./dogfood
     ./emacs
+    ./fonts
     ./git
     ./gnupg
     ./gtypist
