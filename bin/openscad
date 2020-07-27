@@ -1,0 +1,5 @@
+#!/bin/sh
+
+readonly OPENSCAD=/Applications/OpenSCAD.app/Contents/MacOS/OpenSCAD
+
+exec "$OPENSCAD" "$@"
