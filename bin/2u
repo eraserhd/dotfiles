@@ -6,6 +6,22 @@ readonly ANYCONNECT_PREFIX=/opt/cisco/anyconnect
 readonly ONELOGIN_ITEM_ID=ok36jmwmuzf6pjjxmzzr64lxby
 
 #-----------------------------------------------------------------------------
+#                            ** OneLogin Helpers **
+#-----------------------------------------------------------------------------
+
+oneLoginUser() {
+    op get item "$ONELOGIN_ITEM_ID" |jq -r '.details.fields[] | select(.designation == "username") | .value'
+}
+
+oneLoginPassword() {
+    op get item "$ONELOGIN_ITEM_ID" |jq -r '.details.fields[] | select(.designation == "password") | .value'
+}
+
+oneLoginOTP() {
+    op get totp "$ONELOGIN_ITEM_ID"
+}
+
+#-----------------------------------------------------------------------------
 #                                  ** VPN **
 #-----------------------------------------------------------------------------
 
@@ -20,9 +36,9 @@ cmd_vpn_connect() {
         return 1
     fi
     (
-        op get item "$ONELOGIN_ITEM_ID" |jq -r '.details.fields[] | select(.designation == "username") | .value'
-        op get item "$ONELOGIN_ITEM_ID" |jq -r '.details.fields[] | select(.designation == "password") | .value'
-        op get totp "$ONELOGIN_ITEM_ID"
+        oneLoginUser
+        oneLoginPassword
+        oneLoginOTP
         printf y\\n
     ) | "$ANYCONNECT_PREFIX/bin/vpn" -s connect "2U Corp Network"
 }
