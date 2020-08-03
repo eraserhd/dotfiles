@@ -1,11 +1,56 @@
 #!/bin/sh
 
-if [ -z "$1" ]; then
-    printf '2u: usage is `2u subcommand [args ...]`\n' >&2
+set -e
+
+readonly ANYCONNECT_PREFIX=/opt/cisco/anyconnect
+readonly ONELOGIN_ITEM_ID=ok36jmwmuzf6pjjxmzzr64lxby
+
+#-----------------------------------------------------------------------------
+#                                  ** VPN **
+#-----------------------------------------------------------------------------
+
+cmd_vpn_usage() {
+    printf '2u vpn: usage: `2u vpn { connect | disconnect }`\n'
     exit 1
-fi
+}
 
-command="$1"
-shift
-exec "2u-$command" "$@"
+cmd_vpn_connect() {
+    if ! op get item "$ONELOGIN_ITEM_ID" >/dev/null 2>&1; then
+        printf 'vpn: cannot get OneLogin item, are you signed in?\n' >&2
+        return 1
+    fi
+    (
+        op get item "$ONELOGIN_ITEM_ID" |jq -r '.details.fields[] | select(.designation == "username") | .value'
+        op get item "$ONELOGIN_ITEM_ID" |jq -r '.details.fields[] | select(.designation == "password") | .value'
+        op get totp "$ONELOGIN_ITEM_ID"
+        printf y\\n
+    ) | "$ANYCONNECT_PREFIX/bin/vpn" -s connect "2U Corp Network"
+}
 
+cmd_vpn_disconnect() {
+    "$ANYCONNECT_PREFIX/bin/vpn" disconnect "2U Corp Network"
+}
+
+cmd_vpn() {
+    case "$1" in
+    connect)    cmd_vpn_connect ;;
+    disconnect) cmd_vpn_disconnect ;;
+    *)          cmd_vpn_usage ;;
+    esac
+}
+
+#-----------------------------------------------------------------------------
+# Entry point
+
+main() {
+    if [ -z "$1" ]; then
+        printf '2u: usage is `2u subcommand [args ...]`\n' >&2
+        exit 1
+    fi
+
+    command="$1"
+    shift
+    cmd_$command "$@"
+}
+
+main "$@"
