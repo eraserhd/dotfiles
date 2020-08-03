@@ -6,6 +6,7 @@ with lib;
     ./1password
     ./3d
     ./alfred
+    ./anki
     ./aws
     ./browser
     ./clojure
