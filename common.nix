@@ -4,6 +4,7 @@ with lib;
 {
   imports = [
     ./1password
+    ./alfred
     ./aws
     ./browser
     ./clojure
