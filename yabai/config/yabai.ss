@@ -19,20 +19,16 @@
 (def (yabai-configure option value space: (space #f))
   (apply yabai "-m" "config" [(if space ["--space" space] []) ... option value]))
 
-(def (yabai-add-rule label: (label #f)
-                     app: (app #f)
-                     space: (space #f)
-                     manage: (manage no-change:))
+(def (yabai-add-rule label:  (label #f)
+                     app:    (app #f)
+                     space:  (space #f)
+                     manage: (manage no-change:)
+                     grid:   (grid #f))
   (apply yabai "-m" "rule" "--add"
-         [(if label
-            [(string-append "label=" label)]
-            []) ...
-          (if app
-            [(string-append "app=" app)]
-            []) ...
-          (if space
-            [(string-append "space=" space)]
-            []) ...
+         [(if label [(string-append "label=" label)] []) ...
+          (if app [(string-append "app=" app)] []) ...
+          (if space [(string-append "space=" space)] []) ...
+          (if grid [(string-append "grid=" grid)] []) ...
           (case manage
             ((no-change:) [])
             ((#t)         ["manage=on"])

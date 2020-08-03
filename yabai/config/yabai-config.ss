@@ -149,14 +149,14 @@
   (yabai-add-rule label: "kitty" app: "kitty" space: "^code")
 
   ; (2) Laptop window
-  (yabai-add-rule label: "Anki" app: "Anki" space: "browse")
-  (yabai-add-rule label: "Books" app: "Books" space: "browse")
-  (yabai-add-rule label: "Calendar" app: "Calendar" space: "browse")
-  (yabai-add-rule label: "Discord" app: "Discord" space: "browse")
-  (yabai-add-rule label: "Firefox" app: "Firefox" space: "browse")
-  (yabai-add-rule label: "Messages" app: "Messages" space: "browse")
-  (yabai-add-rule label: "Music" app: "Music" space: "browse")
-  (yabai-add-rule label: "Spotify" app: "Spotify" space: "browse")
+  (yabai-add-rule label: "Anki" app: "Anki" space: "browse" grid: "1:1:0:0:1:1")
+  (yabai-add-rule label: "Books" app: "Books" space: "browse" grid: "1:1:0:0:1:1")
+  (yabai-add-rule label: "Calendar" app: "Calendar" space: "browse" grid: "1:1:0:0:1:1")
+  (yabai-add-rule label: "Discord" app: "Discord" space: "browse" grid: "1:1:0:0:1:1")
+  (yabai-add-rule label: "Firefox" app: "Firefox" space: "browse" grid: "1:1:0:0:1:1")
+  (yabai-add-rule label: "Messages" app: "Messages" space: "browse" grid: "1:1:0:0:1:1")
+  (yabai-add-rule label: "Music" app: "Music" space: "browse" grid: "1:1:0:0:1:1")
+  (yabai-add-rule label: "Spotify" app: "Spotify" space: "browse" grid: "1:1:0:0:1:1")
 
   ; general space settings
   (yabai-configure "layout"         "bsp")
