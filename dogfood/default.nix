@@ -29,7 +29,7 @@
           };
         };
 
-        kakoune-unwrapped = super.kakoune-unwrapped.overrideAttrs (oldAttrs: {
+        kakoune = super.kakoune.overrideAttrs (oldAttrs: {
           src = super.pkgs.fetchFromGitHub (import ./kakoune.nix);
           enableParallelBuilding = true;
         });

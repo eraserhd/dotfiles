@@ -10,18 +10,16 @@ in {
     {
       nixpkgs.overlays = [
         (self: super: {
-          kakoune = super.wrapKakoune self.kakoune-unwrapped {
-            configure = {
-              plugins = with self.kakounePlugins; [
-                #case-kak
-                kak-ansi
-                kak-fzf
-                my-kak-plumb
-                parinfer-rust
-              ]
-              # Remove this hack when Graal is on MacOS
-              ++ lib.optional (!pkgs.stdenv.isDarwin) rep;
-            };
+          kakoune-with-plugins = super.kakoune-with-plugins.override {
+            plugins = with pkgs.kakounePlugins; [
+              #case-kak
+              kak-ansi
+              kak-fzf
+              my-kak-plumb
+              parinfer-rust
+            ]
+            # Remove this hack when Graal is on MacOS
+            ++ lib.optional (!pkgs.stdenv.isDarwin) rep;
           };
           kakouneWrapper = super.callPackage ./wrapper {};
         })
