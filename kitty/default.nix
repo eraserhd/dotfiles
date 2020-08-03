@@ -31,6 +31,7 @@ in {
       in ''
         --listen-on=unix:/Users/jfelice/.run/kitty --single-instance --directory=${homeDirectory}/src
       '';
+      home.file.".config/kitty/window_position.py".source = ./window_position.py;
       home.file.".config/kitty/kitty.conf".text = ''
         font_family mononoki
         font_size   12.0
