@@ -55,6 +55,16 @@
 
 (def laptop-display "143ABEAF-FB72-322D-E98C-F6A9BBDF00CA")
 
+(def browse-space-apps
+  ["Anki"
+   "Books"
+   "Calendar"
+   "Discord"
+   "Firefox"
+   "Messages"
+   "Music"
+   "Spotify"])
+
 (def (remove)
   (def (remove-signal event)
     (try
@@ -149,14 +159,9 @@
   (yabai-add-rule label: "kitty" app: "kitty" space: "^code")
 
   ; (2) Laptop window
-  (yabai-add-rule label: "Anki" app: "Anki" space: "browse" grid: "1:1:0:0:1:1")
-  (yabai-add-rule label: "Books" app: "Books" space: "browse" grid: "1:1:0:0:1:1")
-  (yabai-add-rule label: "Calendar" app: "Calendar" space: "browse" grid: "1:1:0:0:1:1")
-  (yabai-add-rule label: "Discord" app: "Discord" space: "browse" grid: "1:1:0:0:1:1")
-  (yabai-add-rule label: "Firefox" app: "Firefox" space: "browse" grid: "1:1:0:0:1:1")
-  (yabai-add-rule label: "Messages" app: "Messages" space: "browse" grid: "1:1:0:0:1:1")
-  (yabai-add-rule label: "Music" app: "Music" space: "browse" grid: "1:1:0:0:1:1")
-  (yabai-add-rule label: "Spotify" app: "Spotify" space: "browse" grid: "1:1:0:0:1:1")
+  (for-each (lambda (app-name)
+              (yabai-add-rule label: app-name app: app-name space: "browse" grid: "1:1:0:0:1:1"))
+            browse-space-apps)
 
   ; general space settings
   (yabai-configure "layout"         "bsp")
