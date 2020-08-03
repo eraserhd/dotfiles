@@ -18,6 +18,7 @@ with lib;
     ./gtypist
     ./kakoune
     ./kitty
+    ./macos
     ./modules/environment/xdg
     ./modules/bubbles
     ./networking/plan9
