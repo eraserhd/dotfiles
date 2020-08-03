@@ -10,6 +10,8 @@
       zle -N edit-command-line
       bindkey '^xe' edit-command-line
       bindkey '^x^e' edit-command-line
+      bindkey '\ef' emacs-forward-word
+      bindkey '\eb' emacs-backward-word
 
       setopt auto_cd
       cdpath=(~/src)
