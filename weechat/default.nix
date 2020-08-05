@@ -1,7 +1,25 @@
 { lib, config, pkgs, ... }:
 
 with lib;
-{
+let
+  edit-weechat = pkgs.stdenv.mkDerivation {
+    name = "edit-weechat";
+    src = pkgs.fetchFromGitHub {
+      owner = "keith";
+      repo = "edit-weechat";
+      rev = "c1f6966d32f8c54a480fa60b20eb9e82c4a16a33";
+      sha256 = "1s42r0l0xkhlp6rbc23cm4vlda91il6cg53w33hqfhd2wz91s66w";
+    };
+    buildPhase = ''
+      :
+    '';
+    installPhase = ''
+      mkdir -p $out
+      cp edit.py $out/
+    '';
+  };
+
+in {
   config = mkIf config.local.plan9.terminal.enable {
     nixpkgs.overlays = [
       (self: super: {
@@ -31,6 +49,7 @@ with lib;
       home.file.".weechat/plugins.conf".source = ./config/plugins.conf;
       home.file.".weechat/python.conf".source = ./config/python.conf;
       home.file.".weechat/python/autoload/url_hint.py".source = ./config/python/autoload/url_hint.py;
+      home.file.".weechat/python/autoload/edit.py".source = "${edit-weechat}/edit.py";
       home.file.".weechat/relay.conf".source = ./config/relay.conf;
       home.file.".weechat/script.conf".source = ./config/script.conf;
       home.file.".weechat/sec.conf".source = ./config/sec.conf;
