@@ -162,7 +162,7 @@
   (for-each (lambda (app-name)
               (yabai-add-rule label: app-name app: app-name space: "browse" grid: "1:1:0:0:1:1"))
             browse-space-apps)
-  
+
   (yabai-add-rule label: "Firefox-Meet" app: "Firefox" title: "Meet .*" space: "focus")
 
   ; general space settings
