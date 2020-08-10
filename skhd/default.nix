@@ -93,20 +93,58 @@
 
       ctrlw < i ; warp
       warp < escape ; default
-      warp < h : yabai -m window --warp west ; skhd -k escape
-      warp < j : yabai -m window --warp south ; skhd -k escape
-      warp < k : yabai -m window --warp north ; skhd -k escape
-      warp < l : yabai -m window --warp east ; skhd -k escape
-      warp < 0x1D : yabai -m window --space code ; yabai -m window --warp $(yabai-window-number 0) ; skhd -k escape
-      warp < 1 : yabai -m window --space code ; yabai -m window --warp $(yabai-window-number 1) ; skhd -k escape
-      warp < 2 : yabai -m window --space code ; yabai -m window --warp $(yabai-window-number 2) ; skhd -k escape
-      warp < 3 : yabai -m window --space code ; yabai -m window --warp $(yabai-window-number 3) ; skhd -k escape
-      warp < 4 : yabai -m window --space code ; yabai -m window --warp $(yabai-window-number 4) ; skhd -k escape
-      warp < 5 : yabai -m window --space code ; yabai -m window --warp $(yabai-window-number 5) ; skhd -k escape
-      warp < 6 : yabai -m window --space code ; yabai -m window --warp $(yabai-window-number 6) ; skhd -k escape
-      warp < 7 : yabai -m window --space code ; yabai -m window --warp $(yabai-window-number 7) ; skhd -k escape
-      warp < 8 : yabai -m window --space code ; yabai -m window --warp $(yabai-window-number 8) ; skhd -k escape
-      warp < 9 : yabai -m window --space code ; yabai -m window --warp $(yabai-window-number 9) ; skhd -k escape
+      warp < h : yabai -m window --warp west ; \
+        yabai -m space code --balance ; \
+        skhd -k escape
+      warp < j : yabai -m window --warp south ; \
+        yabai -m space code --balance ; \
+        skhd -k escape
+      warp < k : yabai -m window --warp north ; \
+        yabai -m space code --balance ; \
+        skhd -k escape
+      warp < l : yabai -m window --warp east ; \
+        yabai -m space code --balance ; \
+        skhd -k escape
+      warp < 0x1D : yabai -m window --space code ; \
+        yabai -m window --warp $(yabai-window-number 0) ; \
+        yabai -m space code --balance ; \
+        skhd -k escape
+      warp < 1 : yabai -m window --space code ; \
+        yabai -m window --warp $(yabai-window-number 1) ; \
+        yabai -m space code --balance ; \
+        skhd -k escape
+      warp < 2 : yabai -m window --space code ; \
+        yabai -m window --warp $(yabai-window-number 2) ; \
+        yabai -m space code --balance ; \
+        skhd -k escape
+      warp < 3 : yabai -m window --space code ; \
+        yabai -m window --warp $(yabai-window-number 3) ; \
+        yabai -m space code --balance ; \
+        skhd -k escape
+      warp < 4 : yabai -m window --space code ; \
+        yabai -m window --warp $(yabai-window-number 4) ; \
+        yabai -m space code --balance ; \
+        skhd -k escape
+      warp < 5 : yabai -m window --space code ; \
+        yabai -m window --warp $(yabai-window-number 5) ; \
+        yabai -m space code --balance ; \
+        skhd -k escape
+      warp < 6 : yabai -m window --space code ; \
+        yabai -m window --warp $(yabai-window-number 6) ; \
+        yabai -m space code --balance ; \
+        skhd -k escape
+      warp < 7 : yabai -m window --space code ; \
+        yabai -m window --warp $(yabai-window-number 7) ; \
+        yabai -m space code --balance ; \
+        skhd -k escape
+      warp < 8 : yabai -m window --space code ; \
+        yabai -m window --warp $(yabai-window-number 8) ; \
+        yabai -m space code --balance ; \
+        skhd -k escape
+      warp < 9 : yabai -m window --space code ; \
+        yabai -m window --warp $(yabai-window-number 9) ; \
+        yabai -m space code --balance ; \
+        skhd -k escape
 
       cmd + shift + alt + ctrl - k ; keycommand
       keycommand < escape ; default
