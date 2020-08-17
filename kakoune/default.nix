@@ -12,7 +12,7 @@ in {
         (self: super: {
           kakoune-with-plugins = super.kakoune-with-plugins.override {
             plugins = with pkgs.kakounePlugins; [
-              #case-kak
+              case-kak
               kak-ansi
               kak-fzf
               my-kak-plumb
