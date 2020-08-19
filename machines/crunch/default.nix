@@ -84,11 +84,13 @@
   users.users = {
     jfelice = {
       isNormalUser = true;
+      home = "/home/jfelice";
       extraGroups = [ "docker" "wheel" ];
       openssh.authorizedKeys.keys = config.local.authorizedKeys.jfelice;
     };
     alex = {
       isNormalUser = true;
+      home = "/home/alex";
       extraGroups = [ "docker" "wheel" ];
       openssh.authorizedKeys.keys = config.local.authorizedKeys.alex;
     };
