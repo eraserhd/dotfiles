@@ -20,7 +20,7 @@ let
   };
 
 in {
-  config = mkIf config.local.plan9.terminal.enable {
+  config = {
     nixpkgs.overlays = [
       (self: super: {
         weechat = (super.weechat.override {
