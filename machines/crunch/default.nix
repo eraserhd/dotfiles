@@ -95,6 +95,10 @@
     root.openssh.authorizedKeys.keys = config.local.authorizedKeys.jfelice;
   };
 
+  security.sudo.extraConfig = ''
+    jfelice  ALL=(ALL:ALL) NOPASSWD: ALL
+  '';
+
   home-manager.verbose = true;
 
   # This value determines the NixOS release with which your system is to be
