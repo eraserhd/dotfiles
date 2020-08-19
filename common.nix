@@ -19,6 +19,7 @@ with lib;
     ./gtypist
     ./kakoune
     ./kitty
+    ./i3
     ./macos
     ./modules/environment/xdg
     ./modules/bubbles
