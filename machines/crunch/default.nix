@@ -96,7 +96,7 @@
   system.stateVersion = "19.03";
 
   local.plan9.cpu.enable = true;
-  local.sendOutgoingMailWithSES.enable = true;
+  #local.sendOutgoingMailWithSES.enable = true;
   local.updateDNS.enable = true;
   local.tmux.paneZeroCommand = "weechat";
 }
