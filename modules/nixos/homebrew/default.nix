@@ -1,5 +1,6 @@
-{ lib, ... }:
+{ config, lib, ... }:
 
+with lib;
 {
   options.homebrew = {
     enable = mkEnableOption "Homebrew";
@@ -28,7 +29,7 @@
   config = {
     assertions = [
       {
-        assertion = !cfg.enable;
+        assertion = !config.homebrew.enable;
         message = "Cannnot enable Homebrew support on NixOS";
       }
     ];
