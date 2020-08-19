@@ -66,6 +66,14 @@
     '';
   };
 
+  services.xserver.enable = true;
+  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.windowManager.i3.enable = true;
+  services.xserver.autorun = false;
+  services.xserver.displayManager.sessionCommands = ''
+    ${pkgs.xlibs.xset}/bin/xset r rate 200 60
+  '';
+
   nix.nixPath = [
     "nixpkgs=/home/jfelice/src/dotfiles/nixpkgs"
     "nixos-config=/home/jfelice/src/dotfiles/machines/crunch/default.nix"
