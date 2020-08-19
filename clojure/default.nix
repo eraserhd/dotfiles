@@ -21,11 +21,11 @@ with lib;
         home.file.".lein/profiles.clj".source = ./profiles.clj;
       };
     }
-    (mkIf (!pkgs.stdenv.isDarwin) {
-      environment.systemPackages = with pkgs; [
-        clj-kondo
-        rep
-      ];
-    })
+    #(mkIf (!pkgs.stdenv.isDarwin) {
+    #  environment.systemPackages = with pkgs; [
+    #    clj-kondo
+    #    rep
+    #  ];
+    #})
   ];
 }
