@@ -1,7 +1,13 @@
 { pkgs, lib, ... }:
 
+with lib;
 {
-  config = lib.mkIf pkgs.stdenv.isDarwin {
-    homebrew.casks = [ "1password" ];
-  };
+  config = mkMerge [
+    {
+      environment.systemPackages = with pkgs; [ _1password ];
+    }
+    (mkIf pkgs.stdenv.isDarwin {
+      homebrew.casks = [ "1password" ];
+    })
+  ];
 }
