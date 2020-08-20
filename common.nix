@@ -18,9 +18,10 @@ with lib;
     ./git
     ./gnupg
     ./gtypist
+    ./i3
     ./kakoune
     ./kitty
-    ./i3
+    ./linux
     ./macos
     ./modules/environment/xdg
     ./modules/bubbles
