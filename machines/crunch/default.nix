@@ -73,7 +73,6 @@
   services.xserver.displayManager.sessionCommands = ''
     ${pkgs.xlibs.xset}/bin/xset r rate 200 60
   '';
-  fonts.fontconfig.antialias = false;
 
   nix.nixPath = [
     "nixpkgs=/home/jfelice/src/dotfiles/nixpkgs"
