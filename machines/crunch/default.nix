@@ -65,6 +65,7 @@
     '';
   };
 
+  local.bluetooth.enable = true;
   local.services.X11.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
 
