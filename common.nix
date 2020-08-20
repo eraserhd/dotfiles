@@ -41,6 +41,7 @@ with lib;
     ./tracker
     ./vim
     ./weechat
+    ./x
     ./yabai
     ./zsh
   ];
