@@ -3,6 +3,9 @@
 {
   config = {
     fonts.enableFontDir = true;
-    fonts.fonts = with pkgs; [ mononoki ];
+    fonts.fonts = with pkgs; [
+      inconsolata
+      mononoki
+    ];
   };
 }

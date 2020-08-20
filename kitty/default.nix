@@ -22,6 +22,17 @@ let
     directives = map (name: "env ${name}=${fixVariableReferences (getAttr name vars)}") (attrNames vars);
   in
     concatStringsSep "\n" directives;
+
+  fontInfo = (if pkgs.stdenv.isDarwin
+  then {
+    font_family = "mononoki";
+    font_size = "12.0";
+  }
+  else {
+    font_family = "Inconsolata Regular";
+    font_size = "11.0";
+  });
+
 in {
   config = {
     environment.systemPackages = with pkgs; [ kitty ];
@@ -33,8 +44,8 @@ in {
       '';
       home.file.".config/kitty/window_position.py".source = ./window_position.py;
       home.file.".config/kitty/kitty.conf".text = ''
-        font_family mononoki
-        font_size   12.0
+        font_family ${fontInfo.font_family}
+        font_size   ${fontInfo.font_size}
         # symbol_map U+E0A0-U+E0A3,U+E0C0-U+E0C7 PowerlineSymbols
         # box_drawing_scale 0.001, 1, 1.5, 2
 
