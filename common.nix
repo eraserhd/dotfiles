@@ -9,6 +9,7 @@ with lib;
     ./anki
     ./aws
     ./browser
+    ./chromium
     ./clojure
     ./coq
     ./dogfood
