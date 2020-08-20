@@ -54,7 +54,6 @@
   ];
 
   documentation.dev.enable = true;
-  virtualisation.docker.enable = true;
 
   services.openssh = {
     enable = true;
@@ -68,9 +67,6 @@
 
   local.services.X11.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
-  services.xserver.displayManager.sessionCommands = ''
-    ${pkgs.xlibs.xset}/bin/xset r rate 200 60
-  '';
 
   nix.nixPath = [
     "nixpkgs=/home/jfelice/src/dotfiles/nixpkgs"
