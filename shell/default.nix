@@ -93,6 +93,7 @@ in {
       posix_man_pages
       shellcheck
       tree
+      unzip
       wget
     ];
   } // (if (builtins.hasAttr "defaultUserShell" options.users)
