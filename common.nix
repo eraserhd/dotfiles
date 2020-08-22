@@ -41,6 +41,7 @@ with lib;
     ./tmux
     ./tracker
     ./vim
+    ./vnc
     ./weechat
     ./x
     ./yabai
