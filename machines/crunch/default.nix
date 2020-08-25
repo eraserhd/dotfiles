@@ -15,6 +15,17 @@
   boot.crashDump.enable = true;
   boot.kernelPackages = pkgs.linuxPackages_5_7;
 
+  ## Try this next
+  #boot.kernelPatches = [ {
+  #  name = "rcu-nohang";
+  #  patch = null;
+  #  extraConfig = ''
+  #    RCU_EXPERT y
+  #    RCU_NOCB_CPU y
+  #  '';
+  #} ];
+  #boot.kernelParams = [ "rcu_nocbs=0-23" ];
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 15;
