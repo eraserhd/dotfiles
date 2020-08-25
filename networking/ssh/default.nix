@@ -23,5 +23,27 @@ with lib;
         ("COMMAND=\"#{pkgs.coreutils}/bin/false\" " + (builtins.readFile ./files/id_rsa-macbook.pub))
       ];
     };
+
+    home-manager.users.jfelice = { pkgs, ... }: {
+      # .profile is sourced by Xsession, I'm told
+      home.file.".profile".text = ''
+        isSshAgentAlive() {
+          if [ -z "$SSH_AGENT_PID" ]; then
+            return 1
+          fi
+          ps -p "$SSH_AGENT_PID" |grep -q ssh-agent
+        }
+
+        ensureSshAgent() {
+          if ! isSshAgentAlive; then
+            eval "$(ssh-agent)"
+          fi
+        }
+
+        case "$0" in
+        *Xsession) ensureSshAgent;;
+        esac
+      '';
+    };
   };
 }
