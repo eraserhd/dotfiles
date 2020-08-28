@@ -7,6 +7,10 @@
       "caffeine"
       "osxfuse"
     ];
+
+    system.defaults.NSGlobalDomain = {
+      AppleInterfaceStyle = "Dark";
+    };
   }
   else {
   });
