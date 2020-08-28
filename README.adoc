@@ -36,3 +36,45 @@ App Store
 ---------
 
 * Better Snap Tool
+
+
+2020 Install
+------------
+
+* Install developer tools (xcode-select --install)
+* Install nix
+* Install homebrew
+
+* brew cask install 1password
+
+* Unlock 1password with camera from phone
+
+* Download gpg key
+* Download RSA key
+
+* eval $(ssh-agent)
+* ssh-add /path/to/RSA-key
+
+* git clone git@github.com:eraserhd/dotfiles.git
+
+* nix-env -i gnupg
+* nix-env -i git-crypt
+* gpg --import /path/to/gpg.key
+* git crypt unlock
+* git submodule init
+* git submodule update
+
+* Update $NIX_PATH
+  * darwin
+  * darwin-config
+  * nixpkgs
+* nix-build ./nix-darwin -A system
+
+* printf 'run\tprivate/var/run\n' |sudo tee -a /etc/synthetic.conf
+* /System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -B
+
+* sudo rm /etc/shells /etc/nix/nix.conf
+* sudo mv /etc/bashrc{,.orig}
+* sudo mv /etc/zshrc{,.orig}
+
+* ./result/sw/bin/darwin-rebuild switch
