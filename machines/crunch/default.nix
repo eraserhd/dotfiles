@@ -58,10 +58,7 @@
   time.timeZone = "America/New_York";
 
   environment.systemPackages = with pkgs; [
-    git
-    git-crypt
     glib
-    gnupg
     manpages
   ];
 

@@ -7,6 +7,7 @@
       gitAndTools.hub
       gitAndTools.gitout
       local.git-scripts
+      git-crypt
     ];
 
     # Needed for `hub browse`
