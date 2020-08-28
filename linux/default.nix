@@ -13,7 +13,7 @@ with lib;
       ];
     })
     (mkIf config.local.bluetooth.enable
-     (if (builtins.hasAttr "bluetooth" options.hardware)
+     (if (builtins.hasAttr "hardware" options)
       then {
         hardware.bluetooth.enable = true;
         hardware.pulseaudio.enable = true;
