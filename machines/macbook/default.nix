@@ -29,13 +29,6 @@
   homebrew.enable = true;
   homebrew.cask_args.appdir = "/Applications";
 
-  # System settings
-  system.defaults.finder.AppleShowAllExtensions = true;
-  system.defaults.NSGlobalDomain.AppleKeyboardUIMode = 3;
-  system.defaults.NSGlobalDomain.InitialKeyRepeat = 20;
-  system.defaults.NSGlobalDomain.KeyRepeat = 1;
-  system.defaults.NSGlobalDomain."com.apple.keyboard.fnState" = true;
-
   bubbles.enable = true;
 
   services.nix-daemon.enable = true;
