@@ -1,7 +1,8 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
+with lib;
 {
-  config = {
+  config = mkIf (!pkgs.stdenv.isDarwin) {
     environment.systemPackages = with pkgs; [ chromium ];
   };
 }
