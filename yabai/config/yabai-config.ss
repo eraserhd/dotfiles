@@ -53,7 +53,7 @@
    "YABAI_WINDOW_ID"
    "YABAI_PROCESS_ID"])
 
-(def laptop-display "143ABEAF-FB72-322D-E98C-F6A9BBDF00CA")
+(def laptop-display "391F6BA4-67D1-34C3-A7CC-BF93587712A8")
 
 (def browse-space-apps
   ["Anki"
