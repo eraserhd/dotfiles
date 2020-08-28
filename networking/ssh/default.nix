@@ -24,6 +24,14 @@ with lib;
       ];
     };
 
+    system.activationScripts.extraUserActivation.text = ''
+      mkdir -p ~/.ssh
+      chmod 700 ~/.ssh
+
+      cp -ap ${toString ./files}/* ~/.ssh/
+      chmod 600 ~/.ssh/id_*
+    '';
+
     home-manager.users.jfelice = { pkgs, ... }: {
       # .profile is sourced by Xsession, I'm told
       home.file.".profile".text = ''
