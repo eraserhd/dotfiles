@@ -48,7 +48,6 @@
 
   environment.systemPackages = with pkgs; [
     glib
-    manpages
   ];
 
   documentation.dev.enable = true;
