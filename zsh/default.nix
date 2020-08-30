@@ -34,5 +34,11 @@
       RPS1=""
     '';
     environment.shells = [ pkgs.zsh ];
+
+    home-manager.users.jfelice = { pkgs, ... }: {
+      home.file.".zshrc".text = ''
+        # empty file to prevent zsh from trying to initialize
+      '';
+    };
   };
 }
