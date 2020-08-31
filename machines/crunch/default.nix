@@ -12,10 +12,8 @@
       /etc/nixos/hardware-configuration.nix
     ];
 
-  boot.crashDump.enable = true;
-  boot.kernelPackages = pkgs.linuxPackages_5_7;
-
   # Use the systemd-boot EFI boot loader.
+  boot.kernelPackages = pkgs.linuxPackages_5_7;
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 15;
   boot.loader.efi.canTouchEfiVariables = true;
