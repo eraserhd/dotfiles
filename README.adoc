@@ -69,7 +69,6 @@ App Store
   * darwin-config
   * nixpkgs
 * nix-build ./nix-darwin -A system
-
 * printf 'run\tprivate/var/run\n' |sudo tee -a /etc/synthetic.conf
 * /System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -B
 
@@ -78,3 +77,22 @@ App Store
 * sudo mv /etc/zshrc{,.orig}
 
 * ./result/sw/bin/darwin-rebuild switch
+* chsh -s /run/current-system/sw/bin/zsh
+
+* Pair headphones
+* Pair AirPods
+
+* nix-env -e gnupg
+* nix-env -e git-crypt
+
+* Change laptop display UUID in yabai-config
+
+* Log out then in
+
+* VPN signin, then change password back
+* op signin
+
+* sudo chown -R 755 /usr/local/share/zsh # Remove compinit warnings
+
+* Create "Focus" space manually
+* Add fingerprints
