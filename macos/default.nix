@@ -1,7 +1,7 @@
 { options, ... }:
 
 {
-  config = (if (builtins.hasAttr "homebrew" options)
+  config = (if (builtins.hasAttr "launchd" options)
   then {
     homebrew.casks = [
       "caffeine"
