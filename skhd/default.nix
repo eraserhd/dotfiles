@@ -50,10 +50,10 @@
         window_id=$(yabai -m query --windows --window |jq .id) ; \
         yabai-focus-space code ; \
         yabai -m window --focus $window_id
-      ctrlw < f : skhd -k escape ; yabai-focus-space meeting
+      ctrlw < f : skhd -k escape ; yabai-focus-space focus
       ctrlw < shift - f : skhd -k escape ; \
         window_id=$(yabai -m query --windows --window |jq .id) ; \
-        yabai-focus-space meeting ; \
+        yabai-focus-space focus ; \
         yabai -m window --focus $window_id
       ctrlw < b : skhd -k escape ; yabai-focus-space browse
       ctrlw < shift - b : \

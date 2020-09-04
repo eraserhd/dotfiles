@@ -110,7 +110,7 @@
   (def laptop-display-number (get-laptop-display-number))
   (def code-space #f)
   (def browse-space #f)
-  (def meeting-space #f)
+  (def focus-space #f)
   (for-each (lambda (space)
               (let-hash space
                 (if (= .display laptop-display-number)
@@ -121,7 +121,7 @@
                   (begin
                     (cond
                      ((not code-space)    (set! code-space .index))
-                     ((not meeting-space) (set! meeting-space .index))
+                     ((not focus-space) (set! focus-space .index))
                      (else                #f))
                     (configure-monitor-space .index)))))
             (yabai-query "--spaces"))
@@ -129,8 +129,8 @@
     (label-space code-space "code"))
   (when browse-space
     (label-space browse-space "browse"))
-  (when meeting-space
-    (label-space meeting-space "meeting")))
+  (when focus-space
+    (label-space focus-space "focus")))
 
 (def (reconfigure)
   (install)
