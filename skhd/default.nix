@@ -21,130 +21,130 @@
       ctrlw < 0x2F ; ctrlww
       ctrlww < ctrl - w -> ; default
 
-      ctrlw < h : yabai -m window --focus west ; skhd -k escape
-      ctrlw < j : yabai -m window --focus south ; skhd -k escape
-      ctrlw < k : yabai -m window --focus north ; skhd -k escape
-      ctrlw < l : yabai -m window --focus east ; skhd -k escape
+      ctrlw < h : skhd -k escape ; yabai -m window --focus west
+      ctrlw < j : skhd -k escape ; yabai -m window --focus south
+      ctrlw < k : skhd -k escape ; yabai -m window --focus north
+      ctrlw < l : skhd -k escape ; yabai -m window --focus east
 
-      ctrlw < p : yabai -m space --focus code ; yabai -m window --focus recent ; skhd -k escape
-      ctrlw < r : kitty @ --to unix:/Users/jfelice/.run/kitty focus-window \
-        --match=title:kak_repl_window ; skhd -k escape
-      ctrlw < shift - r : kitty @ --to unix:/Users/jfelice/.run/kitty focus-window \
-        --match=title:shell_window ; skhd -k escape
+      ctrlw < p : skhd -k escape ; \
+        yabai -m space --focus code ; \
+        yabai -m window --focus recent
+      ctrlw < r : skhd -k escape ; \
+        kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:kak_repl_window
+      ctrlw < shift - r : skhd -k escape ; \
+        kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:shell_window
 
-      ctrlw < 0x1D : yabai -m window --focus $(yabai-window-number 0) ; skhd -k escape
-      ctrlw < 1 : yabai -m window --focus $(yabai-window-number 1) ; skhd -k escape
-      ctrlw < 2 : yabai -m window --focus $(yabai-window-number 2) ; skhd -k escape
-      ctrlw < 3 : yabai -m window --focus $(yabai-window-number 3) ; skhd -k escape
-      ctrlw < 4 : yabai -m window --focus $(yabai-window-number 4) ; skhd -k escape
-      ctrlw < 5 : yabai -m window --focus $(yabai-window-number 5) ; skhd -k escape
-      ctrlw < 6 : yabai -m window --focus $(yabai-window-number 6) ; skhd -k escape
-      ctrlw < 7 : yabai -m window --focus $(yabai-window-number 7) ; skhd -k escape
-      ctrlw < 8 : yabai -m window --focus $(yabai-window-number 8) ; skhd -k escape
-      ctrlw < 9 : yabai -m window --focus $(yabai-window-number 9) ; skhd -k escape
+      ctrlw < 0x1D : skhd -k escape ; yabai -m window --focus $(yabai-window-number 0)
+      ctrlw < 1 : skhd -k escape ; yabai -m window --focus $(yabai-window-number 1)
+      ctrlw < 2 : skhd -k escape ; yabai -m window --focus $(yabai-window-number 2)
+      ctrlw < 3 : skhd -k escape ; yabai -m window --focus $(yabai-window-number 3)
+      ctrlw < 4 : skhd -k escape ; yabai -m window --focus $(yabai-window-number 4)
+      ctrlw < 5 : skhd -k escape ; yabai -m window --focus $(yabai-window-number 5)
+      ctrlw < 6 : skhd -k escape ; yabai -m window --focus $(yabai-window-number 6)
+      ctrlw < 7 : skhd -k escape ; yabai -m window --focus $(yabai-window-number 7)
+      ctrlw < 8 : skhd -k escape ; yabai -m window --focus $(yabai-window-number 8)
+      ctrlw < 9 : skhd -k escape ; yabai -m window --focus $(yabai-window-number 9)
 
-      ctrlw < c : yabai-focus-space code ; skhd -k escape
-      ctrlw < shift - c : \
+      ctrlw < c : skhd -k escape ; yabai-focus-space code
+      ctrlw < shift - c : skhd -k escape ; \
         window_id=$(yabai -m query --windows --window |jq .id) ; \
         yabai-focus-space code ; \
-        yabai -m window --focus $window_id ; \
-        skhd -k escape
-      ctrlw < f : yabai-focus-space meeting ; skhd -k escape
-      ctrlw < shift - f : \
+        yabai -m window --focus $window_id
+      ctrlw < f : skhd -k escape ; yabai-focus-space meeting
+      ctrlw < shift - f : skhd -k escape ; \
         window_id=$(yabai -m query --windows --window |jq .id) ; \
         yabai-focus-space meeting ; \
-        yabai -m window --focus $window_id ; \
-        skhd -k escape
-      ctrlw < b : yabai-focus-space browse ; skhd -k escape
+        yabai -m window --focus $window_id
+      ctrlw < b : skhd -k escape ; yabai-focus-space browse
       ctrlw < shift - b : \
+        skhd -k escape ; \
         window_id=$(yabai -m query --windows --window |jq .id) ; \
         yabai-focus-space browse ; \
         yabai -m window --focus $window_id ; \
-        yabai -m window --grid 1:1:0:0:1:1 ; \
-        skhd -k escape
+        yabai -m window --grid 1:1:0:0:1:1
 
-      ctrlw < 0x2B : kitty @ --to unix:/Users/jfelice/.run/kitty send-text \
-        --match=title:kak_repl_window '\x10\x0d' ; skhd -k escape
+      ctrlw < 0x2B : skhd -k escape ; \
+        kitty @ --to unix:/Users/jfelice/.run/kitty send-text --match=title:kak_repl_window '\x10\x0d'
 
-      ctrlw < 0x18 : yabai -m space --balance
-      ctrlw < 0x2C : yabai -m window --toggle split
+      ctrlw < 0x18 : skhd -k esacpe ; yabai -m space --balance
+      ctrlw < 0x2C : skhd -k esacpe ; yabai -m window --toggle split
 
       ctrlw < s ; swap
       swap < escape ; default
 
-      swap < h : yabai -m window --swap west ; skhd -k escape
-      swap < j : yabai -m window --swap south ; skhd -k escape
-      swap < k : yabai -m window --swap north ; skhd -k escape
-      swap < l : yabai -m window --swap east ; skhd -k escape
+      swap < h : skhd -k escape ; yabai -m window --swap west
+      swap < j : skhd -k escape ; yabai -m window --swap south
+      swap < k : skhd -k escape ; yabai -m window --swap north
+      swap < l : skhd -k escape ; yabai -m window --swap east
 
-      swap < p : yabai -m window --swap recent ; skhd -k escape
-      swap < r : yabai -m window --swap last ; skhd -k escape
+      swap < p : skhd -k escape ; yabai -m window --swap recent
+      swap < r : skhd -k escape ; yabai -m window --swap last
 
-      swap < 0x1D : yabai -m window --swap $(yabai-window-number 0) ; skhd -k escape
-      swap < 1 : yabai -m window --swap $(yabai-window-number 1) ; skhd -k escape
-      swap < 2 : yabai -m window --swap $(yabai-window-number 2) ; skhd -k escape
-      swap < 3 : yabai -m window --swap $(yabai-window-number 3) ; skhd -k escape
-      swap < 4 : yabai -m window --swap $(yabai-window-number 4) ; skhd -k escape
-      swap < 5 : yabai -m window --swap $(yabai-window-number 5) ; skhd -k escape
-      swap < 6 : yabai -m window --swap $(yabai-window-number 6) ; skhd -k escape
-      swap < 7 : yabai -m window --swap $(yabai-window-number 7) ; skhd -k escape
-      swap < 8 : yabai -m window --swap $(yabai-window-number 8) ; skhd -k escape
-      swap < 9 : yabai -m window --swap $(yabai-window-number 9) ; skhd -k escape
+      swap < 0x1D : skhd -k escape ; yabai -m window --swap $(yabai-window-number 0)
+      swap < 1 : skhd -k escape ; yabai -m window --swap $(yabai-window-number 1)
+      swap < 2 : skhd -k escape ; yabai -m window --swap $(yabai-window-number 2)
+      swap < 3 : skhd -k escape ; yabai -m window --swap $(yabai-window-number 3)
+      swap < 4 : skhd -k escape ; yabai -m window --swap $(yabai-window-number 4)
+      swap < 5 : skhd -k escape ; yabai -m window --swap $(yabai-window-number 5)
+      swap < 6 : skhd -k escape ; yabai -m window --swap $(yabai-window-number 6)
+      swap < 7 : skhd -k escape ; yabai -m window --swap $(yabai-window-number 7)
+      swap < 8 : skhd -k escape ; yabai -m window --swap $(yabai-window-number 8)
+      swap < 9 : skhd -k escape ; yabai -m window --swap $(yabai-window-number 9)
 
       ctrlw < i ; warp
       warp < escape ; default
-      warp < h : yabai -m window --warp west ; \
-        yabai -m space code --balance ; \
-        skhd -k escape
-      warp < j : yabai -m window --warp south ; \
-        yabai -m space code --balance ; \
-        skhd -k escape
-      warp < k : yabai -m window --warp north ; \
-        yabai -m space code --balance ; \
-        skhd -k escape
-      warp < l : yabai -m window --warp east ; \
-        yabai -m space code --balance ; \
-        skhd -k escape
-      warp < 0x1D : yabai -m window --space code ; \
+      warp < h : skhd -k escape ; \
+        yabai -m window --warp west ; \
+        yabai -m space code --balance
+      warp < j : skhd -k escape ; \
+        yabai -m window --warp south ; \
+        yabai -m space code --balance
+      warp < k : skhd -k escape ; \
+        yabai -m window --warp north ; \
+        yabai -m space code --balance
+      warp < l : skhd -k escape ; \
+        yabai -m window --warp east ; \
+        yabai -m space code --balance
+      warp < 0x1D : skhd -k escape ; \
+        yabai -m window --space code ; \
         yabai -m window --warp $(yabai-window-number 0) ; \
-        yabai -m space code --balance ; \
-        skhd -k escape
-      warp < 1 : yabai -m window --space code ; \
+        yabai -m space code --balance
+      warp < 1 : skhd -k escape ; \
+        yabai -m window --space code ; \
         yabai -m window --warp $(yabai-window-number 1) ; \
-        yabai -m space code --balance ; \
-        skhd -k escape
-      warp < 2 : yabai -m window --space code ; \
+        yabai -m space code --balance
+      warp < 2 : skhd -k escape ; \
+        yabai -m window --space code ; \
         yabai -m window --warp $(yabai-window-number 2) ; \
-        yabai -m space code --balance ; \
-        skhd -k escape
-      warp < 3 : yabai -m window --space code ; \
+        yabai -m space code --balance
+      warp < 3 : skhd -k escape ; \
+        yabai -m window --space code ; \
         yabai -m window --warp $(yabai-window-number 3) ; \
-        yabai -m space code --balance ; \
-        skhd -k escape
-      warp < 4 : yabai -m window --space code ; \
+        yabai -m space code --balance
+      warp < 4 : skhd -k escape ; \
+        yabai -m window --space code ; \
         yabai -m window --warp $(yabai-window-number 4) ; \
-        yabai -m space code --balance ; \
-        skhd -k escape
-      warp < 5 : yabai -m window --space code ; \
+        yabai -m space code --balance
+      warp < 5 : skhd -k escape ; \
+        yabai -m window --space code ; \
         yabai -m window --warp $(yabai-window-number 5) ; \
-        yabai -m space code --balance ; \
-        skhd -k escape
-      warp < 6 : yabai -m window --space code ; \
+        yabai -m space code --balance
+      warp < 6 : skhd -k escape ; \
+        yabai -m window --space code ; \
         yabai -m window --warp $(yabai-window-number 6) ; \
-        yabai -m space code --balance ; \
-        skhd -k escape
-      warp < 7 : yabai -m window --space code ; \
+        yabai -m space code --balance
+      warp < 7 : skhd -k escape ; \
+        yabai -m window --space code ; \
         yabai -m window --warp $(yabai-window-number 7) ; \
-        yabai -m space code --balance ; \
-        skhd -k escape
-      warp < 8 : yabai -m window --space code ; \
+        yabai -m space code --balance
+      warp < 8 : skhd -k escape ; \
+        yabai -m window --space code ; \
         yabai -m window --warp $(yabai-window-number 8) ; \
-        yabai -m space code --balance ; \
-        skhd -k escape
-      warp < 9 : yabai -m window --space code ; \
+        yabai -m space code --balance
+      warp < 9 : skhd -k escape ; \
+        yabai -m window --space code ; \
         yabai -m window --warp $(yabai-window-number 9) ; \
-        yabai -m space code --balance ; \
-        skhd -k escape
+        yabai -m space code --balance
 
       cmd + shift + alt + ctrl - k ; keycommand
       keycommand < escape ; default
