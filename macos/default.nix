@@ -9,6 +9,7 @@
     ];
 
     system.defaults.finder.AppleShowAllExtensions = true;
+    system.defaults.finder._FXShowPosixPathInTitle = true;
 
     system.defaults.NSGlobalDomain = {
       AppleInterfaceStyle = "Dark";
