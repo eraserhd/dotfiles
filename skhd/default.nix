@@ -43,22 +43,22 @@
       ctrlw < 8 : yabai -m window --focus $(yabai-window-number 8) ; skhd -k escape
       ctrlw < 9 : yabai -m window --focus $(yabai-window-number 9) ; skhd -k escape
 
-      ctrlw < c : yabai -m space --focus code ; skhd -k escape
+      ctrlw < c : yabai-focus-space code ; skhd -k escape
       ctrlw < shift - c : \
         window_id=$(yabai -m query --windows --window |jq .id) ; \
-        yabai -m window --space code ; \
+        yabai-focus-space code ; \
         yabai -m window --focus $window_id ; \
         skhd -k escape
-      ctrlw < f : yabai -m space --focus meeting ; skhd -k escape
+      ctrlw < f : yabai-focus-space meeting ; skhd -k escape
       ctrlw < shift - f : \
         window_id=$(yabai -m query --windows --window |jq .id) ; \
-        yabai -m window --space meeting ; \
+        yabai-focus-space meeting ; \
         yabai -m window --focus $window_id ; \
         skhd -k escape
-      ctrlw < b : yabai -m display --focus 2 ; skhd -k escape
+      ctrlw < b : yabai-focus-space browse ; skhd -k escape
       ctrlw < shift - b : \
         window_id=$(yabai -m query --windows --window |jq .id) ; \
-        yabai -m window --space browse ; \
+        yabai-focus-space browse ; \
         yabai -m window --focus $window_id ; \
         yabai -m window --grid 1:1:0:0:1:1 ; \
         skhd -k escape
@@ -148,10 +148,10 @@
 
       cmd + shift + alt + ctrl - k ; keycommand
       keycommand < escape ; default
-      keycommand < h : yabai -m space --focus code ; yabai -m window --focus west
-      keycommand < j : yabai -m space --focus code ; yabai -m window --focus south
-      keycommand < k : yabai -m space --focus code ; yabai -m window --focus north
-      keycommand < l : yabai -m space --focus code ; yabai -m window --focus east
+      keycommand < h : yabai-focus-space code ; yabai -m window --focus west
+      keycommand < j : yabai-focus-space code ; yabai -m window --focus south
+      keycommand < k : yabai-focus-space code ; yabai -m window --focus north
+      keycommand < l : yabai-focus-space code ; yabai -m window --focus east
 
       keycommand < n : notification --activate
       keycommand < m : notification --menu
