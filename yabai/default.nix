@@ -11,6 +11,9 @@ in {
       package = pkgs.yabai;
       extraConfig = "exec ${pkgs.zsh}/bin/zsh -l -c '${yabai-config}/bin/yabai-config --init'";
     };
+
+    # Here we should enable 'Switch to Desktop 1 = ^1, Switch to Desktop 2 = ^2, ...' once
+    # nix-darwin has support for symbolic hotkeys.
   }
   else {
   });

@@ -96,3 +96,6 @@ App Store
 
 * Create "Focus" space manually
 * Add fingerprints
+
+* Enable Switch to Desktop N key shortcuts in Keyboard preferences Mission
+  Control item
