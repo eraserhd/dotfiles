@@ -7,6 +7,11 @@ with lib;
       nixpkgs.overlays = [
         (self: super: {
           jdk = super.jdk11;
+
+          # fop doesn't like my jdk11 override
+          fop = (super.fop.override {
+            jdk = self.jdk8;
+          });
         })
       ];
 

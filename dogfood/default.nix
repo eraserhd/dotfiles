@@ -10,11 +10,6 @@
           clojerbil = self.callPackage "${super.fetchFromGitHub (import ./clojerbil.nix)}/derivation.nix" {};
          };
        in {
-        # fop doesn't like my jdk11 override
-        fop = (super.fop.override {
-          jdk = self.jdk8;
-        });
-
         gerbil = super.gerbil.overrideAttrs (oldAttrs: {
           src = super.pkgs.fetchFromGitHub (import ./gerbil.nix);
         });
