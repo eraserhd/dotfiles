@@ -17,11 +17,8 @@ in {
               kak-fzf
               my-kak-plumb
               parinfer-rust
-            ]
-            # Remove this hack when Graal is on MacOS
-            # Uncomment when Graal works on NixOS again
-            #++ lib.optional (!pkgs.stdenv.isDarwin) rep
-            ;
+              rep
+            ];
           };
           kakouneWrapper = super.callPackage ./wrapper {};
         })

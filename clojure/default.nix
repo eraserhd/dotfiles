@@ -19,6 +19,7 @@ with lib;
         clojure
         leiningen
         parinfer-rust
+        rep
       ];
 
       home-manager.users.jfelice = { pkgs, ... }: {
@@ -29,7 +30,6 @@ with lib;
     #(mkIf (!pkgs.stdenv.isDarwin) {
     #  environment.systemPackages = with pkgs; [
     #    clj-kondo
-    #    rep
     #  ];
     #})
   ];
