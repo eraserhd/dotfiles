@@ -20,7 +20,6 @@ ctrlw = {
   modes = {
     default = {
       hs.hotkey.new({"alt", "control"}, "W", function()
-        hs.alert.show("enter")
         ctrlw:enter_mode("ctrlw")
       end)
     },
@@ -31,6 +30,30 @@ ctrlw = {
     }
   }
 }
+
+function window_number(n)
+  local windows = hs.window.visibleWindows()
+  local bounds = hs.screen.mainScreen():frame()
+  local screen_windows = {}
+  for _, w in windows do
+    local wframe = w:frame()
+    if wframe.x >= bounds.x and wframe.y >= bounds.y
+      table.insert(screen_windows, w)
+    end
+  end
+  windows = screen_windows
+  table.sort(windows, function(a, b)
+    local af, bf = a:frame(), b:frame()
+    if af.x < bf.x then return true end
+    if af.x > bf.x then return false end
+    return af.y < bf.y
+  end)
+  if n == 9 or n > #windows then
+    return windows[#windows]
+  else
+    return windows[n+1]
+  end
+end
 
 function hotkey_exec(mode_table, mods, key, command)
   table.insert(mode_table, hs.hotkey.new(mods, key, function()
@@ -46,5 +69,17 @@ hotkey_exec(ctrlw.modes.ctrlw, {},        "L", "yabai -m window --focus east")
 hotkey_exec(ctrlw.modes.ctrlw, {},        "P", "yabai -m window --focus recent")
 hotkey_exec(ctrlw.modes.ctrlw, {},        "R", "kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:kak_repl_window")
 hotkey_exec(ctrlw.modes.ctrlw, {"shift"}, "R", "kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:shell_window")
+
+for i=0,9 do
+  table.insert(ctrlw.modes.ctrlw, hs.hotkey.new({}, tostring(i), function()
+    ctrlw:enter_mode("default")
+    local window = window_number(i)
+    window:focus()
+  end))
+end
+
+hotkey_exec(ctrlw.modes.ctrlw, {}, "C", "yabai-focus-space code")
+hotkey_exec(ctrlw.modes.ctrlw, {}, "F", "yabai-focus-space focus")
+hotkey_exec(ctrlw.modes.ctrlw, {}, "B", "yabai-focus-space browse")
 
 ctrlw:init()
