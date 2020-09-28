@@ -241,15 +241,15 @@ hook -group autowrap global WinSetOption filetype=(asciidoc|markdown) %{
 
 # Clojure
 # ‾‾‾‾‾‾‾
-hook global WinSetOption filetype=(clojure|scheme|racket) %{
+hook global WinSetOption filetype=(clojure|scheme|racket|lisp) %{
     parinfer-enable-window -smart
-    require-module clojure
-    set-option window clojure_source_directories '(?:[^/.][^/]*)(?:/src|/test|/dev)'
 }
 
 define-command -hidden -override lint-show-counters %{}
 
 hook global WinSetOption filetype=clojure %{
+    require-module clojure
+    set-option window clojure_source_directories '(?:[^/.][^/]*)(?:/src|/test|/dev)'
     set-option window lintcmd 'cd "$(dirname "$kak_bufname")" && clj-kondo --lint'
     lint-enable
     hook -group lint-diagnostics window NormalIdle .* %{ lint; lint-show }
