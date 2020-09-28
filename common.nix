@@ -18,6 +18,7 @@ with lib;
     ./git
     ./gnupg
     ./gtypist
+    ./hammerspoon
     ./i3
     ./kakoune
     ./kitty
