@@ -28,24 +28,23 @@ ctrlw = {
       hs.hotkey.new({}, "escape", function()
         ctrlw:enter_mode("default")
       end),
-      hs.hotkey.new({}, "H", function()
-        ctrlw:enter_mode("default")
-        hs.execute("yabai -m window --focus west", true)
-      end),
-      hs.hotkey.new({}, "J", function()
-        ctrlw:enter_mode("default")
-        hs.execute("yabai -m window --focus south", true)
-      end),
-      hs.hotkey.new({}, "K", function()
-        ctrlw:enter_mode("default")
-        hs.execute("yabai -m window --focus north", true)
-      end),
-      hs.hotkey.new({}, "L", function()
-        ctrlw:enter_mode("default")
-        hs.execute("yabai -m window --focus east", true)
-      end),
     }
   }
 }
+
+function hotkey_exec(mode_table, mods, key, command)
+  table.insert(mode_table, hs.hotkey.new(mods, key, function()
+    ctrlw:enter_mode("default")
+    hs.execute(command, true)
+  end))
+end
+
+hotkey_exec(ctrlw.modes.ctrlw, {},        "H", "yabai -m window --focus west")
+hotkey_exec(ctrlw.modes.ctrlw, {},        "J", "yabai -m window --focus south")
+hotkey_exec(ctrlw.modes.ctrlw, {},        "K", "yabai -m window --focus north")
+hotkey_exec(ctrlw.modes.ctrlw, {},        "L", "yabai -m window --focus east")
+hotkey_exec(ctrlw.modes.ctrlw, {},        "P", "yabai -m window --focus recent")
+hotkey_exec(ctrlw.modes.ctrlw, {},        "R", "kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:kak_repl_window")
+hotkey_exec(ctrlw.modes.ctrlw, {"shift"}, "R", "kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:shell_window")
 
 ctrlw:init()
