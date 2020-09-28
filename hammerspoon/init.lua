@@ -20,15 +20,30 @@ ctrlw = {
   modes = {
     default = {
       hs.hotkey.new({"alt", "control"}, "W", function()
-        ctrlw:enter_mode("ctrlw")
         hs.alert.show("enter")
+        ctrlw:enter_mode("ctrlw")
       end)
     },
     ctrlw = {
       hs.hotkey.new({}, "escape", function()
         ctrlw:enter_mode("default")
-        hs.alert.show("leave")
-      end)
+      end),
+      hs.hotkey.new({}, "H", function()
+        ctrlw:enter_mode("default")
+        hs.execute("yabai -m window --focus west", true)
+      end),
+      hs.hotkey.new({}, "J", function()
+        ctrlw:enter_mode("default")
+        hs.execute("yabai -m window --focus south", true)
+      end),
+      hs.hotkey.new({}, "K", function()
+        ctrlw:enter_mode("default")
+        hs.execute("yabai -m window --focus north", true)
+      end),
+      hs.hotkey.new({}, "L", function()
+        ctrlw:enter_mode("default")
+        hs.execute("yabai -m window --focus east", true)
+      end),
     }
   }
 }
