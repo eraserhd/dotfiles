@@ -36,7 +36,6 @@ with lib;
     ./rlwrap
     ./scheme
     ./shell
-    ./skhd
     ./taskwarrior
     ./tex
     ./tmux

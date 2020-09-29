@@ -69,7 +69,7 @@ function CtrlW:init()
   end
 
   self.modes.default = Mode:new():append({
-    hs.hotkey.new({"alt", "control"}, "W", function() self:enter_mode("ctrlw") end)
+    hs.hotkey.new({"control"}, "W", function() self:enter_mode("ctrlw") end)
   })
 
   self.modes.ctrlw = Mode:new():append({
@@ -96,8 +96,77 @@ function CtrlW:init()
 
   self.modes.ctrlw:append({
     shell_hotkey({}, "C", "yabai-focus-space code"),
+    -- shift + C
     shell_hotkey({}, "F", "yabai-focus-space focus"),
+    -- shift + F
     shell_hotkey({}, "B", "yabai-focus-space browse"),
+    -- shift + B
+
+    shell_hotkey({}, ",", "kitty @ --to unix:/Users/jfelice/.run/kitty send-text --match=title:kak_repl_window '\x10\x0d'"),
+    shell_hotkey({}, "=", "yabai -m space --balance"),
+    shell_hotkey({}, "/", "yabai -m window --toggle split"),
+
+    hs.hotkey.new({}, "S", function() self:enter_mode("swap") end),
+    hs.hotkey.new({}, "I", function() self:enter_mode("warp") end),
+    hs.hotkey.new({"command", "shift", "alt", "control"}, "K", function() self:enter_mode("keycommand") end),
+  })
+
+  local function swap(to)
+    self:enter_mode("default")
+    hs.execute("yabai -m window --swap " .. tostring(to), true)
+  end
+
+  self.modes.swap = Mode:new():append({
+    hs.hotkey.new({}, "escape", function() self:enter_mode("default") end),
+    hs.hotkey.new({}, "H", function() swap("west") end),
+    hs.hotkey.new({}, "J", function() swap("south") end),
+    hs.hotkey.new({}, "K", function() swap("north") end),
+    hs.hotkey.new({}, "L", function() swap("east") end),
+  })
+
+  for i=0,9 do
+    self.modes.swap:append({
+      hs.hotkey.new({}, tostring(i), function()
+        local window = window_number(i)
+        swap(window:id())
+      end)
+    })
+  end
+
+  local function warp(to)
+    self:enter_mode("default")
+    hs.execute("yabai -m window --space code", true)
+    hs.execute("yabai -m window --warp " .. tostring(to), true)
+    hs.execute("yabai -m space code --balance", true)
+  end
+
+  self.modes.warp = Mode:new():append({
+    hs.hotkey.new({}, "escape", function() self:enter_mode("default") end),
+    hs.hotkey.new({}, "H", function() warp("west") end),
+    hs.hotkey.new({}, "J", function() warp("south") end),
+    hs.hotkey.new({}, "K", function() warp("north") end),
+    hs.hotkey.new({}, "L", function() warp("east") end),
+  })
+
+  for i=0,9 do
+    self.modes.warp:append({
+      hs.hotkey.new({}, tostring(i), function()
+        local window = window_number(i)
+        wrap(window:id())
+      end)
+    })
+  end
+
+  self.modes.keycommand = Mode:new():append({
+    hs.hotkey.new({}, "escape", function() self:enter_mode("default") end),
+    shell_hotkey({}, "H", "yabai -m window --focus west"),
+    shell_hotkey({}, "J", "yabai -m window --focus south"),
+    shell_hotkey({}, "K", "yabai -m window --focus north"),
+    shell_hotkey({}, "L", "yabai -m window --focus east"),
+
+    shell_hotkey({}, "N", "notification --activate"),
+    shell_hotkey({}, "M", "notification --menu"),
+    shell_hotkey({}, "I", "notification --close"),
   })
 
   self:enter_mode("default")
