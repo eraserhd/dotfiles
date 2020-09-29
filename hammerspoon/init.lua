@@ -87,10 +87,22 @@ function CtrlW:make_ctrlw_mode()
   local mode = Mode:new():append({
     hs.hotkey.new({}, "escape", function() self:enter_mode("default") end),
     hs.hotkey.new({}, "f14", function() self:enter_mode("default") end),
-    self:shell_hotkey({},        "H", "yabai -m window --focus west"),
-    self:shell_hotkey({},        "J", "yabai -m window --focus south"),
-    self:shell_hotkey({},        "K", "yabai -m window --focus north"),
-    self:shell_hotkey({},        "L", "yabai -m window --focus east"),
+    hs.hotkey.new({}, "H", function()
+      self:enter_mode("default")
+      hs.window.focusedWindow():focusWindowWest(nil, true)
+    end),
+    hs.hotkey.new({}, "J", function()
+      self:enter_mode("default")
+      hs.window.focusedWindow():focusWindowSouth(nil, true)
+    end),
+    hs.hotkey.new({}, "K", function()
+      self:enter_mode("default")
+      hs.window.focusedWindow():focusWindowNorth(nil, true)
+    end),
+    hs.hotkey.new({}, "L", function()
+      self:enter_mode("default")
+      hs.window.focusedWindow():focusWindowEast(nil, true)
+    end),
     self:shell_hotkey({},        "P", "yabai -m window --focus recent"),
     self:shell_hotkey({},        "R", "kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:kak_repl_window"),
     self:shell_hotkey({"shift"}, "R", "kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:shell_window"),
@@ -198,11 +210,18 @@ end
 function CtrlW:make_keycommand_mode()
   return Mode:new():append({
     hs.hotkey.new({}, "escape", function() self:enter_mode("default") end),
-    hs.hotkey.new({}, "H", function() hs.execute("yabai -m window --focus west", true) end),
-    hs.hotkey.new({}, "J", function() hs.execute("yabai -m window --focus south", true) end),
-    hs.hotkey.new({}, "K", function() hs.execute("yabai -m window --focus north", true) end),
-    hs.hotkey.new({}, "L", function() hs.execute("yabai -m window --focus east", true) end),
-
+    hs.hotkey.new({}, "H", function()
+      hs.window.focusedWindow():focusWindowWest(nil, true)
+    end),
+    hs.hotkey.new({}, "J", function()
+      hs.window.focusedWindow():focusWindowSouth(nil, true)
+    end),
+    hs.hotkey.new({}, "K", function()
+      hs.window.focusedWindow():focusWindowNorth(nil, true)
+    end),
+    hs.hotkey.new({}, "L", function()
+      hs.window.focusedWindow():focusWindowEast(nil, true)
+    end),
     hs.hotkey.new({}, "N", function() hs.execute("notification --activate", true) end),
     hs.hotkey.new({}, "M", function() hs.execute("notification --menu", true) end),
     hs.hotkey.new({}, "I", function() hs.execute("notification --close", true) end),
