@@ -112,6 +112,11 @@ function CtrlW:make_ctrlw_mode()
     self:shell_hotkey({},        "P", "yabai -m window --focus recent"),
     self:shell_hotkey({},        "R", "kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:kak_repl_window"),
     self:shell_hotkey({"shift"}, "R", "kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:shell_window"),
+
+    hs.hotkey.new({}, "V", function()
+      self:enter_mode("default")
+      hs.eventtap.keyStrokes(hs.pasteboard.readString())
+    end),
   })
 
   for i=0,9 do
