@@ -69,7 +69,8 @@ function CtrlW:init()
   end
 
   self.modes.default = Mode:new():append({
-    hs.hotkey.new({"control"}, "W", function() self:enter_mode("ctrlw") end)
+    hs.hotkey.new({"control"}, "W", function() self:enter_mode("ctrlw") end),
+    hs.hotkey.new({"command", "shift", "alt", "control"}, "K", function() self:enter_mode("keycommand") end),
   })
 
   self.modes.ctrlw = Mode:new():append({
@@ -94,13 +95,29 @@ function CtrlW:init()
     })
   end
 
+  local function send_to_space(space_name)
+    local window = hs.window.focusedWindow()
+    hs.execute("yabai -m window --space " .. space_name, true)
+    hs.execute("yabai-focus-space " .. space_name, true)
+    window:focus()
+  end
+
   self.modes.ctrlw:append({
     shell_hotkey({}, "C", "yabai-focus-space code"),
-    -- shift + C
+    hs.hotkey.new({"shift"}, "C", function()
+      self:enter_mode("default")
+      send_to_space("code")
+    end),
     shell_hotkey({}, "F", "yabai-focus-space focus"),
-    -- shift + F
+    hs.hotkey.new({"shift"}, "F", function()
+      self:enter_mode("default")
+      send_to_space("focus")
+    end),
     shell_hotkey({}, "B", "yabai-focus-space browse"),
-    -- shift + B
+    hs.hotkey.new({"shift"}, "B", function()
+      self:enter_mode("default")
+      send_to_space("browse")
+    end),
 
     shell_hotkey({}, ",", "kitty @ --to unix:/Users/jfelice/.run/kitty send-text --match=title:kak_repl_window '\x10\x0d'"),
     shell_hotkey({}, "=", "yabai -m space --balance"),
@@ -108,7 +125,6 @@ function CtrlW:init()
 
     hs.hotkey.new({}, "S", function() self:enter_mode("swap") end),
     hs.hotkey.new({}, "I", function() self:enter_mode("warp") end),
-    hs.hotkey.new({"command", "shift", "alt", "control"}, "K", function() self:enter_mode("keycommand") end),
   })
 
   local function swap(to)
@@ -159,14 +175,14 @@ function CtrlW:init()
 
   self.modes.keycommand = Mode:new():append({
     hs.hotkey.new({}, "escape", function() self:enter_mode("default") end),
-    shell_hotkey({}, "H", "yabai -m window --focus west"),
-    shell_hotkey({}, "J", "yabai -m window --focus south"),
-    shell_hotkey({}, "K", "yabai -m window --focus north"),
-    shell_hotkey({}, "L", "yabai -m window --focus east"),
+    hs.hotkey.new({}, "H", function() hs.execute("yabai -m window --focus west", true) end),
+    hs.hotkey.new({}, "J", function() hs.execute("yabai -m window --focus south", true) end),
+    hs.hotkey.new({}, "K", function() hs.execute("yabai -m window --focus north", true) end),
+    hs.hotkey.new({}, "L", function() hs.execute("yabai -m window --focus east", true) end),
 
-    shell_hotkey({}, "N", "notification --activate"),
-    shell_hotkey({}, "M", "notification --menu"),
-    shell_hotkey({}, "I", "notification --close"),
+    hs.hotkey.new({}, "N", function() hs.execute("notification --activate", true) end),
+    hs.hotkey.new({}, "M", function() hs.execute("notification --menu", true) end),
+    hs.hotkey.new({}, "I", function() hs.execute("notification --close", true) end),
   })
 
   self:enter_mode("default")
