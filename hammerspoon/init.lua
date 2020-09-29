@@ -25,30 +25,38 @@ function Mode:append(keys)
   return self
 end
 
+local CtrlW = {}
+local ctrlw
 
-ctrlw = {
-  init = function(self)
-    self:enter_mode("default")
-  end,
-
-  enter_mode = function(self, mode_name)
-    if self.current_mode then
-      self.current_mode:disable()
-    end
-    self.current_mode = self.modes[mode_name]
-    self.current_mode:enable()
-  end,
-
-  current_mode = nil,
-  modes = {
-    default = Mode:new():append({
-      hs.hotkey.new({"alt", "control"}, "W", function() ctrlw:enter_mode("ctrlw") end)
-    }),
-    ctrlw = Mode:new():append({
-      hs.hotkey.new({}, "escape", function() ctrlw:enter_mode("default") end)
-    })
+function CtrlW:new()
+  newObj = {
+    current_mode = nil,
+    modes = {
+      default = Mode:new():append({
+        hs.hotkey.new({"alt", "control"}, "W", function() ctrlw:enter_mode("ctrlw") end)
+      }),
+      ctrlw = Mode:new():append({
+        hs.hotkey.new({}, "escape", function() ctrlw:enter_mode("default") end)
+      })
+    }
   }
-}
+  self.__index = self
+  return setmetatable(newObj, self)
+end
+
+function CtrlW:init()
+  self:enter_mode("default")
+end
+
+function CtrlW:enter_mode(mode_name)
+  if self.current_mode then
+    self.current_mode:disable()
+  end
+  self.current_mode = self.modes[mode_name]
+  self.current_mode:enable()
+end
+
+ctrlw = CtrlW:new()
 
 function window_number(n)
   local windows = hs.window.visibleWindows()
