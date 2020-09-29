@@ -173,7 +173,13 @@ function CtrlW:init()
     })
   end
 
-  self.modes.keycommand = Mode:new():append({
+  self.modes.keycommand = self:make_keycommand_mode()
+
+  self:enter_mode("default")
+end
+
+function CtrlW:make_keycommand_mode()
+  return Mode:new():append({
     hs.hotkey.new({}, "escape", function() self:enter_mode("default") end),
     hs.hotkey.new({}, "H", function() hs.execute("yabai -m window --focus west", true) end),
     hs.hotkey.new({}, "J", function() hs.execute("yabai -m window --focus south", true) end),
@@ -184,8 +190,6 @@ function CtrlW:init()
     hs.hotkey.new({}, "M", function() hs.execute("notification --menu", true) end),
     hs.hotkey.new({}, "I", function() hs.execute("notification --close", true) end),
   })
-
-  self:enter_mode("default")
 end
 
 function CtrlW:enter_mode(mode_name)
