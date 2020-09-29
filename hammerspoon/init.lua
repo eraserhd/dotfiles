@@ -69,7 +69,7 @@ function CtrlW:init()
   end
 
   local function shell_hotkey(mods, key, command)
-    hs.hotkey.new(mods, key, function()
+    return hs.hotkey.new(mods, key, function()
       self:enter_mode("default")
       hs.execute(command, true)
     end)
