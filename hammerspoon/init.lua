@@ -89,19 +89,19 @@ function CtrlW:make_ctrlw_mode()
     hs.hotkey.new({}, "f14", function() self:enter_mode("default") end),
     hs.hotkey.new({}, "H", function()
       self:enter_mode("default")
-      hs.window.focusedWindow():focusWindowWest(nil, true)
+      hs.window.focusedWindow():focusWindowWest(nil, true, true)
     end),
     hs.hotkey.new({}, "J", function()
       self:enter_mode("default")
-      hs.window.focusedWindow():focusWindowSouth(nil, true)
+      hs.window.focusedWindow():focusWindowSouth(nil, true, true)
     end),
     hs.hotkey.new({}, "K", function()
       self:enter_mode("default")
-      hs.window.focusedWindow():focusWindowNorth(nil, true)
+      hs.window.focusedWindow():focusWindowNorth(nil, true, true)
     end),
     hs.hotkey.new({}, "L", function()
       self:enter_mode("default")
-      hs.window.focusedWindow():focusWindowEast(nil, true)
+      hs.window.focusedWindow():focusWindowEast(nil, true, true)
     end),
     self:shell_hotkey({},        "P", "yabai -m window --focus recent"),
     self:shell_hotkey({},        "R", "kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:kak_repl_window"),
@@ -211,16 +211,16 @@ function CtrlW:make_keycommand_mode()
   return Mode:new():append({
     hs.hotkey.new({}, "escape", function() self:enter_mode("default") end),
     hs.hotkey.new({}, "H", function()
-      hs.window.focusedWindow():focusWindowWest(nil, true)
+      hs.window.focusedWindow():focusWindowWest(nil, true, true)
     end),
     hs.hotkey.new({}, "J", function()
-      hs.window.focusedWindow():focusWindowSouth(nil, true)
+      hs.window.focusedWindow():focusWindowSouth(nil, true, true)
     end),
     hs.hotkey.new({}, "K", function()
-      hs.window.focusedWindow():focusWindowNorth(nil, true)
+      hs.window.focusedWindow():focusWindowNorth(nil, true, true)
     end),
     hs.hotkey.new({}, "L", function()
-      hs.window.focusedWindow():focusWindowEast(nil, true)
+      hs.window.focusedWindow():focusWindowEast(nil, true, true)
     end),
     hs.hotkey.new({}, "N", function() hs.execute("notification --activate", true) end),
     hs.hotkey.new({}, "M", function() hs.execute("notification --menu", true) end),
@@ -238,3 +238,5 @@ end
 
 ctrlw = CtrlW:new()
 ctrlw:init()
+
+config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
