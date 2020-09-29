@@ -30,14 +30,7 @@ local CtrlW = {}
 function CtrlW:new()
   newObj = {
     current_mode = nil,
-    modes = {
-      default = Mode:new():append({
-        hs.hotkey.new({"alt", "control"}, "W", function() ctrlw:enter_mode("ctrlw") end)
-      }),
-      ctrlw = Mode:new():append({
-        hs.hotkey.new({}, "escape", function() ctrlw:enter_mode("default") end)
-      })
-    }
+    modes = {}
   }
   self.__index = self
   return setmetatable(newObj, self)
@@ -75,7 +68,13 @@ function CtrlW:init()
     end)
   end
 
-  self.modes.ctrlw:append({
+  self.modes.default = Mode:new():append({
+    hs.hotkey.new({"alt", "control"}, "W", function() self:enter_mode("ctrlw") end)
+  })
+
+  self.modes.ctrlw = Mode:new():append({
+    hs.hotkey.new({}, "escape", function() self:enter_mode("default") end),
+    hs.hotkey.new({}, "f14", function() self:enter_mode("default") end),
     shell_hotkey({},        "H", "yabai -m window --focus west"),
     shell_hotkey({},        "J", "yabai -m window --focus south"),
     shell_hotkey({},        "K", "yabai -m window --focus north"),
