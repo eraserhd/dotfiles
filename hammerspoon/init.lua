@@ -68,7 +68,7 @@ function CtrlW:init()
     end
   end
 
-  local function hotkey_exec(mode_table, mods, key, command)
+  local function shell_hotkey(mode_table, mods, key, command)
     mode_table:append({
       hs.hotkey.new(mods, key, function()
         self:enter_mode("default")
@@ -77,13 +77,13 @@ function CtrlW:init()
     })
   end
 
-  hotkey_exec(self.modes.ctrlw, {},        "H", "yabai -m window --focus west")
-  hotkey_exec(self.modes.ctrlw, {},        "J", "yabai -m window --focus south")
-  hotkey_exec(self.modes.ctrlw, {},        "K", "yabai -m window --focus north")
-  hotkey_exec(self.modes.ctrlw, {},        "L", "yabai -m window --focus east")
-  hotkey_exec(self.modes.ctrlw, {},        "P", "yabai -m window --focus recent")
-  hotkey_exec(self.modes.ctrlw, {},        "R", "kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:kak_repl_window")
-  hotkey_exec(self.modes.ctrlw, {"shift"}, "R", "kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:shell_window")
+  shell_hotkey(self.modes.ctrlw, {},        "H", "yabai -m window --focus west")
+  shell_hotkey(self.modes.ctrlw, {},        "J", "yabai -m window --focus south")
+  shell_hotkey(self.modes.ctrlw, {},        "K", "yabai -m window --focus north")
+  shell_hotkey(self.modes.ctrlw, {},        "L", "yabai -m window --focus east")
+  shell_hotkey(self.modes.ctrlw, {},        "P", "yabai -m window --focus recent")
+  shell_hotkey(self.modes.ctrlw, {},        "R", "kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:kak_repl_window")
+  shell_hotkey(self.modes.ctrlw, {"shift"}, "R", "kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:shell_window")
 
   for i=0,9 do
     self.modes.ctrlw:append({
@@ -95,9 +95,9 @@ function CtrlW:init()
     })
   end
 
-  hotkey_exec(self.modes.ctrlw, {}, "C", "yabai-focus-space code")
-  hotkey_exec(self.modes.ctrlw, {}, "F", "yabai-focus-space focus")
-  hotkey_exec(self.modes.ctrlw, {}, "B", "yabai-focus-space browse")
+  shell_hotkey(self.modes.ctrlw, {}, "C", "yabai-focus-space code")
+  shell_hotkey(self.modes.ctrlw, {}, "F", "yabai-focus-space focus")
+  shell_hotkey(self.modes.ctrlw, {}, "B", "yabai-focus-space browse")
 
   self:enter_mode("default")
 end
