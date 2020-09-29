@@ -87,6 +87,12 @@ function CtrlW:make_ctrlw_mode()
   local mode = Mode:new():append({
     hs.hotkey.new({}, "escape", function() self:enter_mode("default") end),
     hs.hotkey.new({}, "f14", function() self:enter_mode("default") end),
+
+    hs.hotkey.new({}, ".", function()
+      hs.eventtap.keyStroke({"control"}, "W")
+      self:enter_mode("default")
+    end),
+
     hs.hotkey.new({}, "H", function()
       self:enter_mode("default")
       hs.window.focusedWindow():focusWindowWest(nil, true, true)
