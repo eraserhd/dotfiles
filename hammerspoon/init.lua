@@ -19,14 +19,10 @@ ctrlw = {
   current_mode = nil,
   modes = {
     default = {
-      hs.hotkey.new({"alt", "control"}, "W", function()
-        ctrlw:enter_mode("ctrlw")
-      end)
+      hs.hotkey.new({"alt", "control"}, "W", function() ctrlw:enter_mode("ctrlw") end)
     },
     ctrlw = {
-      hs.hotkey.new({}, "escape", function()
-        ctrlw:enter_mode("default")
-      end),
+      hs.hotkey.new({}, "escape", function() ctrlw:enter_mode("default") end),
     }
   }
 }
@@ -35,9 +31,9 @@ function window_number(n)
   local windows = hs.window.visibleWindows()
   local bounds = hs.screen.mainScreen():frame()
   local screen_windows = {}
-  for _, w in windows do
+  for _, w in ipairs(windows) do
     local wframe = w:frame()
-    if wframe.x >= bounds.x and wframe.y >= bounds.y
+    if w:frame():inside(bounds) then
       table.insert(screen_windows, w)
     end
   end
