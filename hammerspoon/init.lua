@@ -1,29 +1,52 @@
+local Mode = {}
+
+function Mode:new()
+  newObj = { keys = {} }
+  self.__index = self
+  return setmetatable(newObj, self)
+end
+
+function Mode:enable()
+  for _, key in ipairs(self.keys) do
+    key:enable()
+  end
+end
+
+function Mode:disable()
+  for _, key in ipairs(self.keys) do
+    key:disable()
+  end
+end
+
+function Mode:append(keys)
+  for _, key in ipairs(keys) do
+    table.insert(self.keys, key)
+  end
+  return self
+end
+
 
 ctrlw = {
   init = function(self)
     self:enter_mode("default")
   end,
 
-  enter_mode = function(self, mode)
+  enter_mode = function(self, mode_name)
     if self.current_mode then
-      for _, hotkey in pairs(self.modes[self.current_mode]) do
-        hotkey:disable()
-      end
+      self.current_mode:disable()
     end
-    for _, hotkey in pairs(self.modes[mode]) do
-      hotkey:enable()
-    end
-    self.current_mode = mode
+    self.current_mode = self.modes[mode_name]
+    self.current_mode:enable()
   end,
 
   current_mode = nil,
   modes = {
-    default = {
+    default = Mode:new():append({
       hs.hotkey.new({"alt", "control"}, "W", function() ctrlw:enter_mode("ctrlw") end)
-    },
-    ctrlw = {
-      hs.hotkey.new({}, "escape", function() ctrlw:enter_mode("default") end),
-    }
+    }),
+    ctrlw = Mode:new():append({
+      hs.hotkey.new({}, "escape", function() ctrlw:enter_mode("default") end)
+    })
   }
 }
 
@@ -52,10 +75,12 @@ function window_number(n)
 end
 
 function hotkey_exec(mode_table, mods, key, command)
-  table.insert(mode_table, hs.hotkey.new(mods, key, function()
-    ctrlw:enter_mode("default")
-    hs.execute(command, true)
-  end))
+  mode_table:append({
+    hs.hotkey.new(mods, key, function()
+      ctrlw:enter_mode("default")
+      hs.execute(command, true)
+    end)
+  })
 end
 
 hotkey_exec(ctrlw.modes.ctrlw, {},        "H", "yabai -m window --focus west")
@@ -67,11 +92,13 @@ hotkey_exec(ctrlw.modes.ctrlw, {},        "R", "kitty @ --to unix:/Users/jfelice
 hotkey_exec(ctrlw.modes.ctrlw, {"shift"}, "R", "kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:shell_window")
 
 for i=0,9 do
-  table.insert(ctrlw.modes.ctrlw, hs.hotkey.new({}, tostring(i), function()
-    ctrlw:enter_mode("default")
-    local window = window_number(i)
-    window:focus()
-  end))
+  ctrlw.modes.ctrlw:append({
+    hs.hotkey.new({}, tostring(i), function()
+      ctrlw:enter_mode("default")
+      local window = window_number(i)
+      window:focus()
+    end)
+  })
 end
 
 hotkey_exec(ctrlw.modes.ctrlw, {}, "C", "yabai-focus-space code")
