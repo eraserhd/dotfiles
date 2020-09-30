@@ -142,15 +142,15 @@ function CtrlW:make_ctrlw_mode()
       self:enter_mode("default")
       send_to_space("code")
     end),
-    self:shell_hotkey({}, "F", "yabai-focus-space focus"),
-    hs.hotkey.new({"shift"}, "F", function()
-      self:enter_mode("default")
-      send_to_space("focus")
-    end),
     self:shell_hotkey({}, "B", "yabai-focus-space browse"),
     hs.hotkey.new({"shift"}, "B", function()
       self:enter_mode("default")
       send_to_space("browse")
+    end),
+
+    hs.hotkey.new({}, "F", function()
+      self:enter_mode("default")
+      hs.window.focusedWindow():toggleFullScreen()
     end),
 
     self:shell_hotkey({}, ",", "kitty @ --to unix:/Users/jfelice/.run/kitty send-text --match=title:kak_repl_window '\x10\x0d'"),
