@@ -362,7 +362,7 @@ hook -group centralpark global WinSetOption filetype=clojure %{
 define-command -override -params 0 -docstring %{Run all Clojure tests} \
     clojure-test-all %{
     evaluate-commands -draft %{
-        send-text "(refresh) (run-tests)
+        repl-send-text "(refresh) (run-tests)
 "
     }
 }
@@ -371,7 +371,7 @@ define-command -override -params 0 -docstring %{Run tests in current Clojure nam
     clojure-test-ns %{
     evaluate-commands -draft %{
         rep-find-namespace
-        send-text "(refresh) (run-tests '%opt{rep_namespace})
+        repl-send-text "(refresh) (run-tests '%opt{rep_namespace})
 "
     }
 }
@@ -384,7 +384,7 @@ define-command -override -params 0 -docstring %{Run selected Clojure test} \
         execute-keys '<a-k>deftest<ret>' # Ensure this is a test
         execute-keys '\e\b"ty'
         rep-find-namespace
-        send-text "(refresh) (run-tests '%opt{rep_namespace}/%reg{t})
+        repl-send-text "(refresh) (run-tests '%opt{rep_namespace}/%reg{t})
 "
     }
 }
