@@ -40,6 +40,7 @@ with lib;
     ./tex
     ./tmux
     ./tracker
+    ./usb-overdrive
     ./vim
     ./vnc
     ./weechat
