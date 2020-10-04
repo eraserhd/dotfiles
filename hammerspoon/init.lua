@@ -258,6 +258,10 @@ end
 
 ctrlw:bind('', 'escape', function() ctrlw:exit() end)
 ctrlw:bind('', 'f14', function() ctrlw:exit() end)
+ctrlw:bind('', '.', function()
+  hs.eventtap.keyStroke({"control"}, "W")
+  ctrlw:exit()
+end)
 ctrlw:bind('', 'h', function() moveFocus('West') end)
 ctrlw:bind('', 'j', function() moveFocus('South') end)
 ctrlw:bind('', 'k', function() moveFocus('North') end)
