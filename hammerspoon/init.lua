@@ -206,9 +206,25 @@ local function actualCtrlW()
   ctrlw:exit()
 end
 
-ctrlw:bind('', 'escape', function() ctrlw:exit() end)
-ctrlw:bind('', 'f14', function() ctrlw:exit() end)
-ctrlw:bind('', '.', function() actualCtrlW() end)
+local function bindKeyToAction(key, fn, ...)
+  local args = {...}
+  ctrlw:bind('', key, function()
+    fn(args)
+  end)
+end
+
+keys = {
+  escape = {},
+  f14 = {},
+}
+
+for key, action in pairs(keys) do
+  ctrlw:bind('', key, function()
+    ctrlw:exit()
+  end)
+end
+
+bindKeyToAction('.', actualCtrlW)
 ctrlw:bind('', 'h', function() moveFocus('West') end)
 ctrlw:bind('', 'j', function() moveFocus('South') end)
 ctrlw:bind('', 'k', function() moveFocus('North') end)
