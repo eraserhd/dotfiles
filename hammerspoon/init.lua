@@ -208,16 +208,21 @@ local function focus_kitty_window(title)
   hs.execute("kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:" .. title, true)
 end
 
+local function paste_as_keystrokes()
+  hs.eventtap.keyStrokes(hs.pasteboard.readString())
+end
+
 keys = {
   escape = {},
   f14    = {},
-  ['.']  = {actualCtrlW},
+  ['.']  = {actualCtrlW, delay_exiting_mode = true},
   h      = {moveFocus, 'West'},
   j      = {moveFocus, 'South'},
   k      = {moveFocus, 'North'},
   l      = {moveFocus, 'East'},
   r      = {focus_kitty_window, 'kak_repl_window'},
   R      = {focus_kitty_window, 'shell_window'},
+  v      = {paste_as_keystrokes},
 }
 
 for key, mapping in pairs(keys) do
@@ -227,16 +232,19 @@ for key, mapping in pairs(keys) do
   if string.match(key, "%u") then
     mods = 'shift'
   end
-  ctrlw:bind(mods, key, function()
-    action(arg)
-    ctrlw:exit()
-  end)
+  if mapping['delay_exiting_mode'] then
+    ctrlw:bind(mods, key, function()
+      action(arg)
+      ctrlw:exit()
+    end)
+  else
+    ctrlw:bind(mods, key, function()
+      ctrlw:exit()
+      action(arg)
+    end)
+  end
 end
 
-ctrlw:bind('', 'v', function()
-  ctrlw:exit()
-  hs.eventtap.keyStrokes(hs.pasteboard.readString())
-end)
 for i=0,9 do
   ctrlw:bind('', tostring(i), function()
     ctrlw:exit()
