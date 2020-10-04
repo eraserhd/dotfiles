@@ -191,7 +191,7 @@ config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.re
 
 ctrlw = hs.hotkey.modal.new('ctrl', 'w')
 
-local function moveFocus(direction)
+local function move_focus(direction)
   local window = hs.window.focusedWindow()
   window['focusWindow' .. direction](window, nil, true, true)
 end
@@ -224,10 +224,10 @@ keys = {
   escape = {},
   f14    = {},
   ['.']  = {actualCtrlW, delay_exiting_mode = true},
-  h      = {moveFocus, 'West'},
-  j      = {moveFocus, 'South'},
-  k      = {moveFocus, 'North'},
-  l      = {moveFocus, 'East'},
+  h      = {move_focus, 'West'},
+  j      = {move_focus, 'South'},
+  k      = {move_focus, 'North'},
+  l      = {move_focus, 'East'},
   r      = {focus_kitty_window, 'kak_repl_window'},
   R      = {focus_kitty_window, 'shell_window'},
   v      = {paste_as_keystrokes},
