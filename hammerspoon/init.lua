@@ -210,17 +210,18 @@ keys = {
   escape = {},
   f14    = {},
   ['.']  = {actualCtrlW},
+  h      = {moveFocus, 'West'},
 }
 
 for key, mapping in pairs(keys) do
   local action = mapping[1] or function() end
+  local arg = mapping[2]
   ctrlw:bind('', key, function()
-    action()
+    action(arg)
     ctrlw:exit()
   end)
 end
 
-ctrlw:bind('', 'h', function() moveFocus('West') end)
 ctrlw:bind('', 'j', function() moveFocus('South') end)
 ctrlw:bind('', 'k', function() moveFocus('North') end)
 ctrlw:bind('', 'l', function() moveFocus('East') end)
