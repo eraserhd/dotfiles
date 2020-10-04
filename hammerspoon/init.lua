@@ -93,7 +93,6 @@ end
 function CtrlW:make_ctrlw_mode()
   local mode = {}
   mode:append({
-    self:shell_hotkey({}, ",", "kitty @ --to unix:/Users/jfelice/.run/kitty send-text --match=title:kak_repl_window '\x10\x0d'"),
     self:shell_hotkey({}, "=", "yabai -m space --balance"),
     self:shell_hotkey({}, "/", "yabai -m window --toggle split"),
 
@@ -220,6 +219,11 @@ local function toggle_full_screen()
   hs.window.focusedWindow():toggleFullScreen()
 end
 
+local function rerun_last_command()
+  hs.execute("kitty @ --to unix:/Users/jfelice/.run/kitty " ..
+             "send-text --match=title:kak_repl_window '\x10\x0d'", true)
+end
+
 keys = {
   escape = {},
   f14    = {},
@@ -246,6 +250,7 @@ keys = {
   ['8']  = {focus_window_number, 8},
   ['9']  = {focus_window_number, 9},
   f      = {toggle_full_screen},
+  [',']  = {rerun_last_command},
 }
 
 for key, mapping in pairs(keys) do
