@@ -217,6 +217,10 @@ local function focus_space(space_name)
   hs.execute("yabai-focus-space " .. space_name, true)
 end
 
+local function focus_window_number(n)
+  window_number(n):focus()
+end
+
 keys = {
   escape = {},
   f14    = {},
@@ -232,6 +236,16 @@ keys = {
   C      = {send_to_space, 'code'},
   b      = {focus_space, 'browse'},
   B      = {send_to_space, 'browse'},
+  ['0']  = {focus_window_number, 0},
+  ['1']  = {focus_window_number, 1},
+  ['2']  = {focus_window_number, 2},
+  ['3']  = {focus_window_number, 3},
+  ['4']  = {focus_window_number, 4},
+  ['5']  = {focus_window_number, 5},
+  ['6']  = {focus_window_number, 6},
+  ['7']  = {focus_window_number, 7},
+  ['8']  = {focus_window_number, 8},
+  ['9']  = {focus_window_number, 9},
 }
 
 for key, mapping in pairs(keys) do
@@ -252,11 +266,4 @@ for key, mapping in pairs(keys) do
       action(arg)
     end)
   end
-end
-
-for i=0,9 do
-  ctrlw:bind('', tostring(i), function()
-    ctrlw:exit()
-    window_number(i):focus()
-  end)
 end
