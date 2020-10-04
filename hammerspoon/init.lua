@@ -29,63 +29,10 @@ local function send_to_space(space_name)
   window:focus()
 end
 
-local Mode = {}
-
-function Mode:new()
-  newObj = { keys = {} }
-  self.__index = self
-  return setmetatable(newObj, self)
-end
-
-function Mode:enable()
-  for _, key in ipairs(self.keys) do
-    key:enable()
-  end
-end
-
-function Mode:disable()
-  for _, key in ipairs(self.keys) do
-    key:disable()
-  end
-end
-
-function Mode:append(keys)
-  for _, key in ipairs(keys) do
-    table.insert(self.keys, key)
-  end
-  return self
-end
-
 local CtrlW = {}
-
-function CtrlW:new()
-  newObj = {
-    current_mode = nil,
-    modes = {}
-  }
-  self.__index = self
-  return setmetatable(newObj, self)
-end
-
-function CtrlW:init()
-  self.modes.default = self:make_default_mode()
-  self.modes.ctrlw = self:make_ctrlw_mode()
-  self.modes.swap = self:make_swap_mode()
-  self.modes.warp = self:make_warp_mode()
-  self.modes.keycommand = self:make_keycommand_mode()
-  self:enter_mode("default")
-end
-
-function CtrlW:shell_hotkey(mods, key, command)
-  return hs.hotkey.new(mods, key, function()
-    self:enter_mode("default")
-    hs.execute(command, true)
-  end)
-end
 
 function CtrlW:make_default_mode()
   return Mode:new():append({
-    hs.hotkey.new({"control"}, "W", function() self:enter_mode("ctrlw") end),
     hs.hotkey.new({"command", "shift", "alt", "control"}, "K", function() self:enter_mode("keycommand") end),
   })
 end
@@ -145,14 +92,6 @@ function CtrlW:make_keycommand_mode()
     hs.hotkey.new({}, "M", function() hs.execute("notification --menu", true) end),
     hs.hotkey.new({}, "I", function() hs.execute("notification --close", true) end),
   })
-end
-
-function CtrlW:enter_mode(mode_name)
-  if self.current_mode then
-    self.current_mode:disable()
-  end
-  self.current_mode = self.modes[mode_name]
-  self.current_mode:enable()
 end
 
 config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
