@@ -196,14 +196,12 @@ config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.re
 ctrlw = hs.hotkey.modal.new('ctrl', 'w')
 
 local function moveFocus(direction)
-  ctrlw:exit()
   local window = hs.window.focusedWindow()
   window['focusWindow' .. direction](window, nil, true, true)
 end
 
 local function actualCtrlW()
   hs.eventtap.keyStroke({"control"}, "W")
-  ctrlw:exit()
 end
 
 keys = {
