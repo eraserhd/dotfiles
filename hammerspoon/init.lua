@@ -196,7 +196,7 @@ local function move_focus(direction)
   window['focusWindow' .. direction](window, nil, true, true)
 end
 
-local function actualCtrlW()
+local function send_control_w()
   hs.eventtap.keyStroke({"control"}, "W")
 end
 
@@ -223,7 +223,7 @@ end
 keys = {
   escape = {},
   f14    = {},
-  ['.']  = {actualCtrlW, delay_exiting_mode = true},
+  ['.']  = {send_control_w, delay_exiting_mode = true},
   h      = {move_focus, 'West'},
   j      = {move_focus, 'South'},
   k      = {move_focus, 'North'},
