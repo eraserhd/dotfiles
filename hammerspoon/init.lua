@@ -117,6 +117,7 @@ function CtrlW:make_swap_mode()
   local mode = Mode:new():append({
     hs.hotkey.new({}, "escape", function() self:enter_mode("default") end),
     hs.hotkey.new({}, "H", function() swap("west") end),
+
     hs.hotkey.new({}, "J", function() swap("south") end),
     hs.hotkey.new({}, "K", function() swap("north") end),
     hs.hotkey.new({}, "L", function() swap("east") end),
@@ -212,6 +213,10 @@ local function paste_as_keystrokes()
   hs.eventtap.keyStrokes(hs.pasteboard.readString())
 end
 
+local function focus_space(space_name)
+  hs.execute("yabai-focus-space " .. space_name, true)
+end
+
 keys = {
   escape = {},
   f14    = {},
@@ -253,7 +258,7 @@ for i=0,9 do
 end
 ctrlw:bind('', 'c', function()
   ctrlw:exit()
-  hs.execute("yabai-focus-space code", true)
+  focus_space("code")
 end)
 ctrlw:bind('shift', 'c', function()
   ctrlw:exit()
@@ -261,7 +266,7 @@ ctrlw:bind('shift', 'c', function()
 end)
 ctrlw:bind('', 'b', function()
   ctrlw:exit()
-  hs.execute("yabai-focus-space browse", true)
+  focus_space("browse")
 end)
 ctrlw:bind('shift', 'b', function()
   ctrlw:exit()
