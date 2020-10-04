@@ -37,29 +37,6 @@ function CtrlW:make_default_mode()
   })
 end
 
-function CtrlW:make_ctrlw_mode()
-  local mode = {}
-  mode:append({
-    hs.hotkey.new({}, "I", function() self:enter_mode("warp") end),
-  })
-  return mode
-end
-
-function CtrlW:make_warp_mode()
-  local mode = Mode:new():append({})
-
-  for i=0,9 do
-    mode:append({
-      hs.hotkey.new({}, tostring(i), function()
-        local window = window_number(i)
-        wrap(window:id())
-      end)
-    })
-  end
-
-  return mode
-end
-
 function CtrlW:make_keycommand_mode()
   return Mode:new():append({
     hs.hotkey.new({}, "escape", function() self:enter_mode("default") end),
@@ -140,6 +117,10 @@ local function warp_window(to)
   hs.execute("yabai -m window --space code", true)
   hs.execute("yabai -m window --warp " .. tostring(to), true)
   hs.execute("yabai -m space code --balance", true)
+end
+
+local function warp_window_number(n)
+  warp_window(window_number(n):id())
 end
 
 ctrlw = hs.hotkey.modal.new('ctrl', 'w')
@@ -225,4 +206,14 @@ map_all_the_things(warp, {
   j      = {warp_window, 'south'},
   k      = {warp_window, 'north'},
   l      = {warp_window, 'east'},
+  ['0']  = {warp_window_number, 0},
+  ['1']  = {warp_window_number, 1},
+  ['2']  = {warp_window_number, 2},
+  ['3']  = {warp_window_number, 3},
+  ['4']  = {warp_window_number, 4},
+  ['5']  = {warp_window_number, 5},
+  ['6']  = {warp_window_number, 6},
+  ['7']  = {warp_window_number, 7},
+  ['8']  = {warp_window_number, 8},
+  ['9']  = {warp_window_number, 9},
 })
