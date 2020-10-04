@@ -93,7 +93,6 @@ end
 function CtrlW:make_ctrlw_mode()
   local mode = {}
   mode:append({
-    self:shell_hotkey({}, "=", "yabai -m space --balance"),
     self:shell_hotkey({}, "/", "yabai -m window --toggle split"),
 
     hs.hotkey.new({}, "S", function() self:enter_mode("swap") end),
@@ -227,6 +226,10 @@ local function rerun_last_command()
   kitty("send-text --match=title:kak_repl_window '\x10\x0d'")
 end
 
+local function balance_space()
+  hs.execute("yabai -m space --balance", true)
+end
+
 keys = {
   escape = {},
   f14    = {},
@@ -254,6 +257,7 @@ keys = {
   ['8']  = {focus_window_number, 8},
   ['9']  = {focus_window_number, 9},
   [',']  = {rerun_last_command},
+  ['=']  = {balance_space},
 }
 
 for key, mapping in pairs(keys) do
