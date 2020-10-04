@@ -91,62 +91,8 @@ function CtrlW:make_default_mode()
 end
 
 function CtrlW:make_ctrlw_mode()
-  local mode = Mode:new():append({
-    hs.hotkey.new({}, "escape", function() self:enter_mode("default") end),
-    hs.hotkey.new({}, "f14", function() self:enter_mode("default") end),
-
-    hs.hotkey.new({}, ".", function()
-      hs.eventtap.keyStroke({"control"}, "W")
-      self:enter_mode("default")
-    end),
-
-    hs.hotkey.new({}, "H", function()
-      self:enter_mode("default")
-      hs.window.focusedWindow():focusWindowWest(nil, true, true)
-    end),
-    hs.hotkey.new({}, "J", function()
-      self:enter_mode("default")
-      hs.window.focusedWindow():focusWindowSouth(nil, true, true)
-    end),
-    hs.hotkey.new({}, "K", function()
-      self:enter_mode("default")
-      hs.window.focusedWindow():focusWindowNorth(nil, true, true)
-    end),
-    hs.hotkey.new({}, "L", function()
-      self:enter_mode("default")
-      hs.window.focusedWindow():focusWindowEast(nil, true, true)
-    end),
-    self:shell_hotkey({},        "R", "kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:kak_repl_window"),
-    self:shell_hotkey({"shift"}, "R", "kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:shell_window"),
-
-    hs.hotkey.new({}, "V", function()
-      self:enter_mode("default")
-      hs.eventtap.keyStrokes(hs.pasteboard.readString())
-    end),
-  })
-
-  for i=0,9 do
-    mode:append({
-      hs.hotkey.new({}, tostring(i), function()
-        self:enter_mode("default")
-        local window = window_number(i)
-        window:focus()
-      end)
-    })
-  end
-
+  local mode = {}
   mode:append({
-    self:shell_hotkey({}, "C", "yabai-focus-space code"),
-    hs.hotkey.new({"shift"}, "C", function()
-      self:enter_mode("default")
-      send_to_space("code")
-    end),
-    self:shell_hotkey({}, "B", "yabai-focus-space browse"),
-    hs.hotkey.new({"shift"}, "B", function()
-      self:enter_mode("default")
-      send_to_space("browse")
-    end),
-
     hs.hotkey.new({}, "F", function()
       self:enter_mode("default")
       hs.window.focusedWindow():toggleFullScreen()
@@ -159,7 +105,6 @@ function CtrlW:make_ctrlw_mode()
     hs.hotkey.new({}, "S", function() self:enter_mode("swap") end),
     hs.hotkey.new({}, "I", function() self:enter_mode("warp") end),
   })
-
   return mode
 end
 
