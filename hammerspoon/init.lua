@@ -261,4 +261,5 @@ function ctrlaltw:exited()
 end
 
 ctrlaltw:bind('', 'escape', function() ctrlaltw:exit() end)
+ctrlaltw:bind('', 'f14', function() ctrlaltw:exit() end)
 
