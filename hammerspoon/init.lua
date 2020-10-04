@@ -93,35 +93,8 @@ end
 function CtrlW:make_ctrlw_mode()
   local mode = {}
   mode:append({
-    hs.hotkey.new({}, "S", function() self:enter_mode("swap") end),
     hs.hotkey.new({}, "I", function() self:enter_mode("warp") end),
   })
-  return mode
-end
-
-function CtrlW:make_swap_mode()
-  local function swap(to)
-    self:enter_mode("default")
-    hs.execute("yabai -m window --swap " .. tostring(to), true)
-  end
-
-  local mode = Mode:new():append({
-    hs.hotkey.new({}, "H", function() swap("west") end),
-
-    hs.hotkey.new({}, "J", function() swap("south") end),
-    hs.hotkey.new({}, "K", function() swap("north") end),
-    hs.hotkey.new({}, "L", function() swap("east") end),
-  })
-
-  for i=0,9 do
-    mode:append({
-      hs.hotkey.new({}, tostring(i), function()
-        local window = window_number(i)
-        swap(window:id())
-      end)
-    })
-  end
-
   return mode
 end
 
@@ -233,6 +206,10 @@ local function swap_window(what)
   hs.execute("yabai -m window --swap " .. tostring(what), true)
 end
 
+local function swap_window_number(n)
+  swap_window(window_number(n):id())
+end
+
 ctrlw = hs.hotkey.modal.new('ctrl', 'w')
 swap = hs.hotkey.modal.new('cmd-ctrl-alt-shift', 's') -- bogus, unused key
 
@@ -296,4 +273,14 @@ map_all_the_things(swap, {
   j      = {swap_window, 'south'},
   k      = {swap_window, 'north'},
   l      = {swap_window, 'east'},
+  ['0']  = {swap_window_number, 0},
+  ['1']  = {swap_window_number, 1},
+  ['2']  = {swap_window_number, 2},
+  ['3']  = {swap_window_number, 3},
+  ['4']  = {swap_window_number, 4},
+  ['5']  = {swap_window_number, 5},
+  ['6']  = {swap_window_number, 6},
+  ['7']  = {swap_window_number, 7},
+  ['8']  = {swap_window_number, 8},
+  ['9']  = {swap_window_number, 9},
 })
