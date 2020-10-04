@@ -29,8 +29,6 @@ local function send_to_space(space_name)
   window:focus()
 end
 
-config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
-
 local function move_focus(direction)
   local window = hs.window.focusedWindow()
   window['focusWindow' .. direction](window, nil, true, true)
@@ -102,10 +100,6 @@ local function activate_notification()
   hs.execute("notification --activate", true)
 end
 
-ctrlw = hs.hotkey.modal.new('ctrl', 'w')
-swap = hs.hotkey.modal.new('cmd-ctrl-alt-shift', 's') -- bogus, unused key
-warp = hs.hotkey.modal.new('cmd-ctrl-alt-shift', 'w') -- also bogus
-
 local function map_all_the_things(mode, keys)
   for key, mapping in pairs(keys) do
     local action = mapping[1] or function() end
@@ -127,6 +121,10 @@ local function map_all_the_things(mode, keys)
     end
   end
 end
+
+ctrlw = hs.hotkey.modal.new('ctrl', 'w')
+swap = hs.hotkey.modal.new('cmd-ctrl-alt-shift', 's') -- bogus, unused key
+warp = hs.hotkey.modal.new('cmd-ctrl-alt-shift', 'w') -- also bogus
 
 map_all_the_things(ctrlw, {
   escape = {},
@@ -198,3 +196,5 @@ map_all_the_things(warp, {
   ['8']  = {warp_window_number, 8},
   ['9']  = {warp_window_number, 9},
 })
+
+config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
