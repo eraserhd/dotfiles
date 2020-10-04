@@ -40,18 +40,6 @@ end
 function CtrlW:make_keycommand_mode()
   return Mode:new():append({
     hs.hotkey.new({}, "escape", function() self:enter_mode("default") end),
-    hs.hotkey.new({}, "H", function()
-      hs.window.focusedWindow():focusWindowWest(nil, true, true)
-    end),
-    hs.hotkey.new({}, "J", function()
-      hs.window.focusedWindow():focusWindowSouth(nil, true, true)
-    end),
-    hs.hotkey.new({}, "K", function()
-      hs.window.focusedWindow():focusWindowNorth(nil, true, true)
-    end),
-    hs.hotkey.new({}, "L", function()
-      hs.window.focusedWindow():focusWindowEast(nil, true, true)
-    end),
     hs.hotkey.new({}, "N", function() hs.execute("notification --activate", true) end),
     hs.hotkey.new({}, "M", function() hs.execute("notification --menu", true) end),
     hs.hotkey.new({}, "I", function() hs.execute("notification --close", true) end),
@@ -123,6 +111,10 @@ local function warp_window_number(n)
   warp_window(window_number(n):id())
 end
 
+local function ignore_notification()
+  hs.execute("notification --close", true)
+end
+
 ctrlw = hs.hotkey.modal.new('ctrl', 'w')
 swap = hs.hotkey.modal.new('cmd-ctrl-alt-shift', 's') -- bogus, unused key
 warp = hs.hotkey.modal.new('cmd-ctrl-alt-shift', 'w') -- also bogus
@@ -166,6 +158,7 @@ map_all_the_things(ctrlw, {
   R      = {focus_kitty_window, 'shell_window'},
   s      = {function() swap:enter() end},
   i      = {function() warp:enter() end},
+  I      = {ignore_notification},
   v      = {paste_as_keystrokes},
   ['0']  = {focus_window_number, 0},
   ['1']  = {focus_window_number, 1},
