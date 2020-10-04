@@ -204,6 +204,10 @@ local function actualCtrlW()
   hs.eventtap.keyStroke({"control"}, "W")
 end
 
+local function focus_kitty_window(title)
+  hs.execute("kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:" .. title, true)
+end
+
 keys = {
   escape = {},
   f14    = {},
@@ -225,11 +229,11 @@ end
 
 ctrlw:bind('', 'r', function()
   ctrlw:exit()
-  hs.execute("kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:kak_repl_window", true)
+  focus_kitty_window("kak_repl_window")
 end)
 ctrlw:bind('shift', 'R', function()
   ctrlw:exit()
-  hs.execute("kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:shell_window", true)
+  focus_kitty_window("shell_window")
 end)
 ctrlw:bind('', 'v', function()
   ctrlw:exit()
