@@ -106,7 +106,6 @@ function CtrlW:make_swap_mode()
   end
 
   local mode = Mode:new():append({
-    hs.hotkey.new({}, "escape", function() self:enter_mode("default") end),
     hs.hotkey.new({}, "H", function() swap("west") end),
 
     hs.hotkey.new({}, "J", function() swap("south") end),
@@ -230,9 +229,14 @@ local function toggle_split_direction()
   hs.execute("yabai -m window --toggle split", true)
 end
 
-ctrlw = hs.hotkey.modal.new('ctrl', 'w')
+local function swap_window(what)
+  hs.execute("yabai -m window --swap " .. tostring(what), true)
+end
 
-local function map_all_the_things(keys)
+ctrlw = hs.hotkey.modal.new('ctrl', 'w')
+swap = hs.hotkey.modal.new('cmd-ctrl-alt-shift', 's') -- bogus, unused key
+
+local function map_all_the_things(mode, keys)
   for key, mapping in pairs(keys) do
     local action = mapping[1] or function() end
     local arg = mapping[2]
@@ -241,20 +245,20 @@ local function map_all_the_things(keys)
       mods = 'shift'
     end
     if mapping['delay_exiting_mode'] then
-      ctrlw:bind(mods, key, function()
+      mode:bind(mods, key, function()
         action(arg)
-        ctrlw:exit()
+        mode:exit()
       end)
     else
-      ctrlw:bind(mods, key, function()
-        ctrlw:exit()
+      mode:bind(mods, key, function()
+        mode:exit()
         action(arg)
       end)
     end
   end
 end
 
-map_all_the_things({
+map_all_the_things(ctrlw, {
   escape = {},
   f14    = {},
   ['.']  = {send_control_w, delay_exiting_mode = true},
@@ -269,6 +273,7 @@ map_all_the_things({
   l      = {move_focus, 'East'},
   r      = {focus_kitty_window, 'kak_repl_window'},
   R      = {focus_kitty_window, 'shell_window'},
+  s      = {function() swap:enter() end},
   v      = {paste_as_keystrokes},
   ['0']  = {focus_window_number, 0},
   ['1']  = {focus_window_number, 1},
@@ -283,4 +288,12 @@ map_all_the_things({
   [',']  = {rerun_last_command},
   ['=']  = {balance_space},
   ['/']  = {toggle_split_direction},
+})
+
+map_all_the_things(swap, {
+  escape = {},
+  h      = {swap_window, 'west'},
+  j      = {swap_window, 'south'},
+  k      = {swap_window, 'north'},
+  l      = {swap_window, 'east'},
 })
