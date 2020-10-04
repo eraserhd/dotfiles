@@ -29,23 +29,6 @@ local function send_to_space(space_name)
   window:focus()
 end
 
-local CtrlW = {}
-
-function CtrlW:make_default_mode()
-  return Mode:new():append({
-    hs.hotkey.new({"command", "shift", "alt", "control"}, "K", function() self:enter_mode("keycommand") end),
-  })
-end
-
-function CtrlW:make_keycommand_mode()
-  return Mode:new():append({
-    hs.hotkey.new({}, "escape", function() self:enter_mode("default") end),
-    hs.hotkey.new({}, "N", function() hs.execute("notification --activate", true) end),
-    hs.hotkey.new({}, "M", function() hs.execute("notification --menu", true) end),
-    hs.hotkey.new({}, "I", function() hs.execute("notification --close", true) end),
-  })
-end
-
 config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
 
 local function move_focus(direction)
@@ -115,6 +98,10 @@ local function ignore_notification()
   hs.execute("notification --close", true)
 end
 
+local function activate_notification()
+  hs.execute("notification --activate", true)
+end
+
 ctrlw = hs.hotkey.modal.new('ctrl', 'w')
 swap = hs.hotkey.modal.new('cmd-ctrl-alt-shift', 's') -- bogus, unused key
 warp = hs.hotkey.modal.new('cmd-ctrl-alt-shift', 'w') -- also bogus
@@ -159,6 +146,7 @@ map_all_the_things(ctrlw, {
   s      = {function() swap:enter() end},
   i      = {function() warp:enter() end},
   I      = {ignore_notification},
+  N      = {activate_notification},
   v      = {paste_as_keystrokes},
   ['0']  = {focus_window_number, 0},
   ['1']  = {focus_window_number, 1},
