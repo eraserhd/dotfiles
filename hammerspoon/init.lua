@@ -256,12 +256,14 @@ local function moveFocus(direction)
   window['focusWindow' .. direction](window, nil, true, true)
 end
 
-ctrlw:bind('', 'escape', function() ctrlw:exit() end)
-ctrlw:bind('', 'f14', function() ctrlw:exit() end)
-ctrlw:bind('', '.', function()
+local function actualCtrlW()
   hs.eventtap.keyStroke({"control"}, "W")
   ctrlw:exit()
-end)
+end
+
+ctrlw:bind('', 'escape', function() ctrlw:exit() end)
+ctrlw:bind('', 'f14', function() ctrlw:exit() end)
+ctrlw:bind('', '.', function() actualCtrlW() end)
 ctrlw:bind('', 'h', function() moveFocus('West') end)
 ctrlw:bind('', 'j', function() moveFocus('South') end)
 ctrlw:bind('', 'k', function() moveFocus('North') end)
@@ -284,3 +286,8 @@ for i=0,9 do
     window_number(i):focus()
   end)
 end
+ctrlw:bind('', 'c', function()
+  ctrlw:exit()
+  hs.execute("yabai-focus-space code", true)
+end)
+
