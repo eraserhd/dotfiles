@@ -251,3 +251,14 @@ ctrlw = CtrlW:new()
 ctrlw:init()
 
 config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
+
+ctrlaltw = hs.hotkey.modal.new('ctrl-alt', 'w')
+function ctrlaltw:entered()
+  hs.alert("Entered ctrlaltw mode")
+end
+function ctrlaltw:exited()
+  hs.alert("Exited ctrlaltw mode")
+end
+
+ctrlaltw:bind('', 'escape', function() ctrlaltw:exit() end)
+
