@@ -290,4 +290,8 @@ ctrlw:bind('', 'c', function()
   ctrlw:exit()
   hs.execute("yabai-focus-space code", true)
 end)
+ctrlw:bind('', 'b', function()
+  ctrlw:exit()
+  hs.execute("yabai-focus-space browse", true)
+end)
 
