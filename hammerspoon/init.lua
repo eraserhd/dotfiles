@@ -22,6 +22,13 @@ local function window_number(n)
   end
 end
 
+local function send_to_space(space_name)
+  local window = hs.window.focusedWindow()
+  hs.execute("yabai -m window --space " .. space_name, true)
+  hs.execute("yabai-focus-space " .. space_name, true)
+  window:focus()
+end
+
 local Mode = {}
 
 function Mode:new()
@@ -126,13 +133,6 @@ function CtrlW:make_ctrlw_mode()
         window:focus()
       end)
     })
-  end
-
-  local function send_to_space(space_name)
-    local window = hs.window.focusedWindow()
-    hs.execute("yabai -m window --space " .. space_name, true)
-    hs.execute("yabai-focus-space " .. space_name, true)
-    window:focus()
   end
 
   mode:append({
