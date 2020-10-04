@@ -217,21 +217,22 @@ keys = {
   k      = {moveFocus, 'North'},
   l      = {moveFocus, 'East'},
   r      = {focus_kitty_window, 'kak_repl_window'},
+  R      = {focus_kitty_window, 'shell_window'},
 }
 
 for key, mapping in pairs(keys) do
   local action = mapping[1] or function() end
   local arg = mapping[2]
-  ctrlw:bind('', key, function()
+  local mods = ''
+  if string.match(key, "%u") then
+    mods = 'shift'
+  end
+  ctrlw:bind(mods, key, function()
     action(arg)
     ctrlw:exit()
   end)
 end
 
-ctrlw:bind('shift', 'R', function()
-  ctrlw:exit()
-  focus_kitty_window("shell_window")
-end)
 ctrlw:bind('', 'v', function()
   ctrlw:exit()
   hs.eventtap.keyStrokes(hs.pasteboard.readString())
