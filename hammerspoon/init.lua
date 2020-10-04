@@ -211,6 +211,9 @@ keys = {
   f14    = {},
   ['.']  = {actualCtrlW},
   h      = {moveFocus, 'West'},
+  j      = {moveFocus, 'South'},
+  k      = {moveFocus, 'North'},
+  l      = {moveFocus, 'East'},
 }
 
 for key, mapping in pairs(keys) do
@@ -222,9 +225,6 @@ for key, mapping in pairs(keys) do
   end)
 end
 
-ctrlw:bind('', 'j', function() moveFocus('South') end)
-ctrlw:bind('', 'k', function() moveFocus('North') end)
-ctrlw:bind('', 'l', function() moveFocus('East') end)
 ctrlw:bind('', 'r', function()
   ctrlw:exit()
   hs.execute("kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:kak_repl_window", true)
