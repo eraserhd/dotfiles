@@ -206,25 +206,20 @@ local function actualCtrlW()
   ctrlw:exit()
 end
 
-local function bindKeyToAction(key, fn, ...)
-  local args = {...}
-  ctrlw:bind('', key, function()
-    fn(args)
-  end)
-end
-
 keys = {
   escape = {},
-  f14 = {},
+  f14    = {},
+  ['.']  = {actualCtrlW},
 }
 
-for key, action in pairs(keys) do
+for key, mapping in pairs(keys) do
+  local action = mapping[1] or function() end
   ctrlw:bind('', key, function()
+    action()
     ctrlw:exit()
   end)
 end
 
-bindKeyToAction('.', actualCtrlW)
 ctrlw:bind('', 'h', function() moveFocus('West') end)
 ctrlw:bind('', 'j', function() moveFocus('South') end)
 ctrlw:bind('', 'k', function() moveFocus('North') end)
