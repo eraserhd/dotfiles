@@ -185,8 +185,6 @@ end
 
 config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
 
-ctrlw = hs.hotkey.modal.new('ctrl', 'w')
-
 local function move_focus(direction)
   local window = hs.window.focusedWindow()
   window['focusWindow' .. direction](window, nil, true, true)
@@ -232,7 +230,31 @@ local function toggle_split_direction()
   hs.execute("yabai -m window --toggle split", true)
 end
 
-keys = {
+ctrlw = hs.hotkey.modal.new('ctrl', 'w')
+
+local function map_all_the_things(keys)
+  for key, mapping in pairs(keys) do
+    local action = mapping[1] or function() end
+    local arg = mapping[2]
+    local mods = ''
+    if string.match(key, "%u") then
+      mods = 'shift'
+    end
+    if mapping['delay_exiting_mode'] then
+      ctrlw:bind(mods, key, function()
+        action(arg)
+        ctrlw:exit()
+      end)
+    else
+      ctrlw:bind(mods, key, function()
+        ctrlw:exit()
+        action(arg)
+      end)
+    end
+  end
+end
+
+map_all_the_things({
   escape = {},
   f14    = {},
   ['.']  = {send_control_w, delay_exiting_mode = true},
@@ -261,24 +283,4 @@ keys = {
   [',']  = {rerun_last_command},
   ['=']  = {balance_space},
   ['/']  = {toggle_split_direction},
-}
-
-for key, mapping in pairs(keys) do
-  local action = mapping[1] or function() end
-  local arg = mapping[2]
-  local mods = ''
-  if string.match(key, "%u") then
-    mods = 'shift'
-  end
-  if mapping['delay_exiting_mode'] then
-    ctrlw:bind(mods, key, function()
-      action(arg)
-      ctrlw:exit()
-    end)
-  else
-    ctrlw:bind(mods, key, function()
-      ctrlw:exit()
-      action(arg)
-    end)
-  end
-end
+})
