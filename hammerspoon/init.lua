@@ -262,4 +262,7 @@ end
 
 ctrlaltw:bind('', 'escape', function() ctrlaltw:exit() end)
 ctrlaltw:bind('', 'f14', function() ctrlaltw:exit() end)
-
+ctrlaltw:bind('', 'h', function()
+  ctrlaltw:exit()
+  hs.window.focusedWindow():focusWindowWest(nil, true, true)
+end)
