@@ -199,8 +199,12 @@ local function send_control_w()
   hs.eventtap.keyStroke({"control"}, "W")
 end
 
+local function kitty(command)
+  hs.execute("kitty @ --to unix:/Users/jfelice/.run/kitty " .. command, true)
+end
+
 local function focus_kitty_window(title)
-  hs.execute("kitty @ --to unix:/Users/jfelice/.run/kitty focus-window --match=title:" .. title, true)
+  kitty("focus-window --match=title:" .. title)
 end
 
 local function paste_as_keystrokes()
@@ -220,8 +224,7 @@ local function toggle_full_screen()
 end
 
 local function rerun_last_command()
-  hs.execute("kitty @ --to unix:/Users/jfelice/.run/kitty " ..
-             "send-text --match=title:kak_repl_window '\x10\x0d'", true)
+  kitty("send-text --match=title:kak_repl_window '\x10\x0d'")
 end
 
 keys = {
