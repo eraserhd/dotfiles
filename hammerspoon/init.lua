@@ -93,8 +93,6 @@ end
 function CtrlW:make_ctrlw_mode()
   local mode = {}
   mode:append({
-    self:shell_hotkey({}, "/", "yabai -m window --toggle split"),
-
     hs.hotkey.new({}, "S", function() self:enter_mode("swap") end),
     hs.hotkey.new({}, "I", function() self:enter_mode("warp") end),
   })
@@ -230,6 +228,10 @@ local function balance_space()
   hs.execute("yabai -m space --balance", true)
 end
 
+local function toggle_split_direction()
+  hs.execute("yabai -m window --toggle split", true)
+end
+
 keys = {
   escape = {},
   f14    = {},
@@ -258,6 +260,7 @@ keys = {
   ['9']  = {focus_window_number, 9},
   [',']  = {rerun_last_command},
   ['=']  = {balance_space},
+  ['/']  = {toggle_split_direction},
 }
 
 for key, mapping in pairs(keys) do
