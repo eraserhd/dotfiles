@@ -228,6 +228,10 @@ keys = {
   r      = {focus_kitty_window, 'kak_repl_window'},
   R      = {focus_kitty_window, 'shell_window'},
   v      = {paste_as_keystrokes},
+  c      = {focus_space, 'code'},
+  C      = {send_to_space, 'code'},
+  b      = {focus_space, 'browse'},
+  B      = {send_to_space, 'browse'},
 }
 
 for key, mapping in pairs(keys) do
@@ -256,20 +260,3 @@ for i=0,9 do
     window_number(i):focus()
   end)
 end
-ctrlw:bind('', 'c', function()
-  ctrlw:exit()
-  focus_space("code")
-end)
-ctrlw:bind('shift', 'c', function()
-  ctrlw:exit()
-  send_to_space("code")
-end)
-ctrlw:bind('', 'b', function()
-  ctrlw:exit()
-  focus_space("browse")
-end)
-ctrlw:bind('shift', 'b', function()
-  ctrlw:exit()
-  send_to_space("browse")
-end)
-
