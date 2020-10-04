@@ -289,3 +289,9 @@ ctrlaltw:bind('', 'v', function()
   ctrlaltw:exit()
   hs.eventtap.keyStrokes(hs.pasteboard.readString())
 end)
+for i=0,9 do
+  ctrlaltw:bind('', tostring(i), function()
+    ctrlaltw:exit()
+    window_number(i):focus()
+  end)
+end
