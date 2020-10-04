@@ -46,20 +46,7 @@ function CtrlW:make_ctrlw_mode()
 end
 
 function CtrlW:make_warp_mode()
-  local function warp(to)
-    self:enter_mode("default")
-    hs.execute("yabai -m window --space code", true)
-    hs.execute("yabai -m window --warp " .. tostring(to), true)
-    hs.execute("yabai -m space code --balance", true)
-  end
-
-  local mode = Mode:new():append({
-    hs.hotkey.new({}, "escape", function() self:enter_mode("default") end),
-    hs.hotkey.new({}, "H", function() warp("west") end),
-    hs.hotkey.new({}, "J", function() warp("south") end),
-    hs.hotkey.new({}, "K", function() warp("north") end),
-    hs.hotkey.new({}, "L", function() warp("east") end),
-  })
+  local mode = Mode:new():append({})
 
   for i=0,9 do
     mode:append({
@@ -149,8 +136,15 @@ local function swap_window_number(n)
   swap_window(window_number(n):id())
 end
 
+local function warp_window(to)
+  hs.execute("yabai -m window --space code", true)
+  hs.execute("yabai -m window --warp " .. tostring(to), true)
+  hs.execute("yabai -m space code --balance", true)
+end
+
 ctrlw = hs.hotkey.modal.new('ctrl', 'w')
 swap = hs.hotkey.modal.new('cmd-ctrl-alt-shift', 's') -- bogus, unused key
+warp = hs.hotkey.modal.new('cmd-ctrl-alt-shift', 'w') -- also bogus
 
 local function map_all_the_things(mode, keys)
   for key, mapping in pairs(keys) do
@@ -190,6 +184,7 @@ map_all_the_things(ctrlw, {
   r      = {focus_kitty_window, 'kak_repl_window'},
   R      = {focus_kitty_window, 'shell_window'},
   s      = {function() swap:enter() end},
+  i      = {function() warp:enter() end},
   v      = {paste_as_keystrokes},
   ['0']  = {focus_window_number, 0},
   ['1']  = {focus_window_number, 1},
@@ -222,4 +217,12 @@ map_all_the_things(swap, {
   ['7']  = {swap_window_number, 7},
   ['8']  = {swap_window_number, 8},
   ['9']  = {swap_window_number, 9},
+})
+
+map_all_the_things(warp, {
+  escape = {},
+  h      = {warp_window, 'west'},
+  j      = {warp_window, 'south'},
+  k      = {warp_window, 'north'},
+  l      = {warp_window, 'east'},
 })
