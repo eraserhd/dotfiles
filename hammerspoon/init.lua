@@ -1,3 +1,27 @@
+local function window_number(n)
+  local windows = hs.window.visibleWindows()
+  local bounds = hs.screen.mainScreen():frame()
+  local screen_windows = {}
+  for _, w in ipairs(windows) do
+    local wframe = w:frame()
+    if w:frame():inside(bounds) then
+      table.insert(screen_windows, w)
+    end
+  end
+  windows = screen_windows
+  table.sort(windows, function(a, b)
+    local af, bf = a:frame(), b:frame()
+    if af.x < bf.x then return true end
+    if af.x > bf.x then return false end
+    return af.y < bf.y
+  end)
+  if n == 9 or n > #windows then
+    return windows[#windows]
+  else
+    return windows[n+1]
+  end
+end
+
 local Mode = {}
 
 function Mode:new()
@@ -43,30 +67,6 @@ function CtrlW:init()
   self.modes.warp = self:make_warp_mode()
   self.modes.keycommand = self:make_keycommand_mode()
   self:enter_mode("default")
-end
-
-function CtrlW:window_number(n)
-  local windows = hs.window.visibleWindows()
-  local bounds = hs.screen.mainScreen():frame()
-  local screen_windows = {}
-  for _, w in ipairs(windows) do
-    local wframe = w:frame()
-    if w:frame():inside(bounds) then
-      table.insert(screen_windows, w)
-    end
-  end
-  windows = screen_windows
-  table.sort(windows, function(a, b)
-    local af, bf = a:frame(), b:frame()
-    if af.x < bf.x then return true end
-    if af.x > bf.x then return false end
-    return af.y < bf.y
-  end)
-  if n == 9 or n > #windows then
-    return windows[#windows]
-  else
-    return windows[n+1]
-  end
 end
 
 function CtrlW:shell_hotkey(mods, key, command)
@@ -123,7 +123,7 @@ function CtrlW:make_ctrlw_mode()
     mode:append({
       hs.hotkey.new({}, tostring(i), function()
         self:enter_mode("default")
-        local window = self:window_number(i)
+        local window = window_number(i)
         window:focus()
       end)
     })
@@ -181,7 +181,7 @@ function CtrlW:make_swap_mode()
   for i=0,9 do
     mode:append({
       hs.hotkey.new({}, tostring(i), function()
-        local window = self:window_number(i)
+        local window = window_number(i)
         swap(window:id())
       end)
     })
@@ -209,7 +209,7 @@ function CtrlW:make_warp_mode()
   for i=0,9 do
     mode:append({
       hs.hotkey.new({}, tostring(i), function()
-        local window = self:window_number(i)
+        local window = window_number(i)
         wrap(window:id())
       end)
     })
