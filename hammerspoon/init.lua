@@ -216,6 +216,7 @@ keys = {
   j      = {moveFocus, 'South'},
   k      = {moveFocus, 'North'},
   l      = {moveFocus, 'East'},
+  r      = {focus_kitty_window, 'kak_repl_window'},
 }
 
 for key, mapping in pairs(keys) do
@@ -227,10 +228,6 @@ for key, mapping in pairs(keys) do
   end)
 end
 
-ctrlw:bind('', 'r', function()
-  ctrlw:exit()
-  focus_kitty_window("kak_repl_window")
-end)
 ctrlw:bind('shift', 'R', function()
   ctrlw:exit()
   focus_kitty_window("shell_window")
