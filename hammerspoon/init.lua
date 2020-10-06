@@ -123,6 +123,8 @@ local function map_all_the_things(mode, keys)
 end
 
 ctrlw = hs.hotkey.modal.new('ctrl', 'w')
+swap = hs.hotkey.modal.new()
+warp = hs.hotkey.modal.new()
 map_all_the_things(ctrlw, {
   escape = {},
   f14    = {},
@@ -158,7 +160,6 @@ map_all_the_things(ctrlw, {
   ['/']  = {toggle_split_direction},
 })
 
-swap = hs.hotkey.modal.new()
 map_all_the_things(swap, {
   escape = {},
   h      = {swap_window, 'west'},
@@ -177,7 +178,6 @@ map_all_the_things(swap, {
   ['9']  = {swap_window_number, 9},
 })
 
-warp = hs.hotkey.modal.new()
 map_all_the_things(warp, {
   escape = {},
   h      = {warp_window, 'west'},
