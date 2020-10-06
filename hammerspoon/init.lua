@@ -38,10 +38,9 @@ local function focus_space(space_name)
 end
 
 local function send_to_space(space_name)
+  local screen = hs.screen.find(spaces[space_name])
   local window = hs.window.focusedWindow()
-  hs.execute("yabai -m window --space " .. space_name, true)
-  focus_space(space_name)
-  window:focus()
+  window:centerOnScreen(screen, true, 0)
 end
 
 local function move_focus(direction)
