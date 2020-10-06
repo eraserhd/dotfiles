@@ -109,8 +109,7 @@ local function map_all_the_things(mode, keys)
       mods = 'shift'
     end
     if mapping['submode'] then
-      local submode = hs.hotkey.modal.new()
-      map_all_the_things(submode, mapping['submode'])
+      local submode = map_all_the_things(hs.hotkey.modal.new(), mapping['submode'])
       action = function() submode:enter() end
     end
     if mapping['delay_exiting_mode'] then
