@@ -41,6 +41,9 @@ local function send_to_space(space_name)
   local screen = hs.screen.find(spaces[space_name])
   local window = hs.window.focusedWindow()
   window:centerOnScreen(screen, true, 0)
+  if space_name == 'browse' then
+    window:moveToUnit('[0,0,100,100]')
+  end
 end
 
 local function move_focus(direction)
