@@ -22,10 +22,25 @@ local function window_number(n)
   end
 end
 
+local spaces = {
+  browse = "Color LCD",
+  code   = "PHL 328E1"
+}
+
+local function focus_space(space_name)
+  local screen = hs.screen.find(spaces[space_name])
+  if not screen then return end
+  local function isOnScreen(window)
+    return window:screen() == screen
+  end
+  local window = hs.fnutils.filter(hs.window.orderedWindows(), isOnScreen)[1] or hs.window.desktop()
+  window:focus()
+end
+
 local function send_to_space(space_name)
   local window = hs.window.focusedWindow()
   hs.execute("yabai -m window --space " .. space_name, true)
-  hs.execute("yabai-focus-space " .. space_name, true)
+  focus_space(space_name)
   window:focus()
 end
 
@@ -48,10 +63,6 @@ end
 
 local function paste_as_keystrokes()
   hs.eventtap.keyStrokes(hs.pasteboard.readString())
-end
-
-local function focus_space(space_name)
-  hs.execute("yabai-focus-space " .. space_name, true)
 end
 
 local function focus_window_number(n)
