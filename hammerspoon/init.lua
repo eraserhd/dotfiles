@@ -67,7 +67,7 @@ local function paste_as_keystrokes()
   hs.eventtap.keyStrokes(hs.pasteboard.readString())
 end
 
-local function focus_window_number(n)
+local function focus_window(n)
   window_number(n):focus()
 end
 
@@ -190,16 +190,16 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   I      = {ignore_notification},
   N      = {activate_notification},
   v      = {paste_as_keystrokes},
-  ['0']  = {focus_window_number, 0},
-  ['1']  = {focus_window_number, 1},
-  ['2']  = {focus_window_number, 2},
-  ['3']  = {focus_window_number, 3},
-  ['4']  = {focus_window_number, 4},
-  ['5']  = {focus_window_number, 5},
-  ['6']  = {focus_window_number, 6},
-  ['7']  = {focus_window_number, 7},
-  ['8']  = {focus_window_number, 8},
-  ['9']  = {focus_window_number, 9},
+  ['0']  = {focus_window, 0},
+  ['1']  = {focus_window, 1},
+  ['2']  = {focus_window, 2},
+  ['3']  = {focus_window, 3},
+  ['4']  = {focus_window, 4},
+  ['5']  = {focus_window, 5},
+  ['6']  = {focus_window, 6},
+  ['7']  = {focus_window, 7},
+  ['8']  = {focus_window, 8},
+  ['9']  = {focus_window, 9},
   [',']  = {rerun_last_command},
   ['=']  = {balance_space},
   ['/']  = {toggle_split_direction},
