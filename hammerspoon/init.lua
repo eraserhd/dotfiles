@@ -108,6 +108,11 @@ local function map_all_the_things(mode, keys)
     if string.match(key, "%u") then
       mods = 'shift'
     end
+    if mapping['submode'] then
+      local submode = hs.hotkey.modal.new()
+      map_all_the_things(submode, mapping['submode'])
+      action = function() submode:enter() end
+    end
     if mapping['delay_exiting_mode'] then
       mode:bind(mods, key, function()
         action(arg)
@@ -120,11 +125,10 @@ local function map_all_the_things(mode, keys)
       end)
     end
   end
+  return mode
 end
 
 ctrlw = hs.hotkey.modal.new('ctrl', 'w')
-swap = hs.hotkey.modal.new()
-warp = hs.hotkey.modal.new()
 map_all_the_things(ctrlw, {
   escape = {},
   f14    = {},
@@ -140,8 +144,40 @@ map_all_the_things(ctrlw, {
   l      = {move_focus, 'East'},
   r      = {focus_kitty_window, 'kak_repl_window'},
   R      = {focus_kitty_window, 'shell_window'},
-  s      = {function() swap:enter() end},
-  i      = {function() warp:enter() end},
+  s      = {submode = {
+             escape = {},
+             h      = {swap_window, 'west'},
+             j      = {swap_window, 'south'},
+             k      = {swap_window, 'north'},
+             l      = {swap_window, 'east'},
+             ['0']  = {swap_window_number, 0},
+             ['1']  = {swap_window_number, 1},
+             ['2']  = {swap_window_number, 2},
+             ['3']  = {swap_window_number, 3},
+             ['4']  = {swap_window_number, 4},
+             ['5']  = {swap_window_number, 5},
+             ['6']  = {swap_window_number, 6},
+             ['7']  = {swap_window_number, 7},
+             ['8']  = {swap_window_number, 8},
+             ['9']  = {swap_window_number, 9},
+           }},
+  i      = {submode = {
+             escape = {},
+             h      = {warp_window, 'west'},
+             j      = {warp_window, 'south'},
+             k      = {warp_window, 'north'},
+             l      = {warp_window, 'east'},
+             ['0']  = {warp_window_number, 0},
+             ['1']  = {warp_window_number, 1},
+             ['2']  = {warp_window_number, 2},
+             ['3']  = {warp_window_number, 3},
+             ['4']  = {warp_window_number, 4},
+             ['5']  = {warp_window_number, 5},
+             ['6']  = {warp_window_number, 6},
+             ['7']  = {warp_window_number, 7},
+             ['8']  = {warp_window_number, 8},
+             ['9']  = {warp_window_number, 9},
+           }},
   I      = {ignore_notification},
   N      = {activate_notification},
   v      = {paste_as_keystrokes},
@@ -158,42 +194,6 @@ map_all_the_things(ctrlw, {
   [',']  = {rerun_last_command},
   ['=']  = {balance_space},
   ['/']  = {toggle_split_direction},
-})
-
-map_all_the_things(swap, {
-  escape = {},
-  h      = {swap_window, 'west'},
-  j      = {swap_window, 'south'},
-  k      = {swap_window, 'north'},
-  l      = {swap_window, 'east'},
-  ['0']  = {swap_window_number, 0},
-  ['1']  = {swap_window_number, 1},
-  ['2']  = {swap_window_number, 2},
-  ['3']  = {swap_window_number, 3},
-  ['4']  = {swap_window_number, 4},
-  ['5']  = {swap_window_number, 5},
-  ['6']  = {swap_window_number, 6},
-  ['7']  = {swap_window_number, 7},
-  ['8']  = {swap_window_number, 8},
-  ['9']  = {swap_window_number, 9},
-})
-
-map_all_the_things(warp, {
-  escape = {},
-  h      = {warp_window, 'west'},
-  j      = {warp_window, 'south'},
-  k      = {warp_window, 'north'},
-  l      = {warp_window, 'east'},
-  ['0']  = {warp_window_number, 0},
-  ['1']  = {warp_window_number, 1},
-  ['2']  = {warp_window_number, 2},
-  ['3']  = {warp_window_number, 3},
-  ['4']  = {warp_window_number, 4},
-  ['5']  = {warp_window_number, 5},
-  ['6']  = {warp_window_number, 6},
-  ['7']  = {warp_window_number, 7},
-  ['8']  = {warp_window_number, 8},
-  ['9']  = {warp_window_number, 9},
 })
 
 config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
