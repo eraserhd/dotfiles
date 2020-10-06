@@ -49,12 +49,6 @@
           rep = rep;
         };
 
-        # With patch that supports $WINDOWID
-        kitty = super.kitty.overridePythonAttrs (oldAttrs: {
-          src = super.pkgs.fetchFromGitHub (import ./kitty.nix);
-          doCheck = false;
-        });
-
         parinfer-rust = super.parinfer-rust.overrideAttrs (oldAttrs: {
           src = super.pkgs.fetchFromGitHub (import ./parinfer-rust.nix);
         });
