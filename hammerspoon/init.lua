@@ -87,22 +87,20 @@ local function toggle_split_direction()
   hs.execute("yabai -m window --toggle split", true)
 end
 
-local function swap_window(what)
-  hs.execute("yabai -m window --swap " .. tostring(what), true)
+local function yabai_window_id(what)
+  if type(what) == 'string' then
+    return what
+  end
+  return tostring(window_number(what):id())
 end
 
-local function swap_window_number(n)
-  swap_window(window_number(n):id())
+local function swap_window(what)
+  hs.execute("yabai -m window --swap " .. yabai_window_id(what), true)
 end
 
 local function warp_window(to)
-  hs.execute("yabai -m window --space code", true)
-  hs.execute("yabai -m window --warp " .. tostring(to), true)
-  hs.execute("yabai -m space code --balance", true)
-end
-
-local function warp_window_number(n)
-  warp_window(window_number(n):id())
+  hs.execute("yabai -m window --warp " .. yabai_window_id(to), true)
+  balance_space()
 end
 
 local function ignore_notification()
@@ -161,16 +159,16 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
              j      = {swap_window, 'south'},
              k      = {swap_window, 'north'},
              l      = {swap_window, 'east'},
-             ['0']  = {swap_window_number, 0},
-             ['1']  = {swap_window_number, 1},
-             ['2']  = {swap_window_number, 2},
-             ['3']  = {swap_window_number, 3},
-             ['4']  = {swap_window_number, 4},
-             ['5']  = {swap_window_number, 5},
-             ['6']  = {swap_window_number, 6},
-             ['7']  = {swap_window_number, 7},
-             ['8']  = {swap_window_number, 8},
-             ['9']  = {swap_window_number, 9},
+             ['0']  = {swap_window, 0},
+             ['1']  = {swap_window, 1},
+             ['2']  = {swap_window, 2},
+             ['3']  = {swap_window, 3},
+             ['4']  = {swap_window, 4},
+             ['5']  = {swap_window, 5},
+             ['6']  = {swap_window, 6},
+             ['7']  = {swap_window, 7},
+             ['8']  = {swap_window, 8},
+             ['9']  = {swap_window, 9},
            }},
   i      = {submode = {
              escape = {},
@@ -178,16 +176,16 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
              j      = {warp_window, 'south'},
              k      = {warp_window, 'north'},
              l      = {warp_window, 'east'},
-             ['0']  = {warp_window_number, 0},
-             ['1']  = {warp_window_number, 1},
-             ['2']  = {warp_window_number, 2},
-             ['3']  = {warp_window_number, 3},
-             ['4']  = {warp_window_number, 4},
-             ['5']  = {warp_window_number, 5},
-             ['6']  = {warp_window_number, 6},
-             ['7']  = {warp_window_number, 7},
-             ['8']  = {warp_window_number, 8},
-             ['9']  = {warp_window_number, 9},
+             ['0']  = {warp_window, 0},
+             ['1']  = {warp_window, 1},
+             ['2']  = {warp_window, 2},
+             ['3']  = {warp_window, 3},
+             ['4']  = {warp_window, 4},
+             ['5']  = {warp_window, 5},
+             ['6']  = {warp_window, 6},
+             ['7']  = {warp_window, 7},
+             ['8']  = {warp_window, 8},
+             ['9']  = {warp_window, 9},
            }},
   I      = {ignore_notification},
   N      = {activate_notification},
