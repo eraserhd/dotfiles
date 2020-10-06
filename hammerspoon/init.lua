@@ -128,8 +128,7 @@ local function map_all_the_things(mode, keys)
   return mode
 end
 
-ctrlw = hs.hotkey.modal.new('ctrl', 'w')
-map_all_the_things(ctrlw, {
+ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   escape = {},
   f14    = {},
   ['.']  = {send_control_w, delay_exiting_mode = true},
