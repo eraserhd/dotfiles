@@ -46,11 +46,6 @@ local function send_to_space(space_name)
   end
 end
 
-local function move_focus(direction)
-  local window = hs.window.focusedWindow()
-  window['focusWindow' .. direction](window, nil, true, true)
-end
-
 local function send_control_w()
   hs.eventtap.keyStroke({"control"}, "W")
 end
@@ -67,8 +62,13 @@ local function paste_as_keystrokes()
   hs.eventtap.keyStrokes(hs.pasteboard.readString())
 end
 
-local function focus_window(n)
-  window_number(n):focus()
+local function focus_window(what)
+  if type(what) == 'string' then
+    local window = hs.window.focusedWindow()
+    window['focusWindow' .. what](window, nil, true, true)
+  else
+    window_number(what):focus()
+  end
 end
 
 local function toggle_full_screen()
@@ -147,10 +147,10 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   c      = {focus_space, 'code'},
   C      = {send_to_space, 'code'},
   f      = {toggle_full_screen},
-  h      = {move_focus, 'West'},
-  j      = {move_focus, 'South'},
-  k      = {move_focus, 'North'},
-  l      = {move_focus, 'East'},
+  h      = {focus_window, 'West'},
+  j      = {focus_window, 'South'},
+  k      = {focus_window, 'North'},
+  l      = {focus_window, 'East'},
   r      = {focus_kitty_window, 'kak_repl_window'},
   R      = {focus_kitty_window, 'shell_window'},
   s      = {submode = {
