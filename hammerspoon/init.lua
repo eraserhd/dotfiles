@@ -195,3 +195,5 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
 })
 
 config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
+
+require("hs.ipc")
