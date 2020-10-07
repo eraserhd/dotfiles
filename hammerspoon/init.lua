@@ -1,14 +1,21 @@
+config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
+
+local spaces = {
+  browse = "Color LCD",
+  code   = "PHL 328E1"
+}
+
+code_window_filter = hs.window.filter.new({override={
+  visible = true,
+  allowScreens = spaces['code'],
+}}):setDefaultFilter({
+  visible = true,
+  allowScreens = spaces['code'],
+})
+
+
 local function ordered_code_windows()
-  local windows = hs.window.visibleWindows()
-  local bounds = hs.screen.mainScreen():frame()
-  local screen_windows = {}
-  for _, w in ipairs(windows) do
-    local wframe = w:frame()
-    if w:frame():inside(bounds) then
-      table.insert(screen_windows, w)
-    end
-  end
-  windows = screen_windows
+  local windows = code_window_filter:getWindows()
   table.sort(windows, function(a, b)
     local af, bf = a:frame(), b:frame()
     if af.x < bf.x then return true end
@@ -26,11 +33,6 @@ local function window_number(n)
     return windows[n+1]
   end
 end
-
-local spaces = {
-  browse = "Color LCD",
-  code   = "PHL 328E1"
-}
 
 local function focus_space(space_name)
   local screen = hs.screen.find(spaces[space_name])
@@ -210,36 +212,68 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   ['/']  = {toggle_split_direction},
 })
 
+local NumberOverlay = {}
 
-function make_number_canvas()
-  local screen = hs.screen.find(spaces['code'])
-  local bounds = screen:frame()
-  local canvas = hs.canvas.new(bounds)
-  local windows = ordered_code_windows()
-  for i, window in ipairs(windows) do
-    local wframe = window:frame()
-    if wframe.w > 50 then wframe.w = 50 end
-    if wframe.h > 50 then wframe.h = 50 end
-    local rect = hs.geometry.toUnitRect(wframe, bounds)
-    local frame = { x = tostring(rect.x), y = tostring(rect.y), w = tostring(rect.w), h = tostring(rect.h) }
-    canvas:appendElements({
-      action = "fill",
-      fillColor = { alpha = 0.3, green = 1.0, blue = 1.0 },
-      frame = frame,
-      type = "rectangle",
-      withShadow = true,
-    },{
-      type = "text",
-      text = tostring(i - 1),
-      frame = frame,
-    })
-  end
-  canvas:show()
-  return canvas
+function NumberOverlay:new(...)
+  local obj = {}
+  self.__index = self
+  return setmetatable(obj, NumberOverlay):init(...)
 end
 
-number_canvas = make_number_canvas()
+function NumberOverlay:init(screen_name, window_filter)
+  self.screen = hs.screen.find(screen_name)
+  local bounds = self.screen:frame()
+  self.canvas = hs.canvas.new(bounds)
+  self.canvas:show()
 
-config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
+  self.window_filter = window_filter
+  self.window_filter:subscribe({
+    hs.window.filter.windowCreated,
+    hs.window.filter.windowDestroyed,
+    hs.window.filter.windowMoved,
+    hs.window.filter.windowAllowed,
+    hs.window.filter.windowRejected,
+    hs.window.filter.windowNotVisible,
+    hs.window.filter.windowVisible,
+  }, function()
+    self:refresh()
+  end)
+
+  self:refresh()
+  return self
+end
+
+function NumberOverlay:refresh()
+  local bounds = self.screen:frame()
+
+  local function make_frame(wframe)
+    local rect = hs.geometry.toUnitRect(wframe, bounds)
+    return { x = tostring(rect.x), y = tostring(rect.y), w = tostring(rect.w), h = tostring(rect.h) }
+  end
+
+  local new_elements = {}
+  local windows = ordered_code_windows()
+  print("-- windows: " .. #windows)
+  for i, window in ipairs(windows) do
+    local wframe = window:frame()
+    table.insert(new_elements, {
+      action = "fill",
+      fillColor = { alpha = 0.3, green = 1.0, blue = 1.0 },
+      frame = make_frame{x = wframe.x + 5, y = wframe.y + 5, w = 30, h = 30},
+      type = "rectangle",
+      withShadow = true,
+    })
+    table.insert(new_elements, {
+      type = "text",
+      text = tostring(i - 1),
+      frame = make_frame{x = wframe.x + 10, y = wframe.y + 5, w = 30, h = 30},
+    })
+  end
+  if #new_elements > 0 then
+    self.canvas:replaceElements(new_elements)
+  end
+end
+
+overlay = NumberOverlay:new(spaces['code'], code_window_filter)
 
 require("hs.ipc")
