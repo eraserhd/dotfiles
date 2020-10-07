@@ -1,4 +1,4 @@
-local function window_number(n)
+local function ordered_code_windows()
   local windows = hs.window.visibleWindows()
   local bounds = hs.screen.mainScreen():frame()
   local screen_windows = {}
@@ -15,6 +15,11 @@ local function window_number(n)
     if af.x > bf.x then return false end
     return af.y < bf.y
   end)
+  return windows
+end
+
+local function window_number(n)
+  local windows = ordered_code_windows()
   if n == 9 or n > #windows then
     return windows[#windows]
   else
@@ -204,6 +209,36 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   ['=']  = {balance_space},
   ['/']  = {toggle_split_direction},
 })
+
+
+function make_number_canvas()
+  local screen = hs.screen.find(spaces['code'])
+  local bounds = screen:frame()
+  local canvas = hs.canvas.new(bounds)
+  local windows = ordered_code_windows()
+  for i, window in ipairs(windows) do
+    local wframe = window:frame()
+    if wframe.w > 50 then wframe.w = 50 end
+    if wframe.h > 50 then wframe.h = 50 end
+    local rect = hs.geometry.toUnitRect(wframe, bounds)
+    local frame = { x = tostring(rect.x), y = tostring(rect.y), w = tostring(rect.w), h = tostring(rect.h) }
+    canvas:appendElements({
+      action = "fill",
+      fillColor = { alpha = 0.3, green = 1.0, blue = 1.0 },
+      frame = frame,
+      type = "rectangle",
+      withShadow = true,
+    },{
+      type = "text",
+      text = tostring(i - 1),
+      frame = frame,
+    })
+  end
+  canvas:show()
+  return canvas
+end
+
+number_canvas = make_number_canvas()
 
 config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
 
