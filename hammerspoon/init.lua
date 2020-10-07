@@ -1,3 +1,4 @@
+require("hs.ipc")
 config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
 
 local spaces = {
@@ -253,7 +254,6 @@ function NumberOverlay:refresh()
 
   local new_elements = {}
   local windows = ordered_code_windows()
-  print("-- windows: " .. #windows)
   for i, window in ipairs(windows) do
     local wframe = window:frame()
     table.insert(new_elements, {
@@ -275,5 +275,3 @@ function NumberOverlay:refresh()
 end
 
 overlay = NumberOverlay:new(spaces['code'], code_window_filter)
-
-require("hs.ipc")
