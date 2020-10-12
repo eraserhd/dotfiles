@@ -23,16 +23,10 @@ let
   in
     concatStringsSep "\n" directives;
 
-  fontInfo = (if pkgs.stdenv.isDarwin
-  then {
-    font_family = "mononoki";
-    font_size = "12.0";
-  }
-  else {
-    font_family = "Inconsolata Regular";
+  fontInfo = {
+    font_family = "JuliaMono Regular";
     font_size = "11.0";
-  });
-
+  };
 in {
   config = {
     environment.systemPackages = with pkgs; [ kitty ];
