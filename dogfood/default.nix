@@ -4,7 +4,8 @@
   config = {
     nixpkgs.overlays = [
       (self: super: let
-         rep = self.callPackage "${super.fetchFromGitHub (import ./rep.nix)}/derivation.nix" {};
+         rep-source = super.fetchFromGitHub (import ./rep.nix);
+         rep = self.callPackage "${rep-source}/derivation.nix" { fetchFromGitHub = _: rep-source; };
 
          gerbilPackages = {
            clojerbil = self.callPackage "${super.fetchFromGitHub (import ./clojerbil.nix)}/derivation.nix" {};

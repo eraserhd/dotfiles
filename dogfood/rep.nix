@@ -1,7 +1,7 @@
 {
   owner = "eraserhd";
   repo = "rep";
-  rev = "f71dfc3c99448827dd209f66ac20456a5d988506";
-  sha256 = "07srigbcajxl6yfwnrqx9xz9hzwwx9m6lcskrg6xrw2i9gpkvqvv";
+  rev = "816509ccb380d4e72383a2063091385fb19ba78a";
+  sha256 = "1p0dbaj7f4irzzw1m44x3b3j3jjij9i4rs83wkrpiamlq61077di";
   fetchSubmodules = true;
 }
