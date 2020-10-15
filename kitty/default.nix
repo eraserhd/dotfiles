@@ -23,10 +23,6 @@ let
   in
     concatStringsSep "\n" directives;
 
-  fontInfo = {
-    font_family = "JuliaMono Regular";
-    font_size = "11.0";
-  };
 in {
   config = {
     environment.systemPackages = with pkgs; [ kitty ];
@@ -37,8 +33,10 @@ in {
         --listen-on=unix:/Users/jfelice/.run/kitty --single-instance --directory=${homeDirectory}/src
       '';
       home.file.".config/kitty/kitty.conf".text = ''
-        font_family ${fontInfo.font_family}
-        font_size   ${fontInfo.font_size}
+        font_family        JuliaMono Regular
+        font_size          11
+        adjust_line_height 93%
+
         # symbol_map U+E0A0-U+E0A3,U+E0C0-U+E0C7 PowerlineSymbols
         # box_drawing_scale 0.001, 1, 1.5, 2
 
