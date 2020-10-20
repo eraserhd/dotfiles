@@ -6,14 +6,24 @@ local spaces = {
   code   = "PHL 328E1"
 }
 
-code_window_filter = hs.window.filter.new({override={
-  visible = true,
-  allowScreens = spaces['code'],
-}}):setDefaultFilter({
-  visible = true,
-  allowScreens = spaces['code'],
-})
+local function codeScreens()
+  local function isBigScreen(screen)
+    return screen:name() ~= 'Color LCD'
+  end
+  return hs.fnutils.map(hs.fnutils.filter(hs.screen.allScreens(), isBigScreen), function(screen) return screen:getUUID() end)
+end
 
+local function codeWindowFilter()
+  return hs.window.filter.new({override={
+    visible = true,
+    allowScreens = codeScreens(),
+  }}):setDefaultFilter({
+    visible = true,
+    allowScreens = codeScreens(),
+  })
+end
+
+code_window_filter = codeWindowFilter()
 
 local function ordered_code_windows()
   local windows = code_window_filter:getWindows()
@@ -221,11 +231,17 @@ function NumberOverlay:new(...)
   return setmetatable(obj, NumberOverlay):init(...)
 end
 
-function NumberOverlay:init(screen_name, window_filter)
-  self.screen = hs.screen.find(screen_name)
-  local bounds = self.screen:frame()
-  self.canvas = hs.canvas.new(bounds)
-  self.canvas:show()
+function NumberOverlay:init(screens, window_filter)
+  self.screens = hs.fnutils.map(screens, function(screen_hint)
+    local screen = hs.screen.find(screen_hint)
+    local bounds = screen:frame()
+    local canvas = hs.canvas.new(bounds)
+    canvas:show()
+    return {
+      screen = screen,
+      canvas = canvas
+    }
+  end)
 
   self.window_filter = window_filter
   self.window_filter:subscribe({
@@ -245,33 +261,35 @@ function NumberOverlay:init(screen_name, window_filter)
 end
 
 function NumberOverlay:refresh()
-  local bounds = self.screen:frame()
+  for _, screen_data in ipairs(self.screens) do
+    local bounds = screen_data.screen:frame()
 
-  local function make_frame(wframe)
-    local rect = hs.geometry.toUnitRect(wframe, bounds)
-    return { x = tostring(rect.x), y = tostring(rect.y), w = tostring(rect.w), h = tostring(rect.h) }
-  end
+    local function make_frame(wframe)
+      local rect = hs.geometry.toUnitRect(wframe, bounds)
+      return { x = tostring(rect.x), y = tostring(rect.y), w = tostring(rect.w), h = tostring(rect.h) }
+    end
 
-  local new_elements = {}
-  local windows = ordered_code_windows()
-  for i, window in ipairs(windows) do
-    local wframe = window:frame()
-    table.insert(new_elements, {
-      action = "fill",
-      fillColor = { alpha = 0.3, green = 1.0, blue = 1.0 },
-      frame = make_frame{x = wframe.x + 5, y = wframe.y + 5, w = 30, h = 30},
-      type = "rectangle",
-      withShadow = true,
-    })
-    table.insert(new_elements, {
-      type = "text",
-      text = tostring(i - 1),
-      frame = make_frame{x = wframe.x + 10, y = wframe.y + 5, w = 30, h = 30},
-    })
-  end
-  if #new_elements > 0 then
-    self.canvas:replaceElements(new_elements)
+    local new_elements = {}
+    local windows = ordered_code_windows()
+    for i, window in ipairs(windows) do
+      local wframe = window:frame()
+      table.insert(new_elements, {
+        action = "fill",
+        fillColor = { alpha = 0.3, green = 1.0, blue = 1.0 },
+        frame = make_frame{x = wframe.x + 5, y = wframe.y + 5, w = 30, h = 30},
+        type = "rectangle",
+        withShadow = true,
+      })
+      table.insert(new_elements, {
+        type = "text",
+        text = tostring(i - 1),
+        frame = make_frame{x = wframe.x + 10, y = wframe.y + 5, w = 30, h = 30},
+      })
+    end
+    if #new_elements > 0 then
+      screen_data.canvas:replaceElements(new_elements)
+    end
   end
 end
 
-overlay = NumberOverlay:new(spaces['code'], code_window_filter)
+overlay = NumberOverlay:new(codeScreens(), code_window_filter)
