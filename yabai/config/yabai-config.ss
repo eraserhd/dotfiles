@@ -55,16 +55,6 @@
 
 (def laptop-display "391F6BA4-67D1-34C3-A7CC-BF93587712A8")
 
-(def browse-space-apps
-  ["Anki"
-   "Books"
-   "Calendar"
-   "Discord"
-   "Google Chrome"
-   "Messages"
-   "Music"
-   "Spotify"])
-
 (def (remove)
   (def (remove-signal event)
     (try
@@ -108,25 +98,21 @@
 
 (def (update-spaces)
   (def laptop-display-number (get-laptop-display-number))
-  (def code-space #f)
-  (def browse-space #f)
+  (def have-left? #f)
   (for-each (lambda (space)
               (let-hash space
-                (if (= .display laptop-display-number)
-                  (begin
-                    (when (not browse-space)
-                      (set! browse-space .index))
-                    (configure-laptop-space .index))
-                  (begin
-                    (cond
-                     ((not code-space)    (set! code-space .index))
-                     (else                #f))
-                    (configure-monitor-space .index)))))
-            (yabai-query "--spaces"))
-  (when code-space
-    (label-space code-space "code"))
-  (when browse-space
-    (label-space browse-space "browse")))
+                (cond
+                 ((equal? .display laptop-display-number)
+                  (label-space .index "laptop")
+                  (configure-laptop-space .index))
+                 ((not have-left?)
+                  (set! have-left? #t)
+                  (label-space .index "left")
+                  (configure-monitor-space .index))
+                 (else
+                  (label-space .index "right")
+                  (configure-monitor-space .index)))))
+            (yabai-query "--spaces")))
 
 (def (reconfigure)
   (install)
@@ -150,14 +136,6 @@
   (yabai-configure "active_window_border_color" "0xff8c6cff")
 
   (update-spaces)
-
-  ; (1) Coding
-  (yabai-add-rule label: "kitty" app: "kitty" space: "^code")
-
-  ; (2) Laptop window
-  (for-each (lambda (app-name)
-              (yabai-add-rule label: app-name app: app-name space: "browse" grid: "1:1:0:0:1:1"))
-            browse-space-apps)
 
   ; general space settings
   (yabai-configure "layout"         "bsp")
