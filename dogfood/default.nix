@@ -4,6 +4,9 @@
   config = {
     nixpkgs.overlays = [
       (self: super: let
+         rep-source = super.fetchFromGitHub (import ./rep.nix);
+         rep = self.callPackage "${rep-source}/derivation.nix" { fetchFromGitHub = _: rep-source; };
+
          gerbilPackages = {
            clojerbil = self.callPackage "${super.fetchFromGitHub (import ./clojerbil.nix)}/derivation.nix" {};
          };
@@ -29,7 +32,7 @@
           };
         };
 
-        kakoune-unwrapped = super.kakoune-unwrapped.overrideAttrs (oldAttrs: {
+        kakoune = super.kakoune.overrideAttrs (oldAttrs: {
           src = super.pkgs.fetchFromGitHub (import ./kakoune.nix);
           enableParallelBuilding = true;
         });
@@ -44,12 +47,14 @@
           kak-plumb = super.callPackage "${super.fetchFromGitHub (import ./kak-plumb.nix)}/derivation.nix" {
             plan9port = pkgs.plan9port-wrapper;
           };
-          rep = super.rep;
+          rep = rep;
         };
 
         parinfer-rust = super.parinfer-rust.overrideAttrs (oldAttrs: {
           src = super.pkgs.fetchFromGitHub (import ./parinfer-rust.nix);
         });
+
+        rep = rep;
 
         yabai = super.yabai.overrideAttrs (oldAttrs: {
           src = super.pkgs.fetchFromGitHub (import ./yabai.nix);

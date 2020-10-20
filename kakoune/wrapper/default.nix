@@ -1,8 +1,8 @@
-{ bash, kakoune, stdenv }:
+{ bash, kakoune-with-plugins, stdenv }:
 
 stdenv.mkDerivation {
   name = "kakouneWrapper";
-  buildInputs = [ bash kakoune ];
+  buildInputs = [ bash kakoune-with-plugins ];
   src = ./wrapper.sh;
 
   phases = [ "installPhase" "fixupPhase" ];
@@ -12,6 +12,6 @@ stdenv.mkDerivation {
     cp $src $out/bin/kak
     substituteInPlace $out/bin/kak \
         --subst-var-by bash "${bash}" \
-        --subst-var-by kakoune "${kakoune}"
+        --subst-var-by kakoune-with-plugins "${kakoune-with-plugins}"
   '';
 }

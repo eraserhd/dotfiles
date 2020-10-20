@@ -10,7 +10,7 @@ in {
     {
       nixpkgs.overlays = [
         (self: super: {
-          kakoune = super.kakoune.override {
+          kakoune-with-plugins = super.kakoune-with-plugins.override {
             plugins = with pkgs.kakounePlugins; [
               case-kak
               kak-ansi
