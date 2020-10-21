@@ -114,10 +114,6 @@ local function map_all_the_things(mode, keys)
     if string.match(key, "%u") then
       table.insert(mods, 'shift')
     end
-    if mapping['submode'] then
-      local submode = map_all_the_things(hs.hotkey.modal.new(), mapping['submode'])
-      action = function() submode:enter() end
-    end
     if mapping['delay_exiting_mode'] then
       mode:bind(mods, key, function()
         action(arg)
@@ -144,29 +140,6 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   f14    = {},
   ['.']  = {send_control_w, delay_exiting_mode = true},
   F      = {toggle_full_screen},
-  i      = {submode = {
-             escape = {},
-             h      = {warp_window, 'west'},
-             j      = {warp_window, 'south'},
-             k      = {warp_window, 'north'},
-             l      = {warp_window, 'east'},
-             ['0']  = {warp_window, 0},
-             ['1']  = {warp_window, 1},
-             ['2']  = {warp_window, 2},
-             ['3']  = {warp_window, 3},
-             ['4']  = {warp_window, 4},
-             ['5']  = {warp_window, 5},
-             ['6']  = {warp_window, 6},
-             ['7']  = {warp_window, 7},
-             ['8']  = {warp_window, 8},
-             ['9']  = {warp_window, 9},
-             a      = {warp_window, 10},
-             b      = {warp_window, 11},
-             c      = {warp_window, 12},
-             d      = {warp_window, 13},
-             e      = {warp_window, 14},
-             f      = {warp_window, 15},
-           }},
   I      = {ignore_notification},
   N      = {activate_notification},
   v      = {paste_as_keystrokes},
@@ -242,6 +215,42 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   ['ctrl-7'] = {swap_window, 26},
   ['ctrl-8'] = {swap_window, 27},
   ['ctrl-9'] = {swap_window, 28},
+
+  -- Warping
+  ['alt-h'] = {warp_window, 'west'},
+  ['alt-j'] = {warp_window, 'south'},
+  ['alt-k'] = {warp_window, 'north'},
+  ['alt-l'] = {warp_window, 'east'},
+
+  ['alt-a'] = {warp_window, 0},
+  ['alt-b'] = {warp_window, 1},
+  ['alt-c'] = {warp_window, 2},
+  ['alt-d'] = {warp_window, 3},
+  ['alt-e'] = {warp_window, 4},
+  ['alt-f'] = {warp_window, 5},
+  ['alt-g'] = {warp_window, 6},
+  ['alt-m'] = {warp_window, 7},
+  ['alt-n'] = {warp_window, 8},
+  ['alt-o'] = {warp_window, 9},
+  ['alt-p'] = {warp_window, 10},
+  ['alt-q'] = {warp_window, 11},
+  ['alt-r'] = {warp_window, 12},
+  ['alt-t'] = {warp_window, 13},
+  ['alt-u'] = {warp_window, 14},
+  ['alt-w'] = {warp_window, 15},
+  ['alt-x'] = {warp_window, 16},
+  ['alt-y'] = {warp_window, 17},
+  ['alt-z'] = {warp_window, 18},
+  ['alt-0'] = {warp_window, 19},
+  ['alt-1'] = {warp_window, 20},
+  ['alt-2'] = {warp_window, 21},
+  ['alt-3'] = {warp_window, 22},
+  ['alt-4'] = {warp_window, 23},
+  ['alt-5'] = {warp_window, 24},
+  ['alt-6'] = {warp_window, 25},
+  ['alt-7'] = {warp_window, 26},
+  ['alt-8'] = {warp_window, 27},
+  ['alt-9'] = {warp_window, 28},
 
   [',']  = {rerun_last_command},
   ['=']  = {balance_space},
