@@ -1,25 +1,11 @@
 require("hs.ipc")
 config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
 
-local spaces = {
-  browse = "Color LCD",
-  code   = "PHL 328E1"
-}
-
-local function codeScreens()
-  local function isBigScreen(screen)
-    return screen:name() ~= 'Color LCD'
-  end
-  return hs.fnutils.map(hs.fnutils.filter(hs.screen.allScreens(), isBigScreen), function(screen) return screen:getUUID() end)
-end
-
 local function codeWindowFilter()
   return hs.window.filter.new({override={
     visible = true,
-    allowScreens = codeScreens(),
   }}):setDefaultFilter({
     visible = true,
-    allowScreens = codeScreens(),
   })
 end
 
@@ -310,14 +296,17 @@ function NumberOverlay:refresh()
       table.insert(new_elements, {
         action = "fill",
         fillColor = { alpha = 0.3, green = 1.0, blue = 1.0 },
-        frame = make_frame{x = wframe.x + 5, y = wframe.y + 5, w = 30, h = 30},
+        frame = make_frame{x = wframe.x + 70, y = wframe.y + 1, w = 20, h = 19},
         type = "rectangle",
         withShadow = true,
       })
       table.insert(new_elements, {
         type = "text",
         text = window_keys[i-1],
-        frame = make_frame{x = wframe.x + 10, y = wframe.y + 5, w = 30, h = 30},
+        textFont = "JuliaMono Regular",
+        textSize = 18,
+        textLineBreak = 'trancateTail',
+        frame = make_frame{x = wframe.x + 73, y = wframe.y - 3, w = 17, h = 19 + 7},
       })
     end
     if #new_elements > 0 then
