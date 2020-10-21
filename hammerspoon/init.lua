@@ -128,6 +128,12 @@ local function map_all_the_things(mode, keys)
   return mode
 end
 
+local window_keys = {
+  "b", "c", "d", "e", "f", "g", "m", "n", "o", "p", "q", "r", "t", "u",
+  "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+  [0] = "a",
+}
+
 ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   escape = {},
   f14    = {},
@@ -186,22 +192,38 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   I      = {ignore_notification},
   N      = {activate_notification},
   v      = {paste_as_keystrokes},
-  ['0']  = {focus_window, 0},
-  ['1']  = {focus_window, 1},
-  ['2']  = {focus_window, 2},
-  ['3']  = {focus_window, 3},
-  ['4']  = {focus_window, 4},
-  ['5']  = {focus_window, 5},
-  ['6']  = {focus_window, 6},
-  ['7']  = {focus_window, 7},
-  ['8']  = {focus_window, 8},
-  ['9']  = {focus_window, 9},
-  a      = {focus_window, 10},
-  b      = {focus_window, 11},
-  c      = {focus_window, 12},
-  d      = {focus_window, 13},
-  e      = {focus_window, 14},
-  f      = {focus_window, 15},
+
+  -- Focusing window N.
+  a     = {focus_window, 0},
+  b     = {focus_window, 1},
+  c     = {focus_window, 2},
+  d     = {focus_window, 3},
+  e     = {focus_window, 4},
+  f     = {focus_window, 5},
+  g     = {focus_window, 6},
+  m     = {focus_window, 7},
+  n     = {focus_window, 8},
+  o     = {focus_window, 9},
+  p     = {focus_window, 10},
+  q     = {focus_window, 11},
+  r     = {focus_window, 12},
+  t     = {focus_window, 13},
+  u     = {focus_window, 14},
+  w     = {focus_window, 15},
+  x     = {focus_window, 16},
+  y     = {focus_window, 17},
+  z     = {focus_window, 18},
+  ['0'] = {focus_window, 19},
+  ['1'] = {focus_window, 20},
+  ['2'] = {focus_window, 21},
+  ['3'] = {focus_window, 22},
+  ['4'] = {focus_window, 23},
+  ['5'] = {focus_window, 24},
+  ['6'] = {focus_window, 25},
+  ['7'] = {focus_window, 26},
+  ['8'] = {focus_window, 27},
+  ['9'] = {focus_window, 28},
+
   [',']  = {rerun_last_command},
   ['=']  = {balance_space},
   ['/']  = {toggle_split_direction},
@@ -266,7 +288,7 @@ function NumberOverlay:refresh()
       })
       table.insert(new_elements, {
         type = "text",
-        text = string.format("%x", i - 1),
+        text = window_keys[i-1],
         frame = make_frame{x = wframe.x + 10, y = wframe.y + 5, w = 30, h = 30},
       })
     end
