@@ -105,9 +105,14 @@ local function map_all_the_things(mode, keys)
   for key, mapping in pairs(keys) do
     local action = mapping[1] or function() end
     local arg = mapping[2]
-    local mods = ''
+    local mods = {}
+    for mod in string.gmatch(key, "([^-]+)") do
+      table.insert(mods, mod)
+    end
+    key = mods[#mods]
+    mods[#mods] = nil
     if string.match(key, "%u") then
-      mods = 'shift'
+      table.insert(mods, 'shift')
     end
     if mapping['submode'] then
       local submode = map_all_the_things(hs.hotkey.modal.new(), mapping['submode'])
@@ -139,33 +144,6 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   f14    = {},
   ['.']  = {send_control_w, delay_exiting_mode = true},
   F      = {toggle_full_screen},
-  h      = {focus_window, 'West'},
-  j      = {focus_window, 'South'},
-  k      = {focus_window, 'North'},
-  l      = {focus_window, 'East'},
-  s      = {submode = {
-             escape = {},
-             h      = {swap_window, 'west'},
-             j      = {swap_window, 'south'},
-             k      = {swap_window, 'north'},
-             l      = {swap_window, 'east'},
-             ['0']  = {swap_window, 0},
-             ['1']  = {swap_window, 1},
-             ['2']  = {swap_window, 2},
-             ['3']  = {swap_window, 3},
-             ['4']  = {swap_window, 4},
-             ['5']  = {swap_window, 5},
-             ['6']  = {swap_window, 6},
-             ['7']  = {swap_window, 7},
-             ['8']  = {swap_window, 8},
-             ['9']  = {swap_window, 9},
-             a      = {swap_window, 10},
-             b      = {swap_window, 11},
-             c      = {swap_window, 12},
-             d      = {swap_window, 13},
-             e      = {swap_window, 14},
-             f      = {swap_window, 15},
-           }},
   i      = {submode = {
              escape = {},
              h      = {warp_window, 'west'},
@@ -193,7 +171,12 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   N      = {activate_notification},
   v      = {paste_as_keystrokes},
 
-  -- Focusing window N.
+  -- Focusing
+  h     = {focus_window, 'West'},
+  j     = {focus_window, 'South'},
+  k     = {focus_window, 'North'},
+  l     = {focus_window, 'East'},
+
   a     = {focus_window, 0},
   b     = {focus_window, 1},
   c     = {focus_window, 2},
@@ -223,6 +206,42 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   ['7'] = {focus_window, 26},
   ['8'] = {focus_window, 27},
   ['9'] = {focus_window, 28},
+
+  -- Swapping
+  ['ctrl-h'] = {swap_window, 'west'},
+  ['ctrl-j'] = {swap_window, 'south'},
+  ['ctrl-k'] = {swap_window, 'north'},
+  ['ctrl-l'] = {swap_window, 'east'},
+
+  ['ctrl-a'] = {swap_window, 0},
+  ['ctrl-b'] = {swap_window, 1},
+  ['ctrl-c'] = {swap_window, 2},
+  ['ctrl-d'] = {swap_window, 3},
+  ['ctrl-e'] = {swap_window, 4},
+  ['ctrl-f'] = {swap_window, 5},
+  ['ctrl-g'] = {swap_window, 6},
+  ['ctrl-m'] = {swap_window, 7},
+  ['ctrl-n'] = {swap_window, 8},
+  ['ctrl-o'] = {swap_window, 9},
+  ['ctrl-p'] = {swap_window, 10},
+  ['ctrl-q'] = {swap_window, 11},
+  ['ctrl-r'] = {swap_window, 12},
+  ['ctrl-t'] = {swap_window, 13},
+  ['ctrl-u'] = {swap_window, 14},
+  ['ctrl-w'] = {swap_window, 15},
+  ['ctrl-x'] = {swap_window, 16},
+  ['ctrl-y'] = {swap_window, 17},
+  ['ctrl-z'] = {swap_window, 18},
+  ['ctrl-0'] = {swap_window, 19},
+  ['ctrl-1'] = {swap_window, 20},
+  ['ctrl-2'] = {swap_window, 21},
+  ['ctrl-3'] = {swap_window, 22},
+  ['ctrl-4'] = {swap_window, 23},
+  ['ctrl-5'] = {swap_window, 24},
+  ['ctrl-6'] = {swap_window, 25},
+  ['ctrl-7'] = {swap_window, 26},
+  ['ctrl-8'] = {swap_window, 27},
+  ['ctrl-9'] = {swap_window, 28},
 
   [',']  = {rerun_last_command},
   ['=']  = {balance_space},
