@@ -48,10 +48,6 @@ local function kitty(command)
   hs.execute("kitty @ --to unix:/Users/jfelice/.run/kitty " .. command, true)
 end
 
-local function focus_kitty_window(title)
-  kitty("focus-window --match=title:" .. title)
-end
-
 local function paste_as_keystrokes()
   hs.eventtap.keyStrokes(hs.pasteboard.readString())
 end
@@ -141,8 +137,6 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   j      = {focus_window, 'South'},
   k      = {focus_window, 'North'},
   l      = {focus_window, 'East'},
-  r      = {focus_kitty_window, 'kak_repl_window'},
-  R      = {focus_kitty_window, 'shell_window'},
   s      = {submode = {
              escape = {},
              h      = {swap_window, 'west'},
