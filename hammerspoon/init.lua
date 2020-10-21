@@ -37,12 +37,7 @@ local function ordered_code_windows()
 end
 
 local function window_number(n)
-  local windows = ordered_code_windows()
-  if n == 9 or n > #windows then
-    return windows[#windows]
-  else
-    return windows[n+1]
-  end
+  return ordered_code_windows()[n+1]
 end
 
 local function send_control_w()
@@ -141,7 +136,7 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   escape = {},
   f14    = {},
   ['.']  = {send_control_w, delay_exiting_mode = true},
-  f      = {toggle_full_screen},
+  F      = {toggle_full_screen},
   h      = {focus_window, 'West'},
   j      = {focus_window, 'South'},
   k      = {focus_window, 'North'},
@@ -164,6 +159,12 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
              ['7']  = {swap_window, 7},
              ['8']  = {swap_window, 8},
              ['9']  = {swap_window, 9},
+             a      = {swap_window, 10},
+             b      = {swap_window, 11},
+             c      = {swap_window, 12},
+             d      = {swap_window, 13},
+             e      = {swap_window, 14},
+             f      = {swap_window, 15},
            }},
   i      = {submode = {
              escape = {},
@@ -181,6 +182,12 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
              ['7']  = {warp_window, 7},
              ['8']  = {warp_window, 8},
              ['9']  = {warp_window, 9},
+             a      = {warp_window, 10},
+             b      = {warp_window, 11},
+             c      = {warp_window, 12},
+             d      = {warp_window, 13},
+             e      = {warp_window, 14},
+             f      = {warp_window, 15},
            }},
   I      = {ignore_notification},
   N      = {activate_notification},
@@ -195,6 +202,12 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   ['7']  = {focus_window, 7},
   ['8']  = {focus_window, 8},
   ['9']  = {focus_window, 9},
+  a      = {focus_window, 10},
+  b      = {focus_window, 11},
+  c      = {focus_window, 12},
+  d      = {focus_window, 13},
+  e      = {focus_window, 14},
+  f      = {focus_window, 15},
   [',']  = {rerun_last_command},
   ['=']  = {balance_space},
   ['/']  = {toggle_split_direction},
@@ -259,7 +272,7 @@ function NumberOverlay:refresh()
       })
       table.insert(new_elements, {
         type = "text",
-        text = tostring(i - 1),
+        text = string.format("%x", i - 1),
         frame = make_frame{x = wframe.x + 10, y = wframe.y + 5, w = 30, h = 30},
       })
     end
