@@ -45,25 +45,6 @@ local function window_number(n)
   end
 end
 
-local function focus_space(space_name)
-  local screen = hs.screen.find(spaces[space_name])
-  if not screen then return end
-  local function isOnScreen(window)
-    return window:screen() == screen
-  end
-  local window = hs.fnutils.filter(hs.window.orderedWindows(), isOnScreen)[1] or hs.window.desktop()
-  window:focus()
-end
-
-local function send_to_space(space_name)
-  local screen = hs.screen.find(spaces[space_name])
-  local window = hs.window.focusedWindow()
-  window:centerOnScreen(screen, true, 0)
-  if space_name == 'browse' then
-    window:moveToUnit('[0,0,100,100]')
-  end
-end
-
 local function send_control_w()
   hs.eventtap.keyStroke({"control"}, "W")
 end
@@ -160,10 +141,6 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   escape = {},
   f14    = {},
   ['.']  = {send_control_w, delay_exiting_mode = true},
-  b      = {focus_space, 'browse'},
-  B      = {send_to_space, 'browse'},
-  c      = {focus_space, 'code'},
-  C      = {send_to_space, 'code'},
   f      = {toggle_full_screen},
   h      = {focus_window, 'West'},
   j      = {focus_window, 'South'},
