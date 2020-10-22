@@ -314,4 +314,4 @@ function WindowSigils:refresh()
   end
 end
 
-overlay = WindowSigils:new(code_window_filter)
+sigils = WindowSigils:new(code_window_filter)
