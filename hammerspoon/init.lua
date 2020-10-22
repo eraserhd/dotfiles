@@ -251,9 +251,8 @@ function NumberOverlay:new(...)
   return setmetatable(obj, NumberOverlay):init(...)
 end
 
-function NumberOverlay:init(screens, window_filter)
-  self.screens = hs.fnutils.map(screens, function(screen_hint)
-    local screen = hs.screen.find(screen_hint)
+function NumberOverlay:init(window_filter)
+  self.screens = hs.fnutils.map(hs.screen.allScreens(), function(screen)
     local bounds = screen:frame()
     local canvas = hs.canvas.new(bounds)
     canvas:show()
@@ -315,4 +314,4 @@ function NumberOverlay:refresh()
   end
 end
 
-overlay = NumberOverlay:new(codeScreens(), code_window_filter)
+overlay = NumberOverlay:new(code_window_filter)
