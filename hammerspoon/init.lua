@@ -2,6 +2,7 @@ require("hs.ipc")
 config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
 
 sigils = hs.loadSpoon("WindowSigils")
+sigils:start()
 
 local function ordered_code_windows()
   local windows = sigils.window_filter:getWindows()

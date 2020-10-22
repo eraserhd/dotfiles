@@ -20,12 +20,6 @@ obj.license = "MIT - https://opensource.org/licenses/MIT"
 obj.logger = hs.logger.new('WindowSigils')
 
 
-obj.window_filter = hs.window.filter.new({override={
-  visible = true,
-}}):setDefaultFilter({
-  visible = true,
-})
-
 --- Some internal variable
 obj.key_hello = nil
 
@@ -38,8 +32,11 @@ obj.some_config_param = true
 --- Method
 --- Greet the user
 function obj:sayHello()
-   hs.alert.show("Hello!")
-   return self
+  hs.alert.show("Hello!")
+  return self
+end
+
+function obj:init()
 end
 
 --- WindowSigils:bindHotkeys(mapping)
@@ -50,12 +47,33 @@ end
 ---  * mapping - A table containing hotkey objifier/key details for the following items:
 ---   * hello - Say Hello
 function obj:bindHotkeys(mapping)
-   if mapping["hello"] then
-      if (self.key_hello) then
-         self.key_hello:delete()
-      end
-      self.key_hello = hs.hotkey.bindSpec(mapping["hello"], function() self:sayHello() end)
-   end
+  if mapping["hello"] then
+    if (self.key_hello) then
+      self.key_hello:delete()
+    end
+    self.key_hello = hs.hotkey.bindSpec(mapping["hello"], function() self:sayHello() end)
+  end
+end
+
+--- WindowSigils:start()
+--- Method
+--- Starts rendering the sigils and handling hotkeys
+---
+--- Parameters:
+function obj:start()
+  self.window_filter = hs.window.filter.new({override={
+    visible = true,
+  }}):setDefaultFilter({
+    visible = true,
+  })
+end
+
+--- WindowSigils:stop()
+--- Method
+--- Stops rendering the sigils and handling hotkeys
+---
+--- Parameters:
+function obj:stop()
 end
 
 return obj
