@@ -4,19 +4,8 @@ config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.re
 sigils = hs.loadSpoon("WindowSigils")
 sigils:start()
 
-local function ordered_code_windows()
-  local windows = sigils.window_filter:getWindows()
-  table.sort(windows, function(a, b)
-    local af, bf = a:frame(), b:frame()
-    if af.x < bf.x then return true end
-    if af.x > bf.x then return false end
-    return af.y < bf.y
-  end)
-  return windows
-end
-
 local function window_number(n)
-  return ordered_code_windows()[n+1]
+  return sigils:orderedWindows()[n+1]
 end
 
 local function send_control_w()
@@ -282,7 +271,7 @@ function WindowSigils:refresh()
     end
 
     local new_elements = {}
-    local windows = ordered_code_windows()
+    local windows = sigils:orderedWindows()
     for i, window in ipairs(windows) do
       local wframe = window:frame()
       table.insert(new_elements, {

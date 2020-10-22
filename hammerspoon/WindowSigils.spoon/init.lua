@@ -76,4 +76,19 @@ end
 function obj:stop()
 end
 
+
+--- WindowSigils:orderedWindows()
+--- Method
+--- A list of windows, in the order sigils are assigned.
+function obj:orderedWindows()
+  local windows = self.window_filter:getWindows()
+  table.sort(windows, function(a, b)
+    local af, bf = a:frame(), b:frame()
+    if af.x < bf.x then return true end
+    if af.x > bf.x then return false end
+    return af.y < bf.y
+  end)
+  return windows
+end
+
 return obj
