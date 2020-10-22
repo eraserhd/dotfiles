@@ -1,6 +1,9 @@
 require("hs.ipc")
 config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
 
+sigils = hs.spoons.use("WindowSigils", {
+})
+
 local function codeWindowFilter()
   return hs.window.filter.new({override={
     visible = true,
@@ -314,4 +317,4 @@ function WindowSigils:refresh()
   end
 end
 
-sigils = WindowSigils:new(code_window_filter)
+old_sigils = WindowSigils:new(code_window_filter)

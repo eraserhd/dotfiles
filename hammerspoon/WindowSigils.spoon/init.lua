@@ -10,7 +10,7 @@ obj.__index = obj
 -- Metadata
 obj.name = "WindowSigils"
 obj.version = "0.1"
-obj.author = "Your Name <your@email.org>"
+obj.author = "Jason Felice <jason.m.felice@gmail.com>"
 obj.homepage = "https://github.com/Hammerspoon/Spoons"
 obj.license = "MIT - https://opensource.org/licenses/MIT"
 
