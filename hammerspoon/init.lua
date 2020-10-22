@@ -1,21 +1,10 @@
 require("hs.ipc")
 config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
 
-sigils = hs.spoons.use("WindowSigils", {
-})
-
-local function codeWindowFilter()
-  return hs.window.filter.new({override={
-    visible = true,
-  }}):setDefaultFilter({
-    visible = true,
-  })
-end
-
-code_window_filter = codeWindowFilter()
+sigils = hs.loadSpoon("WindowSigils")
 
 local function ordered_code_windows()
-  local windows = code_window_filter:getWindows()
+  local windows = sigils.window_filter:getWindows()
   table.sort(windows, function(a, b)
     local af, bf = a:frame(), b:frame()
     if af.x < bf.x then return true end
@@ -317,4 +306,4 @@ function WindowSigils:refresh()
   end
 end
 
-old_sigils = WindowSigils:new(code_window_filter)
+old_sigils = WindowSigils:new(sigils.window_filter)

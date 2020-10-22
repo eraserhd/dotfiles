@@ -19,6 +19,13 @@ obj.license = "MIT - https://opensource.org/licenses/MIT"
 --- Logger object used within the Spoon. Can be accessed to set the default log level for the messages coming from the Spoon.
 obj.logger = hs.logger.new('WindowSigils')
 
+
+obj.window_filter = hs.window.filter.new({override={
+  visible = true,
+}}):setDefaultFilter({
+  visible = true,
+})
+
 --- Some internal variable
 obj.key_hello = nil
 
