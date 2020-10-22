@@ -20,5 +20,6 @@ in {
 
   home-manager.users.jfelice = { pkgs, ... }: {
     home.file.".hammerspoon/init.lua".source = "${checkedConfig}/init.lua";
+    home.file.".hammerspoon/Spoons/WindowSigils.spoon".source = ./WindowSigils.spoon;
   };
 }
