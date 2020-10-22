@@ -243,15 +243,15 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   ['/']  = {toggle_split_direction},
 })
 
-local NumberOverlay = {}
+local WindowSigils = {}
 
-function NumberOverlay:new(...)
+function WindowSigils:new(...)
   local obj = {}
   self.__index = self
-  return setmetatable(obj, NumberOverlay):init(...)
+  return setmetatable(obj, WindowSigils):init(...)
 end
 
-function NumberOverlay:init(window_filter)
+function WindowSigils:init(window_filter)
   self.screens = hs.fnutils.map(hs.screen.allScreens(), function(screen)
     local bounds = screen:frame()
     local canvas = hs.canvas.new(bounds)
@@ -279,7 +279,7 @@ function NumberOverlay:init(window_filter)
   return self
 end
 
-function NumberOverlay:refresh()
+function WindowSigils:refresh()
   for _, screen_data in ipairs(self.screens) do
     local bounds = screen_data.screen:frame()
 
@@ -314,4 +314,4 @@ function NumberOverlay:refresh()
   end
 end
 
-overlay = NumberOverlay:new(code_window_filter)
+overlay = WindowSigils:new(code_window_filter)
