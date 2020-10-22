@@ -21,12 +21,13 @@ local function paste_as_keystrokes()
 end
 
 local function focus_window(what)
-  if type(what) == 'string' then
-    local window = hs.window.focusedWindow()
-    window['focusWindow' .. what](window, nil, true, true)
-  else
-    window_number(what):focus()
-  end
+  return sigils:window(what):focus()
+  --if type(what) == 'string' then
+  --  local window = hs.window.focusedWindow()
+  --  window['focusWindow' .. what](window, nil, true, true)
+  --else
+  --  window_number(what):focus()
+  --end
 end
 
 local function toggle_full_screen()
@@ -118,35 +119,35 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   k     = {focus_window, 'North'},
   l     = {focus_window, 'East'},
 
-  a     = {focus_window, 0},
-  b     = {focus_window, 1},
-  c     = {focus_window, 2},
-  d     = {focus_window, 3},
-  e     = {focus_window, 4},
-  f     = {focus_window, 5},
-  g     = {focus_window, 6},
-  m     = {focus_window, 7},
-  n     = {focus_window, 8},
-  o     = {focus_window, 9},
-  p     = {focus_window, 10},
-  q     = {focus_window, 11},
-  r     = {focus_window, 12},
-  t     = {focus_window, 13},
-  u     = {focus_window, 14},
-  w     = {focus_window, 15},
-  x     = {focus_window, 16},
-  y     = {focus_window, 17},
-  z     = {focus_window, 18},
-  ['0'] = {focus_window, 19},
-  ['1'] = {focus_window, 20},
-  ['2'] = {focus_window, 21},
-  ['3'] = {focus_window, 22},
-  ['4'] = {focus_window, 23},
-  ['5'] = {focus_window, 24},
-  ['6'] = {focus_window, 25},
-  ['7'] = {focus_window, 26},
-  ['8'] = {focus_window, 27},
-  ['9'] = {focus_window, 28},
+  a     = {focus_window, 'a'},
+  b     = {focus_window, 'b'},
+  c     = {focus_window, 'c'},
+  d     = {focus_window, 'd'},
+  e     = {focus_window, 'e'},
+  f     = {focus_window, 'f'},
+  g     = {focus_window, 'g'},
+  m     = {focus_window, 'm'},
+  n     = {focus_window, 'n'},
+  o     = {focus_window, 'o'},
+  p     = {focus_window, 'p'},
+  q     = {focus_window, 'q'},
+  r     = {focus_window, 'r'},
+  t     = {focus_window, 't'},
+  u     = {focus_window, 'u'},
+  w     = {focus_window, 'w'},
+  x     = {focus_window, 'x'},
+  y     = {focus_window, 'y'},
+  z     = {focus_window, 'z'},
+  ['0'] = {focus_window, '0'},
+  ['1'] = {focus_window, '1'},
+  ['2'] = {focus_window, '2'},
+  ['3'] = {focus_window, '3'},
+  ['4'] = {focus_window, '4'},
+  ['5'] = {focus_window, '5'},
+  ['6'] = {focus_window, '6'},
+  ['7'] = {focus_window, '7'},
+  ['8'] = {focus_window, '8'},
+  ['9'] = {focus_window, '9'},
 
   -- Swapping
   ['ctrl-h'] = {swap_window, 'west'},
