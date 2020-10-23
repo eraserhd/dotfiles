@@ -19,6 +19,11 @@ obj.license = "MIT - https://opensource.org/licenses/MIT"
 --- Logger object used within the Spoon. Can be accessed to set the default log level for the messages coming from the Spoon.
 obj.logger = hs.logger.new('WindowSigils')
 
+obj.sigils = {
+  "a", "b", "c", "d", "e", "f", "g", "m", "n", "o", "p", "q", "r", "t", "u",
+  "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+}
+
 --- WindowSigils.some_config_param
 --- Variable
 --- Some configuration parameter
@@ -118,12 +123,7 @@ function obj:window(sigil)
   elseif sigil == 'West' then
     return hs.window.focusedWindow():windowsToWest(nil, true, true)[1]
   else
-    local sigils = {
-      "a",
-      "b", "c", "d", "e", "f", "g", "m", "n", "o", "p", "q", "r", "t", "u",
-      "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-    }
-    for i,k in ipairs(sigils) do
+    for i,k in ipairs(self.sigils) do
       if k == sigil then
         return self:orderedWindows()[i]
       end
@@ -131,12 +131,6 @@ function obj:window(sigil)
   end
   return nil
 end
-
-local window_keys = {
-  "b", "c", "d", "e", "f", "g", "m", "n", "o", "p", "q", "r", "t", "u",
-  "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-  [0] = "a",
-}
 
 --- WindowSigils:refresh()
 --- Method
@@ -165,7 +159,7 @@ function obj:refresh()
       })
       table.insert(new_elements, {
         type = "text",
-        text = window_keys[i-1],
+        text = self.sigils[i],
         textFont = "JuliaMono Regular",
         textSize = 18,
         textLineBreak = 'trancateTail',
