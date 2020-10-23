@@ -3,13 +3,9 @@ config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.re
 
 sigils = hs.loadSpoon("WindowSigils")
 sigils:bindHotkeys({
-  enter = {{"ctrl"}, "w"}
+  enter = {{"control"}, "W"}
 })
 sigils:start()
-
-local function send_control_w()
-  hs.eventtap.keyStroke({"control"}, "W")
-end
 
 local function kitty(command)
   hs.execute("kitty @ --to unix:/Users/jfelice/.run/kitty " .. command, true)
@@ -71,8 +67,6 @@ local function map_all_the_things(keys)
 end
 
 ctrlw = map_all_the_things({
-  escape = {},
-  ['.']  = {send_control_w, delay_exiting_mode = true},
   F      = {toggle_full_screen},
   I      = {ignore_notification},
   N      = {activate_notification},

@@ -40,6 +40,13 @@ function obj:bindHotkeys(mapping)
   if mapping['enter'] then
     mods, key = table.unpack(mapping['enter'])
     self.mode = hs.hotkey.modal.new(mods, key)
+    self.mode:bind({}, 'escape', function() self.mode:exit() end)
+    self.mode:bind({}, '.', function()
+      self.mode:exit()
+      self.mode.k:disable()
+      hs.eventtap.keyStroke(mods, key)
+      self.mode.k:enable()
+    end)
   end
 end
 
@@ -50,7 +57,7 @@ local directions = {
   l = 'East'
 }
 
---- WindowSigils:bindSigilAction(mods, fn)
+--- WindowSigils:bindSigilAction(mods, action)
 --- Method
 --- Bind an action to be triggered in the sigil mode when a window's sigil key is pressed.
 ---
