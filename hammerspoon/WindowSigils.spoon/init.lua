@@ -39,7 +39,26 @@ obj.some_config_param = true
 function obj:bindHotkeys(mapping)
   if mapping['enter'] then
     mods, key = table.unpack(mapping['enter'])
-    obj.mode = hs.hotkey.modal.new(mods, key)
+    self.mode = hs.hotkey.modal.new(mods, key)
+  end
+end
+
+--- WindowSigils:bindSigilAction(mods, fn)
+--- Method
+--- Bind an action to be triggered in the sigil mode when a window's sigil key is pressed.
+---
+--- Parameters:
+---   * mods - The modifiers which must be held to trigger this action.
+---   * action - A function which takes a window object and performs this action.
+function obj:bindSigilAction(mods, action)
+  for i,sigil in ipairs(self.sigils) do
+    self.mode:bind(mods, sigil, function()
+      self.mode:exit()
+      local window = self:window(sigil)
+      if window then
+        action(window)
+      end
+    end)
   end
 end
 
