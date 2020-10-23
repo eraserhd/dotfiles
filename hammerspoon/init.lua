@@ -19,14 +19,6 @@ local function paste_as_keystrokes()
   hs.eventtap.keyStrokes(hs.pasteboard.readString())
 end
 
-local function focus_window(what)
-  local window = sigils:window(what)
-  window:focus()
-  if hs.window.focusedWindow() ~= window then
-    window:focus()
-  end
-end
-
 local function toggle_full_screen()
   hs.window.focusedWindow():toggleFullScreen()
 end
@@ -41,15 +33,6 @@ end
 
 local function toggle_split_direction()
   hs.execute("yabai -m window --toggle split", true)
-end
-
-local function swap_window(what)
-  hs.execute("yabai -m window --swap " .. sigils:window(what):id(), true)
-end
-
-local function warp_window(to)
-  hs.execute("yabai -m window --warp " .. sigils:window(to):id(), true)
-  balance_space()
 end
 
 local function ignore_notification()

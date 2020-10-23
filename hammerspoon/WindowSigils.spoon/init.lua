@@ -58,23 +58,20 @@ local directions = {
 ---   * mods - The modifiers which must be held to trigger this action.
 ---   * action - A function which takes a window object and performs this action.
 function obj:bindSigilAction(mods, action)
-  for key,direction in pairs(directions) do
-    self.mode:bind(mods, key, function()
-      self.mode:exit()
-      local window = self:window(direction)
-      if window then
-        action(window)
-      end
-    end)
-  end
-  for _,sigil in ipairs(self.sigils) do
-    self.mode:bind(mods, sigil, function()
+  local function make_action(sigil)
+    return function()
       self.mode:exit()
       local window = self:window(sigil)
       if window then
         action(window)
       end
-    end)
+    end
+  end
+  for key,direction in pairs(directions) do
+    self.mode:bind(mods, key, make_action(direction))
+  end
+  for _,sigil in ipairs(self.sigils) do
+    self.mode:bind(mods, sigil, make_action(sigil))
   end
 end
 
