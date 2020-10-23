@@ -95,24 +95,6 @@ ctrlw = map_all_the_things({
   N      = {activate_notification},
   v      = {paste_as_keystrokes},
 
-  -- Focusing
-  h     = {focus_window, 'West'},
-  j     = {focus_window, 'South'},
-  k     = {focus_window, 'North'},
-  l     = {focus_window, 'East'},
-
-  -- Swapping
-  ['ctrl-h'] = {swap_window, 'West'},
-  ['ctrl-j'] = {swap_window, 'South'},
-  ['ctrl-k'] = {swap_window, 'North'},
-  ['ctrl-l'] = {swap_window, 'East'},
-
-  -- Warping
-  ['alt-h'] = {warp_window, 'West'},
-  ['alt-j'] = {warp_window, 'South'},
-  ['alt-k'] = {warp_window, 'North'},
-  ['alt-l'] = {warp_window, 'East'},
-
   [',']  = {rerun_last_command},
   ['=']  = {balance_space},
   ['/']  = {toggle_split_direction},

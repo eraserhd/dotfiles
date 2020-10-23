@@ -43,6 +43,13 @@ function obj:bindHotkeys(mapping)
   end
 end
 
+local directions = {
+  h = 'West',
+  j = 'South',
+  k = 'North',
+  l = 'East'
+}
+
 --- WindowSigils:bindSigilAction(mods, fn)
 --- Method
 --- Bind an action to be triggered in the sigil mode when a window's sigil key is pressed.
@@ -51,7 +58,16 @@ end
 ---   * mods - The modifiers which must be held to trigger this action.
 ---   * action - A function which takes a window object and performs this action.
 function obj:bindSigilAction(mods, action)
-  for i,sigil in ipairs(self.sigils) do
+  for key,direction in pairs(directions) do
+    self.mode:bind(mods, key, function()
+      self.mode:exit()
+      local window = self:window(direction)
+      if window then
+        action(window)
+      end
+    end)
+  end
+  for _,sigil in ipairs(self.sigils) do
     self.mode:bind(mods, sigil, function()
       self.mode:exit()
       local window = self:window(sigil)
