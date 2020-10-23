@@ -4,10 +4,6 @@ config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.re
 sigils = hs.loadSpoon("WindowSigils")
 sigils:start()
 
-local function window_number(n)
-  return sigils:orderedWindows()[n+1]
-end
-
 local function send_control_w()
   hs.eventtap.keyStroke({"control"}, "W")
 end
@@ -88,12 +84,6 @@ local function map_all_the_things(mode, keys)
   end
   return mode
 end
-
-local window_keys = {
-  "b", "c", "d", "e", "f", "g", "m", "n", "o", "p", "q", "r", "t", "u",
-  "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
-  [0] = "a",
-}
 
 ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   escape = {},
@@ -216,76 +206,3 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   ['=']  = {balance_space},
   ['/']  = {toggle_split_direction},
 })
-
-local WindowSigils = {}
-
-function WindowSigils:new(...)
-  local obj = {}
-  self.__index = self
-  return setmetatable(obj, WindowSigils):init(...)
-end
-
-function WindowSigils:init(window_filter)
-  self.screens = hs.fnutils.map(hs.screen.allScreens(), function(screen)
-    local bounds = screen:frame()
-    local canvas = hs.canvas.new(bounds)
-    canvas:show()
-    return {
-      screen = screen,
-      canvas = canvas
-    }
-  end)
-
-  self.window_filter = window_filter
-  self.window_filter:subscribe({
-    hs.window.filter.windowCreated,
-    hs.window.filter.windowDestroyed,
-    hs.window.filter.windowMoved,
-    hs.window.filter.windowAllowed,
-    hs.window.filter.windowRejected,
-    hs.window.filter.windowNotVisible,
-    hs.window.filter.windowVisible,
-  }, function()
-    self:refresh()
-  end)
-
-  self:refresh()
-  return self
-end
-
-function WindowSigils:refresh()
-  for _, screen_data in ipairs(self.screens) do
-    local bounds = screen_data.screen:frame()
-
-    local function make_frame(wframe)
-      local rect = hs.geometry.toUnitRect(wframe, bounds)
-      return { x = tostring(rect.x), y = tostring(rect.y), w = tostring(rect.w), h = tostring(rect.h) }
-    end
-
-    local new_elements = {}
-    local windows = sigils:orderedWindows()
-    for i, window in ipairs(windows) do
-      local wframe = window:frame()
-      table.insert(new_elements, {
-        action = "fill",
-        fillColor = { alpha = 0.3, green = 1.0, blue = 1.0 },
-        frame = make_frame{x = wframe.x + 70, y = wframe.y + 1, w = 20, h = 19},
-        type = "rectangle",
-        withShadow = true,
-      })
-      table.insert(new_elements, {
-        type = "text",
-        text = window_keys[i-1],
-        textFont = "JuliaMono Regular",
-        textSize = 18,
-        textLineBreak = 'trancateTail',
-        frame = make_frame{x = wframe.x + 73, y = wframe.y - 3, w = 17, h = 19 + 7},
-      })
-    end
-    if #new_elements > 0 then
-      screen_data.canvas:replaceElements(new_elements)
-    end
-  end
-end
-
-old_sigils = WindowSigils:new(sigils.window_filter)

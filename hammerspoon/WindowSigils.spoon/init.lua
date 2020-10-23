@@ -66,6 +66,29 @@ function obj:start()
   }}):setDefaultFilter({
     visible = true,
   })
+  self.window_filter:subscribe({
+    hs.window.filter.windowCreated,
+    hs.window.filter.windowDestroyed,
+    hs.window.filter.windowMoved,
+    hs.window.filter.windowAllowed,
+    hs.window.filter.windowRejected,
+    hs.window.filter.windowNotVisible,
+    hs.window.filter.windowVisible,
+  }, function()
+    self:refresh()
+  end)
+
+  self.screens = hs.fnutils.map(hs.screen.allScreens(), function(screen)
+    local bounds = screen:frame()
+    local canvas = hs.canvas.new(bounds)
+    canvas:show()
+    return {
+      screen = screen,
+      canvas = canvas
+    }
+  end)
+
+  self:refresh()
 end
 
 --- WindowSigils:stop()
@@ -124,6 +147,52 @@ function obj:window(sigil)
     end
   end
   return nil
+end
+
+local window_keys = {
+  "b", "c", "d", "e", "f", "g", "m", "n", "o", "p", "q", "r", "t", "u",
+  "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+  [0] = "a",
+}
+
+--- WindowSigils:refresh()
+--- Method
+--- Rerender all window sigils.
+---
+--- Parameters:
+function obj:refresh()
+  for _, screen_data in ipairs(self.screens) do
+    local bounds = screen_data.screen:frame()
+
+    local function make_frame(wframe)
+      local rect = hs.geometry.toUnitRect(wframe, bounds)
+      return { x = tostring(rect.x), y = tostring(rect.y), w = tostring(rect.w), h = tostring(rect.h) }
+    end
+
+    local new_elements = {}
+    local windows = sigils:orderedWindows()
+    for i, window in ipairs(windows) do
+      local wframe = window:frame()
+      table.insert(new_elements, {
+        action = "fill",
+        fillColor = { alpha = 0.3, green = 1.0, blue = 1.0 },
+        frame = make_frame{x = wframe.x + 70, y = wframe.y + 1, w = 20, h = 19},
+        type = "rectangle",
+        withShadow = true,
+      })
+      table.insert(new_elements, {
+        type = "text",
+        text = window_keys[i-1],
+        textFont = "JuliaMono Regular",
+        textSize = 18,
+        textLineBreak = 'trancateTail',
+        frame = make_frame{x = wframe.x + 73, y = wframe.y - 3, w = 17, h = 19 + 7},
+      })
+    end
+    if #new_elements > 0 then
+      screen_data.canvas:replaceElements(new_elements)
+    end
+  end
 end
 
 return obj
