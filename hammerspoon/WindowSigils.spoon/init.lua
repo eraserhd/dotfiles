@@ -59,6 +59,21 @@ function obj:bindHotkeys(mapping)
   end
 end
 
+--- WindowSigils:bindModeKey(mods, key, action)
+--- Method
+--- Bind an extra action to be triggered by a key in the sigil mode.
+---
+--- Parameters:
+---   * mods - The key modifiers
+---   * key - The key
+---   * action - A function, called with no parameters.
+function obj:bindModeKey(mods, key, action)
+  self.mode:bind(mods, key, function()
+    self.mode:exit()
+    action()
+  end)
+end
+
 local directions = {
   h = 'West',
   j = 'South',

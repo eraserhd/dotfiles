@@ -5,7 +5,6 @@ sigils = hs.loadSpoon("WindowSigils")
 sigils:bindHotkeys({
   enter = {{"control"}, "W"}
 })
-sigils:start()
 
 local function kitty(command)
   hs.execute("kitty @ --to unix:/Users/jfelice/.run/kitty " .. command, true)
@@ -39,43 +38,13 @@ local function activate_notification()
   hs.execute("notification --activate", true)
 end
 
-local function map_all_the_things(keys)
-  for key, mapping in pairs(keys) do
-    local action = mapping[1] or function() end
-    local arg = mapping[2]
-    local mods = {}
-    for mod in string.gmatch(key, "([^-]+)") do
-      table.insert(mods, mod)
-    end
-    key = mods[#mods]
-    mods[#mods] = nil
-    if string.match(key, "%u") then
-      table.insert(mods, 'shift')
-    end
-    if mapping['delay_exiting_mode'] then
-      sigils.mode:bind(mods, key, function()
-        action(arg)
-        sigils.mode:exit()
-      end)
-    else
-      sigils.mode:bind(mods, key, function()
-        sigils.mode:exit()
-        action(arg)
-      end)
-    end
-  end
-end
-
-ctrlw = map_all_the_things({
-  F      = {toggle_full_screen},
-  I      = {ignore_notification},
-  N      = {activate_notification},
-  v      = {paste_as_keystrokes},
-
-  [',']  = {rerun_last_command},
-  ['=']  = {balance_space},
-  ['/']  = {toggle_split_direction},
-})
+sigils:bindModeKey({'shift'}, 'f', toggle_full_screen)
+sigils:bindModeKey({'shift'}, 'i', ignore_notification)
+sigils:bindModeKey({'shift'}, 'n', activate_notification)
+sigils:bindModeKey({}, 'v', paste_as_keystrokes)
+sigils:bindModeKey({}, ',', rerun_last_command)
+sigils:bindModeKey({}, '=', balance_space)
+sigils:bindModeKey({}, '/', toggle_split_direction)
 
 sigils:bindSigilAction({}, function(window)
   window:focus()
@@ -92,3 +61,5 @@ sigils:bindSigilAction({'alt'}, function(window)
   hs.execute("yabai -m window --warp " .. window:id(), true)
   balance_space()
 end)
+
+sigils:start()
