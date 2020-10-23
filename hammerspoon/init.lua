@@ -21,13 +21,11 @@ local function paste_as_keystrokes()
 end
 
 local function focus_window(what)
-  return sigils:window(what):focus()
-  --if type(what) == 'string' then
-  --  local window = hs.window.focusedWindow()
-  --  window['focusWindow' .. what](window, nil, true, true)
-  --else
-  --  window_number(what):focus()
-  --end
+  local window = sigils:window(what)
+  window:focus()
+  if hs.window.focusedWindow() ~= window then
+    window:focus()
+  end
 end
 
 local function toggle_full_screen()
@@ -46,19 +44,12 @@ local function toggle_split_direction()
   hs.execute("yabai -m window --toggle split", true)
 end
 
-local function yabai_window_id(what)
-  if type(what) == 'string' then
-    return what
-  end
-  return tostring(window_number(what):id())
-end
-
 local function swap_window(what)
-  hs.execute("yabai -m window --swap " .. yabai_window_id(what), true)
+  hs.execute("yabai -m window --swap " .. sigils:window(what):id(), true)
 end
 
 local function warp_window(to)
-  hs.execute("yabai -m window --warp " .. yabai_window_id(to), true)
+  hs.execute("yabai -m window --warp " .. sigils:window(to):id(), true)
   balance_space()
 end
 
@@ -150,76 +141,76 @@ ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
   ['9'] = {focus_window, '9'},
 
   -- Swapping
-  ['ctrl-h'] = {swap_window, 'west'},
-  ['ctrl-j'] = {swap_window, 'south'},
-  ['ctrl-k'] = {swap_window, 'north'},
-  ['ctrl-l'] = {swap_window, 'east'},
+  ['ctrl-h'] = {swap_window, 'West'},
+  ['ctrl-j'] = {swap_window, 'South'},
+  ['ctrl-k'] = {swap_window, 'North'},
+  ['ctrl-l'] = {swap_window, 'East'},
 
-  ['ctrl-a'] = {swap_window, 0},
-  ['ctrl-b'] = {swap_window, 1},
-  ['ctrl-c'] = {swap_window, 2},
-  ['ctrl-d'] = {swap_window, 3},
-  ['ctrl-e'] = {swap_window, 4},
-  ['ctrl-f'] = {swap_window, 5},
-  ['ctrl-g'] = {swap_window, 6},
-  ['ctrl-m'] = {swap_window, 7},
-  ['ctrl-n'] = {swap_window, 8},
-  ['ctrl-o'] = {swap_window, 9},
-  ['ctrl-p'] = {swap_window, 10},
-  ['ctrl-q'] = {swap_window, 11},
-  ['ctrl-r'] = {swap_window, 12},
-  ['ctrl-t'] = {swap_window, 13},
-  ['ctrl-u'] = {swap_window, 14},
-  ['ctrl-w'] = {swap_window, 15},
-  ['ctrl-x'] = {swap_window, 16},
-  ['ctrl-y'] = {swap_window, 17},
-  ['ctrl-z'] = {swap_window, 18},
-  ['ctrl-0'] = {swap_window, 19},
-  ['ctrl-1'] = {swap_window, 20},
-  ['ctrl-2'] = {swap_window, 21},
-  ['ctrl-3'] = {swap_window, 22},
-  ['ctrl-4'] = {swap_window, 23},
-  ['ctrl-5'] = {swap_window, 24},
-  ['ctrl-6'] = {swap_window, 25},
-  ['ctrl-7'] = {swap_window, 26},
-  ['ctrl-8'] = {swap_window, 27},
-  ['ctrl-9'] = {swap_window, 28},
+  ['ctrl-a'] = {swap_window, 'a'},
+  ['ctrl-b'] = {swap_window, 'b'},
+  ['ctrl-c'] = {swap_window, 'c'},
+  ['ctrl-d'] = {swap_window, 'd'},
+  ['ctrl-e'] = {swap_window, 'e'},
+  ['ctrl-f'] = {swap_window, 'f'},
+  ['ctrl-g'] = {swap_window, 'g'},
+  ['ctrl-m'] = {swap_window, 'm'},
+  ['ctrl-n'] = {swap_window, 'n'},
+  ['ctrl-o'] = {swap_window, 'o'},
+  ['ctrl-p'] = {swap_window, 'p'},
+  ['ctrl-q'] = {swap_window, 'q'},
+  ['ctrl-r'] = {swap_window, 'r'},
+  ['ctrl-t'] = {swap_window, 't'},
+  ['ctrl-u'] = {swap_window, 'u'},
+  ['ctrl-w'] = {swap_window, 'w'},
+  ['ctrl-x'] = {swap_window, 'x'},
+  ['ctrl-y'] = {swap_window, 'y'},
+  ['ctrl-z'] = {swap_window, 'z'},
+  ['ctrl-0'] = {swap_window, '0'},
+  ['ctrl-1'] = {swap_window, '1'},
+  ['ctrl-2'] = {swap_window, '2'},
+  ['ctrl-3'] = {swap_window, '3'},
+  ['ctrl-4'] = {swap_window, '4'},
+  ['ctrl-5'] = {swap_window, '5'},
+  ['ctrl-6'] = {swap_window, '6'},
+  ['ctrl-7'] = {swap_window, '7'},
+  ['ctrl-8'] = {swap_window, '8'},
+  ['ctrl-9'] = {swap_window, '9'},
 
   -- Warping
-  ['alt-h'] = {warp_window, 'west'},
-  ['alt-j'] = {warp_window, 'south'},
-  ['alt-k'] = {warp_window, 'north'},
-  ['alt-l'] = {warp_window, 'east'},
+  ['alt-h'] = {warp_window, 'West'},
+  ['alt-j'] = {warp_window, 'South'},
+  ['alt-k'] = {warp_window, 'North'},
+  ['alt-l'] = {warp_window, 'East'},
 
-  ['alt-a'] = {warp_window, 0},
-  ['alt-b'] = {warp_window, 1},
-  ['alt-c'] = {warp_window, 2},
-  ['alt-d'] = {warp_window, 3},
-  ['alt-e'] = {warp_window, 4},
-  ['alt-f'] = {warp_window, 5},
-  ['alt-g'] = {warp_window, 6},
-  ['alt-m'] = {warp_window, 7},
-  ['alt-n'] = {warp_window, 8},
-  ['alt-o'] = {warp_window, 9},
-  ['alt-p'] = {warp_window, 10},
-  ['alt-q'] = {warp_window, 11},
-  ['alt-r'] = {warp_window, 12},
-  ['alt-t'] = {warp_window, 13},
-  ['alt-u'] = {warp_window, 14},
-  ['alt-w'] = {warp_window, 15},
-  ['alt-x'] = {warp_window, 16},
-  ['alt-y'] = {warp_window, 17},
-  ['alt-z'] = {warp_window, 18},
-  ['alt-0'] = {warp_window, 19},
-  ['alt-1'] = {warp_window, 20},
-  ['alt-2'] = {warp_window, 21},
-  ['alt-3'] = {warp_window, 22},
-  ['alt-4'] = {warp_window, 23},
-  ['alt-5'] = {warp_window, 24},
-  ['alt-6'] = {warp_window, 25},
-  ['alt-7'] = {warp_window, 26},
-  ['alt-8'] = {warp_window, 27},
-  ['alt-9'] = {warp_window, 28},
+  ['alt-a'] = {warp_window, 'a'},
+  ['alt-b'] = {warp_window, 'b'},
+  ['alt-c'] = {warp_window, 'c'},
+  ['alt-d'] = {warp_window, 'd'},
+  ['alt-e'] = {warp_window, 'e'},
+  ['alt-f'] = {warp_window, 'f'},
+  ['alt-g'] = {warp_window, 'g'},
+  ['alt-m'] = {warp_window, 'm'},
+  ['alt-n'] = {warp_window, 'n'},
+  ['alt-o'] = {warp_window, 'o'},
+  ['alt-p'] = {warp_window, 'p'},
+  ['alt-q'] = {warp_window, 'q'},
+  ['alt-r'] = {warp_window, 'r'},
+  ['alt-t'] = {warp_window, 't'},
+  ['alt-u'] = {warp_window, 'u'},
+  ['alt-w'] = {warp_window, 'w'},
+  ['alt-x'] = {warp_window, 'x'},
+  ['alt-y'] = {warp_window, 'y'},
+  ['alt-z'] = {warp_window, 'z'},
+  ['alt-0'] = {warp_window, '0'},
+  ['alt-1'] = {warp_window, '1'},
+  ['alt-2'] = {warp_window, '2'},
+  ['alt-3'] = {warp_window, '3'},
+  ['alt-4'] = {warp_window, '4'},
+  ['alt-5'] = {warp_window, '5'},
+  ['alt-6'] = {warp_window, '6'},
+  ['alt-7'] = {warp_window, '7'},
+  ['alt-8'] = {warp_window, '8'},
+  ['alt-9'] = {warp_window, '9'},
 
   [',']  = {rerun_last_command},
   ['=']  = {balance_space},
