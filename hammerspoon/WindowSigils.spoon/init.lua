@@ -1,6 +1,15 @@
 --- === WindowSigils ===
 ---
---- A new Sample Spoon
+--- Assign every window a sigil for quick access.
+---
+--- A letter or digit is rendered in the titlebar of every window, and actions can be bound
+--- inside a "sigil" mode with different modifiers.  For example, with no modifiers, the
+--- the sigil key can focus the window.  If the 'enter' action is bound to control-w, then
+--- 'control-w c' will focus the window with sigil 'c'.
+---
+--- By default, two keys (other than the sigils) are bound in the mode: escape leaves the
+--- mode without doing anything, and '.' sends the sigil key to the focused window.  This
+--- allows sending 'control-w' to the underlying window by typing 'control-w .'.
 ---
 --- Download: [https://github.com/Hammerspoon/Spoons/raw/master/Spoons/WindowSigils.spoon.zip](https://github.com/Hammerspoon/Spoons/raw/master/Spoons/WindowSigils.spoon.zip)
 
