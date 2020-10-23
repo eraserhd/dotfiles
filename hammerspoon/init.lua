@@ -2,6 +2,9 @@ require("hs.ipc")
 config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
 
 sigils = hs.loadSpoon("WindowSigils")
+sigils:bindHotkeys({
+  enter = {{"ctrl"}, "w"}
+})
 sigils:start()
 
 local function send_control_w()
@@ -57,7 +60,7 @@ local function activate_notification()
   hs.execute("notification --activate", true)
 end
 
-local function map_all_the_things(mode, keys)
+local function map_all_the_things(keys)
   for key, mapping in pairs(keys) do
     local action = mapping[1] or function() end
     local arg = mapping[2]
@@ -71,23 +74,21 @@ local function map_all_the_things(mode, keys)
       table.insert(mods, 'shift')
     end
     if mapping['delay_exiting_mode'] then
-      mode:bind(mods, key, function()
+      sigils.mode:bind(mods, key, function()
         action(arg)
-        mode:exit()
+        sigils.mode:exit()
       end)
     else
-      mode:bind(mods, key, function()
-        mode:exit()
+      sigils.mode:bind(mods, key, function()
+        sigils.mode:exit()
         action(arg)
       end)
     end
   end
-  return mode
 end
 
-ctrlw = map_all_the_things(hs.hotkey.modal.new('ctrl', 'w'), {
+ctrlw = map_all_the_things({
   escape = {},
-  f14    = {},
   ['.']  = {send_control_w, delay_exiting_mode = true},
   F      = {toggle_full_screen},
   I      = {ignore_notification},
