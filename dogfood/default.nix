@@ -47,7 +47,6 @@
           kak-plumb = super.callPackage "${super.fetchFromGitHub (import ./kak-plumb.nix)}/derivation.nix" {
             plan9port = pkgs.plan9port-wrapper;
           };
-          rep = rep;
         };
 
         parinfer-rust = super.parinfer-rust.overrideAttrs (oldAttrs: {
