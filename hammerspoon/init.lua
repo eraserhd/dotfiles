@@ -54,7 +54,10 @@ sigils:bindSigilAction({}, function(window)
 end)
 
 sigils:bindSigilAction({'ctrl'}, function(window)
-  hs.execute("yabai -m window --swap " .. window:id(), true)
+  local focused_frame = hs.window.focusedWindow():frame()
+  local selected_frame = window:frame()
+  hs.window.focusedWindow():setFrame(selected_frame, 0)
+  window:setFrame(focused_frame, 0)
 end)
 
 sigils:bindSigilAction({'alt'}, function(window)
