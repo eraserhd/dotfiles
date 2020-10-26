@@ -4,7 +4,7 @@
 #       for the current tmux window.
 #
 
-kak="@kakoune-with-plugins@/bin/kak"
+kak="@kakoune@/bin/kak"
 declare -a extraArgs=()
 
 canSpecifySession() {
