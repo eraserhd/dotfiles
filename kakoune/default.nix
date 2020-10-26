@@ -25,6 +25,7 @@ in {
       ];
 
       environment.systemPackages = with pkgs; [
+        pythonPackages.editorconfig
         kakouneWrapper
       ];
 

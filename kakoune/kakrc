@@ -5,6 +5,7 @@ set-option global autoreload yes
 set-option global grepcmd 'ag --column'
 
 hook global BufWritePre .* %{ nop %sh{ mkdir -p $(dirname "$kak_hook_param") }}
+hook global WinCreate ^[^*]+$ editorconfig-load
 
 alias global gn grep-next-match
 alias global gp grep-previous-match
