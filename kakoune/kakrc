@@ -10,6 +10,19 @@ hook global WinCreate ^[^*]+$ editorconfig-load
 alias global gn grep-next-match
 alias global gp grep-previous-match
 
+# Mappings
+# ‾‾‾‾‾‾‾‾
+
+map global normal <a-g> ': execute-keys %val{count}g<ret>'
+map global normal <a-v> ': execute-keys %val{count}v<ret>'
+map global normal <a-q> ': execute-keys %val{count}q<ret>'
+map global normal g     ': nop<ret>'
+map global normal v     ': nop<ret>'
+map global normal q     ': nop<ret>'
+
+map global normal w     ': execute-keys %val{count}<lt>a-w<gt><ret>'
+map global normal <a-w> ': execute-keys %val{count}w<ret>'
+
 # Appearance
 # ‾‾‾‾‾‾‾‾‾‾
 
