@@ -4,12 +4,12 @@
   config = {
     nixpkgs.overlays = [
       (self: super: let
-         rep-source = super.fetchFromGitHub (import ./rep.nix);
-         rep = self.callPackage "${rep-source}/derivation.nix" { fetchFromGitHub = _: rep-source; };
+        rep-source = super.fetchFromGitHub (import ./rep.nix);
+        rep = self.callPackage "${rep-source}/derivation.nix" { fetchFromGitHub = _: rep-source; };
 
-         gerbilPackages = {
-           clojerbil = self.callPackage "${super.fetchFromGitHub (import ./clojerbil.nix)}/derivation.nix" {};
-         };
+        gerbilPackages = {
+          clojerbil = self.callPackage "${super.fetchFromGitHub (import ./clojerbil.nix)}/derivation.nix" {};
+        };
       in {
         gerbil = super.gerbil.overrideAttrs (oldAttrs: {
           src = super.pkgs.fetchFromGitHub (import ./gerbil.nix);
@@ -47,13 +47,14 @@
           kak-plumb = super.callPackage "${super.fetchFromGitHub (import ./kak-plumb.nix)}/derivation.nix" {
             plan9port = pkgs.plan9port-wrapper;
           };
+          quickscope-kak = super.callPackage ../kakoune/quickscope-kak.nix {};
         };
 
         parinfer-rust = super.parinfer-rust.overrideAttrs (oldAttrs: {
           src = super.pkgs.fetchFromGitHub (import ./parinfer-rust.nix);
         });
 
-        rep = rep;
+        inherit rep;
 
         yabai = super.yabai.overrideAttrs (oldAttrs: {
           src = super.pkgs.fetchFromGitHub (import ./yabai.nix);

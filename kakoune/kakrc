@@ -33,6 +33,15 @@ map global normal E     ': execute-keys %val{count}<lt>a-E<gt><ret>'
 map global normal <a-e> ': execute-keys %val{count}e<ret>'
 map global normal <a-E> ': execute-keys %val{count}E<ret>'
 
+# quickscope.kak
+# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+require-module quickscope
+map global normal f     ': quickscope-f<ret>'
+map global normal <a-f> ': quickscope-a-f<ret>'
+map global normal t     ': quickscope-t<ret>'
+map global normal <a-t> ': quickscope-a-t<ret>'
+
 # Appearance
 # ‾‾‾‾‾‾‾‾‾‾
 

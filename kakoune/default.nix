@@ -17,6 +17,7 @@ in {
               kak-fzf
               my-kak-plumb
               parinfer-rust
+              quickscope-kak
               rep
             ];
           };
