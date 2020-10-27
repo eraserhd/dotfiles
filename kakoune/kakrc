@@ -21,7 +21,17 @@ map global normal v     ': nop<ret>'
 map global normal q     ': nop<ret>'
 
 map global normal w     ': execute-keys %val{count}<lt>a-w<gt><ret>'
+map global normal W     ': execute-keys %val{count}<lt>a-W<gt><ret>'
 map global normal <a-w> ': execute-keys %val{count}w<ret>'
+map global normal <a-W> ': execute-keys %val{count}W<ret>'
+map global normal b     ': execute-keys %val{count}<lt>a-b<gt><ret>'
+map global normal B     ': execute-keys %val{count}<lt>a-B<gt><ret>'
+map global normal <a-b> ': execute-keys %val{count}b<ret>'
+map global normal <a-B> ': execute-keys %val{count}B<ret>'
+map global normal e     ': execute-keys %val{count}<lt>a-e<gt><ret>'
+map global normal E     ': execute-keys %val{count}<lt>a-E<gt><ret>'
+map global normal <a-e> ': execute-keys %val{count}e<ret>'
+map global normal <a-E> ': execute-keys %val{count}E<ret>'
 
 # Appearance
 # ‾‾‾‾‾‾‾‾‾‾
