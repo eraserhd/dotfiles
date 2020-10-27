@@ -13,10 +13,8 @@ alias global gp grep-previous-match
 # Mappings
 # ‾‾‾‾‾‾‾‾
 
-map global normal <a-g> ': execute-keys %val{count}g<ret>'
 map global normal <a-v> ': execute-keys %val{count}v<ret>'
 map global normal <a-q> ': execute-keys %val{count}q<ret>'
-map global normal g     ': nop<ret>'
 map global normal v     ': nop<ret>'
 map global normal q     ': nop<ret>'
 
