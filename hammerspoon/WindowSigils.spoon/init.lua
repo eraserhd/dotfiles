@@ -33,11 +33,6 @@ obj.sigils = {
   "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
 }
 
---- WindowSigils.some_config_param
---- Variable
---- Some configuration parameter
-obj.some_config_param = true
-
 --- WindowSigils:bindHotkeys(mapping)
 --- Method
 --- Binds hotkeys for WindowSigils
