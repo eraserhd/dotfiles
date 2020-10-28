@@ -1,11 +1,6 @@
 require("hs.ipc")
 config_watcher = hs.pathwatcher.new(os.getenv("HOME") .. "/.hammerspoon/", hs.reload):start()
 
-sigils = hs.loadSpoon("WindowSigils")
-sigils:bindHotkeys({
-  enter = {{"control"}, "W"}
-})
-
 local function kitty(command)
   hs.execute("kitty @ --to unix:/Users/jfelice/.run/kitty " .. command, true)
 end
@@ -38,31 +33,44 @@ local function activate_notification()
   hs.execute("notification --activate", true)
 end
 
-sigils:bindModeKey({'shift'}, 'f', toggle_full_screen)
-sigils:bindModeKey({'shift'}, 'i', ignore_notification)
-sigils:bindModeKey({'shift'}, 'n', activate_notification)
-sigils:bindModeKey({}, 'v', paste_as_keystrokes)
-sigils:bindModeKey({}, ',', rerun_last_command)
-sigils:bindModeKey({}, '=', balance_space)
-sigils:bindModeKey({}, '/', toggle_split_direction)
-
-sigils:bindSigilAction({}, function(window)
+local function focus_window(window)
   window:focus()
   if hs.window.focusedWindow() ~= window then
     window:focus()
   end
-end)
+end
 
-sigils:bindSigilAction({'ctrl'}, function(window)
+local function swap_window(window)
   local focused_frame = hs.window.focusedWindow():frame()
   local selected_frame = window:frame()
   hs.window.focusedWindow():setFrame(selected_frame, 0)
   window:setFrame(focused_frame, 0)
-end)
+end
 
-sigils:bindSigilAction({'alt'}, function(window)
+local function warp_window(window)
   hs.execute("yabai -m window --warp " .. window:id(), true)
   balance_space()
-end)
+end
+
+sigils = hs.loadSpoon("WindowSigils")
+sigils:configure({
+  hotkeys = {
+    enter = {{"control"}, "W"}
+  },
+  mode_keys = {
+    [{{'shift'}, 'f'}] = toggle_full_screen,
+    [{{'shift'}, 'i'}] = ignore_notification,
+    [{{'shift'}, 'n'}] = activate_notification,
+    [{{}, 'v'}]        = paste_as_keystrokes,
+    [{{}, ','}]        = rerun_last_command,
+    [{{}, '='}]        = balance_space,
+    [{{}, '/'}]        = toggle_split_direction,
+  },
+  sigil_actions = {
+    [{}]       = focus_window,
+    [{'ctrl'}] = swap_window,
+    [{'alt'}]  = warp_window,
+  }
+})
 
 sigils:start()

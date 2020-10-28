@@ -55,6 +55,32 @@ function obj:bindHotkeys(mapping)
   end
 end
 
+--- WindowSigils:configure(configuration)
+--- Method
+--- Configures the spoon.
+---
+--- Parameters:
+---   * configuration - :
+---    * hotkeys -
+---    * mode_keys -
+---    * sigil_actions -
+function obj:configure(configuration)
+  if configuration['hotkeys'] then
+    self:bindHotkeys(configuration['hotkeys'])
+  end
+  if configuration['mode_keys'] then
+    for keyspec,fn in pairs(configuration['mode_keys']) do
+      local mods, key = table.unpack(keyspec)
+      self:bindModeKey(mods, key, fn)
+    end
+  end
+  if configuration['sigil_actions'] then
+    for mods,fn in pairs(configuration['sigil_actions']) do
+      self:bindSigilAction(mods, fn)
+    end
+  end
+end
+
 --- WindowSigils:bindModeKey(mods, key, action)
 --- Method
 --- Bind an extra action to be triggered by a key in the sigil mode.
