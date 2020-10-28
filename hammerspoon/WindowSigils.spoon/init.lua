@@ -29,8 +29,9 @@ obj.license = "MIT - https://opensource.org/licenses/MIT"
 obj.logger = hs.logger.new('WindowSigils')
 
 obj.sigils = {
-  "a", "b", "c", "d", "e", "f", "g", "m", "n", "o", "p", "q", "r", "t", "u",
-  "w", "x", "y", "z", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+  "a", "b", "c", "d", "e", "f", "g", "i", "m", "n", "o", "p", "q", "r", "s", "t", "u",
+  "v", "w", "x", "y", "z", ";", ",", ".", "/", "0", "1", "2", "3", "4", "5", "6", "7",
+  "8", "9",
 }
 
 --- WindowSigils:bindHotkeys(mapping)
@@ -63,6 +64,10 @@ end
 ---   * key - The key
 ---   * action - A function, called with no parameters.
 function obj:bindModeKey(mods, key, action)
+  local sigil_to_remove = hs.fnutils.indexOf(self.sigils, key)
+  if sigil_to_remove then
+    table.remove(self.sigils, sigil_to_remove)
+  end
   self.mode:bind(mods, key, function()
     self.mode:exit()
     action()
