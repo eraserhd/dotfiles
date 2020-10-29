@@ -10,9 +10,6 @@ in
   config = {
     nixpkgs.overlays = [
       (self: super: let
-        rep-source = super.fetchFromGitHub (import ./rep.nix);
-        rep = self.callPackage "${rep-source}/derivation.nix" { fetchFromGitHub = _: rep-source; };
-
         gerbilPackages = {
           clojerbil = self.callPackage "${super.fetchFromGitHub (import ./clojerbil.nix)}/derivation.nix" {};
         };
@@ -21,7 +18,7 @@ in
           src = super.pkgs.fetchFromGitHub (import ./gerbil.nix);
         });
 
-        add-missing = self.callPackage "${super.fetchFromGitHub (import ./add-missing.nix)}/derivation.nix" {};
+        add-missing = dogfoodFromGitHub super ./add-missing.nix {};
 
         # For new module system.  Remove when >4.9.3 is released
         gambit = super.callPackage ../nixpkgs/pkgs/development/compilers/gambit/build.nix rec {
@@ -51,7 +48,7 @@ in
             src = super.pkgs.fetchFromGitHub (import ./fzf.kak.nix);
           });
           kak-jira = dogfoodFromGitHub super ./kak-jira.nix {};
-          kak-plumb = super.callPackage "${super.fetchFromGitHub (import ./kak-plumb.nix)}/derivation.nix" {
+          kak-plumb = dogfoodFromGitHub super ./kak-plumb.nix {
             plan9port = pkgs.plan9port-wrapper;
           };
           quickscope-kak = super.callPackage ../kakoune/quickscope-kak.nix {};
@@ -61,7 +58,7 @@ in
           src = super.pkgs.fetchFromGitHub (import ./parinfer-rust.nix);
         });
 
-        inherit rep;
+        rep = dogfoodFromGitHub super ./rep.nix {};
 
         yabai = super.yabai.overrideAttrs (oldAttrs: {
           src = super.pkgs.fetchFromGitHub (import ./yabai.nix);
