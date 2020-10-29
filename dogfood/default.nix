@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let
-  dogfoodFromGitHub = super: file: overrides: let
+  dogfood = super: file: overrides: let
     source = super.fetchFromGitHub (import file);
   in
     super.callPackage "${source}/derivation.nix" ({ fetchFromGitHub = _: source; } // overrides);
@@ -14,7 +14,7 @@ in
           src = super.pkgs.fetchFromGitHub (import ./gerbil.nix);
         });
 
-        add-missing = dogfoodFromGitHub super ./add-missing.nix {};
+        add-missing = dogfood super ./add-missing.nix {};
 
         # For new module system.  Remove when >4.9.3 is released
         gambit = super.callPackage ../nixpkgs/pkgs/development/compilers/gambit/build.nix rec {
@@ -24,11 +24,11 @@ in
         };
 
         gerbilPackages = {
-          clojerbil = dogfoodFromGitHub super ./clojerbil.nix {};
+          clojerbil = dogfood super ./clojerbil.nix {};
         };
 
         gitAndTools = super.gitAndTools // {
-          gitout = dogfoodFromGitHub super ./gitout.nix { inherit gerbilPackages; };
+          gitout = dogfood super ./gitout.nix { inherit gerbilPackages; };
         };
 
         kakoune-unwrapped = super.kakoune-unwrapped.overrideAttrs (oldAttrs: {
@@ -37,12 +37,12 @@ in
         });
 
         kakounePlugins = super.kakounePlugins // {
-          kak-ansi = dogfoodFromGitHub super ./kak-ansi.nix {};
+          kak-ansi = dogfood super ./kak-ansi.nix {};
           kak-fzf = super.kakounePlugins.kak-fzf.overrideAttrs (oldAttrs: {
             src = super.pkgs.fetchFromGitHub (import ./fzf.kak.nix);
           });
-          kak-jira = dogfoodFromGitHub super ./kak-jira.nix {};
-          kak-plumb = dogfoodFromGitHub super ./kak-plumb.nix {
+          kak-jira = dogfood super ./kak-jira.nix {};
+          kak-plumb = dogfood super ./kak-plumb.nix {
             plan9port = pkgs.plan9port-wrapper;
           };
           quickscope-kak = super.callPackage ../kakoune/quickscope-kak.nix {};
@@ -52,7 +52,7 @@ in
           src = super.pkgs.fetchFromGitHub (import ./parinfer-rust.nix);
         });
 
-        rep = dogfoodFromGitHub super ./rep.nix {};
+        rep = dogfood super ./rep.nix {};
 
         yabai = super.yabai.overrideAttrs (oldAttrs: {
           src = super.pkgs.fetchFromGitHub (import ./yabai.nix);
