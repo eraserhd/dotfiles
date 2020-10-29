@@ -9,11 +9,7 @@ in
 {
   config = {
     nixpkgs.overlays = [
-      (self: super: let
-        gerbilPackages = {
-          clojerbil = self.callPackage "${super.fetchFromGitHub (import ./clojerbil.nix)}/derivation.nix" {};
-        };
-      in {
+      (self: super: rec {
         gerbil = super.gerbil.overrideAttrs (oldAttrs: {
           src = super.pkgs.fetchFromGitHub (import ./gerbil.nix);
         });
@@ -27,12 +23,12 @@ in
           src = super.pkgs.fetchFromGitHub (import ./gambit.nix);
         };
 
-        inherit gerbilPackages;
+        gerbilPackages = {
+          clojerbil = dogfoodFromGitHub super ./clojerbil.nix {};
+        };
 
         gitAndTools = super.gitAndTools // {
-          gitout = super.callPackage "${super.fetchFromGitHub (import ./gitout.nix)}/derivation.nix" {
-            inherit gerbilPackages;
-          };
+          gitout = dogfoodFromGitHub super ./gitout.nix { inherit gerbilPackages; };
         };
 
         kakoune-unwrapped = super.kakoune-unwrapped.overrideAttrs (oldAttrs: {
