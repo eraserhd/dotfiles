@@ -15,6 +15,7 @@ in {
               case-kak
               kak-ansi
               kak-fzf
+              kak-jira
               my-kak-plumb
               parinfer-rust
               quickscope-kak

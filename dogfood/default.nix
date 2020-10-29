@@ -1,5 +1,11 @@
 { pkgs, ... }:
 
+let
+  dogfoodFromGitHub = super: file: overrides: let
+    source = super.fetchFromGitHub (import file);
+  in
+    super.callPackage "${source}/derivation.nix" ({ fetchFromGitHub = _: source; } // overrides);
+in
 {
   config = {
     nixpkgs.overlays = [
@@ -44,6 +50,7 @@
           kak-fzf = super.kakounePlugins.kak-fzf.overrideAttrs (oldAttrs: {
             src = super.pkgs.fetchFromGitHub (import ./fzf.kak.nix);
           });
+          kak-jira = dogfoodFromGitHub super ./kak-jira.nix {};
           kak-plumb = super.callPackage "${super.fetchFromGitHub (import ./kak-plumb.nix)}/derivation.nix" {
             plan9port = pkgs.plan9port-wrapper;
           };
