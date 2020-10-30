@@ -62,8 +62,9 @@ end
 --- Parameters:
 ---   * configuration - :
 ---    * hotkeys -
----    * mode_keys -
----    * sigil_actions -
+---    * mode_keys - a table of key specs (e.g. {{'shift'}, 'n'}) to functions.  The keys are
+---      mapped inside the sigil mode and the key is no longer used as a window sigil.
+---    * sigil_actions - a table of mod specs (e.g. {'alt'}) to functions.  When the modifiers
 function obj:configure(configuration)
   if configuration['hotkeys'] then
     self:bindHotkeys(configuration['hotkeys'])
