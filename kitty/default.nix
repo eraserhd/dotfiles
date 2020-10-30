@@ -34,6 +34,8 @@ in {
       '';
       home.file.".config/kitty/kitty.conf".text = ''
         font_family        JuliaMono Regular
+        bold_font          JuliaMono Bold
+        italic_font        JuliaMono Light
         font_size          11
         adjust_line_height 93%
 
