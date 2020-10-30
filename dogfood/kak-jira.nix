@@ -1,7 +1,7 @@
 {
   owner = "eraserhd";
   repo = "kak-jira";
-  rev = "f3f02cd516cdc966835c821adb1e0a47d2963694";
-  sha256 = "0384igy8i70m309mc6x3v797mfvdbyknynxamlhl8fvsmy88wb4f";
+  rev = "185b3db5cf31710fe77724b89148cf354f5718c1";
+  sha256 = "136m1rpl412fbpvxarrrg08w2yzv81i7s9snqp7lnsj7nifnf2z1";
   fetchSubmodules = true;
 }
