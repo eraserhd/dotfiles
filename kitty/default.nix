@@ -33,11 +33,11 @@ in {
         --listen-on=unix:/Users/jfelice/.run/kitty --single-instance --directory=${homeDirectory}/src
       '';
       home.file.".config/kitty/kitty.conf".text = ''
-        font_family        JuliaMono Regular
-        bold_font          JuliaMono Bold
-        italic_font        JuliaMono Light
+        font_family        mononoki Regular
+        bold_font          mononoki Bold
+        italic_font        mononoki Italic
         font_size          11
-        adjust_line_height 93%
+        # adjust_line_height 93%
 
         # symbol_map U+E0A0-U+E0A3,U+E0C0-U+E0C7 PowerlineSymbols
         # box_drawing_scale 0.001, 1, 1.5, 2
