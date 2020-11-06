@@ -55,5 +55,8 @@ with lib;
     } else {
       environment.variables.PATH = [ (toString ./bin) ];
     })
+    {
+      environment.systemPackages = [ (pkgs.callPackage ./2u {}) ];
+    }
   ];
 }
