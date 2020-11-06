@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../../2u
+    ../../2u/modules
     ../../common.nix
     ../../home-manager/nix-darwin
     ../../modules/nix-darwin
