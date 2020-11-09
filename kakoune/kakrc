@@ -233,7 +233,7 @@ map global user c ': enter-user-mode case<ret>'
 
 define-command -override f %sh{
     printf 'require-module fzf\n'
-    if [ "$uname" = "Darwin"; then
+    if [ "$uname" = "Darwin" ]; then
         dir="$(pwd)"
         file_command="mdfind -onlyin "${dir}/" / |sed -e 's,^'"${dir}"'/,,'"
     else
