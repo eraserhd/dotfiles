@@ -33,6 +33,7 @@ with lib;
     ./networking/update-dns
     ./networking/wifi
     ./npm
+    ./postgres
     ./rlwrap
     ./scheme
     ./shell
