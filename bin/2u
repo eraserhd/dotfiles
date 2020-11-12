@@ -52,6 +52,7 @@ cmd_vpn_connect() {
     (
         oneLoginUser
         oneLoginPassword
+        sleep 120
         oneLoginOTP
         printf y\\n
     ) | "$ANYCONNECT_PREFIX/bin/vpn" -s connect "2U Corp Network"
