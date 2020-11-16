@@ -17,6 +17,7 @@ in {
               kak-fzf
               kak-jira
               my-kak-plumb
+              openscad-kak
               parinfer-rust
               quickscope-kak
               rep
