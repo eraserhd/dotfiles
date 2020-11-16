@@ -39,6 +39,10 @@ map global normal f     ': quickscope-f<ret>'
 map global normal <a-f> ': quickscope-a-f<ret>'
 map global normal t     ': quickscope-t<ret>'
 map global normal <a-t> ': quickscope-a-t<ret>'
+map global normal F     ': quickscope-F<ret>'
+map global normal <a-F> ': quickscope-a-F<ret>'
+map global normal T     ': quickscope-T<ret>'
+map global normal <a-T> ': quickscope-a-T<ret>'
 
 # Appearance
 # ‾‾‾‾‾‾‾‾‾‾
