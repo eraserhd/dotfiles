@@ -8,8 +8,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "onealexharms";
       repo = "openscad-cli";
-      rev = "d4a02e92dea6a0f08b7a67313b13b043d0a9f4ec";
-      sha256 = "1l0drqpjy2p0g6i9mcrqbcap64wnq1yymrwic1m7i6cgfnrdcyn2";
+      rev = "41de5cc63baa9f48b9755456a326d6c2ecf0f090";
+      sha256 = "13lphyh54vqv4l9kv1l47cd5aimdxkjzk01gpyk1kfp6259gkbdy";
     };
 
     installPhase = ''
