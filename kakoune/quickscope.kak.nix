@@ -2,12 +2,12 @@
 
 stdenv.mkDerivation rec {
   pname = "quickscope-kak";
-  version = "9bc5d55a541373aa2a";
+  version = "unstable-2020-11-16";
 
   src = fetchgit {
-    url = "https://git.sr.ht/~voroskoi/quickscope.kak";
-    rev = "30e7b51d32e1683d79312060614af8ce18eb8e08";
-    sha256 = "1k92g1aqj9lh1vdljadkcdjzbq3vxzxiqb80lny99bb5h55v6ghm";
+    url = "https://git.sr.ht/~eraserhd/quickscope.kak";
+    rev = "28898f971d7534123305425bb1133d6560485f70";
+    sha256 = "0y1g3zpa2ql8l9rl5i2w84bka8a09kig9nq9zdchaff5pw660mcx";
   };
 
   buildInputs = [ lua5_3 ];
