@@ -60,41 +60,45 @@ readLineOrPartialLine() {
     return 0
 }
 
+makeTemporaryDirectory() {
+    local dir="$(mktemp)"
+    rm -f "$dir"
+    mkdir -p "$dir"
+    printf %s\\n "$dir"
+}
+
+# We unfortunately need to make an interactive sub-process for answering the
+# prompts, since the hostscan can sometimes take a few minutes, invalidating
+# our OTP.
+#
+# Further, the VPN client writes "secure" prompts directly to /dev/tty, so
+# we need to find cues other than "Password:" and "Answer:"
+vpnResponder() {
+    local line
+    while readLineOrPartialLine <&3; do
+        printf %s "$line"
+        case "$line" in
+            *Username:*)
+                oneLoginUser >&4
+                oneLoginPassword >&4
+                ;;
+            *"Enter your one-time password"*)
+                oneLoginOTP >&4
+                ;;
+            *accept"?"*)
+                printf y\\n >&4
+                ;;
+        esac
+    done
+}
+
 cmd_vpn_connect() {
     unlock1p
-    local fifoDir="$(mktemp)"
-    rm -f "$fifoDir"
-    mkdir -p "$fifoDir"
+    local fifoDir="$(makeTemporaryDirectory)"
     mkfifo "${fifoDir}/vpn-in"
     mkfifo "${fifoDir}/vpn-out"
-
-    # We unfortunately need to make an interactive sub-process for answering the
-    # prompts, since the hostscan can sometimes take a few minutes, invalidating
-    # our OTP.
-    #
-    # Further, the VPN client writes "secure" prompts directly to /dev/tty, so
-    # we need to find cues other than "Password:" and "Answer:"
-    (
-        local line
-        while readLineOrPartialLine <&3; do
-            printf %s "$line"
-            case "$line" in
-                *Username:*)
-                    oneLoginUser >&4
-                    oneLoginPassword >&4
-                    ;;
-                *"Enter your one-time password"*)
-                    oneLoginOTP >&4
-                    ;;
-                *accept"?"*)
-                    printf y\\n >&4
-                    ;;
-            esac
-        done
-    ) 3<"${fifoDir}/vpn-out" 4>"${fifoDir}/vpn-in" &
-
+    vpnResponder 3<"${fifoDir}/vpn-out" 4>"${fifoDir}/vpn-in" &
     "$ANYCONNECT_PREFIX/bin/vpn" -s connect "2U Corp Network" >"${fifoDir}/vpn-out" 2>&1 <"${fifoDir}/vpn-in"
-
     rm -rf "$fifoDir"
 }
 
