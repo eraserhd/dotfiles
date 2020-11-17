@@ -55,8 +55,7 @@ readLineOrPartialLine() {
         return $ec
     fi
     if (( ec == 0 )); then
-        line="${line}
-"
+        line="$line"$'\n'
     fi
     return 0
 }
