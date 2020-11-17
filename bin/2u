@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 set -e
 
@@ -47,15 +47,56 @@ cmd_vpn_usage() {
     exit 1
 }
 
+readLineOrPartialLine() {
+    local ec=0
+    line=''
+    read -t 1 line || ec=$?
+    if (( ec != 0 && ec < 128 )); then
+        return $ec
+    fi
+    if (( ec == 0 )); then
+        line="${line}
+"
+    fi
+    return 0
+}
+
 cmd_vpn_connect() {
     unlock1p
+    local fifoDir="$(mktemp)"
+    rm -f "$fifoDir"
+    mkdir -p "$fifoDir"
+    mkfifo "${fifoDir}/vpn-in"
+    mkfifo "${fifoDir}/vpn-out"
+
+    # We unfortunately need to make an interactive sub-process for answering the
+    # prompts, since the hostscan can sometimes take a few minutes, invalidating
+    # our OTP.
+    #
+    # Further, the VPN client writes "secure" prompts directly to /dev/tty, so
+    # we need to find cues other than "Password:" and "Answer:"
     (
-        oneLoginUser
-        oneLoginPassword
-        sleep 120
-        oneLoginOTP
-        printf y\\n
-    ) | "$ANYCONNECT_PREFIX/bin/vpn" -s connect "2U Corp Network"
+        local line
+        while readLineOrPartialLine <&3; do
+            printf %s "$line"
+            case "$line" in
+                *Username:*)
+                    oneLoginUser >&4
+                    oneLoginPassword >&4
+                    ;;
+                *"Enter your one-time password"*)
+                    oneLoginOTP >&4
+                    ;;
+                *accept"?"*)
+                    printf y\\n >&4
+                    ;;
+            esac
+        done
+    ) 3<"${fifoDir}/vpn-out" 4>"${fifoDir}/vpn-in" &
+
+    "$ANYCONNECT_PREFIX/bin/vpn" -s connect "2U Corp Network" >"${fifoDir}/vpn-out" 2>&1 <"${fifoDir}/vpn-in"
+
+    rm -rf "$fifoDir"
 }
 
 cmd_vpn_disconnect() {
