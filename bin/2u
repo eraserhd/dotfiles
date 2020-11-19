@@ -48,13 +48,13 @@ cmd_vpn_usage() {
 }
 
 readLineOrPartialLine() {
-    local ec=0
+    local exitCode=0
     line=''
-    read -t 1 line || ec=$?
-    if (( ec != 0 && ec < 128 )); then
-        return $ec
+    read -t 1 line || exitCode=$?
+    if (( exitCode != 0 && exitCode < 128 )); then
+        return $exitCode
     fi
-    if (( ec == 0 )); then
+    if (( exitCode == 0 )); then
         line="$line"$'\n'
     fi
     return 0
@@ -95,11 +95,12 @@ vpnResponder() {
 cmd_vpn_connect() {
     unlock1p
     local fifoDir="$(makeTemporaryDirectory)"
-    mkfifo "${fifoDir}/vpn-in"
-    mkfifo "${fifoDir}/vpn-out"
+    mkfifo "${fifoDir}/vpn-in" "${fifoDir}/vpn-out"
     vpnResponder 3<"${fifoDir}/vpn-out" 4>"${fifoDir}/vpn-in" &
-    "$ANYCONNECT_PREFIX/bin/vpn" -s connect "2U Corp Network" >"${fifoDir}/vpn-out" 2>&1 <"${fifoDir}/vpn-in"
+    local exitCode=0
+    "$ANYCONNECT_PREFIX/bin/vpn" -s connect "2U Corp Network" >"${fifoDir}/vpn-out" 2>&1 <"${fifoDir}/vpn-in" || exitCode=$?
     rm -rf "$fifoDir"
+    return $exitCode
 }
 
 cmd_vpn_disconnect() {
