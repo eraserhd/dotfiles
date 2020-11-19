@@ -3,7 +3,6 @@
 set -e
 
 readonly ANYCONNECT_PREFIX=/opt/cisco/anyconnect
-readonly ONELOGIN_ITEM_ID=ok36jmwmuzf6pjjxmzzr64lxby
 
 #-----------------------------------------------------------------------------
 #                            ** 1Passowrd Helpers **
@@ -13,12 +12,18 @@ unlock1p() {
     if [ -e ~/.1password ]; then
         source ~/.1password
     fi
-    if ! op get item "$ONELOGIN_ITEM_ID" >/dev/null 2>&1; then
+    if ! op list items --tags 2u/onelogin >/dev/null 2>&1; then
         if ! op signin >~/.1password; then
             printf '2u: unlock failed.\n' >&2
             exit 1
         fi
         source ~/.1password
+    fi
+    local items=""
+    items="$(op list items --tags 2u/onelogin)"
+    if [[ $items = "[]" ]]; then
+        printf '2u: no 1Password item is tagged with "2u/onelogin".\n' >&2
+        exit 1
     fi
 }
 
@@ -27,15 +32,15 @@ unlock1p() {
 #-----------------------------------------------------------------------------
 
 oneLoginUser() {
-    op get item "$ONELOGIN_ITEM_ID" |jq -r '.details.fields[] | select(.designation == "username") | .value'
+    op list items --tags 2u/onelogin | op get item --fields username -
 }
 
 oneLoginPassword() {
-    op get item "$ONELOGIN_ITEM_ID" |jq -r '.details.fields[] | select(.designation == "password") | .value'
+    op list items --tags 2u/onelogin | op get item --fields password -
 }
 
 oneLoginOTP() {
-    op get totp "$ONELOGIN_ITEM_ID"
+    op list items --tags 2u/onelogin | op get totp -
 }
 
 #-----------------------------------------------------------------------------
