@@ -75,6 +75,8 @@ in {
 
       source_if_exists ~/.nix-profile/etc/profile.d/nix.sh
       source ${toString ../bin/private.sh}
+
+      eval "$(2u shell initialize --zsh)"
     '';
 
     environment.variables = {
