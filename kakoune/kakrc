@@ -276,15 +276,13 @@ hook -group autowrap global WinSetOption filetype=(asciidoc|markdown) %{
 
 # Clojure
 # ‾‾‾‾‾‾‾
-hook global WinSetOption filetype=(clojure|scheme|racket|lisp) %{
-    parinfer-enable-window -smart
+
+hook -once global ModuleLoaded clojure %{
+    set-option global clojure_source_directories '(?:[^/.][^/]*)(?:/src|/test|/dev)'
 }
 
-define-command -hidden -override lint-show-counters %{}
-
-hook global WinSetOption filetype=clojure %{
-    require-module clojure
-    set-option window clojure_source_directories '(?:[^/.][^/]*)(?:/src|/test|/dev)'
+hook global WinSetOption filetype=(clojure|scheme|racket|lisp) %{
+    parinfer-enable-window -smart
 }
 
 declare-option -hidden str clojure_buffer_contents
