@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
 
-gtypist -b ~/src/dotfiles/gtypist/gtypist.typ
+readonly TESTS=( $(sed -n 's/^\*://p' <~/src/dotfiles/gtypist/gtypist.typ) )
+
+test=$(( RANDOM % ${#TESTS[@]} ))
+testLabel=${TESTS[$test]}
+gtypist -i -b -l $testLabel ~/src/dotfiles/gtypist/gtypist.typ
