@@ -7,3 +7,5 @@ X:
 *:COMMON
 D:#_ 2&>1< %$1
 X:
+*:FINGERS
+D:of Vi
