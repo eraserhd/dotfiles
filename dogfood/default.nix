@@ -45,7 +45,6 @@ in
           kak-plumb = dogfood super ./kak-plumb.nix {
             plan9port = pkgs.plan9port-wrapper;
           };
-          quickscope-kak = super.callPackage ../kakoune/quickscope.kak.nix {};
         };
 
         parinfer-rust = super.parinfer-rust.overrideAttrs (oldAttrs: {
