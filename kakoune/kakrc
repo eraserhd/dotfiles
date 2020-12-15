@@ -178,7 +178,7 @@ hook -group snarf global RegisterModified '"' copy-dquote-to-snarf
 
 define-command -params 0 expand-tabs %{
     hook -group expand-tabs window InsertChar \t %{ try %{
-        execute-keys -draft "h<a-h><a-k>\A\h+\z<ret><a-;>;%opt{indentwidth}@"
+        execute-keys -draft "h%opt{indentwidth}@"
     } }
     hook -group expand-tabs window InsertDelete ' ' %{ try %{
         execute-keys -draft "h<a-h><a-k>\A\h+\z<ret>i<space><esc><lt>"
