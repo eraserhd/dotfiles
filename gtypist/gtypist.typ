@@ -9,3 +9,5 @@ D:#_ 2&>1< %$1
 X:
 *:FINGERS
 D:of Vi
+*:P
+D:ekphore sompne pronpl pipkin ashpan Rajput upjet poppy helpmate
