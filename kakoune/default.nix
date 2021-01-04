@@ -19,7 +19,7 @@ in {
               my-kak-plumb
               openscad-kak
               parinfer-rust
-              #quickscope-kak
+              quickscope-kak
               rep
             ];
           };
