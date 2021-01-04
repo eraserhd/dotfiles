@@ -1,11 +1,8 @@
-{ config, pkgs, ... }:
+{ config, darwin, nixpkgs, pkgs, ... }:
 
 {
   imports = [
-    ../../2u/modules
     ../../common.nix
-    ../../home-manager/nix-darwin
-    ../../modules/nix-darwin
   ];
 
   # Use a custom configuration.nix location.
@@ -13,8 +10,7 @@
   environment.darwinConfig = "$HOME/src/dotfiles/machines/macbook/default.nix";
 
   nix.nixPath = [ {
-    nixpkgs = "$HOME/src/dotfiles/nixpkgs";
-    darwin = "$HOME/src/dotfiles/nix-darwin";
+    #inherit darwin nixpkgs;
     darwin-config = "$HOME/src/dotfiles/machines/macbook/default.nix";
   } ];
 
@@ -59,9 +55,9 @@
     shell = pkgs.zsh;
   };
 
-  services."2u".vault.enable = true;
-  services."2u".kubernetes-clients.enable = true;
-  services."2u".kubernetes-clients.namespaces = [ "implementation" ];
+  #services."2u".vault.enable = true;
+  #services."2u".kubernetes-clients.enable = true;
+  #services."2u".kubernetes-clients.namespaces = [ "implementation" ];
 
   local.plan9.terminal.enable = true;
 

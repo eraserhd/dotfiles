@@ -1,0 +1,92 @@
+{
+  "nodes": {
+    "darwin": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1608628442,
+        "narHash": "sha256-MNpNlZ2TqaQNiYuP8UcudfQoZAT/ocwFwFxhANSRt1c=",
+        "owner": "lnl7",
+        "repo": "nix-darwin",
+        "rev": "8834df431736c3037bbef017b24c62bc4ace4645",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lnl7",
+        "ref": "master",
+        "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1609665715,
+        "narHash": "sha256-O5Cy3BgKBoZFM2ZdjndYeQNxESI2ZcMdke60wZ6uPgk=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "b9597e57747f227317affdfa2f97fee8e167c33f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1609782775,
+        "narHash": "sha256-FJHzhdVJnZy3NX5FL8llBfoWL8b/2gRKfeDD+8NBKy8=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "5a92a9ce32819700a4ebf91ddc741a96be8e4a94",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "darwin": "darwin",
+        "home-manager": "home-manager",
+        "nixpkgs": "nixpkgs",
+        "twou": "twou"
+      }
+    },
+    "twou": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1609782865,
+        "narHash": "sha256-T8Y10YXAmDEGIF0jUBes90fWKnFEBdeoXNClz55z6oA=",
+        "ref": "develop",
+        "rev": "7997723b1207beb2f08dc2c5852bc3ed3d032f39",
+        "revCount": 56,
+        "type": "git",
+        "url": "ssh://git@github.com/2uinc/nix-2u"
+      },
+      "original": {
+        "ref": "develop",
+        "type": "git",
+        "url": "ssh://git@github.com/2uinc/nix-2u"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

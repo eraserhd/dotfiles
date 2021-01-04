@@ -16,13 +16,6 @@ in
 
         add-missing = dogfood super ./add-missing.nix {};
 
-        # For new module system.  Remove when >4.9.3 is released
-        gambit = super.callPackage ../nixpkgs/pkgs/development/compilers/gambit/build.nix rec {
-          version = (import ./gambit.nix).rev;
-          git-version = version;
-          src = super.pkgs.fetchFromGitHub (import ./gambit.nix);
-        };
-
         gerbilPackages = {
           clojerbil = dogfood super ./clojerbil.nix {};
         };

@@ -1,4 +1,4 @@
-{ pkgs, lib, options, ... }:
+{ pkgs, lib, options, twou, ... }:
 
 with lib;
 {
@@ -58,7 +58,7 @@ with lib;
       environment.variables.PATH = [ (toString ./bin) ];
     })
     {
-      environment.systemPackages = [ (pkgs.callPackage ./2u {}) ];
+      #environment.systemPackages = [ twou ];
     }
   ];
 }
