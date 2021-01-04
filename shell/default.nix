@@ -77,6 +77,7 @@ in {
       source ${toString ../bin/private.sh}
 
       eval "$(2u shell initialize --zsh)"
+      eval "$(broot --print-shell-function zsh)"
     '';
 
     environment.variables = {
@@ -87,6 +88,7 @@ in {
       add-missing
       ag
       bat
+      broot
       direnv
       fzf
       jq
