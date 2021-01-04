@@ -5,7 +5,6 @@ with lib;
   imports = [
     ./1password
     ./3d
-    ./alfred
     ./anki
     ./aws
     ./browser
