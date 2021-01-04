@@ -1,4 +1,4 @@
-{ pkgs, lib, options, twou, ... }:
+{ pkgs, lib, options, inputs, ... }:
 
 with lib;
 {
@@ -57,7 +57,7 @@ with lib;
       environment.variables.PATH = [ (toString ./bin) ];
     })
     {
-      #environment.systemPackages = [ twou ];
+      environment.systemPackages = [ inputs.twou.packages.x86_64-darwin.devEnvironment ];
     }
   ];
 }
