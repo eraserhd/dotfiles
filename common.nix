@@ -32,6 +32,7 @@ with lib;
     ./networking/tls
     ./networking/update-dns
     ./networking/wifi
+    ./nix
     ./npm
     ./postgres
     ./rlwrap
