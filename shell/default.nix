@@ -27,16 +27,16 @@ in {
         local readlink_bin="${pkgs.coreutils}/bin/readlink"
         if command -v darwin-rebuild >/dev/null; then
           pushd ~/src/dotfiles >/dev/null
-          TERM=xterm darwin-rebuild build || return $?
+          TERM=xterm darwin-rebuild build --flake $HOME/src/dotfiles || return $?
           if [ "$($readlink_bin -f /run/current-system)" != "$($readlink_bin -f ./result)" ]; then
-            TERM=xterm VERBOSE=1 darwin-rebuild switch || return $?
+            TERM=xterm VERBOSE=1 darwin-rebuild switch --flake $HOME/src/dotfiles || return $?
           fi
           popd >/dev/null
         elif command -v nixos-rebuild >/dev/null; then
           pushd ~/src/dotfiles >/dev/null
-          nixos-rebuild build || return $?
+          nixos-rebuild build --flake $HOME/src/dotfiles || return $?
           if [ "$($readlink_bin -f /run/current-system)" != "$($readlink_bin -f ./result)" ]; then
-            sudo nixos-rebuild switch || return $?
+            sudo nixos-rebuild switch --flake $HOME/src/dotfiles || return $?
           fi
           popd >/dev/null
         fi

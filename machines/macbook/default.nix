@@ -1,4 +1,4 @@
-{ config, darwin, nixpkgs, pkgs, ... }:
+{ config, inputs, pkgs, ... }:
 
 {
   imports = [
@@ -10,7 +10,7 @@
   environment.darwinConfig = "$HOME/src/dotfiles/machines/macbook/default.nix";
 
   nix.nixPath = [ {
-    #inherit darwin nixpkgs;
+    inherit (inputs) nixpkgs darwin;
     darwin-config = "$HOME/src/dotfiles/machines/macbook/default.nix";
   } ];
 
