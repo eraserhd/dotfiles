@@ -41,7 +41,7 @@
           home-manager.useUserPackages = true;
         }
         {
-          environment.systemPackages = [ twou.packages.x86_64-darwin.devEnvironment ];
+          environment.systemPackages = [ twou.packages.x86_64-linux.devEnvironment ];
         }
       ];
     };
