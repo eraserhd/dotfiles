@@ -29,5 +29,21 @@
         }
       ];
     };
+
+    nixosConfigurations.crunch = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        ./machines/crunch
+        ./modules/nixos
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+        }
+        {
+          environment.systemPackages = [ twou.packages.x86_64-darwin.devEnvironment ];
+        }
+      ];
+    };
   };
 }

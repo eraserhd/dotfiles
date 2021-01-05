@@ -1,16 +1,28 @@
-# Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      ../../common.nix
-      ../../home-manager/nixos
-      ../../modules/nixos
-      /etc/nixos/hardware-configuration.nix
+  imports = [ ../../common.nix ];
+
+  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
+  boot.kernelModules = [ "kvm-amd" ];
+  boot.extraModulePackages = [ ];
+
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/5fcc6180-13bf-4dc9-a8a0-fabf45c50a03";
+      fsType = "ext4";
+    };
+
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/A464-04ED";
+      fsType = "vfat";
+    };
+
+  swapDevices =
+    [ { device = "/dev/disk/by-uuid/54fc28ec-2594-49a5-9de7-fbb6bab34070"; }
     ];
+
+  nix.maxJobs = 1;
+  nix.buildCores = 20;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
