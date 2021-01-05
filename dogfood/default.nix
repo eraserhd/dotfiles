@@ -31,9 +31,6 @@ in
 
         kakounePlugins = super.kakounePlugins // {
           kak-ansi = dogfood super ./kak-ansi.nix {};
-          kak-fzf = super.kakounePlugins.kak-fzf.overrideAttrs (oldAttrs: {
-            src = super.pkgs.fetchFromGitHub (import ./fzf.kak.nix);
-          });
           kak-jira = dogfood super ./kak-jira.nix {};
           kak-plumb = dogfood super ./kak-plumb.nix {
             plan9port = pkgs.plan9port-wrapper;

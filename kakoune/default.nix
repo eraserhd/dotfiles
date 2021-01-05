@@ -14,7 +14,6 @@ in {
             plugins = with pkgs.kakounePlugins; [
               case-kak
               kak-ansi
-              kak-fzf
               kak-jira
               my-kak-plumb
               openscad-kak
