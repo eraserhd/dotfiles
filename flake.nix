@@ -21,10 +21,13 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
         }
+        {
+          nix.nixPath = {
+            inherit nixpkgs darwin;
+          };
+          environment.systemPackages = [ twou.packages.x86_64-darwin.devEnvironment ];
+        }
       ];
-      inputs = {
-        inherit nixpkgs darwin home-manager twou;
-      };
     };
   };
 }

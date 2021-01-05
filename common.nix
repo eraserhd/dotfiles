@@ -56,8 +56,5 @@ with lib;
     } else {
       environment.variables.PATH = [ (toString ./bin) ];
     })
-    {
-      environment.systemPackages = [ inputs.twou.packages.x86_64-darwin.devEnvironment ];
-    }
   ];
 }
