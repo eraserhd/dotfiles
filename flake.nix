@@ -25,6 +25,8 @@
           nix.nixPath = {
             inherit nixpkgs darwin;
           };
+        }
+        {
           environment.systemPackages = [ twou.packages.x86_64-darwin.devEnvironment ];
         }
       ];
