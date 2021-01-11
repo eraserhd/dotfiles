@@ -9,5 +9,10 @@ D:#_ 2&>1< %$1
 X:
 *:FINGERS
 D:of Vi
+X:
 *:P
 D:ekphore sompne pronpl pipkin ashpan Rajput upjet poppy helpmate
+X:
+*:P2
+D:bumpkin sheepkeeper limpkin capkin hopkins pumpkin
+X:
