@@ -10,7 +10,8 @@
       home.file.".taskrc".text = ''
         data.location=~/src/data/tasks
         reserved.lines=2
-        confirmation=no
+        confirmation=off
+        recurrence.confirmation=off
 
         uda.reviewed.type=date
         uda.reviewed.label=Reviewed
