@@ -250,7 +250,7 @@ function obj:refresh()
       table.insert(new_elements, {
         type = "text",
         text = self.sigils[i],
-        textFont = "mononoki Regular",
+        textFont = "Menlo Regular",
         textSize = 18,
         textLineBreak = 'trancateTail',
         frame = make_frame{x = wframe.x + 73, y = wframe.y - 3, w = 17, h = 19 + 7},
