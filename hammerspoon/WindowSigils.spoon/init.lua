@@ -252,7 +252,7 @@ function obj:refresh()
         text = self.sigils[i],
         textFont = "Menlo Regular",
         textSize = 18,
-        textLineBreak = 'trancateTail',
+        textLineBreak = 'truncateTail',
         frame = make_frame{x = wframe.x + 73, y = wframe.y - 3, w = 17, h = 19 + 7},
       })
     end

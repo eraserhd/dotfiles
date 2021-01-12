@@ -68,4 +68,6 @@ sigils:configure({
 sigils:start()
 
 bubbles = hs.loadSpoon("Bubbles")
+bubbles:configure({
+})
 bubbles:start()
