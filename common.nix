@@ -46,7 +46,6 @@ with lib;
     ./vnc
     ./weechat
     ./x
-    ./yabai
     ./zsh
   ];
 

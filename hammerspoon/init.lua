@@ -17,14 +17,6 @@ local function rerun_last_command()
   kitty("send-text --match=title:kak_repl_window '\x10\x0d'")
 end
 
-local function balance_space()
-  hs.execute("yabai -m space --balance", true)
-end
-
-local function toggle_split_direction()
-  hs.execute("yabai -m window --toggle split", true)
-end
-
 local function ignore_notification()
   hs.execute("notification --close", true)
 end
@@ -48,7 +40,7 @@ local function swap_window(window)
 end
 
 local function warp_window(window)
-  hs.execute("yabai -m window --warp " .. window:id(), true)
+  -- hs.execute("yabai -m window --warp " .. window:id(), true)
   balance_space()
 end
 
