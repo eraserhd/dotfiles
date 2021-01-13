@@ -6,12 +6,36 @@
 --- inside a "sigil" mode with different modifiers.  For example, with no modifiers, the
 --- the sigil key can focus the window.  If the 'enter' action is bound to control-w, then
 --- 'control-w c' will focus the window with sigil 'c'.
+--
+--- h,j,k, and l are reserved for the window west, south, north, and east of the currently
+--- focused window, and so are not assigned as sigils.
 ---
 --- By default, two keys (other than the sigils) are bound in the mode: escape leaves the
 --- mode without doing anything, and '.' sends the sigil key to the focused window.  This
 --- allows sending 'control-w' to the underlying window by typing 'control-w .'.
 ---
 --- Download: [https://github.com/Hammerspoon/Spoons/raw/master/Spoons/WindowSigils.spoon.zip](https://github.com/Hammerspoon/Spoons/raw/master/Spoons/WindowSigils.spoon.zip)
+---
+--- Usage example:
+--- ```
+--- sigils = hs.loadSpoon("WindowSigils")
+--- sigils:configure({
+---   hotkeys = {
+---     enter = {{"control"}, "W"}
+---   },
+---   mode_keys = {
+---     [{{'shift'}, 'i'}] = ignore_notification,
+---     [{{}, 'v'}]        = paste_as_keystrokes,
+---     [{{}, ','}]        = rerun_last_command,
+---   },
+---   sigil_actions = {
+---     [{}]       = focus_window,
+---     [{'ctrl'}] = swap_window,
+---     [{'alt'}]  = warp_window,
+---   }
+--- })
+--- sigils:start()
+--- ```
 
 local obj={}
 obj.__index = obj
@@ -64,7 +88,9 @@ end
 ---    * hotkeys -
 ---    * mode_keys - a table of key specs (e.g. {{'shift'}, 'n'}) to functions.  The keys are
 ---      mapped inside the sigil mode and the key is no longer used as a window sigil.
----    * sigil_actions - a table of mod specs (e.g. {'alt'}) to functions.  When the modifiers
+---    * sigil_actions - a table of mod specs (e.g. {'alt'}) to functions.  When the sigil is
+---      used in the sigil mode with the specified modifier pressed, the function is invoked
+---      with a window object.
 function obj:configure(configuration)
   if configuration['hotkeys'] then
     self:bindHotkeys(configuration['hotkeys'])
