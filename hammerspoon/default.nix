@@ -22,5 +22,6 @@ in {
     home.file.".hammerspoon/init.lua".source = "${checkedConfig}/init.lua";
     home.file.".hammerspoon/Spoons/WindowSigils.spoon".source = ./WindowSigils.spoon;
     home.file.".hammerspoon/Spoons/Bubbles.spoon".source = ./Bubbles.spoon;
+    home.file.".hammerspoon/Spoons/MouseFollowsFocus.spoon".source = ./MouseFollowsFocus.spoon;
   };
 }

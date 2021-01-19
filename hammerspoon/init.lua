@@ -67,7 +67,10 @@ sigils:configure({
 
 sigils:start()
 
+mouse_follows_focus = hs.loadSpoon("MouseFollowsFocus")
+mouse_follows_focus:configure({})
+mouse_follows_focus:start()
+
 bubbles = hs.loadSpoon("Bubbles")
-bubbles:configure({
-})
+bubbles:configure({})
 bubbles:start()
