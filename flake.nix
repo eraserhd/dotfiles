@@ -26,9 +26,7 @@
             inherit nixpkgs darwin;
           };
         }
-        {
-          environment.systemPackages = [ twou.packages.x86_64-darwin.devEnvironment ];
-        }
+        twou.darwinModules
       ];
     };
 
@@ -42,9 +40,7 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
         }
-        {
-          environment.systemPackages = [ twou.packages.x86_64-linux.devEnvironment ];
-        }
+        twou.nixosModules
       ];
     };
   };
