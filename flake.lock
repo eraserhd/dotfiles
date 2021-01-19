@@ -72,11 +72,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1609859609,
-        "narHash": "sha256-5+L9YHva6qK1yY7nOA53YjKzclKf1iKgZ2/3hLmSLoA=",
+        "lastModified": 1611086661,
+        "narHash": "sha256-0KK/SFslaozyn6i33Pq7Zn26exda3MNesUJHm0LIObM=",
         "ref": "develop",
-        "rev": "a2edf6a06e37c29f9fce878de3a69f1877be17bb",
-        "revCount": 57,
+        "rev": "590db1897059e29d1937284a2aa4e8a1bedbb0b8",
+        "revCount": 58,
         "type": "git",
         "url": "ssh://git@github.com/2uinc/nix-2u"
       },
