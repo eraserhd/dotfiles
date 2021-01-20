@@ -22,6 +22,7 @@ with lib;
     ./kakoune
     ./kitty
     ./linux
+    ./linuxcnc
     ./macos
     ./modules/environment/xdg
     ./modules/bubbles
