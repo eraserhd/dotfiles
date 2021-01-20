@@ -1,7 +1,19 @@
 { lib, stdenv, fetchFromGitHub
 , autoreconfHook
 , pkg-config
+
+, kmod       # insmod
+, procps     # ps
+, psmisc     # fuser
+, util-linux # ipcs
+
+, glib
+, gtk2
+, libmodbus
+, libtirpc
 , libudev
+, libusb
+
 }:
 
 stdenv.mkDerivation rec {
@@ -21,7 +33,19 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    glib
+    gtk2
+    libmodbus
+    libtirpc
     libudev
+    libusb
+  ];
+
+  propagatedBuildInputs = [
+    kmod
+    procps
+    psmisc
+    util-linux
   ];
 
   configureFlags = [
