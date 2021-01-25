@@ -42,10 +42,6 @@ in
         });
 
         rep = dogfood super ./rep.nix {};
-
-        yabai = super.yabai.overrideAttrs (oldAttrs: {
-          src = super.pkgs.fetchFromGitHub (import ./yabai.nix);
-        });
       })
     ];
   };
