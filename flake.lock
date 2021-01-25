@@ -43,16 +43,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1611071854,
-        "narHash": "sha256-xgsCnk0THM9kSYNZdmQ4NCyaMhf9pbx3p4rbG7VwBxY=",
-        "owner": "eraserhd",
+        "lastModified": 1611544074,
+        "narHash": "sha256-wa+TRNehoT187YFOejXqHMZMhVjBbYZGF0EWYfGqbJI=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "a1bb960c13a05c95821a5f44a09881f21325a475",
+        "rev": "aa8868c7cca8d30706a68a876d048968c83e1cf1",
         "type": "github"
       },
       "original": {
-        "owner": "eraserhd",
-        "ref": "dogfood",
+        "owner": "NixOS",
+        "ref": "master",
         "repo": "nixpkgs",
         "type": "github"
       }
