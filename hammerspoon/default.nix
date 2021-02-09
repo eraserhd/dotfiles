@@ -15,9 +15,7 @@ let
   };
 in {
   config = {
-    homebrew.casks = [
-      "hammerspoon"
-    ];
+    services.hammerspoon.enable = true;
 
     home-manager.users.jfelice = { pkgs, ... }: {
       home.file.".hammerspoon/init.lua".source = "${checkedConfig}/init.lua";
