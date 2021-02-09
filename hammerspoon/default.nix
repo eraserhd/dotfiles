@@ -14,14 +14,16 @@ let
     '';
   };
 in {
-  homebrew.casks = [
-    "hammerspoon"
-  ];
+  config = {
+    homebrew.casks = [
+      "hammerspoon"
+    ];
 
-  home-manager.users.jfelice = { pkgs, ... }: {
-    home.file.".hammerspoon/init.lua".source = "${checkedConfig}/init.lua";
-    home.file.".hammerspoon/Spoons/WindowSigils.spoon".source = ./WindowSigils.spoon;
-    home.file.".hammerspoon/Spoons/Bubbles.spoon".source = ./Bubbles.spoon;
-    home.file.".hammerspoon/Spoons/MouseFollowsFocus.spoon".source = ./MouseFollowsFocus.spoon;
+    home-manager.users.jfelice = { pkgs, ... }: {
+      home.file.".hammerspoon/init.lua".source = "${checkedConfig}/init.lua";
+      home.file.".hammerspoon/Spoons/WindowSigils.spoon".source = ./WindowSigils.spoon;
+      home.file.".hammerspoon/Spoons/Bubbles.spoon".source = ./Bubbles.spoon;
+      home.file.".hammerspoon/Spoons/MouseFollowsFocus.spoon".source = ./MouseFollowsFocus.spoon;
+    };
   };
 }
