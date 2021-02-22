@@ -25,7 +25,9 @@ in {
       "openscad"
       "ultimaker-cura"
     ];
-    environment.systemPackages = [ openscad-cli ];
+    environment.systemPackages = [
+      openscad-cli
+    ];
   }
   else {
   });

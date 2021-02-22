@@ -13,6 +13,7 @@ with lib;
     ./coq
     ./dogfood
     ./emacs
+    ./freecad
     ./fonts
     ./git
     ./gnupg
