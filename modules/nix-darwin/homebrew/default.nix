@@ -2,7 +2,7 @@
 
 with lib;
 let
-  cfg = config.homebrew;
+  cfg = config.old-homebrew;
 
   caskAppdirStatement = if (isNull cfg.cask_args.appdir)
                         then ""
@@ -56,7 +56,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    homebrew.taps = [ "homebrew/bundle" ];
+    old-homebrew.taps = [ "homebrew/bundle" ];
 
     system.activationScripts.extraUserActivation.text = ''
       PATH="/usr/local/bin:$PATH" HOMEBREW_NO_AUTO_UPDATE=1 brew bundle --no-lock --file="${brewfile}"
