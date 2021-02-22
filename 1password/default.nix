@@ -8,7 +8,7 @@ with lib;
       environment.systemPackages = with pkgs; [ _1password ];
     }
     (mkIf pkgs.stdenv.isDarwin {
-      homebrew.casks = [ "1password" ];
+      old-homebrew.casks = [ "1password" ];
     })
   ];
 }

@@ -24,7 +24,7 @@ let
   };
 
 in {
-  options.homebrew = {
+  options.old-homebrew = {
     enable = mkEnableOption "Homebrew";
 
     taps = mkOption {

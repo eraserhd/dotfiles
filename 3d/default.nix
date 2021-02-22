@@ -19,9 +19,9 @@ let
     '';
   };
 in {
-  config = (if (builtins.hasAttr "homebrew" options)
+  config = (if (builtins.hasAttr "old-homebrew" options)
   then {
-    homebrew.casks = [
+    old-homebrew.casks = [
       "openscad"
       "ultimaker-cura"
     ];

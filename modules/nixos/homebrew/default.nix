@@ -2,7 +2,7 @@
 
 with lib;
 {
-  options.homebrew = {
+  options.old-homebrew = {
     enable = mkEnableOption "Homebrew";
 
     taps = mkOption {
@@ -29,7 +29,7 @@ with lib;
   config = {
     assertions = [
       {
-        assertion = !config.homebrew.enable;
+        assertion = !config.old-homebrew.enable;
         message = "Cannnot enable Homebrew support on NixOS";
       }
     ];

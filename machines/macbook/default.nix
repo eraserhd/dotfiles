@@ -22,8 +22,8 @@
 
   programs.bash.enable = true;
 
-  homebrew.enable = true;
-  homebrew.cask_args.appdir = "/Applications";
+  old-homebrew.enable = true;
+  old-homebrew.cask_args.appdir = "/Applications";
 
   bubbles.enable = true;
 
