@@ -18,6 +18,8 @@
       KeyRepeat = 1;
       "com.apple.keyboard.fnState" = true;
     };
+
+    users.nix.configureBuildUsers = true;
   }
   else {
   });
