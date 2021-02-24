@@ -23,6 +23,7 @@
   programs.bash.enable = true;
 
   homebrew.enable = true;
+  homebrew.cleanup = "zap";
   homebrew.extraConfig = ''
     cask_args appdir: "/Applications"
   '';
