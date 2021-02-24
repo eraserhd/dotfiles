@@ -40,10 +40,6 @@
     shell = pkgs.zsh;
   };
 
-  #services."2u".vault.enable = true;
-  #services."2u".kubernetes-clients.enable = true;
-  #services."2u".kubernetes-clients.namespaces = [ "implementation" ];
-
   local.plan9.terminal.enable = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
@@ -52,6 +48,6 @@
 
   # You should generally set this to the total number of logical cores in your system.
   # $ sysctl -n hw.ncpu
-  nix.maxJobs = 1;
+  nix.maxJobs = 2;
   nix.buildCores = 4;
 }
