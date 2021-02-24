@@ -2,6 +2,6 @@
 
 {
   config = {
-    old-homebrew.casks = [ "usb-overdrive" ];
+    homebrew.casks = [ "usb-overdrive" ];
   };
 }

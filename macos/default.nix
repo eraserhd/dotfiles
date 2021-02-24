@@ -3,7 +3,7 @@
 {
   config = (if (builtins.hasAttr "launchd" options)
   then {
-    old-homebrew.casks = [
+    homebrew.casks = [
       "caffeine"
       "osxfuse"
     ];

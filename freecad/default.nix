@@ -1,9 +1,9 @@
 { options, pkgs, ... }:
 
 {
-  config = (if (builtins.hasAttr "old-homebrew" options)
+  config = (if (builtins.hasAttr "homebrew" options)
   then {
-    old-homebrew.casks = [ "freecad" ];
+    homebrew.casks = [ "freecad" ];
   }
   else {
     environment.systemPackages = [ pkgs.freecad ];

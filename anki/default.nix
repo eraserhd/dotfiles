@@ -1,9 +1,9 @@
 { options, ... }:
 
 {
-  config = (if (builtins.hasAttr "old-homebrew" options)
+  config = (if (builtins.hasAttr "homebrew" options)
   then {
-    old-homebrew.casks = [ "anki" ];
+    homebrew.casks = [ "anki" ];
   }
   else {
   });

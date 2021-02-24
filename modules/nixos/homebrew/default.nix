@@ -1,8 +1,11 @@
 { config, lib, ... }:
 
+# This is a stub module for NixOS so the same config modules can be used as
+# on nix-darwin.
+
 with lib;
 {
-  options.old-homebrew = {
+  options.homebrew = {
     enable = mkEnableOption "Homebrew";
 
     taps = mkOption {
@@ -10,9 +13,9 @@ with lib;
       default = [];
     };
 
-    cask_args.appdir = mkOption {
-      type = with types; nullOr path;
-      default = null;
+    extraConfig = mkOption {
+      type = types.str;
+      default = "";
     };
 
     casks = mkOption {
@@ -29,7 +32,7 @@ with lib;
   config = {
     assertions = [
       {
-        assertion = !config.old-homebrew.enable;
+        assertion = !config.homebrew.enable;
         message = "Cannnot enable Homebrew support on NixOS";
       }
     ];
