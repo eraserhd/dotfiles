@@ -164,7 +164,7 @@ define-command -override -hidden copy-dquote-to-snarf %{
         if [ ! "$kak_main_reg_dquote" = "$kak_opt_snarf_last_dquote" ]; then
             printf %s "$kak_main_reg_dquote" |9 9p write snarf/snarf
             printf "set-option global snarf_last_dquote '"
-            printf %s "$kak_main_reg_dquote" |sed -e "s/'/''/g"
+            printf %s "$kak_main_reg_dquote" |LC_ALL=C sed -e "s/'/''/g"
             printf "'\n"
         fi
     }
