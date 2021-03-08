@@ -550,3 +550,6 @@ hook -group manage-jumpclient global ClientClose .* %{
         fi
     }
 }
+
+map global user j ': set-option global jumpclient %val{client}<ret>'
+
