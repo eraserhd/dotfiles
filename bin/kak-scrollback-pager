@@ -1,22 +1,38 @@
 #!/bin/sh
+#
+# This works with kak-ansi. It might work without if `--stdin-add-formatting`
+# is removed below.
+#
+# Example kitty config:
+#     scrollback_lines 5000
+#     map shift+ctrl+h launch --stdin-add-formatting --stdin-source=@screen_scrollback --cwd=current --type=overlay kak-scrollback-pager
+#
 
-exec kak -e 'hook -once window NormalIdle .* %{
-    evaluate-commands %sh{
-        tmp="$kak_client_env_KITTY_PIPE_DATA"
-        scrolledBy="${tmp%%:*}"
-        tmp="${tmp#*:}"
-        cursorX="${tmp%%,*}"
-        tmp="${tmp#*,}"
-        cursorY="${tmp%%:*}"
-        tmp="${tmp#*:}"
-        lines="${tmp%%,*}"
-        cursorLine=$(( kak_buf_line_count - scrolledBy - lines + cursorY ))
-        printf "select %d.%d,%d.%d\n" "$cursorLine" "$cursorX" "$cursorLine" "$cursorX"
-        printf "execute-keys vt\n"
-        if [ $cursorY -gt 2 ]; then
-            printf "execute-keys %dvk\n" $(( cursorY - 2 ))
-        fi
+tmp="$KITTY_PIPE_DATA"
+scrolledBy="${tmp%%:*}"
+tmp="${tmp#*:}"
+cursorX="${tmp%%,*}"
+tmp="${tmp#*,}"
+cursorY="${tmp%%:*}"
+tmp="${tmp#*:}"
+lines="${tmp%%,*}"
+
+# select must happen in the window context, but we are notified of new
+# content in the buffer context.  For scrollback buffers, we assume there's
+# only one client, and the user does not change the buffer in it.
+exec kak -e '
+    try %{ declare-option str kak_scrollback_pager_client }
+    set-option buffer kak_scrollback_pager_client %val{client}
+    hook -group kak-scrollback-pager buffer BufReadFifo .* %{
+        evaluate-commands -client %opt{kak_scrollback_pager_client} %sh{
+            cursorLine=$(( kak_buf_line_count - '"$scrolledBy"' - '"$lines"' + '"$cursorY"' ))
+            printf "select %d.%d,%d.%d\n" "$cursorLine" "'"$cursorX"'" "$cursorLine" "'"$cursorX"'"
+            printf "execute-keys vt\n"
+            if [ '"$cursorY"' -gt 2 ]; then
+                printf "execute-keys %dvk\n" $(( '"$cursorY"' - 2 ))
+            fi
+        }
     }
-    set-option buffer plumb_wdir %{'"$(pwd)"'}
-    map window normal <esc> ": quit<ret>"
-}'
+    map window normal <esc> ": delete-buffer! ; quit<ret>"
+    try %{ set-option buffer plumb_wdir %{'"$(pwd)"'} }
+'
