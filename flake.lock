@@ -43,16 +43,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1615819731,
-        "narHash": "sha256-ShnLIAn36NOAqHrraZlQG5ZSEmBFIdQRfjxihBOjEek=",
-        "owner": "NixOS",
+        "lastModified": 1615829417,
+        "narHash": "sha256-YV4Usnokpi01G93FLgrXV3O6zp/OcXS53V+PW7xMQys=",
+        "owner": "eraserhd",
         "repo": "nixpkgs",
-        "rev": "ada691026aa424d7748ceae3c8adf94a3a362ba5",
+        "rev": "32e98af020e70998372cda5cfebf5a99dccea188",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "master",
+        "owner": "eraserhd",
+        "ref": "fix-gambit-compiler-paths",
         "repo": "nixpkgs",
         "type": "github"
       }
