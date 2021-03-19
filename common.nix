@@ -44,7 +44,6 @@ with lib;
     ./tmux
     ./tracker
     ./usb-overdrive
-    ./vim
     ./vnc
     ./weechat
     ./x
