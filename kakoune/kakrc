@@ -232,36 +232,22 @@ map global normal <a-*> '<a-i>w"/y<a-n>'
 
 map global user c ': enter-user-mode case<ret>'
 
-# broot
-# ‾‾‾‾‾
+# fzf
+# ‾‾‾
 
-define-command -override f %{
-    evaluate-commands %sh{
-        tmpdir=$(mktemp)
-        rm -f "$tmpdir"
-        mkdir -p "$tmpdir"
-        (
-            printf '[[verbs]]\n'
-            printf 'invocation = "edit"\n'
-            printf 'key = "enter"\n'
-            printf 'execution = "%s/edit-file {file}"\n' "$tmpdir"
-        ) >"$tmpdir/select.toml"
-        (
-            printf '#!/bin/sh\n'
-            printf 'printf '"'"'evaluate-commands -client %s %%%%{ edit %%%%{%%s} }\\n'"'"' "$1" |kak -p %s\n' "$kak_client" "$kak_session"
-        ) >"$tmpdir/edit-file"
-        (
-            printf '#!/bin/sh\n'
-            printf 'broot --conf=%s/select.toml\n' "$tmpdir"
-            printf 'rm -rf "%s"\n' "$tmpdir"
-        ) >"$tmpdir/run-broot"
-        chmod +x "$tmpdir/run-broot" "$tmpdir/edit-file"
-        printf 'terminal %s/run-broot' "$tmpdir"
-    }
+define-command -override f %sh{
+    printf 'require-module fzf\n'
+    if [ "$uname" = "Darwin" ]; then
+        dir="$(pwd)"
+        file_command="mdfind -onlyin "${dir}/" / |sed -e 's,^'"${dir}"'/,,'"
+    else
+        file_command="ag -l"
+    fi
+    printf 'set-option global fzf_file_command "%s"\n' "$file_command"
+    printf 'set-option global fzf_highlight_command bat\n'
+    printf 'fzf-file\n'
 }
-
 map global user f ': f<ret>'
-
 
 # Filetypes
 # ‾‾‾‾‾‾‾‾‾
