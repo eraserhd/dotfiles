@@ -43,16 +43,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1616425128,
-        "narHash": "sha256-AVeH3Pqom8nhkcb/C1Uh028Uaajbzyh4uqrtvuzTvQM=",
+        "lastModified": 1616429494,
+        "narHash": "sha256-g0mbwBmBfp2eQ7UqPgkwh6p7QzLV4tH06UCESolG/Fw=",
         "owner": "eraserhd",
         "repo": "nixpkgs",
-        "rev": "3ed996727f0deb788d0ca74548f9e0feaae37fd2",
+        "rev": "98976f645ead6865c6cbd628375c51f5e2a4ddfc",
         "type": "github"
       },
       "original": {
         "owner": "eraserhd",
-        "ref": "fix-gambit-compiler-paths",
+        "ref": "dogfood",
         "repo": "nixpkgs",
         "type": "github"
       }
