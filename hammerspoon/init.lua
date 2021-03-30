@@ -39,9 +39,8 @@ local function swap_window(window)
   window:setFrame(focused_frame, 0)
 end
 
-local function warp_window(window)
-  -- hs.execute("yabai -m window --warp " .. window:id(), true)
-  balance_space()
+local function stack_window(window)
+  hs.window.focusedWindow():setFrame(window:frame(), 0)
 end
 
 sigils = hs.loadSpoon("WindowSigils")
@@ -55,13 +54,11 @@ sigils:configure({
     [{{'shift'}, 'n'}] = activate_notification,
     [{{}, 'v'}]        = paste_as_keystrokes,
     [{{}, ','}]        = rerun_last_command,
-    [{{}, '='}]        = balance_space,
-    [{{}, '/'}]        = toggle_split_direction,
   },
   sigil_actions = {
-    [{}]       = focus_window,
-    [{'ctrl'}] = swap_window,
-    [{'alt'}]  = warp_window,
+    [{}]               = focus_window,
+    [{'ctrl'}]         = stack_window,
+    [{'alt'}]          = swap_window,
   }
 })
 
