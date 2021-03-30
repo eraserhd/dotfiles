@@ -248,6 +248,10 @@ function obj:window(sigil)
   return nil
 end
 
+
+local SIGIL_WIDTH = 20
+local SIGIL_HEIGHT = 19
+
 --- WindowSigils:refresh()
 --- Method
 --- Rerender all window sigils.
@@ -266,7 +270,7 @@ function obj:refresh()
       table.insert(elements, {
         action = "fill",
         fillColor = { alpha = 0.3, green = 1.0, blue = 1.0 },
-        frame = make_frame{x = position.x, y = position.y, w = 20, h = 19},
+        frame = make_frame{x = position.x, y = position.y, w = SIGIL_WIDTH, h = SIGIL_HEIGHT},
         type = "rectangle",
         withShadow = false,
       })
@@ -276,7 +280,7 @@ function obj:refresh()
         textFont = "Menlo Regular",
         textSize = 18,
         textLineBreak = 'truncateTail',
-        frame = make_frame{x = position.x + 3, y = position.y - 4, w = 17, h = 19 + 7},
+        frame = make_frame{x = position.x + 3, y = position.y - 4, w = SIGIL_WIDTH - 3, h = SIGIL_HEIGHT + 7},
       })
     end
 
