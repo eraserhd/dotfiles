@@ -266,12 +266,13 @@ function obj:refresh()
     local windows = sigils:orderedWindows()
     for i, window in ipairs(windows) do
       local wframe = window:frame()
+      local position = { x = wframe.x + 70, y = wframe.y + 1 }
       table.insert(new_elements, {
         action = "fill",
         fillColor = { alpha = 0.3, green = 1.0, blue = 1.0 },
-        frame = make_frame{x = wframe.x + 70, y = wframe.y + 1, w = 20, h = 19},
+        frame = make_frame{x = position.x, y = position.y, w = 20, h = 19},
         type = "rectangle",
-        withShadow = true,
+        withShadow = false,
       })
       table.insert(new_elements, {
         type = "text",
@@ -279,7 +280,7 @@ function obj:refresh()
         textFont = "Menlo Regular",
         textSize = 18,
         textLineBreak = 'truncateTail',
-        frame = make_frame{x = wframe.x + 73, y = wframe.y - 3, w = 17, h = 19 + 7},
+        frame = make_frame{x = position.x + 3, y = position.y - 4, w = 17, h = 19 + 7},
       })
     end
     if #new_elements > 0 then
