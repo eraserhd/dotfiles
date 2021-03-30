@@ -262,26 +262,30 @@ function obj:refresh()
       return { x = tostring(rect.x), y = tostring(rect.y), w = tostring(rect.w), h = tostring(rect.h) }
     end
 
-    local new_elements = {}
-    local windows = sigils:orderedWindows()
-    for i, window in ipairs(windows) do
-      local wframe = window:frame()
-      local position = { x = wframe.x + 70, y = wframe.y + 1 }
-      table.insert(new_elements, {
+    local function append_sigil_canvas_elements(elements, position, sigil)
+      table.insert(elements, {
         action = "fill",
         fillColor = { alpha = 0.3, green = 1.0, blue = 1.0 },
         frame = make_frame{x = position.x, y = position.y, w = 20, h = 19},
         type = "rectangle",
         withShadow = false,
       })
-      table.insert(new_elements, {
+      table.insert(elements, {
         type = "text",
-        text = self.sigils[i],
+        text = sigil,
         textFont = "Menlo Regular",
         textSize = 18,
         textLineBreak = 'truncateTail',
         frame = make_frame{x = position.x + 3, y = position.y - 4, w = 17, h = 19 + 7},
       })
+    end
+
+    local new_elements = {}
+    local windows = sigils:orderedWindows()
+    for i, window in ipairs(windows) do
+      local wframe = window:frame()
+      local position = { x = wframe.x + 70, y = wframe.y + 1 }
+      append_sigil_canvas_elements(new_elements, position, self.sigils[i])
     end
     if #new_elements > 0 then
       screen_data.canvas:replaceElements(new_elements)
