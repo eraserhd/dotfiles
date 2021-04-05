@@ -272,6 +272,7 @@ end
 ---
 --- Parameters:
 function obj:refresh()
+  local sigil_boxes = self:_makeSigilBoxes()
   for _, screen_data in ipairs(self.screens) do
     local bounds = screen_data.screen:frame()
 
@@ -298,7 +299,6 @@ function obj:refresh()
       })
     end
 
-    local sigil_boxes = self:_makeSigilBoxes()
     local new_elements = {}
     for i, sigil_box in ipairs(sigil_boxes) do
       append_sigil_canvas_elements(new_elements, sigil_box.position, sigil_box.sigil)
