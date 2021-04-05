@@ -306,6 +306,13 @@ end
 --- Parameters:
 function obj:refresh()
   local sigil_boxes = self:_makeSigilBoxes()
+  table.sort(sigil_boxes, function (a, b)
+    if a.position.x < b.position.x then return true end
+    if a.position.x > b.position.x then return false end
+    if a.position.y < b.position.y then return true end
+    if a.position.y > b.position.y then return false end
+    return a.sigil < b.sigil
+  end)
   for _, screen_data in ipairs(self.screens) do
     local new_elements = self:_makeSigilElements(screen_data, sigil_boxes)
     screen_data.canvas:replaceElements(new_elements)
