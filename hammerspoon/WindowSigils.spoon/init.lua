@@ -284,12 +284,19 @@ function obj:refresh()
       })
     end
 
-    local new_elements = {}
+    local sigil_boxes = {}
     local windows = sigils:orderedWindows()
     for i, window in ipairs(windows) do
       local wframe = window:frame()
       local position = { x = wframe.x + 70, y = wframe.y + 1 }
-      append_sigil_canvas_elements(new_elements, position, self.sigils[i])
+      table.insert(sigil_boxes, {
+        sigil = self.sigils[i],
+        position = position,
+      })
+    end
+    local new_elements = {}
+    for i, sigil_box in ipairs(sigil_boxes) do
+      append_sigil_canvas_elements(new_elements, sigil_box.position, sigil_box.sigil)
     end
     if #new_elements > 0 then
       screen_data.canvas:replaceElements(new_elements)
