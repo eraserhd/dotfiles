@@ -285,7 +285,7 @@ function obj:refresh()
     end
 
     local sigil_boxes = {}
-    local windows = sigils:orderedWindows()
+    local windows = self:orderedWindows()
     for i, window in ipairs(windows) do
       local wframe = window:frame()
       local position = { x = wframe.x + 70, y = wframe.y + 1 }
