@@ -266,6 +266,39 @@ function obj:_makeSigilBoxes()
   return sigil_boxes
 end
 
+function obj:_makeSigilElements(screen_data, sigil_boxes)
+  local bounds = screen_data.screen:frame()
+
+  local function make_frame(wframe)
+    local rect = hs.geometry.toUnitRect(wframe, bounds)
+    return { x = tostring(rect.x), y = tostring(rect.y), w = tostring(rect.w), h = tostring(rect.h) }
+  end
+
+  local function append_sigil_canvas_elements(elements, position, sigil)
+    table.insert(elements, {
+      action = "fill",
+      fillColor = { alpha = 0.3, green = 1.0, blue = 1.0 },
+      frame = make_frame{x = position.x, y = position.y, w = SIGIL_WIDTH, h = SIGIL_HEIGHT},
+      type = "rectangle",
+      withShadow = false,
+    })
+    table.insert(elements, {
+      type = "text",
+      text = sigil,
+      textFont = "Menlo Regular",
+      textSize = 18,
+      textLineBreak = 'truncateTail',
+      frame = make_frame{x = position.x + 3, y = position.y - 4, w = SIGIL_WIDTH - 3, h = SIGIL_HEIGHT + 7},
+    })
+  end
+
+  local new_elements = {}
+  for i, sigil_box in ipairs(sigil_boxes) do
+    append_sigil_canvas_elements(new_elements, sigil_box.position, sigil_box.sigil)
+  end
+  return new_elements
+end
+
 --- WindowSigils:refresh()
 --- Method
 --- Rerender all window sigils.
@@ -274,38 +307,8 @@ end
 function obj:refresh()
   local sigil_boxes = self:_makeSigilBoxes()
   for _, screen_data in ipairs(self.screens) do
-    local bounds = screen_data.screen:frame()
-
-    local function make_frame(wframe)
-      local rect = hs.geometry.toUnitRect(wframe, bounds)
-      return { x = tostring(rect.x), y = tostring(rect.y), w = tostring(rect.w), h = tostring(rect.h) }
-    end
-
-    local function append_sigil_canvas_elements(elements, position, sigil)
-      table.insert(elements, {
-        action = "fill",
-        fillColor = { alpha = 0.3, green = 1.0, blue = 1.0 },
-        frame = make_frame{x = position.x, y = position.y, w = SIGIL_WIDTH, h = SIGIL_HEIGHT},
-        type = "rectangle",
-        withShadow = false,
-      })
-      table.insert(elements, {
-        type = "text",
-        text = sigil,
-        textFont = "Menlo Regular",
-        textSize = 18,
-        textLineBreak = 'truncateTail',
-        frame = make_frame{x = position.x + 3, y = position.y - 4, w = SIGIL_WIDTH - 3, h = SIGIL_HEIGHT + 7},
-      })
-    end
-
-    local new_elements = {}
-    for i, sigil_box in ipairs(sigil_boxes) do
-      append_sigil_canvas_elements(new_elements, sigil_box.position, sigil_box.sigil)
-    end
-    if #new_elements > 0 then
-      screen_data.canvas:replaceElements(new_elements)
-    end
+    local new_elements = self:_makeSigilElements(screen_data, sigil_boxes)
+    screen_data.canvas:replaceElements(new_elements)
   end
 end
 
