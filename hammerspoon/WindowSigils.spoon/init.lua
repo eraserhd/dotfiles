@@ -252,6 +252,20 @@ end
 local SIGIL_WIDTH = 20
 local SIGIL_HEIGHT = 19
 
+function obj:_makeSigilBoxes()
+  local sigil_boxes = {}
+  local windows = self:orderedWindows()
+  for i, window in ipairs(windows) do
+    local wframe = window:frame()
+    local position = { x = wframe.x + 70, y = wframe.y + 1 }
+    table.insert(sigil_boxes, {
+      sigil = self.sigils[i],
+      position = position,
+    })
+  end
+  return sigil_boxes
+end
+
 --- WindowSigils:refresh()
 --- Method
 --- Rerender all window sigils.
@@ -284,16 +298,7 @@ function obj:refresh()
       })
     end
 
-    local sigil_boxes = {}
-    local windows = self:orderedWindows()
-    for i, window in ipairs(windows) do
-      local wframe = window:frame()
-      local position = { x = wframe.x + 70, y = wframe.y + 1 }
-      table.insert(sigil_boxes, {
-        sigil = self.sigils[i],
-        position = position,
-      })
-    end
+    local sigil_boxes = self:_makeSigilBoxes()
     local new_elements = {}
     for i, sigil_box in ipairs(sigil_boxes) do
       append_sigil_canvas_elements(new_elements, sigil_box.position, sigil_box.sigil)
