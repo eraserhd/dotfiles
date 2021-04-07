@@ -300,7 +300,9 @@ function obj:_makeSigilElements(screen_data, sigil_boxes)
   return new_elements
 end
 
-local function overlapping(corner1, corner2)
+local function overlapping(box1, box2)
+  local corner1 = box1.position
+  local corner2 = box2.position
   if corner2.y >= corner1.y + SIGIL_HEIGHT then return false end
   if corner1.y >= corner2.y + SIGIL_HEIGHT then return false end
   if corner2.x >= corner1.x + SIGIL_WIDTH + SIGIL_MARGIN then return false end
@@ -324,7 +326,7 @@ function obj:refresh()
   end)
   for i, sigil_box in ipairs(sigil_boxes) do
     local j = i+1
-    while j <= #sigil_boxes and overlapping(sigil_box.position, sigil_boxes[j].position) do
+    while j <= #sigil_boxes and overlapping(sigil_box, sigil_boxes[j]) do
       sigil_boxes[j].position.x = sigil_box.position.x + SIGIL_WIDTH + SIGIL_MARGIN
       j = j + 1
     end
