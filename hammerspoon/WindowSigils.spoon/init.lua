@@ -310,13 +310,7 @@ local function overlapping(box1, box2)
   return true
 end
 
---- WindowSigils:refresh()
---- Method
---- Rerender all window sigils.
----
---- Parameters:
-function obj:refresh()
-  local sigil_boxes = self:_makeSigilBoxes()
+local function move_overlapping_boxes(sigil_boxes)
   table.sort(sigil_boxes, function (a, b)
     if a.position.x < b.position.x then return true end
     if a.position.x > b.position.x then return false end
@@ -331,6 +325,16 @@ function obj:refresh()
       j = j + 1
     end
   end
+end
+
+--- WindowSigils:refresh()
+--- Method
+--- Rerender all window sigils.
+---
+--- Parameters:
+function obj:refresh()
+  local sigil_boxes = self:_makeSigilBoxes()
+  move_overlapping_boxes(sigil_boxes)
   for _, screen_data in ipairs(self.screens) do
     local new_elements = self:_makeSigilElements(screen_data, sigil_boxes)
     screen_data.canvas:replaceElements(new_elements)
