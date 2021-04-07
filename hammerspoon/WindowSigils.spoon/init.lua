@@ -324,10 +324,8 @@ function obj:refresh()
   end)
   for i, sigil_box in ipairs(sigil_boxes) do
     local j = i+1
-    while j <= #sigil_boxes do
-      if overlapping(sigil_box.position, sigil_boxes[j].position) then
-        sigil_boxes[j].position.x = sigil_box.position.x + SIGIL_WIDTH + SIGIL_MARGIN
-      end
+    while j <= #sigil_boxes and overlapping(sigil_box.position, sigil_boxes[j].position) do
+      sigil_boxes[j].position.x = sigil_box.position.x + SIGIL_WIDTH + SIGIL_MARGIN
       j = j + 1
     end
   end
