@@ -43,8 +43,8 @@ local function stack_window(window)
   hs.window.focusedWindow():setFrame(window:frame(), 0)
 end
 
-sigils = hs.loadSpoon("WindowSigils")
-sigils:configure({
+not_sigils = hs.loadSpoon("WindowSigils")
+not_sigils:configure({
   hotkeys = {
     enter = {{"control"}, "W"}
   },
@@ -62,7 +62,7 @@ sigils:configure({
   }
 })
 
-sigils:start()
+not_sigils:start()
 
 mouse_follows_focus = hs.loadSpoon("MouseFollowsFocus")
 mouse_follows_focus:configure({})
