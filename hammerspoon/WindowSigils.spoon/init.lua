@@ -251,6 +251,7 @@ end
 
 local SIGIL_WIDTH = 20
 local SIGIL_HEIGHT = 19
+local SIGIL_MARGIN = 5
 
 function obj:_makeSigilBoxes()
   local sigil_boxes = {}
@@ -299,6 +300,14 @@ function obj:_makeSigilElements(screen_data, sigil_boxes)
   return new_elements
 end
 
+local function overlapping(corner1, corner2)
+  if corner2.y >= corner1.y + SIGIL_HEIGHT then return false end
+  if corner1.y >= corner2.y + SIGIL_HEIGHT then return false end
+  if corner2.x >= corner1.x + SIGIL_WIDTH + SIGIL_MARGIN then return false end
+  if corner1.x >= corner2.x + SIGIL_WIDTH + SIGIL_MARGIN then return false end
+  return true
+end
+
 --- WindowSigils:refresh()
 --- Method
 --- Rerender all window sigils.
@@ -313,6 +322,15 @@ function obj:refresh()
     if a.position.y > b.position.y then return false end
     return a.sigil < b.sigil
   end)
+  for i, sigil_box in ipairs(sigil_boxes) do
+    local j = i+1
+    while j <= #sigil_boxes do
+      if overlapping(sigil_box.position, sigil_boxes[j].position) then
+        sigil_boxes[j].position.x = sigil_box.position.x + SIGIL_WIDTH + SIGIL_MARGIN
+      end
+      j = j + 1
+    end
+  end
   for _, screen_data in ipairs(self.screens) do
     local new_elements = self:_makeSigilElements(screen_data, sigil_boxes)
     screen_data.canvas:replaceElements(new_elements)
