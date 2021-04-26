@@ -11,6 +11,7 @@ with lib;
     ./chromium
     ./clojure
     ./coq
+    ./docker
     ./dogfood
     ./emacs
     ./freecad
