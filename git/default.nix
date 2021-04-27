@@ -8,6 +8,7 @@
       gitAndTools.gitout
       local.git-scripts
       git-crypt
+      git-revise
     ];
 
     # Needed for `hub browse`
