@@ -9,3 +9,5 @@
 	lineNumber = true
 [rebase]
 	autosquash = true
+[rerere]
+	enabled = true
