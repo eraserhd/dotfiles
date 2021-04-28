@@ -30,6 +30,7 @@ in
         });
 
         kakounePlugins = super.kakounePlugins // {
+          kak-ansi = dogfood super ./kak-ansi.nix {};
           kak-fzf = super.kakounePlugins.kak-fzf.overrideAttrs (oldAttrs: {
             src = super.pkgs.fetchFromGitHub (import ./fzf.kak.nix);
           });
@@ -39,10 +40,7 @@ in
           };
         };
 
-        parinfer-rust = super.parinfer-rust.overrideAttrs (oldAttrs: {
-          src = super.pkgs.fetchFromGitHub (import ./parinfer-rust.nix);
-        });
-
+        parinfer-rust = dogfood super ./parinfer-rust.nix {};
         rep = dogfood super ./rep.nix {};
       })
     ];
