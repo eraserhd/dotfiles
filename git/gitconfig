@@ -7,6 +7,8 @@
 	r = "!git l -30"
 [grep]
 	lineNumber = true
+[init]
+	defaultBranch = main
 [rebase]
 	autosquash = true
 [rerere]
