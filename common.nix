@@ -38,7 +38,6 @@ with lib;
     ./npm
     ./postgres
     ./rlwrap
-    ./scheme
     ./shell
     ./taskwarrior
     ./tex
