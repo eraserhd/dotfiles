@@ -1,6 +1,7 @@
 {
   owner = "eraserhd";
   repo = "gitout";
-  rev = "9e65da479a9c4b50e5bbdbe273cec6f725a986f2";
-  sha256 = "00q20hfpwvvlmqir3c6pq108vmlspc1nb5y0i75za90n56rj1mq8";
+  rev = "f7517675aa428613206c028d6e2c76821a43a6d2";
+  sha256 = "X/IIVSxUWkG3ujDLtc0aBllyTmD7X/JcmWrZUsgZVlc=";
+  fetchSubmodules = true;
 }

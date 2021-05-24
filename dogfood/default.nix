@@ -18,6 +18,7 @@ in
 
         gerbilPackages = {
           clojerbil = dogfood super ./clojerbil.nix {};
+          gerbil-bencode = dogfood super ./gerbil-bencode.nix {};
         };
 
         gitAndTools = super.gitAndTools // {
