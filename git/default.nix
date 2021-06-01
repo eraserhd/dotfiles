@@ -5,7 +5,7 @@
     environment.systemPackages = with pkgs; [
       gitFull
       gitAndTools.hub
-      gitAndTools.gitout
+      #gitAndTools.gitout -- no scheme atm
       local.git-scripts
       git-crypt
       git-revise
