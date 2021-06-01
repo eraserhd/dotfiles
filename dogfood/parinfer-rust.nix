@@ -1,7 +1,7 @@
 {
   owner = "eraserhd";
   repo = "parinfer-rust";
-  rev = "e1eb440366211d1925bcd59561d8a1c2a75ae362";
-  sha256 = "Qtx2lsH7Qo6ZFT8V+mgvzbXMLD00hzh4vQRjyblV/gU=";
+  rev = "afcacc8ef1fbf23d804d2c4eb01a419c50565e44";
+  sha256 = "IHUJfwoAOaREGkD8/kJMuXwqmddRL76Ar9SHLfmDivc=";
   fetchSubmodules = true;
 }
