@@ -43,16 +43,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1624380807,
-        "narHash": "sha256-dwl0wuu+sO++hV80jEpkx92FmapRVFM/XZUx8xyutaY=",
-        "owner": "NixOS",
+        "lastModified": 1624389878,
+        "narHash": "sha256-zpGPDq505eISVa/Xd3YYhXd4pWGgunbtWNYOBQHKVOM=",
+        "owner": "eraserhd",
         "repo": "nixpkgs",
-        "rev": "d26902aef932e80eb772026433af13ce662e7872",
+        "rev": "e7b1e1997f2277e297068c5f0197611902e6bf33",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "master",
+        "owner": "eraserhd",
+        "ref": "weechat-darwin-fix",
         "repo": "nixpkgs",
         "type": "github"
       }
