@@ -8,15 +8,13 @@ in {
   then {
     launchd.user.agents.plumber = {
       script = ''
-        exec zsh -l -c '
+        exec bash -l -c '
           ${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace \
               ${pkgs.plan9port-wrapper}/bin/9 plumber -p ${./plumbing} -f
         '
       '';
       serviceConfig = {
         KeepAlive = true;
-        StandardOutPath = "/tmp/out2.log";
-        StandardErrorPath = "/tmp/err2.log";
       };
     };
   }
