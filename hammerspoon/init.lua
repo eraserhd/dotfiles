@@ -37,10 +37,13 @@ local function swap_window(window)
   local selected_frame = window:frame()
   hs.window.focusedWindow():setFrame(selected_frame, 0)
   window:setFrame(focused_frame, 0)
+  hs.mouse.setAbsolutePosition(selected_frame.center)
 end
 
 local function stack_window(window)
-  hs.window.focusedWindow():setFrame(window:frame(), 0)
+  local frame = window:frame()
+  hs.window.focusedWindow():setFrame(frame, 0)
+  hs.mouse.setAbsolutePosition(frame.center)
 end
 
 not_sigils = hs.loadSpoon("WindowSigils")
