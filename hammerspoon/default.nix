@@ -21,6 +21,13 @@ let
     sha256 = "OVDEGdUAuQqdVN0fcfJsKVoTPKUZlvZO6puGnEiN1eI=";
   };
 
+  MouseFollowsFocus-src = pkgs.fetchFromGitHub {
+    owner = "eraserhd";
+    repo = "Spoons";
+    rev = "16d3ac1c013ec4d835e62f71d09348c5e716afb7";
+    sha256 = "J5RJRhU2k/CqsKzd1zThWOM7ziEOG2zXWDY49IuyIho=";
+  };
+
 in {
   config = {
     services.hammerspoon.enable = true;
@@ -29,7 +36,7 @@ in {
       home.file.".hammerspoon/init.lua".source = "${checkedConfig}/init.lua";
       home.file.".hammerspoon/Spoons/WindowSigils.spoon".source = "${WindowSigils-src}/Source/WindowSigils.spoon";
       home.file.".hammerspoon/Spoons/Bubbles.spoon".source = ./Bubbles.spoon;
-      home.file.".hammerspoon/Spoons/MouseFollowsFocus.spoon".source = ./MouseFollowsFocus.spoon;
+      home.file.".hammerspoon/Spoons/MouseFollowsFocus.spoon".source = "${MouseFollowsFocus-src}/Source/MouseFollowsFocus.spoon";
     };
   };
 }
