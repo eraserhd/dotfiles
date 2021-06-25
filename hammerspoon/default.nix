@@ -34,10 +34,13 @@ in {
   config = {
     services.hammerspoon.enable = true;
 
-    home-manager.users.jfelice = { pkgs, ... }: {
-      home.file.".hammerspoon/init.lua".source = "${checkedConfig}/init.lua";
-      home.file.".hammerspoon/Spoons/WindowSigils.spoon".source = "${spoons.WindowSigils}/Source/WindowSigils.spoon";
-      home.file.".hammerspoon/Spoons/MouseFollowsFocus.spoon".source = "${spoons.MouseFollowsFocus}/Source/MouseFollowsFocus.spoon";
+    home-manager.users.jfelice = _: {
+      home.file = {
+        ".hammerspoon/init.lua" = { source = "${checkedConfig}/init.lua"; };
+      } // {
+        ".hammerspoon/Spoons/WindowSigils.spoon" = { source = "${spoons.WindowSigils}/Source/WindowSigils.spoon"; };
+        ".hammerspoon/Spoons/MouseFollowsFocus.spoon" = { source = "${spoons.MouseFollowsFocus}/Source/MouseFollowsFocus.spoon"; };
+      };
     };
   };
 }
