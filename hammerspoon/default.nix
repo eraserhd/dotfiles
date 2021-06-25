@@ -1,5 +1,6 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
+with lib;
 let
   checkedConfig = pkgs.stdenv.mkDerivation {
     name = "hammerspoon-config";
@@ -37,10 +38,7 @@ in {
     home-manager.users.jfelice = _: {
       home.file = {
         ".hammerspoon/init.lua" = { source = "${checkedConfig}/init.lua"; };
-      } // {
-        ".hammerspoon/Spoons/WindowSigils.spoon" = { source = "${spoons.WindowSigils}/Source/WindowSigils.spoon"; };
-        ".hammerspoon/Spoons/MouseFollowsFocus.spoon" = { source = "${spoons.MouseFollowsFocus}/Source/MouseFollowsFocus.spoon"; };
-      };
+      } // (mapAttrs' (name: value: nameValuePair ".hammerspoon/Spoons/${name}.spoon" { source = "${value}/Source/${name}.spoon"; }) spoons);
     };
   };
 }
