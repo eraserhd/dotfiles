@@ -41,6 +41,11 @@ in
           };
         };
 
+        # Use old plan9port for Darwin, because plan9port removed support
+        # for Mac OS 10.12, and Nixpkgs requires it, so the package is marked
+        # broken.
+        plan9port = super.callPackage ./plan9port {};
+
         parinfer-rust = dogfood super ./parinfer-rust.nix {};
         rep = dogfood super ./rep.nix {};
       })
