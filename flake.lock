@@ -28,11 +28,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1624371613,
-        "narHash": "sha256-i/ty0tmd9Pz0GkhflqWGcaBpyAxuWCI0eTNrN94r0mc=",
+        "lastModified": 1624863040,
+        "narHash": "sha256-BeV2TDf0nBB4IituD4JhT5ZWRlPrIvu3Z4P0q0XbQOQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "04955ca970b65c1a5d6f04a888139f30b0a18e38",
+        "rev": "dc4337d9fed5b437913e51722fa150b9eae7d91c",
         "type": "github"
       },
       "original": {
@@ -43,16 +43,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1624389878,
-        "narHash": "sha256-zpGPDq505eISVa/Xd3YYhXd4pWGgunbtWNYOBQHKVOM=",
-        "owner": "eraserhd",
+        "lastModified": 1624886432,
+        "narHash": "sha256-NAqJtx9EybR3ab8IQhW7t6kPbore6LZI36EyhuFwPjs=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e7b1e1997f2277e297068c5f0197611902e6bf33",
+        "rev": "6d66831d1391e63477009814b0d0557970d22b9b",
         "type": "github"
       },
       "original": {
-        "owner": "eraserhd",
-        "ref": "weechat-darwin-fix",
+        "owner": "NixOS",
+        "ref": "master",
         "repo": "nixpkgs",
         "type": "github"
       }
