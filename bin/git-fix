@@ -1,0 +1,27 @@
+#!/bin/sh
+
+git status --porcelain |awk '
+    BEGIN{
+        FS = "??";
+    }
+    substr($0, 1, 1) == "U" || substr($0, 2, 1) == "U" {
+        filename = substr($0, 4);
+        line_number = 1;
+        found_conflict = 0;
+        at_conflict = 0;
+        while (getline line < filename) {
+            if (at_conflict) {
+                at_conflict = 0;
+                printf("%s:%d: %s\n", filename, line_number, line);
+            }
+            if (line ~ /^<<<</) {
+                at_conflict = 1;
+                found_conflict = 1;
+            }
+            line_number++;
+        }
+        if (!found_conflict) {
+            printf("%s:1: FILE DELETED?\n", filename);
+        }
+    }
+'
