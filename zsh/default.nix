@@ -30,7 +30,7 @@
       setopt prompt_subst
       PROMPT='
       %(?.%F{green}.%F{red}[%?] )%n@%m %1d ''${vcs_info_msg_0_}
-      $%f '
+      ᐅ%f '
       RPS1=""
     '';
     environment.shells = [ pkgs.zsh ];
