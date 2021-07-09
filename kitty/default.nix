@@ -47,7 +47,7 @@ in {
         cursor_text_color #c782ea
 
         scrollback_lines 5000
-        map shift+ctrl+h launch --stdin-add-formatting --stdin-source=@screen_scrollback --cwd=current --type=overlay kak-scrollback-pager
+        map shift+ctrl+h launch --stdin-add-formatting --stdin-source=@screen_scrollback --cwd=current --type=overlay kak-scrollback-pager @scrolled-by @cursor-x @cursor-y @line-count
 
         window_resize_step_cells 1
         window_resize_step_lines 1

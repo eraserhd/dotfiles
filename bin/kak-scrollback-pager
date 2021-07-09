@@ -5,17 +5,13 @@
 #
 # Example kitty config:
 #     scrollback_lines 5000
-#     map shift+ctrl+h launch --stdin-add-formatting --stdin-source=@screen_scrollback --cwd=current --type=overlay kak-scrollback-pager
+#     map shift+ctrl+h launch --stdin-add-formatting --stdin-source=@screen_scrollback --cwd=current --type=overlay kak-scrollback-pager @scrolled-by @cursor-x @cursor-y @line-count
 #
 
-tmp="$KITTY_PIPE_DATA"
-scrolledBy="${tmp%%:*}"
-tmp="${tmp#*:}"
-cursorX="${tmp%%,*}"
-tmp="${tmp#*,}"
-cursorY="${tmp%%:*}"
-tmp="${tmp#*:}"
-lines="${tmp%%,*}"
+scrolledBy="$1"
+cursorX="$2"
+cursorY="$3"
+lines="$4"
 
 # select must happen in the window context, but we are notified of new
 # content in the buffer context.  For scrollback buffers, we assume there's
