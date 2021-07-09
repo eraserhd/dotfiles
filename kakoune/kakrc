@@ -258,10 +258,6 @@ hook global WinSetOption filetype=ruby %{
     set-option window indentwidth 2
 }
 
-hook global WinSetOption filetype=typescript %{
-    set-option window indentwidth 2
-}
-
 # Autowrap
 # ‾‾‾‾‾‾‾‾
 
