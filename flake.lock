@@ -28,11 +28,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1625516974,
-        "narHash": "sha256-hq4eAl7wJoGwjtHCdqItjb81XgjVL5K79NX3jSmNRMA=",
+        "lastModified": 1626073055,
+        "narHash": "sha256-vocByfpVu6m9zvtJugDvmd6/9iT2HJuG4tmDICKd0lI=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "97d183e2e466808f5d7cd1c838815bedd88f37fe",
+        "rev": "775cb20bd4af7781fbf336fb201df02ee3d544bb",
         "type": "github"
       },
       "original": {
@@ -43,16 +43,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1625583504,
-        "narHash": "sha256-xyvoW1L9VbCtNPSud85aMNMjXelt21AnA7F1T9pmP5M=",
-        "owner": "eraserhd",
+        "lastModified": 1626093917,
+        "narHash": "sha256-+ERokNKgZbqnNG6XB0HMkc3kQ6B9+hPwPs6n9BoEaVI=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "d46de25f18c0fb0013807478527dc64aa0e1c0e0",
+        "rev": "c303cb45662d7d07e25cbd2b86785889f9e58eb3",
         "type": "github"
       },
       "original": {
-        "owner": "eraserhd",
-        "ref": "fix-broken-vault-darwin",
+        "owner": "NixOS",
+        "ref": "master",
         "repo": "nixpkgs",
         "type": "github"
       }
