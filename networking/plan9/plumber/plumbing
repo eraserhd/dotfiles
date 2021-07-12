@@ -44,6 +44,15 @@ attr add     session=kakoune
 attr add     'evaluate=''edit -existing %§'$data'§ '$2' '$3''''
 plumb to edit
 
+# files tagged by (line number,column number) go to editor
+type is text
+data matches '([.a-zA-Z¡-￿0-9_/\-@]*[a-zA-Z¡-￿0-9_/\-])\(([0-9]+),([0-9]+)\)'
+data set     $1
+data set     $file
+attr add     session=kakoune
+attr add     'evaluate=''edit -existing %§'$data'§ '$2' '$3''''
+plumb to edit
+
 # existing files, tagged by line number, go to editor
 #arg isfile	$1
 type is text
