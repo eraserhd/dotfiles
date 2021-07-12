@@ -10,20 +10,7 @@ in
   config = {
     nixpkgs.overlays = [
       (self: super: rec {
-        gerbil = super.gerbil.overrideAttrs (oldAttrs: {
-          src = super.pkgs.fetchFromGitHub (import ./gerbil.nix);
-        });
-
         add-missing = dogfood super ./add-missing.nix {};
-
-        gerbilPackages = {
-          clojerbil = dogfood super ./clojerbil.nix {};
-          gerbil-bencode = dogfood super ./gerbil-bencode.nix {};
-        };
-
-        gitAndTools = super.gitAndTools // {
-          gitout = dogfood super ./gitout.nix { inherit gerbilPackages; };
-        };
 
         kakoune-unwrapped = super.kakoune-unwrapped.overrideAttrs (oldAttrs: {
           src = super.pkgs.fetchFromGitHub (import ./kakoune.nix);
