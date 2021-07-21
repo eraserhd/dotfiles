@@ -29,6 +29,12 @@ map global normal E     ': execute-keys %val{count}<lt>a-E<gt><ret>'
 map global normal <a-e> ': execute-keys %val{count}e<ret>'
 map global normal <a-E> ': execute-keys %val{count}E<ret>'
 
+# Prompt navigation in scrollback
+# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
+map global normal <c-p> 'gh<a-/>^ᐅ [^\n]<ret>;'
+map global normal <c-n> '/^ᐅ \K[^\n]<ret>'
+
 # quickscope.kak
 # ‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
