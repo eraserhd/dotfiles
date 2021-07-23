@@ -44,22 +44,39 @@ local function stack_window(window)
   hs.window.focusedWindow():setFrame(frame, 0)
 end
 
-not_sigils = hs.loadSpoon("WindowSigils")
+local function split_vertically()
+  local window = hs.window.focusedWindow()
+  local frame = window:frame()
+  frame.w = frame.w/2
+  window:setFrame(frame, 0)
+end
+
+local function split_horizontally()
+  local window = hs.window.focusedWindow()
+  local frame = window:frame()
+  frame.h = frame.h/2
+  window:setFrame(frame, 0)
+end
+
+--not_sigils = hs.loadSpoon("WindowSigils")
+not_sigils = dofile('/Users/jfelice/src/Spoons/Source/WindowSigils.spoon/init.lua')
 not_sigils:configure({
   hotkeys = {
     enter = {{"control"}, "W"}
   },
   mode_keys = {
-    [{{'shift'}, 'f'}] = toggle_full_screen,
-    [{{'shift'}, 'i'}] = ignore_notification,
-    [{{'shift'}, 'n'}] = activate_notification,
-    [{{}, 'v'}]        = paste_as_keystrokes,
-    [{{}, ','}]        = rerun_last_command,
+    [{{'shift'}, 'f'}]  = toggle_full_screen,
+    [{{'shift'}, 'i'}]  = ignore_notification,
+    [{{'shift'}, 'n'}]  = activate_notification,
+    [{{}, '-'}]         = split_horizontally,
+    [{{'shift'}, '\\'}] = split_vertically,
+    [{{}, 'v'}]         = paste_as_keystrokes,
+    [{{}, ','}]         = rerun_last_command,
   },
   sigil_actions = {
-    [{}]               = focus_window,
-    [{'ctrl'}]         = stack_window,
-    [{'alt'}]          = swap_window,
+    [{}]       = focus_window,
+    [{'ctrl'}] = stack_window,
+    [{'alt'}]  = swap_window,
   }
 })
 
