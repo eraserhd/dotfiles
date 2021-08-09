@@ -461,7 +461,6 @@ define-command rm %{
 define-command \
     -override \
     -docstring %{mv <target>: move this file to <target> dir or file} \
-    -shell-script-candidates %{ag -l -f} \
     -params 1 \
     mv %{
     evaluate-commands %sh{
