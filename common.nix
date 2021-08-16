@@ -18,6 +18,7 @@ with lib;
     ./fonts
     ./git
     ./gnupg
+    ./go
     ./gtypist
     ./hammerspoon
     ./i3

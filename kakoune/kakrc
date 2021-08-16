@@ -450,6 +450,12 @@ hook -group scheme global WinSetOption filetype=scheme %{
     set-option window indentwidth 2
 }
 
+# LSP
+# ‾‾‾
+
+evaluate-commands %sh{kak-lsp --kakoune -s $kak_session}
+hook global WinSetOption filetype=go lsp-enable-window
+
 # Misc
 # ‾‾‾‾
 

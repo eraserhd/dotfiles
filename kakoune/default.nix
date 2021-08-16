@@ -14,8 +14,8 @@ in {
             plugins = with pkgs.kakounePlugins; [
               case-kak
               kak-ansi
-              kak-fzf
               kak-jira
+              kak-lsp
               my-kak-plumb
               openscad-kak
               parinfer-rust
@@ -30,6 +30,7 @@ in {
       environment.systemPackages = with pkgs; [
         pythonPackages.editorconfig
         kakouneWrapper
+        kak-lsp
       ];
 
       environment.variables.EDITOR = "${pkgs.kakouneWrapper}/bin/kak";
