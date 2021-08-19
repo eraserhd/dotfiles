@@ -21,18 +21,18 @@ let
   in
     mapAttrs (name: value: fixVariableReferences value) vars;
 
+  homeDirectory = config.users.users.jfelice.home;
 in {
   config = {
     environment.systemPackages = with pkgs; [ kitty ];
     home-manager.users.jfelice = { pkgs, ... }: {
-      home.file.".config/kitty/macos-launch-services-cmdline".text = let
-        homeDirectory = config.users.users.jfelice.home;
-      in ''
-        --listen-on=unix:/Users/jfelice/.run/kitty --single-instance --directory=${homeDirectory}/src
-      '';
-
       programs.kitty = {
         enable = true;
+        darwinLaunchOptions = [
+          "--listen-on=unix:${homeDirectory}/.run/kitty"
+          "--single-instance"
+          "--directory=${homeDirectory}/src"
+        ];
         font = {
           name = "Input Mono Narrow Light";
           size = 11;

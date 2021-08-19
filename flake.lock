@@ -28,11 +28,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1629399475,
-        "narHash": "sha256-JWlVKKfjcgDu1YelL047izaHSO9OTdTJClBd3f9DDNs=",
+        "lastModified": 1629402170,
+        "narHash": "sha256-0MxnOMXhLUy7oUi/pFLF1pyixQcHE/2p6qlR8XRt/Qg=",
         "owner": "eraserhd",
         "repo": "home-manager",
-        "rev": "3e55e5e1f15d1357b7bd545fa6dfa967ca7ecf14",
+        "rev": "69ca7f7c4d98fc42bdd0d88524e4b2ed37528076",
         "type": "github"
       },
       "original": {
