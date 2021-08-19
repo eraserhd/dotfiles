@@ -2,23 +2,6 @@
 
 with lib;
 let
-  weechat-autosort = pkgs.stdenv.mkDerivation {
-    name = "weechat-autosort";
-    src = pkgs.fetchFromGitHub {
-      owner = "de-vri-es";
-      repo = "weechat-autosort";
-      rev = "d62fa8633015ebc2676060fcdae88c402977be46";
-      sha256 = "doYDRIWiuHam2i3r3J3BZuWEhopoN4jms/xPXGyypok=";
-    };
-    buildPhase = ''
-      :
-    '';
-    installPhase = ''
-      mkdir -p $out
-      cp autosort.py $out/
-    '';
-  };
-
   edit-weechat = pkgs.stdenv.mkDerivation {
     name = "edit-weechat";
     src = pkgs.fetchFromGitHub {
@@ -42,7 +25,10 @@ in {
       (self: super: {
         weechat = (super.weechat.override {
           configure = {availablePlugins, ...}: {
-            scripts = with self.weechatScripts; [ wee-slack ];
+            scripts = with self.weechatScripts; [
+              wee-slack
+              weechat-autosort
+            ];
             plugins = with availablePlugins; [ python ];
           };
         });
@@ -65,7 +51,6 @@ in {
       home.file.".weechat/logger.conf".source = ./config/logger.conf;
       home.file.".weechat/plugins.conf".source = ./config/plugins.conf;
       home.file.".weechat/python.conf".source = ./config/python.conf;
-      home.file.".weechat/python/autoload/autosort.py".source = "${weechat-autosort}/autosort.py";
       home.file.".weechat/python/autoload/edit.py".source = "${edit-weechat}/edit.py";
       home.file.".weechat/python/autoload/url_hint.py".source = ./config/python/autoload/url_hint.py;
       home.file.".weechat/relay.conf".source = ./config/relay.conf;
