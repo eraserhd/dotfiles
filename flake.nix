@@ -5,7 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/master";
     darwin.url = "github:lnl7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager.url = "github:eraserhd/home-manager/kitty-env";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     twou.url = "git+ssh://git@github.com/2uinc/nix-2u?ref=develop";
     twou.inputs.nixpkgs.follows = "nixpkgs";
