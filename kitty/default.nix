@@ -18,10 +18,8 @@ let
     }
     else {
     });
-
-    directives = map (name: "env ${name}=${fixVariableReferences (getAttr name vars)}") (attrNames vars);
   in
-    concatStringsSep "\n" directives;
+    mapAttrs (name: value: fixVariableReferences value) vars;
 
 in {
   config = {
@@ -95,9 +93,7 @@ in {
         keybindings = {
           "shift+ctrl+h" = "launch --stdin-add-formatting --stdin-source=@screen_scrollback --cwd=current --type=overlay kak-scrollback-pager @scrolled-by @cursor-x @cursor-y @line-count";
         };
-        extraConfig = ''
-          ${environment "jfelice"}
-        '';
+        environment = environment "jfelice";
       };
     };
   };
