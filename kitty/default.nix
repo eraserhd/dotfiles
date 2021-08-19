@@ -44,15 +44,15 @@ in {
           italic_font = "Input Mono Narrow Light Italic";
           bold_italic_font = "Input Mono Narrow Medium Italic";
 
-          allow_remote_control = "yes";
+          allow_remote_control = true;
 
           scrollback_lines = "5000";
 
-          window_resize_step_cells = "1";
-          window_resize_step_lines = "1";
+          window_resize_step_cells = 1;
+          window_resize_step_lines = 1;
           window_margin_width = "5.0";
 
-          macos_option_as_alt = "yes";
+          macos_option_as_alt = true;
           macos_thicken_font = "0.5";
 
           foreground = "#bfc7d5";
