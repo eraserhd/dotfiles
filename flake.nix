@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/master";
-    darwin.url = "github:lnl7/nix-darwin/master";
+    darwin.url = "github:eraserhd/nix-darwin/magic-mouse";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:eraserhd/home-manager/kitty-env";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
