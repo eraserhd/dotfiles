@@ -26,6 +26,7 @@ in {
         weechat = (super.weechat.override {
           configure = {availablePlugins, ...}: {
             scripts = with self.weechatScripts; [
+              url_hint
               wee-slack
               weechat-autosort
             ];
@@ -52,7 +53,6 @@ in {
       home.file.".weechat/plugins.conf".source = ./config/plugins.conf;
       home.file.".weechat/python.conf".source = ./config/python.conf;
       home.file.".weechat/python/autoload/edit.py".source = "${edit-weechat}/edit.py";
-      home.file.".weechat/python/autoload/url_hint.py".source = ./config/python/autoload/url_hint.py;
       home.file.".weechat/relay.conf".source = ./config/relay.conf;
       home.file.".weechat/script.conf".source = ./config/script.conf;
       home.file.".weechat/sec.conf".source = ./config/sec.conf;
