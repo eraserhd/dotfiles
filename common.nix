@@ -10,7 +10,6 @@ with lib;
     ./browser
     ./chromium
     ./clojure
-    ./coq
     ./docker
     ./dogfood
     ./emacs
