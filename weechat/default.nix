@@ -1,31 +1,14 @@
 { lib, config, pkgs, ... }:
 
 with lib;
-let
-  edit-weechat = pkgs.stdenv.mkDerivation {
-    name = "edit-weechat";
-    src = pkgs.fetchFromGitHub {
-      owner = "keith";
-      repo = "edit-weechat";
-      rev = "c1f6966d32f8c54a480fa60b20eb9e82c4a16a33";
-      sha256 = "1s42r0l0xkhlp6rbc23cm4vlda91il6cg53w33hqfhd2wz91s66w";
-    };
-    buildPhase = ''
-      :
-    '';
-    installPhase = ''
-      mkdir -p $out
-      cp edit.py $out/
-    '';
-  };
-
-in {
+{
   config = {
     nixpkgs.overlays = [
       (self: super: {
         weechat = (super.weechat.override {
           configure = {availablePlugins, ...}: {
             scripts = with self.weechatScripts; [
+              edit
               url_hint
               wee-slack
               weechat-autosort
@@ -52,7 +35,6 @@ in {
       home.file.".weechat/logger.conf".source = ./config/logger.conf;
       home.file.".weechat/plugins.conf".source = ./config/plugins.conf;
       home.file.".weechat/python.conf".source = ./config/python.conf;
-      home.file.".weechat/python/autoload/edit.py".source = "${edit-weechat}/edit.py";
       home.file.".weechat/relay.conf".source = ./config/relay.conf;
       home.file.".weechat/script.conf".source = ./config/script.conf;
       home.file.".weechat/sec.conf".source = ./config/sec.conf;

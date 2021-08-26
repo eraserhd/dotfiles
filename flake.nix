@@ -2,7 +2,7 @@
   description = "eraserhd's machine configs";
 
   inputs = {
-    nixpkgs.url = "github:eraserhd/nixpkgs/weechat-url_hint";
+    nixpkgs.url = "github:eraserhd/nixpkgs/weechat-edit";
     darwin.url = "github:eraserhd/nix-darwin/magic-mouse";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:eraserhd/home-manager/kitty-env";

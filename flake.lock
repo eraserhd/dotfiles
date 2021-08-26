@@ -44,16 +44,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1629899424,
-        "narHash": "sha256-uuRZur1WkwY4s/mh1dW6K+01YafhDQTG24oQfa3Ej+s=",
+        "lastModified": 1629980031,
+        "narHash": "sha256-Ul2uJASBfFe/BBBJSDvvk6Y73pOIv0C9bzWa4D26DQo=",
         "owner": "eraserhd",
         "repo": "nixpkgs",
-        "rev": "5e469a373cf21f82a80f07cd1007f11b5ba37f47",
+        "rev": "4d81b7a99c03715a8a868a70c342a8f557ff647f",
         "type": "github"
       },
       "original": {
         "owner": "eraserhd",
-        "ref": "weechat-url_hint",
+        "ref": "weechat-edit",
         "repo": "nixpkgs",
         "type": "github"
       }
