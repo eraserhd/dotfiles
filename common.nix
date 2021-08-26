@@ -42,7 +42,6 @@ with lib;
     ./tex
     ./timeular
     ./tmux
-    ./tracker
     ./usb-overdrive
     ./vnc
     ./weechat
