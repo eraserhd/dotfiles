@@ -63,16 +63,6 @@ in {
           fi
       }
 
-      ssh() {
-          if [[ "$TERM" = "tmux-256color" ]]; then
-              TERM=screen command ssh "$@"
-              return $?
-          else
-              command ssh "$@"
-              return $?
-          fi
-      }
-
       source_if_exists ~/.nix-profile/etc/profile.d/nix.sh
       source ${toString ../bin/private.sh}
 

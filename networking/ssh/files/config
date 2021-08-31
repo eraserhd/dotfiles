@@ -3,10 +3,5 @@ Host *
     ForwardAgent yes
 
 Host crunch
-    HostName 10.0.0.2
+    HostName crunch.local
     ForwardAgent yes
-
-Host cnc
-    HostName 10.0.0.3
-    ForwardAgent yes
-    User cnc
