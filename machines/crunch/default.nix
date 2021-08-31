@@ -4,22 +4,25 @@
   imports = [ ../../common.nix ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
+  boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/5fcc6180-13bf-4dc9-a8a0-fabf45c50a03";
+    { device = "/dev/disk/by-uuid/95594027-89fd-4f8c-966e-da035aa59b87";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/A464-04ED";
+    { device = "/dev/disk/by-uuid/3624-3954";
       fsType = "vfat";
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/54fc28ec-2594-49a5-9de7-fbb6bab34070"; }
+    [ { device = "/dev/disk/by-uuid/05c1d59b-9cfc-4767-b8e3-4d4f99859411"; }
     ];
+
+  hardware.video.hidpi.enable = lib.mkDefault true;
 
   nix.maxJobs = 1;
   nix.buildCores = 20;
