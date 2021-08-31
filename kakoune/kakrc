@@ -455,6 +455,7 @@ hook -group scheme global WinSetOption filetype=scheme %{
 
 evaluate-commands %sh{kak-lsp --kakoune -s $kak_session}
 hook global WinSetOption filetype=go lsp-enable-window
+map global user l ': enter-user-mode lsp<ret>'
 
 # Misc
 # ‾‾‾‾
