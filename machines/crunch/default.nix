@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 {
   imports = [ ../../common.nix ];
@@ -24,6 +24,11 @@
 
   hardware.video.hidpi.enable = lib.mkDefault true;
 
+  #nix.package = pkgs.nixFlakes;
+  #nix.extraOptions = ''
+  #  experimental-features = nix-command flakes
+  #'';
+
   nix.maxJobs = 1;
   nix.buildCores = 20;
 
@@ -35,36 +40,42 @@
 
   local.systemDisplayName = "crunch";
 
+  networking.useDHCP = false;
+  networking.interfaces.wlp65s0.useDHCP = true;
+
   networking = {
-      hostName = "crunch";
-      defaultGateway = {
-        address = "10.0.0.1";
-        interface = "wlp65s0";
-      };
-      interfaces.wlp65s0 = {
-        useDHCP = false;
-        ipv4 = {
-          addresses = [ {
-            address = "10.0.0.2";
-            prefixLength = 24;
-          } ];
-          routes = [
-            { address = "10.0.0.0"; prefixLength = 24; }
-          ];
-        };
-      };
-      nameservers = [ "8.8.8.8" "8.8.4.4" ];
-      firewall.enable = true;
-      wireless.enable = true;
+    hostName = "crunch";
+    nameservers = [ "8.8.8.8" "8.8.4.4" ];
+    firewall.enable = false;
+    wireless = {
+      enable = true;
+      interfaces = [ "wlp65s0" ];
+    };
   };
 
   time.timeZone = "America/New_York";
 
   environment.systemPackages = with pkgs; [
-    glib
+    pinentry
   ];
 
   documentation.dev.enable = true;
+
+  programs.gnupg.agent = {
+    enable = true;
+    enableExtraSocket = false;
+    pinentryFlavor = "tty";
+  #  enableSSHSupport = true;
+  };
+
+  services.avahi = {
+      enable = true;
+      nssmdns = true;
+      publish.enable = true;
+      publish.addresses = true;
+      publish.hinfo = true;
+      publish.workstation = true;
+  };
 
   services.openssh = {
     enable = true;
@@ -76,31 +87,36 @@
     '';
   };
 
-  local.bluetooth.enable = true;
-  local.services.X11.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
+  #local.bluetooth.enable = true;
+  #local.services.X11.enable = true;
+  #services.xserver.videoDrivers = [ "nvidia" ];
 
   nix.nixPath = [
-    "nixpkgs=/home/jfelice/src/dotfiles/nixpkgs"
     "nixos-config=/home/jfelice/src/dotfiles/machines/crunch/default.nix"
   ];
 
   nixpkgs.config.allowUnfree = true;
 
-  users.users = {
+  users.mutableUsers = false;
+  users.users = let
+    keys = [
+"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDWF7+WLN7pSk+u/TVjJgwSgGbINq0TWbsHDQI29LNvnbsiMfqXPAUY91zXnaKI/jala3fMH9K96amMhMRRp5qt8X3paJCkTKzPpegxOVNopMOebX9uWf+1BcdUllk4ejNBjeS2dQ63MfpjZ3S5cFeji5G8gUqOLgqZohnPlITs4WU7YEOaIs/1xP/8iKw8MIYr00AUEYqQzq/ucX6ea0ACTHlrw7o0qfqFXWeL4PKaKbad9CwyMXpifAaAoGSW7p2X+bFUFx1uMr01rT+QT8s8+j/u/sVDteAkjMGHDXyMVYmEm1Zc8oa2fUw3OuDk8x/G4YRqZIXkKbCQWAb/5Alb"
+"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC0/PrHaQ5nXnhmeT8ABrxe/to5e8bQz0Cn7N5uXD7JGBc65DdlLP0vPhhQH9GDUHtv+WX3AmkYpIlnUYFeXc1/sLoLbkAQQK8cZuUdx0MEQGWa4EYxIX9FLDrkmIOvs4o2QjQiWIIDmExbk62lNm2CKaQerMiy/m93vRkhpkGnTdnzPafs3DLAMbu4Za+WQGm6kJRdKaCxNw11Rl3cMeixkScwlOpjYIKEs0NbtkKwknAti7gdaxpcoGenjWOsj90GTClCgNZ8jjYQr+3Uo/5FOBlIvhU0S3ctjW7vG4Yww68aSMUrCDIiY3HawccN35X9uT1B6hpu3WpGqg/sz4YV"
+    ];
+  in {
     jfelice = {
       isNormalUser = true;
       home = "/home/jfelice";
       extraGroups = [ "docker" "wheel" ];
-      openssh.authorizedKeys.keys = config.local.authorizedKeys.jfelice;
+      openssh.authorizedKeys.keys = keys;
     };
     alex = {
       isNormalUser = true;
       home = "/home/alex";
       extraGroups = [ "docker" "wheel" ];
-      openssh.authorizedKeys.keys = config.local.authorizedKeys.alex;
+      #openssh.authorizedKeys.keys = config.local.authorizedKeys.alex;
     };
-    root.openssh.authorizedKeys.keys = config.local.authorizedKeys.jfelice;
+    root.openssh.authorizedKeys.keys = keys;
   };
 
   security.sudo.extraConfig = ''
@@ -109,14 +125,10 @@
 
   home-manager.verbose = true;
 
-  # This value determines the NixOS release with which your system is to be
-  # compatible, in order to avoid breaking some software such as database
-  # servers. You should change this only after NixOS release notes say you
-  # should.
-  system.stateVersion = "19.03";
+  system.stateVersion = "21.05";
 
   local.plan9.cpu.enable = true;
   #local.sendOutgoingMailWithSES.enable = true;
-  local.updateDNS.enable = true;
+  #local.updateDNS.enable = true;
   local.tmux.paneZeroCommand = "weechat";
 }
