@@ -99,3 +99,16 @@ App Store
 
 * Enable Switch to Desktop N key shortcuts in Keyboard preferences Mission
   Control item
+
+2021 Crunch
+-----------
+
+* Install NixOS with WPA config
+* nix-env -i kakoune git gnupg
+* git clone dotfiles 
+* Set programs.gnupg.agent.enable = true; nixos-rebuild switch (pinentry problem)
+* reboot, because the above doesn't appear to fix it
+* Set programs.gnupg.agent.pinentryFlavor and enableExtraSocket (not sure which)
+* Lots of systemctl --user restart gpg-agent
+* git crypt unlock -- works!!
+

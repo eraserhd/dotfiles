@@ -15,8 +15,7 @@ then
     fi
 fi
 
-git submodule init
-git submodule update
+nix-env -i kakoune git git-crypt gnupg
 
 if [ "$(uname -s)" == "Darwin" ]
 then
