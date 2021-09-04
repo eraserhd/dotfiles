@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ options, lib, pkgs, ... }:
 
 let
   custom-input-fonts = pkgs.stdenv.mkDerivation {
@@ -52,5 +52,11 @@ in {
       custom-input-fonts
       mononoki
     ];
-  };
+  } // (if (builtins.hasAttr "fontDir" options.fonts)
+  then {
+    fonts.fontDir.enable = true; # NixOS
+  }
+  else {
+    fonts.enableFontDir = true;  # Manage fonts on Darwin
+  });
 }
