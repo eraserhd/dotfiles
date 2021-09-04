@@ -28,11 +28,6 @@ in {
     home-manager.users.jfelice = { pkgs, ... }: {
       programs.kitty = {
         enable = true;
-        darwinLaunchOptions = [
-          "--listen-on=unix:${homeDirectory}/.run/kitty"
-          "--single-instance"
-          "--directory=${homeDirectory}/src"
-        ];
         font = {
           name = "Input Mono Narrow Light";
           size = 11;
@@ -94,7 +89,16 @@ in {
           "shift+ctrl+h" = "launch --stdin-add-formatting --stdin-source=@screen_scrollback --cwd=current --type=overlay kak-scrollback-pager @scrolled-by @cursor-x @cursor-y @line-count";
         };
         environment = environment "jfelice";
-      };
+      } // (if pkgs.stdenv.isDarwin
+            then {
+              darwinLaunchOptions = [
+                "--listen-on=unix:${homeDirectory}/.run/kitty"
+                "--single-instance"
+                "--directory=${homeDirectory}/src"
+              ];
+            }
+            else {}
+      );
     };
   };
 }
