@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, options, lib, ... }:
 
 with lib;
 let
@@ -32,7 +32,8 @@ let
   };
 
 in {
-  config = {
+  config = (if (builtins.hasAttr "hammerspoon" options.services)
+  then {
     services.hammerspoon.enable = true;
 
     home-manager.users.jfelice = _: {
@@ -40,5 +41,7 @@ in {
         ".hammerspoon/init.lua" = { source = "${checkedConfig}/init.lua"; };
       } // (mapAttrs' (name: value: nameValuePair ".hammerspoon/Spoons/${name}.spoon" { source = "${value}/Source/${name}.spoon"; }) spoons);
     };
-  };
+  }
+  else {
+  });
 }
