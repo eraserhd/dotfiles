@@ -24,11 +24,6 @@
 
   hardware.video.hidpi.enable = lib.mkDefault true;
 
-  #nix.package = pkgs.nixFlakes;
-  #nix.extraOptions = ''
-  #  experimental-features = nix-command flakes
-  #'';
-
   nix.maxJobs = 1;
   nix.buildCores = 20;
 
