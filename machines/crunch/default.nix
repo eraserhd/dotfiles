@@ -107,7 +107,7 @@
       extraGroups = [ "docker" "wheel" ];
       openssh.authorizedKeys.keys = config.local.authorizedKeys.alex;
     };
-    root.openssh.authorizedKeys.keys = keys;
+    root.openssh.authorizedKeys.keys = config.local.authorizedKeys.jfelice;
   };
 
   security.sudo.extraConfig = ''
