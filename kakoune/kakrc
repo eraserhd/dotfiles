@@ -177,6 +177,14 @@ define-command -override -hidden copy-dquote-to-snarf %{
 hook -group snarf global FocusIn .* copy-snarf-to-dquote
 hook -group snarf global RegisterModified '"' copy-dquote-to-snarf
 
+# Go
+# ‾‾
+
+hook global WinSetOption filetype=go %{
+    set-option window tabstop 8
+    set-option window indentwidth 8
+}
+
 # Soft tabs
 # ‾‾‾‾‾‾‾‾‾
 
@@ -193,8 +201,8 @@ define-command -params 0 keep-tabs %{
     remove-hooks window expand-tabs
 }
 
-hook global WinSetOption filetype=(?!makefile).* expand-tabs
-hook global WinSetOption filetype=makefile keep-tabs
+hook global WinSetOption filetype=(?!makefile|go).* expand-tabs
+hook global WinSetOption filetype=(makefile|go) keep-tabs
 
 # Jump
 # ‾‾‾‾
