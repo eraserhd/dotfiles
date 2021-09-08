@@ -177,16 +177,32 @@ define-command -override -hidden copy-dquote-to-snarf %{
 hook -group snarf global FocusIn .* copy-snarf-to-dquote
 hook -group snarf global RegisterModified '"' copy-dquote-to-snarf
 
+# Makefile
+# ‾‾‾‾‾‾‾‾
+
+hook global WinSetOption filetype=makefile %{
+    set-option window expandtabs no
+    hook -once -always WinSetOption filetype=(?!makefile).* %{
+        unset-option window expandtabs
+    }
+}
+
 # Go
 # ‾‾
 
 hook global WinSetOption filetype=go %{
     set-option window tabstop 8
     set-option window indentwidth 8
+    set-option window expandtabs no
+    hook -once -always WinSetOption filetype=(?!go).* %{
+        unset-option window expandtabs
+    }
 }
 
 # Soft tabs
 # ‾‾‾‾‾‾‾‾‾
+
+declare-option -docstring 'Whether to expand tabs to spaces' bool expandtabs yes
 
 define-command -params 0 expand-tabs %{
     hook -group expand-tabs window InsertChar \t %{ try %{
@@ -201,8 +217,9 @@ define-command -params 0 keep-tabs %{
     remove-hooks window expand-tabs
 }
 
-hook global WinSetOption filetype=(?!makefile|go).* expand-tabs
-hook global WinSetOption filetype=(makefile|go) keep-tabs
+hook global WinSetOption expandtabs=yes expand-tabs
+hook global WinSetOption expandtabs=no keep-tabs
+
 
 # Jump
 # ‾‾‾‾
