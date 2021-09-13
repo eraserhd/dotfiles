@@ -5,7 +5,7 @@
     nixpkgs.url = "github:eraserhd/nixpkgs/weechat-edit";
     darwin.url = "github:eraserhd/nix-darwin/magic-mouse";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:eraserhd/home-manager/kitty-env";
+    home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     twou.url = "git+ssh://git@github.com/2uinc/nix-2u?ref=develop";
     twou.inputs.nixpkgs.follows = "nixpkgs";
