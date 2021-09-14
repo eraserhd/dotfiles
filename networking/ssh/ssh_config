@@ -1,0 +1,55 @@
+IPQoS=none
+Host *
+    ForwardAgent yes
+
+Host crunch
+    HostName crunch.local
+    ForwardAgent yes
+
+Host nexus-prod
+    HostName nexus-prod
+    User ubuntu
+    IdentityFile ~/.ssh/nexus-prod.pem
+    ProxyCommand nc $(aws --profile=trilogy-current --region=us-east-1 ec2 describe-instances --filter Name=tag:Name,Values=%h --query="Reservations[*].Instances[*].[LaunchTime, PublicIpAddress]" --output=text |sort |awk '$2 != "None"{n+=1; if (n == 1) print $2}') %p 
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
+Host nexus-qa
+    HostName nexus-qa
+    User ubuntu
+    IdentityFile ~/.ssh/nexus-qa.pem
+    ProxyCommand nc $(aws --profile=trilogy-current --region=us-east-1 ec2 describe-instances --filter Name=tag:Name,Values=%h --query="Reservations[*].Instances[*].[LaunchTime, PublicIpAddress]" --output=text |sort |awk '$2 != "None"{n+=1; if (n == 1) print $2}') %p 
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
+Host nexus-staging
+    HostName nexus-staging
+    User ubuntu
+    IdentityFile ~/.ssh/nexus-staging.pem
+    ProxyCommand nc $(aws --profile=trilogy-current --region=us-east-1 ec2 describe-instances --filter Name=tag:Name,Values=%h --query="Reservations[*].Instances[*].[LaunchTime, PublicIpAddress]" --output=text |sort |awk '$2 != "None"{n+=1; if (n == 1) print $2}') %p 
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
+Host nexus-backup
+    HostName nexus-backup
+    User ubuntu
+    IdentityFile ~/.ssh/nexus-backup.pem
+    ProxyCommand nc $(aws --profile=trilogy-current --region=us-east-1 ec2 describe-instances --filter Name=tag:Name,Values=%h --query="Reservations[*].Instances[*].[LaunchTime, PublicIpAddress]" --output=text |sort |awk '$2 != "None"{n+=1; if (n == 1) print $2}') %p 
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
+Host nexus-dev
+    HostName nexus-dev
+    User ubuntu
+    IdentityFile ~/.ssh/nexus-dev.pem
+    ProxyCommand nc $(aws --profile=trilogy-current --region=us-east-1 ec2 describe-instances --filter Name=tag:Name,Values=%h --query="Reservations[*].Instances[*].[LaunchTime, PublicIpAddress]" --output=text |sort |awk '$2 != "None"{n+=1; if (n == 1) print $2}') %p 
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
+Host nexus-sfsendgrid
+    HostName nexus-sfsendgrid
+    User ubuntu
+    IdentityFile ~/.ssh/nexus-sfsendgrid.pem
+    ProxyCommand nc $(aws --profile=trilogy-current --region=us-east-1 ec2 describe-instances --filter Name=tag:Name,Values=%h --query="Reservations[*].Instances[*].[LaunchTime, PublicIpAddress]" --output=text |sort |awk '$2 != "None"{n+=1; if (n == 1) print $2}') %p 
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
