@@ -8,6 +8,7 @@ with lib;
     ./anki
     ./aws
     ./browser
+    ./buildkite
     ./chromium
     ./clojure
     ./docker

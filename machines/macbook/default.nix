@@ -41,6 +41,7 @@
   };
 
   local.plan9.terminal.enable = true;
+  local.buildkite.enable = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
