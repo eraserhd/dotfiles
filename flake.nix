@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:eraserhd/nixpkgs/weechat-edit";
-    darwin.url = "github:eraserhd/nix-darwin/magic-mouse";
+    darwin.url = "github:LnL7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -13,6 +13,7 @@
 
   outputs  = { self, nixpkgs, darwin, home-manager, twou }: {
     darwinConfigurations."C02CW0J5ML87" = darwin.lib.darwinSystem {
+      system = "x86_64-darwin";
       modules = [
         ./machines/macbook
         ./modules/nix-darwin
