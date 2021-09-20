@@ -298,13 +298,6 @@ set-option global autowrap_column 78
 set-option global autowrap_fmtcmd 'fmt -w %c'
 set-option global autowrap_format_paragraph yes
 
-hook -group autowrap global WinSetOption filetype=(asciidoc|markdown) %{
-    autowrap-enable
-    hook -once window WinSetOption filetype=(?!asciidoc)(?!markdown).* %{
-        autowrap-disable
-    }
-}
-
 # Clojure
 # ‾‾‾‾‾‾‾
 
