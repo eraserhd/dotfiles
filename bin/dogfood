@@ -27,8 +27,3 @@ if ! git grep -w "$repo" >/dev/null; then
     printf 'dogfood: %s: not mentioned anywhere in dotfiles.\n' >&2
     exit 1
 fi
-
-:r
-
-git add dogfood/"$repo".nix
-git commit -m "Bump ${repo}" dogfood/"$repo".nix
