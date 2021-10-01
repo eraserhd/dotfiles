@@ -23,10 +23,9 @@ Host nexus-qa
     UserKnownHostsFile /dev/null
 
 Host nexus-staging
-    HostName nexus-staging
+    HostName nexus.stg.trilogy.2u.com
     User ubuntu
     IdentityFile ~/.ssh/nexus-staging.pem
-    ProxyCommand nc $(aws --profile=trilogy-current --region=us-east-1 ec2 describe-instances --filter Name=tag:Name,Values=%h --query="Reservations[*].Instances[*].[LaunchTime, PublicIpAddress]" --output=text |sort |awk '$2 != "None"{n+=1; if (n == 1) print $2}') %p 
     StrictHostKeyChecking no
     UserKnownHostsFile /dev/null
 
