@@ -488,6 +488,7 @@ define-command rm %{
 define-command \
     -override \
     -docstring %{mv <target>: move this file to <target> dir or file} \
+    -shell-script-candidates 'echo "$kak_bufname"'
     -params 1 \
     mv %{
     evaluate-commands %sh{
@@ -569,3 +570,12 @@ hook -group manage-jumpclient global ClientClose .* %{
 
 map global user j ': set-option global jumpclient %val{client}<ret>'
 
+# Nexus
+# ‾‾‾‾‾
+define-command \
+	-override \
+	-params 1 \
+	-shell-script-candidates '( cd nexus/services/core/sql && ls -1 *.sql )' \
+	N-sql %{
+	edit "nexus/services/core/sql/%arg{1}"
+}
