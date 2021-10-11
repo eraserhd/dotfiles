@@ -89,6 +89,7 @@ in {
       nix-prefetch-github
       posix_man_pages
       shellcheck
+      sqltools
       tree
       unzip
       wget
