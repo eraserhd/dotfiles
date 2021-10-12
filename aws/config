@@ -17,3 +17,4 @@ region = us-east-1
 [profile trilogy-new]
 role_arn = arn:aws:iam::631616465563:role/l1-developers
 source_profile = default
+region = us-west-2
