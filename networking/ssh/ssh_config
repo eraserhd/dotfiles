@@ -6,16 +6,6 @@ Host crunch
     HostName crunch.local
     ForwardAgent yes
 
-Host nexus-prod
-    HostName nexus.prod.trilogy.2u.com
-    User ubuntu
-    IdentityFile ~/.ssh/nexus-prod.pem
-
-Host nexus-qa
-    HostName nexus.stg.trilogy.2u.com
-    User ubuntu
-    IdentityFile ~/.ssh/nexus-qa.pem
-
 Host nexus-staging
     HostName nexus-staging
     User ubuntu
@@ -47,3 +37,5 @@ Host nexus-sfsendgrid
     ProxyCommand nc $(aws --profile=trilogy-current --region=us-east-1 ec2 describe-instances --filter Name=tag:Name,Values=%h --query="Reservations[*].Instances[*].[LaunchTime, PublicIpAddress]" --output=text |sort |awk '$2 != "None"{n+=1; if (n == 1) print $2}') %p
     StrictHostKeyChecking no
     UserKnownHostsFile /dev/null
+
+Include ~/src/nexus/main/scripts/ssh_config
