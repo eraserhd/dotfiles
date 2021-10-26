@@ -97,6 +97,9 @@ hook global WinSetOption filetype=(!scrollback).* %{
     hook -once window NormalIdle .* highlight-trailing-whitespace
 }
 
+# Scratch buffers
+hook global BufCreate '\*scratch(-\d+)?\*' %{ execute-keys '%<a-d>' }
+
 # Stolen from mawww (and heavily modified!)
 declare-option -hidden regex curword
 declare-option -hidden regex curword_word_class
