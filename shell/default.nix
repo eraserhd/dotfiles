@@ -90,6 +90,7 @@ in {
       posix_man_pages
       shellcheck
       sqltools
+      tableize
       tree
       unzip
       wget
