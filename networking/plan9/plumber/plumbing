@@ -20,7 +20,7 @@ plumb start web $data
 
 # urls go to web browser
 type is text
-data matches '(https?|ftp|file|gopher|mailto|news|nntp|telnet|wais|prospero)://[a-zA-Z0-9_@\-]+([.:][a-zA-Z0-9_@\-]+)*/?[a-zA-Z0-9_?,%#~&/\-+=]+([:.][a-zA-Z0-9_?,%#~&/\-+=]+)*'
+data matches '(https?|ftp|file|gopher|mailto|news|nntp|telnet|wais|prospero)://[a-zA-Z0-9_@\-]+([.:][a-zA-Z0-9_@\-]+)*/?[a-zA-Z0-9_?,$%#~&/\-+=]+([:.][a-zA-Z0-9_?,$%#~&/\-+=]+)*'
 plumb to web
 plumb start open-in-chrome-tab $0
 
