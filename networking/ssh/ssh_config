@@ -1,4 +1,7 @@
 IPQoS=none
+
+Include ~/src/nexus/main/scripts/ssh_config
+
 Host *
     ForwardAgent yes
 
@@ -38,4 +41,3 @@ Host nexus-sfsendgrid
     StrictHostKeyChecking no
     UserKnownHostsFile /dev/null
 
-Include ~/src/nexus/main/scripts/ssh_config
