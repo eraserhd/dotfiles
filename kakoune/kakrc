@@ -265,6 +265,23 @@ map global normal <a-*> '<a-i>w"/y<a-n>'
 
 map global user c ': enter-user-mode case<ret>'
 
+# fzf
+# ‾‾‾
+
+define-command -override f %sh{
+    printf 'require-module fzf\n'
+    if [ "$uname" = "Darwin" ]; then
+        dir="$(pwd)"
+        file_command="mdfind -onlyin "${dir}/" / |sed -e 's,^'"${dir}"'/,,'"
+    else
+        file_command="ag -l"
+    fi
+    printf 'set-option global fzf_file_command "%s"\n' "$file_command"
+    printf 'set-option global fzf_highlight_command bat\n'
+    printf 'fzf-file\n'
+}
+map global user f ': f<ret>'
+
 # Filetypes
 # ‾‾‾‾‾‾‾‾‾
 
@@ -463,7 +480,7 @@ hook global WinSetOption filetype=go lsp-enable-window
 map global user l ': enter-user-mode lsp<ret>'
 
 # Allow goto to be plumbed with the right dir
-hook global WinSetOption lsp_project_root=.* %{
+hook global WinSetOption lsp_project_root=.+ %{
     set-option window plumb_wdir "%opt{lsp_project_root}"
 }
 
