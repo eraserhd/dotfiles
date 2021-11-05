@@ -196,7 +196,7 @@ hook -group golang global WinSetOption filetype=go %{
     set-option window tabstop 8
     set-option window indentwidth 8
     set-option window expandtabs no
-    hook -group golang window BufWritePre .* lsp-formatting
+    hook -group golang window BufWritePre .* lsp-formatting-sync
     hook -once -always window WinSetOption filetype=(?!go).* %{
         unset-option window expandtabs
         remove-hooks window golang
