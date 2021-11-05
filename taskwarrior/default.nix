@@ -8,6 +8,8 @@
 
     home-manager.users.jfelice = { pkgs, ... }: {
       home.file.".taskrc".text = ''
+        news.version=2.6.1
+
         data.location=~/src/data/tasks
         reserved.lines=2
         confirmation=off
