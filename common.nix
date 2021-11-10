@@ -41,6 +41,7 @@ with lib;
     ./shell
     ./taskwarrior
     ./tex
+    ./timeular
     ./tmux
     ./usb-overdrive
     ./vnc
