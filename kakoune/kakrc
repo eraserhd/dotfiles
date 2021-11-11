@@ -99,14 +99,19 @@ hook global WinSetOption filetype=(!scrollback).* %{
 # Scratch buffers
 hook global BufCreate '\*scratch(-\d+)?\*' %{ execute-keys '%<a-d>' }
 
+
+# Highlight Current Word
+# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
+
 # Stolen from mawww (and heavily modified!)
 declare-option -hidden regex curword
+declare-option -hidden str curword_type 'normal'
 declare-option -hidden regex curword_word_class
-set-face global CurWord default,rgb:4a4a4a
-add-highlighter global/ dynregex '%opt{curword}' 0:CurWord
+set-face global Reference default,rgb:4a4a4a
+add-highlighter global/ dynregex '%opt{curword}' 0:Reference
 
-define-command -override -hidden highlight-curword %{
-    eval -draft %{
+define-command -override -hidden highlight-curword-normal %{
+    evaluate-commands -draft %{
         try %{
             execute-keys <space><a-i>w
             set-option buffer curword "(?<!%opt{curword_word_class})\Q%val{selection}\E(?!%opt{curword_word_class})"
@@ -114,6 +119,13 @@ define-command -override -hidden highlight-curword %{
             set-option buffer curword ''
         }
     }
+}
+define-command -override -hidden highlight-curword-lsp %{
+    set-option buffer curword ''
+    lsp-highlight-references
+}
+define-command -override -hidden highlight-curword %{
+    "highlight-curword-%opt{curword_type}"
 }
 define-command -override -hidden make-curword-word-class %{
     evaluate-commands %sh{
@@ -199,8 +211,10 @@ hook -group golang global WinSetOption filetype=go %{
     set-option window tabstop 8
     set-option window indentwidth 8
     set-option window expandtabs no
+    set-option window curword_type lsp
     hook -group golang window BufWritePre .* lsp-formatting-sync
     hook -once -always window WinSetOption filetype=(?!go).* %{
+        set-option window curword_type normal
         unset-option window expandtabs
         remove-hooks window golang
     }
