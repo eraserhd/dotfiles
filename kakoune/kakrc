@@ -143,8 +143,11 @@ define-command -override -hidden make-curword-word-class %{
 hook -group highlight-curword global NormalIdle .* highlight-curword
 hook -group highlight-curword global WinSetOption extra_word_chars=.* make-curword-word-class
 
-define-command wrap %{
-    add-highlighter window/wrap wrap -word -width 78
+# Wrapping
+# ‾‾‾‾‾‾‾‾
+
+define-command -override wrap %{
+    add-highlighter window/wrap wrap -word
 }
 
 # System clipboard handling
