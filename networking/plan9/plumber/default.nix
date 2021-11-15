@@ -3,6 +3,12 @@
 with lib;
 let
   cfg = config.local.plan9.terminal;
+
+  plumbing = pkgs.runCommand "plumbing" {} ''
+    substitute ${./plumbing} $out \
+      --subst-var-by jira_link '${pkgs.jira-link}'
+  '';
+
 in {
   config = mkIf cfg.enable (if (builtins.hasAttr "launchd" options)
   then {
@@ -10,7 +16,7 @@ in {
       script = ''
         exec bash -l -c '
           ${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace \
-              ${pkgs.plan9port-wrapper}/bin/9 plumber -p ${./plumbing} -f
+              ${pkgs.plan9port-wrapper}/bin/9 plumber -p ${plumbing} -f
         '
       '';
       serviceConfig = {
