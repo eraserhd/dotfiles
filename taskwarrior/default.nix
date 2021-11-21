@@ -2,10 +2,6 @@
 
 {
   config = {
-    environment.systemPackages = with pkgs; [
-      taskwarrior
-    ];
-
     home-manager.users.jfelice = { pkgs, ... }: {
       programs.taskwarrior = {
         enable = true;
