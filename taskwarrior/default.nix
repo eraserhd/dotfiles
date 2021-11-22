@@ -1,7 +1,12 @@
 { lib, config, pkgs, options, ... }:
 
-{
+let
+  nexus-github = pkgs.callPackage ./nexus-github {};
+
+in {
   config = {
+    environment.systemPackages = [ nexus-github ];
+
     home-manager.users.jfelice = { pkgs, ... }: {
       programs.taskwarrior = {
         enable = true;
