@@ -19,7 +19,14 @@ func main() {
 	var query struct {
 		Organization struct {
 			Repository struct {
-				Name string
+				PullRequests struct {
+					Edges []struct {
+						Node struct {
+							Id     string
+							Number int
+						}
+					}
+				} `graphql:"pullRequests(first: 100)"`
 			} `graphql:"repository(name: \"nexus\")"`
 		} `graphql:"organization(login: \"coding-boot-camp\")"`
 	}
@@ -28,5 +35,8 @@ func main() {
 		panic(err)
 	}
 
-	fmt.Printf("Got: %s\n", query.Organization.Repository.Name)
+	for _, edge := range query.Organization.Repository.PullRequests.Edges {
+		fmt.Printf("id = %s\n", edge.Node.Id)
+	}
+
 }
