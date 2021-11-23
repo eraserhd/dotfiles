@@ -1,5 +1,13 @@
 package github
 
+import (
+	"context"
+	"os"
+
+	"github.com/shurcooL/githubv4"
+	"golang.org/x/oauth2"
+)
+
 type (
 	OpenPullRequestsQuery struct {
 		Organization struct {
@@ -16,3 +24,11 @@ type (
 		} `graphql:"organization(login: \"coding-boot-camp\")"`
 	}
 )
+
+func (q *OpenPullRequestsQuery) Fetch(token string) error {
+	httpClient := oauth2.NewClient(context.Background(), oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: os.Getenv("GITHUB_TOKEN")},
+	))
+	client := githubv4.NewClient(httpClient)
+	return client.Query(context.Background(), q, nil)
+}
