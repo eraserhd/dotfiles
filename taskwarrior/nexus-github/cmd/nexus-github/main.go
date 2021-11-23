@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/eraserhd/dotfiles/taskwarrior/nexus-github/pkg/github"
+
 	"github.com/shurcooL/githubv4"
 	"golang.org/x/oauth2"
 )
@@ -16,20 +18,7 @@ func main() {
 
 	client := githubv4.NewClient(httpClient)
 
-	var query struct {
-		Organization struct {
-			Repository struct {
-				PullRequests struct {
-					Edges []struct {
-						Node struct {
-							Id     string
-							Number int
-						}
-					}
-				} `graphql:"pullRequests(first: 100)"`
-			} `graphql:"repository(name: \"nexus\")"`
-		} `graphql:"organization(login: \"coding-boot-camp\")"`
-	}
+	var query github.OpenPullRequestsQuery
 	err := client.Query(context.Background(), &query, nil)
 	if err != nil {
 		panic(err)
