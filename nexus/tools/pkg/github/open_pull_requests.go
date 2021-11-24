@@ -45,11 +45,17 @@ func (q *OpenPullRequestsQuery) Tasks() ([]taskwarrior.Task, error) {
 	var tasks []taskwarrior.Task
 	for _, edge := range q.Organization.Repository.PullRequests.Edges {
 		uuid := uuid.NewSHA1(prDomain, []byte(edge.Node.Id))
-		annotations := []string{edge.Node.Permalink}
+		entry := taskwarrior.Date(edge.Node.CreatedAt)
+		annotations := []taskwarrior.Annotation{taskwarrior.Annotation{
+			Entry:       entry,
+			Description: edge.Node.Permalink,
+		}}
 		tickets, _ := jira.TicketsForBranchName(edge.Node.Title)
 		for _, ticket := range tickets {
-			link := jira.Link(ticket)
-			annotations = append(annotations, link)
+			annotations = append(annotations, taskwarrior.Annotation{
+				Entry:       entry,
+				Description: jira.Link(ticket),
+			})
 		}
 
 		tasks = append(tasks, taskwarrior.Task{
@@ -59,7 +65,7 @@ func (q *OpenPullRequestsQuery) Tasks() ([]taskwarrior.Task, error) {
 			Project:     "nexus",
 			Status:      "pending",
 			Tags:        []string{"github"},
-			Annotation:  annotations,
+			Annotations: annotations,
 		})
 	}
 	return tasks, nil

@@ -128,9 +128,9 @@ func Test_Project_is_nexus(t *testing.T) {
 	}
 }
 
-func has(needle string, haystack []string) bool {
+func has(needle string, haystack []taskwarrior.Annotation) bool {
 	for _, s := range haystack {
-		if needle == s {
+		if needle == s.Description {
 			return true
 		}
 	}
@@ -149,20 +149,20 @@ func Test_Has_github_tag(t *testing.T) {
 
 func Test_Annotation_contains_pull_request_URL(t *testing.T) {
 	task := singleTask(t, singlePullWithId1)
-	for _, annotation := range task.Annotation {
-		if annotation == "https://example.com/pull/42" {
+	for _, annotation := range task.Annotations {
+		if annotation.Description == "https://example.com/pull/42" {
 			return
 		}
 	}
-	t.Errorf("wanted %+v to include \"http://example.com/pull/42\"", task.Annotation)
+	t.Errorf("wanted %+v to include \"http://example.com/pull/42\"", task.Annotations)
 }
 
 func Test_Annotation_contains_JIRA_URLs(t *testing.T) {
 	task := singleTask(t, singlePullWithId1)
-	if !has("https://jira.2u.com/browse/BCTS4-1574", task.Annotation) {
-		t.Errorf(`want has("https://jira.2u.com/browse/BCTS4-1574", %+v)`, task.Annotation)
+	if !has("https://jira.2u.com/browse/BCTS4-1574", task.Annotations) {
+		t.Errorf(`want has("https://jira.2u.com/browse/BCTS4-1574", %+v)`, task.Annotations)
 	}
-	if !has("https://jira.2u.com/browse/BCTS4-97", task.Annotation) {
-		t.Errorf(`want has("https://jira.2u.com/browse/BCTS4-97", %+v)`, task.Annotation)
+	if !has("https://jira.2u.com/browse/BCTS4-97", task.Annotations) {
+		t.Errorf(`want has("https://jira.2u.com/browse/BCTS4-97", %+v)`, task.Annotations)
 	}
 }
