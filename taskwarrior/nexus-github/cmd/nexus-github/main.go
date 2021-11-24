@@ -20,9 +20,11 @@ func main() {
 		panic(err)
 	}
 
-	out, err := json.Marshal(tasks)
-	if err != nil {
-		panic(err)
+	for _, task := range tasks {
+		out, err := json.Marshal(task)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println(string(out))
 	}
-	fmt.Println(string(out))
 }
