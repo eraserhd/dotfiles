@@ -38,7 +38,8 @@ const (
 				"PullRequests": {
 					"Edges": [ {
 						"Node": {
-							"Id": "MDExOlB1bGxSZXF1ZXN0MjEwNzk3NTAx"
+							"Id": "MDExOlB1bGxSZXF1ZXN0MjEwNzk3NTAx",
+							"CreatedAt": "2021-11-04T14:43:03Z"
 						}
 					} ]
 				}
@@ -90,8 +91,17 @@ func Test_Task_Uuid_serialies_lower_case_and_dashed(t *testing.T) {
 	}
 }
 
+var datePattern = regexp.MustCompile(`^"\d{8}T\d{6}Z"$`)
+
 func Test_Entry_date_is_pull_request_creation_date(t *testing.T) {
-	//TODO
+	task := singleTask(t, singlePullWithId1)
+	bytes, err := json.Marshal(task.Entry)
+	if err != nil {
+		t.Fatalf("wanted err == nil, got %v", err)
+	}
+	if string(bytes) != `"20211104T144303Z"` {
+		t.Errorf("wanted task.Entry = \"20211104T144303Z\", got %q\n", string(bytes))
+	}
 }
 
 func Test_Status_is_pending(t *testing.T) {

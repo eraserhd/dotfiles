@@ -3,6 +3,7 @@ package github
 import (
 	"context"
 	"os"
+	"time"
 
 	"github.com/eraserhd/dotfiles/taskwarrior/nexus-github/pkg/taskwarrior"
 	"github.com/google/uuid"
@@ -17,7 +18,8 @@ type (
 				PullRequests struct {
 					Edges []struct {
 						Node struct {
-							Id string
+							Id        string
+							CreatedAt time.Time
 						}
 					}
 				} `graphql:"pullRequests(first: 100)"`
@@ -42,6 +44,7 @@ func (q *OpenPullRequestsQuery) Tasks() ([]taskwarrior.Task, error) {
 		uuid := uuid.NewSHA1(prDomain, []byte(edge.Node.Id))
 		tasks = append(tasks, taskwarrior.Task{
 			Uuid:    uuid,
+			Entry:   taskwarrior.Date(edge.Node.CreatedAt),
 			Project: "nexus",
 			Status:  "pending",
 		})
