@@ -6,7 +6,7 @@ let
 
   plumbing = pkgs.runCommand "plumbing" {} ''
     substitute ${./plumbing} $out \
-      --subst-var-by jira_link '${pkgs.jira-link}'
+      --subst-var-by nexus_tools '${pkgs.nexus-tools}'
   '';
 
 in {

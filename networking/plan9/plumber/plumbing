@@ -21,7 +21,7 @@ plumb start web $data
 # JIRA tickets turned into web links
 type is text
 data matches '([a-z][a-z]-)*[a-zA-Z][a-zA-Z0-9]+(-[0-9]+)+'
-plumb start sh -c 'plumb "`@jira_link@/bin/jira-link -1 '''$0'''`"'
+plumb start sh -c 'plumb "`@nexus_tools@/bin/nexus-jira-link -1 '''$0'''`"'
 
 # urls go to web browser
 type is text

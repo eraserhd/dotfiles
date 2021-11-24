@@ -22,7 +22,6 @@ with lib;
     ./gtypist
     ./hammerspoon
     ./i3
-    ./jira
     ./kakoune
     ./kitty
     ./linux
