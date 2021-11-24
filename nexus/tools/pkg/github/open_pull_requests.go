@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/eraserhd/dotfiles/taskwarrior/nexus-github/pkg/taskwarrior"
+	"github.com/eraserhd/dotfiles/nexus/tools/pkg/taskwarrior"
 	"github.com/google/uuid"
 	"github.com/shurcooL/githubv4"
 	"golang.org/x/oauth2"

@@ -8,7 +8,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/eraserhd/dotfiles/taskwarrior/nexus-github/pkg/taskwarrior"
+	"github.com/eraserhd/dotfiles/nexus/tools/pkg/taskwarrior"
 )
 
 func queryResults(t *testing.T, text string) OpenPullRequestsQuery {

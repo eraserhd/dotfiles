@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/eraserhd/dotfiles/taskwarrior/nexus-github/pkg/github"
+	"github.com/eraserhd/dotfiles/nexus/tools/pkg/github"
 )
 
 func main() {

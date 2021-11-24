@@ -1,4 +1,4 @@
-module github.com/eraserhd/dotfiles/taskwarrior/nexus-github
+module github.com/eraserhd/dotfiles/nexus/tools
 
 go 1.16
 
