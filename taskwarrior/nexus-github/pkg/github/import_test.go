@@ -2,6 +2,7 @@ package github
 
 import (
 	"encoding/json"
+	"regexp"
 	"testing"
 
 	"github.com/google/uuid"
@@ -74,4 +75,41 @@ func Test_Uuid_is_repeatably_computed_from_PullRequest_Id(t *testing.T) {
 	if tasks[0].Uuid == tasks3[0].Uuid {
 		t.Errorf("wanted tasks[0].Uuid != tasks3.Uuid, both are %v", tasks3[0].Uuid)
 	}
+}
+
+var uuidPattern = regexp.MustCompile("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}")
+
+func Test_Task_Uuid_serialies_lower_case_and_dashed(t *testing.T) {
+	pulls := queryResults(t, singlePullWithId1)
+	tasks, err := pulls.Tasks()
+	if err != nil {
+		t.Errorf("wanted err == nil, got %v", err)
+	}
+	bytes, err := json.Marshal(tasks[0].Uuid)
+	if err != nil {
+		t.Errorf("wanted err == nil, got %v", err)
+	}
+	if !uuidPattern.Match(bytes) {
+		t.Errorf("wanted uuidPattern.Match(%q)", string(bytes))
+	}
+}
+
+func Test_Entry_date_is_pull_request_creation_date(t *testing.T) {
+	//TODO
+}
+
+func Test_Project_is_nexus(t *testing.T) {
+	//TODO
+}
+
+func Test_Has_github_tag(t *testing.T) {
+	//TODO
+}
+
+func Test_Annotation_contains_pull_request_URL(t *testing.T) {
+	//TODO
+}
+
+func Test_Annotation_contains_JIRA_URL(t *testing.T) {
+	//TODO
 }
