@@ -13,6 +13,7 @@ type (
 		Entry   Date      `json:"entry"`
 		Project string    `json:"project"`
 		Status  string    `json:"status"`
+		Tags    []string  `json:"tags"`
 	}
 )
 

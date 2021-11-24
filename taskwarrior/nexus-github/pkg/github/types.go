@@ -47,6 +47,7 @@ func (q *OpenPullRequestsQuery) Tasks() ([]taskwarrior.Task, error) {
 			Entry:   taskwarrior.Date(edge.Node.CreatedAt),
 			Project: "nexus",
 			Status:  "pending",
+			Tags:    []string{"github"},
 		})
 	}
 	return tasks, nil

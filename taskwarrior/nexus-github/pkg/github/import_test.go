@@ -119,7 +119,13 @@ func Test_Project_is_nexus(t *testing.T) {
 }
 
 func Test_Has_github_tag(t *testing.T) {
-	//TODO
+	task := singleTask(t, singlePullWithId1)
+	for _, tag := range task.Tags {
+		if tag == "github" {
+			return
+		}
+	}
+	t.Error("wanted task.Tags to include \"github\"")
 }
 
 func Test_Annotation_contains_pull_request_URL(t *testing.T) {
