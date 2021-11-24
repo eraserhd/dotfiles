@@ -41,7 +41,7 @@ const (
 						"Node": {
 							"Id": "MDExOlB1bGxSZXF1ZXN0MjEwNzk3NTAx",
 							"CreatedAt": "2021-11-04T14:43:03Z",
-							"Title": "mw-bcts4-1574",
+							"Title": "mw-bcts4-1574-97",
 							"Permalink": "https://example.com/pull/42"
 						}
 					} ]
@@ -128,6 +128,15 @@ func Test_Project_is_nexus(t *testing.T) {
 	}
 }
 
+func has(needle string, haystack []string) bool {
+	for _, s := range haystack {
+		if needle == s {
+			return true
+		}
+	}
+	return false
+}
+
 func Test_Has_github_tag(t *testing.T) {
 	task := singleTask(t, singlePullWithId1)
 	for _, tag := range task.Tags {
@@ -145,9 +154,15 @@ func Test_Annotation_contains_pull_request_URL(t *testing.T) {
 			return
 		}
 	}
-	t.Error("wanted task.Annotation to include \"http://example.com/pull/42\"")
+	t.Errorf("wanted %+v to include \"http://example.com/pull/42\"", task.Annotation)
 }
 
-func Test_Annotation_contains_JIRA_URL(t *testing.T) {
-	//TODO
+func Test_Annotation_contains_JIRA_URLs(t *testing.T) {
+	task := singleTask(t, singlePullWithId1)
+	if !has("https://jira.2u.com/browse/BCTS4-1574", task.Annotation) {
+		t.Errorf(`want has("https://jira.2u.com/browse/BCTS4-1574", %+v)`, task.Annotation)
+	}
+	if !has("https://jira.2u.com/browse/BCTS4-97", task.Annotation) {
+		t.Errorf(`want has("https://jira.2u.com/browse/BCTS4-97", %+v)`, task.Annotation)
+	}
 }

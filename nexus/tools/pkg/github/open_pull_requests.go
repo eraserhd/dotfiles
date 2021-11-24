@@ -5,6 +5,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/eraserhd/dotfiles/nexus/tools/pkg/jira"
 	"github.com/eraserhd/dotfiles/nexus/tools/pkg/taskwarrior"
 	"github.com/google/uuid"
 	"github.com/shurcooL/githubv4"
@@ -44,6 +45,13 @@ func (q *OpenPullRequestsQuery) Tasks() ([]taskwarrior.Task, error) {
 	var tasks []taskwarrior.Task
 	for _, edge := range q.Organization.Repository.PullRequests.Edges {
 		uuid := uuid.NewSHA1(prDomain, []byte(edge.Node.Id))
+		annotations := []string{edge.Node.Permalink}
+		tickets, _ := jira.TicketsForBranchName(edge.Node.Title)
+		for _, ticket := range tickets {
+			link := jira.Link(ticket)
+			annotations = append(annotations, link)
+		}
+
 		tasks = append(tasks, taskwarrior.Task{
 			Uuid:        uuid,
 			Entry:       taskwarrior.Date(edge.Node.CreatedAt),
@@ -51,7 +59,7 @@ func (q *OpenPullRequestsQuery) Tasks() ([]taskwarrior.Task, error) {
 			Project:     "nexus",
 			Status:      "pending",
 			Tags:        []string{"github"},
-			Annotation:  []string{edge.Node.Permalink},
+			Annotation:  annotations,
 		})
 	}
 	return tasks, nil
