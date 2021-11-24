@@ -6,15 +6,29 @@ import (
 	"testing"
 
 	"github.com/google/uuid"
+
+	"github.com/eraserhd/dotfiles/taskwarrior/nexus-github/pkg/taskwarrior"
 )
 
 func queryResults(t *testing.T, text string) OpenPullRequestsQuery {
 	var pulls OpenPullRequestsQuery
 	err := json.Unmarshal([]byte(text), &pulls)
 	if err != nil {
-		t.Errorf("unmarshal: %v", err)
+		t.Fatalf("unmarshal: %v", err)
 	}
 	return pulls
+}
+
+func singleTask(t *testing.T, text string) taskwarrior.Task {
+	pulls := queryResults(t, text)
+	tasks, err := pulls.Tasks()
+	if err != nil {
+		t.Fatalf("wanted err == nil, got %v", err)
+	}
+	if len(tasks) != 1 {
+		t.Fatalf("wanted len(tasks) == 1, got %d", len(tasks))
+	}
+	return tasks[0]
 }
 
 const (
@@ -48,44 +62,26 @@ const (
 )
 
 func Test_Uuid_is_repeatably_computed_from_PullRequest_Id(t *testing.T) {
-	pulls := queryResults(t, singlePullWithId1)
-	tasks, err := pulls.Tasks()
-	if err != nil {
-		t.Errorf("wanted err == nil, got %v", err)
-	}
-	if len(tasks) != 1 {
-		t.Errorf("wanted len(tasks) == 1, got %d", len(tasks))
-	}
+	task := singleTask(t, singlePullWithId1)
 	var zeroUuid uuid.UUID
-	if tasks[0].Uuid == zeroUuid {
+	if task.Uuid == zeroUuid {
 		t.Errorf("wanted non-zero UUID, but got a zero UUID")
 	}
-	tasks2, err := pulls.Tasks()
-	if err != nil {
-		t.Errorf("wanted err == nil, got %v", err)
-	}
-	if tasks[0].Uuid != tasks2[0].Uuid {
+	task2 := singleTask(t, singlePullWithId1)
+	if task.Uuid != task2.Uuid {
 		t.Error("wanted uuid to be repeatable, but it was not")
 	}
-	pulls3 := queryResults(t, singlePullWithId2)
-	tasks3, err := pulls3.Tasks()
-	if err != nil {
-		t.Errorf("wanted err == nil, got %v", err)
-	}
-	if tasks[0].Uuid == tasks3[0].Uuid {
-		t.Errorf("wanted tasks[0].Uuid != tasks3.Uuid, both are %v", tasks3[0].Uuid)
+	task3 := singleTask(t, singlePullWithId2)
+	if task.Uuid == task3.Uuid {
+		t.Errorf("wanted task.Uuid != task3.Uuid, both are %v", task3.Uuid)
 	}
 }
 
-var uuidPattern = regexp.MustCompile("[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}")
+var uuidPattern = regexp.MustCompile(`^"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"$`)
 
 func Test_Task_Uuid_serialies_lower_case_and_dashed(t *testing.T) {
-	pulls := queryResults(t, singlePullWithId1)
-	tasks, err := pulls.Tasks()
-	if err != nil {
-		t.Errorf("wanted err == nil, got %v", err)
-	}
-	bytes, err := json.Marshal(tasks[0].Uuid)
+	task := singleTask(t, singlePullWithId1)
+	bytes, err := json.Marshal(task.Uuid)
 	if err != nil {
 		t.Errorf("wanted err == nil, got %v", err)
 	}
