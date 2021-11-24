@@ -35,6 +35,7 @@ with lib;
     ./networking/tls
     ./networking/update-dns
     ./networking/wifi
+    ./nexus
     ./nix
     ./npm
     ./postgres
