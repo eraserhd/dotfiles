@@ -43,6 +43,7 @@ func (q *OpenPullRequestsQuery) Tasks() ([]taskwarrior.Task, error) {
 		tasks = append(tasks, taskwarrior.Task{
 			Uuid:    uuid,
 			Project: "nexus",
+			Status:  "pending",
 		})
 	}
 	return tasks, nil

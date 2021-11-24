@@ -8,5 +8,6 @@ type (
 	Task struct {
 		Uuid    uuid.UUID
 		Project string
+		Status  string
 	}
 )

@@ -94,6 +94,13 @@ func Test_Entry_date_is_pull_request_creation_date(t *testing.T) {
 	//TODO
 }
 
+func Test_Status_is_pending(t *testing.T) {
+	task := singleTask(t, singlePullWithId1)
+	if task.Status != "pending" {
+		t.Errorf("wanted task.Status == \"pending\", got %q", task.Status)
+	}
+}
+
 func Test_Project_is_nexus(t *testing.T) {
 	task := singleTask(t, singlePullWithId1)
 	if task.Project != "nexus" {
