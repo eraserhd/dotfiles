@@ -95,7 +95,10 @@ func Test_Entry_date_is_pull_request_creation_date(t *testing.T) {
 }
 
 func Test_Project_is_nexus(t *testing.T) {
-	//TODO
+	task := singleTask(t, singlePullWithId1)
+	if task.Project != "nexus" {
+		t.Errorf("wanted task.Project == \"nexus\", got %q", task.Project)
+	}
 }
 
 func Test_Has_github_tag(t *testing.T) {

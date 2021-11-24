@@ -41,7 +41,8 @@ func (q *OpenPullRequestsQuery) Tasks() ([]taskwarrior.Task, error) {
 	for _, edge := range q.Organization.Repository.PullRequests.Edges {
 		uuid := uuid.NewSHA1(prDomain, []byte(edge.Node.Id))
 		tasks = append(tasks, taskwarrior.Task{
-			Uuid: uuid,
+			Uuid:    uuid,
+			Project: "nexus",
 		})
 	}
 	return tasks, nil

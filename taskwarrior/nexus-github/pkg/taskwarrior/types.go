@@ -6,6 +6,7 @@ import (
 
 type (
 	Task struct {
-		Uuid uuid.UUID
+		Uuid    uuid.UUID
+		Project string
 	}
 )
