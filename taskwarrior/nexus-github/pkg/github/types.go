@@ -24,7 +24,7 @@ type (
 							Permalink string
 						}
 					}
-				} `graphql:"pullRequests(first: 100)"`
+				} `graphql:"pullRequests(first: 100, states: [OPEN])"`
 			} `graphql:"repository(name: \"nexus\")"`
 		} `graphql:"organization(login: \"coding-boot-camp\")"`
 	}
