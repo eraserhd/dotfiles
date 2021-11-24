@@ -8,6 +8,8 @@ import (
 	"os"
 	"strings"
 	"unicode"
+
+	"github.com/eraserhd/dotfiles/nexus/tools/pkg/jira"
 )
 
 func isAllDigits(s string) bool {
@@ -45,10 +47,6 @@ func JiraTickets(branch string) ([]string, error) {
 	return tickets, nil
 }
 
-func JiraLink(ticket string) string {
-	return fmt.Sprintf("https://jira.2u.com/browse/%s", ticket)
-}
-
 func branchArgs() []string {
 	branches := flag.Args()
 	if len(branches) > 0 {
@@ -80,7 +78,7 @@ func main() {
 	ticketNameOnly := flag.Bool("ticket", false, "print ticket name instead of full link")
 	flag.Parse()
 
-	formatTicket := JiraLink
+	formatTicket := jira.Link
 	if *ticketNameOnly {
 		formatTicket = func(ticket string) string {
 			return ticket
