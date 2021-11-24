@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 
@@ -14,7 +15,14 @@ func main() {
 		panic(err)
 	}
 
-	for _, edge := range query.Organization.Repository.PullRequests.Edges {
-		fmt.Printf("id = %s\n", edge.Node.Id)
+	tasks, err := query.Tasks()
+	if err != nil {
+		panic(err)
 	}
+
+	out, err := json.Marshal(tasks)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(string(out))
 }
