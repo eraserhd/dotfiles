@@ -39,7 +39,8 @@ const (
 					"Edges": [ {
 						"Node": {
 							"Id": "MDExOlB1bGxSZXF1ZXN0MjEwNzk3NTAx",
-							"CreatedAt": "2021-11-04T14:43:03Z"
+							"CreatedAt": "2021-11-04T14:43:03Z",
+							"Permalink": "https://example.com/pull/42"
 						}
 					} ]
 				}
@@ -129,7 +130,13 @@ func Test_Has_github_tag(t *testing.T) {
 }
 
 func Test_Annotation_contains_pull_request_URL(t *testing.T) {
-	//TODO
+	task := singleTask(t, singlePullWithId1)
+	for _, annotation := range task.Annotation {
+		if annotation == "https://example.com/pull/42" {
+			return
+		}
+	}
+	t.Error("wanted task.Annotation to include \"http://example.com/pull/42\"")
 }
 
 func Test_Annotation_contains_JIRA_URL(t *testing.T) {

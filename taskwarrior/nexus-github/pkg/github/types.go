@@ -20,6 +20,7 @@ type (
 						Node struct {
 							Id        string
 							CreatedAt time.Time
+							Permalink string
 						}
 					}
 				} `graphql:"pullRequests(first: 100)"`
@@ -48,6 +49,9 @@ func (q *OpenPullRequestsQuery) Tasks() ([]taskwarrior.Task, error) {
 			Project: "nexus",
 			Status:  "pending",
 			Tags:    []string{"github"},
+			Annotation: []string{
+				edge.Node.Permalink,
+			},
 		})
 	}
 	return tasks, nil

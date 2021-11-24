@@ -9,11 +9,12 @@ type (
 	Date time.Time
 
 	Task struct {
-		Uuid    uuid.UUID `json:"uuid"`
-		Entry   Date      `json:"entry"`
-		Project string    `json:"project"`
-		Status  string    `json:"status"`
-		Tags    []string  `json:"tags"`
+		Uuid       uuid.UUID `json:"uuid"`
+		Entry      Date      `json:"entry"`
+		Project    string    `json:"project"`
+		Status     string    `json:"status"`
+		Tags       []string  `json:"tags"`
+		Annotation []string  `json:"annotation"`
 	}
 )
 
