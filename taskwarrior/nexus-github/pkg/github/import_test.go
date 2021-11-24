@@ -3,6 +3,7 @@ package github
 import (
 	"encoding/json"
 	"regexp"
+	"strings"
 	"testing"
 
 	"github.com/google/uuid"
@@ -40,6 +41,7 @@ const (
 						"Node": {
 							"Id": "MDExOlB1bGxSZXF1ZXN0MjEwNzk3NTAx",
 							"CreatedAt": "2021-11-04T14:43:03Z",
+							"Title": "mw-bcts4-1574",
 							"Permalink": "https://example.com/pull/42"
 						}
 					} ]
@@ -109,6 +111,13 @@ func Test_Status_is_pending(t *testing.T) {
 	task := singleTask(t, singlePullWithId1)
 	if task.Status != "pending" {
 		t.Errorf("wanted task.Status == \"pending\", got %q", task.Status)
+	}
+}
+
+func Test_Description_contains_pull_request_title(t *testing.T) {
+	task := singleTask(t, singlePullWithId1)
+	if !strings.Contains(task.Description, "mw-bcts4-1574") {
+		t.Errorf("want strings.Contains(%q, \"mw-bcts4-1574\")", task.Description)
 	}
 }
 

@@ -20,6 +20,7 @@ type (
 						Node struct {
 							Id        string
 							CreatedAt time.Time
+							Title     string
 							Permalink string
 						}
 					}
@@ -44,14 +45,13 @@ func (q *OpenPullRequestsQuery) Tasks() ([]taskwarrior.Task, error) {
 	for _, edge := range q.Organization.Repository.PullRequests.Edges {
 		uuid := uuid.NewSHA1(prDomain, []byte(edge.Node.Id))
 		tasks = append(tasks, taskwarrior.Task{
-			Uuid:    uuid,
-			Entry:   taskwarrior.Date(edge.Node.CreatedAt),
-			Project: "nexus",
-			Status:  "pending",
-			Tags:    []string{"github"},
-			Annotation: []string{
-				edge.Node.Permalink,
-			},
+			Uuid:        uuid,
+			Entry:       taskwarrior.Date(edge.Node.CreatedAt),
+			Description: edge.Node.Title,
+			Project:     "nexus",
+			Status:      "pending",
+			Tags:        []string{"github"},
+			Annotation:  []string{edge.Node.Permalink},
 		})
 	}
 	return tasks, nil
