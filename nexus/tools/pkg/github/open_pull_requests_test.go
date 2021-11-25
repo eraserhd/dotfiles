@@ -18,6 +18,7 @@ type (
 	}
 
 	TestableTask struct {
+		t *testing.T
 		taskwarrior.Task
 	}
 )
@@ -64,7 +65,7 @@ func (s *Scenario) SingleTask() TestableTask {
 	if len(tasks) != 1 {
 		s.t.Fatalf("wanted len(tasks) == 1, got %d", len(tasks))
 	}
-	return TestableTask{tasks[0]}
+	return TestableTask{s.t, tasks[0]}
 }
 
 func queryResults(t *testing.T, text string) OpenPullRequestsQuery {
@@ -158,14 +159,21 @@ func assertHasTag(t *testing.T, task taskwarrior.Task, tag string) {
 	t.Errorf("wanted tags to include %q, got %+v", tag, task.Tags)
 }
 
+func (tt TestableTask) HasTag(tag string) {
+	for _, existingTag := range tt.Tags {
+		if existingTag == tag {
+			return
+		}
+	}
+	tt.t.Errorf("wanted tags to include %q, got %+v", tag, tt.Tags)
+}
+
 func Test_Has_github_tag(t *testing.T) {
-	task := NewScenario(t).SingleTask()
-	assertHasTag(t, task.Task, "github")
+	NewScenario(t).SingleTask().HasTag("github")
 }
 
 func Test_Has_next_tag(t *testing.T) {
-	task := NewScenario(t).SingleTask()
-	assertHasTag(t, task.Task, "next")
+	NewScenario(t).SingleTask().HasTag("next")
 }
 
 func assertHasAnnotation(t *testing.T, task taskwarrior.Task, needle string) {
