@@ -58,6 +58,11 @@ func (s *Scenario) WithId(id string) *Scenario {
 	return s
 }
 
+func (s *Scenario) WithExistingTask(task taskwarrior.Task) *Scenario {
+	s.tasks = append(s.tasks, task)
+	return s
+}
+
 func (s *Scenario) SingleTask() TestableTask {
 	if err := s.query.UpdateTasks(&s.tasks); err != nil {
 		s.t.Fatalf("wanted err == nil, got %v", err)
@@ -66,14 +71,6 @@ func (s *Scenario) SingleTask() TestableTask {
 		s.t.Fatalf("wanted len(tasks) == 1, got %d", len(s.tasks))
 	}
 	return TestableTask{s.t, s.tasks[0]}
-}
-
-func queryResults(t *testing.T, text string) OpenPullRequestsQuery {
-	var pulls OpenPullRequestsQuery
-	if err := json.Unmarshal([]byte(text), &pulls); err != nil {
-		t.Fatalf("unmarshal: %v", err)
-	}
-	return pulls
 }
 
 func Test_Uuid_is_repeatably_computed_from_PullRequest_Id(t *testing.T) {
@@ -106,16 +103,9 @@ func Test_Task_Uuid_serialies_lower_case_and_dashed(t *testing.T) {
 }
 
 func Test_An_existing_task_is_not_created_twice(t *testing.T) {
-	pulls := queryResults(t, sampleQueryData)
-	tasks := taskwarrior.Tasks{{
-		Uuid: uuid.MustParse("06292007-ace9-5854-ac4e-732370e890da"),
-	}}
-	if err := pulls.UpdateTasks(&tasks); err != nil {
-		t.Fatalf("wanted err == nil, got %v", err)
-	}
-	if len(tasks) != 1 {
-		t.Fatalf("wanted len(tasks) == 1, got %+v", tasks)
-	}
+	NewScenario(t).
+		WithExistingTask(taskwarrior.Task{Uuid: uuid.MustParse("06292007-ace9-5854-ac4e-732370e890da")}).
+		SingleTask()
 }
 
 func Test_Entry_date_is_pull_request_creation_date(t *testing.T) {
