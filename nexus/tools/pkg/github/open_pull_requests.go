@@ -44,6 +44,7 @@ func (q *OpenPullRequestsQuery) Fetch(token string) error {
 func (q *OpenPullRequestsQuery) UpdateTasks(tasks *taskwarrior.Tasks) error {
 	for _, edge := range q.Organization.Repository.PullRequests.Edges {
 		uuid := uuid.NewSHA1(prDomain, []byte(edge.Node.Id))
+		task := tasks.FindOrCreateByUUID(uuid)
 		entry := taskwarrior.Date(edge.Node.CreatedAt)
 		annotations := []taskwarrior.Annotation{{
 			Entry:       entry,
@@ -56,15 +57,12 @@ func (q *OpenPullRequestsQuery) UpdateTasks(tasks *taskwarrior.Tasks) error {
 				Description: jira.Link(ticket),
 			})
 		}
-		*tasks = append(*tasks, taskwarrior.Task{
-			Uuid:        uuid,
-			Entry:       taskwarrior.Date(edge.Node.CreatedAt),
-			Description: edge.Node.Title,
-			Project:     "nexus",
-			Status:      "pending",
-			Tags:        []string{"github", "next"},
-			Annotations: annotations,
-		})
+		task.Entry = entry
+		task.Description = edge.Node.Title
+		task.Project = "nexus"
+		task.Status = "pending"
+		task.Tags = []string{"github", "next"}
+		task.Annotations = annotations
 	}
 	return nil
 }

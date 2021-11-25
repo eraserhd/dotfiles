@@ -93,7 +93,18 @@ func Test_Task_Uuid_serialies_lower_case_and_dashed(t *testing.T) {
 	}
 }
 
-var datePattern = regexp.MustCompile(`^"\d{8}T\d{6}Z"$`)
+func Test_An_existing_task_is_not_created_twice(t *testing.T) {
+	pulls := queryResults(t, singlePullWithId1)
+	tasks := taskwarrior.Tasks{{
+		Uuid: uuid.MustParse("06292007-ace9-5854-ac4e-732370e890da"),
+	}}
+	if err := pulls.UpdateTasks(&tasks); err != nil {
+		t.Fatalf("wanted err == nil, got %v", err)
+	}
+	if len(tasks) != 1 {
+		t.Fatalf("wanted len(tasks) == 1, got %+v", tasks)
+	}
+}
 
 func Test_Entry_date_is_pull_request_creation_date(t *testing.T) {
 	task := singleTask(t, singlePullWithId1)
