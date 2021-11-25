@@ -147,6 +147,16 @@ func Test_Has_github_tag(t *testing.T) {
 	t.Error("wanted task.Tags to include \"github\"")
 }
 
+func Test_Has_next_tag(t *testing.T) {
+	task := singleTask(t, singlePullWithId1)
+	for _, tag := range task.Tags {
+		if tag == "next" {
+			return
+		}
+	}
+	t.Error("wanted task.Tags to include \"github\"")
+}
+
 func Test_Annotation_contains_pull_request_URL(t *testing.T) {
 	task := singleTask(t, singlePullWithId1)
 	for _, annotation := range task.Annotations {

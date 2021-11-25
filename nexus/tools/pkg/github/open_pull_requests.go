@@ -46,7 +46,7 @@ func (q *OpenPullRequestsQuery) Tasks() ([]taskwarrior.Task, error) {
 	for _, edge := range q.Organization.Repository.PullRequests.Edges {
 		uuid := uuid.NewSHA1(prDomain, []byte(edge.Node.Id))
 		entry := taskwarrior.Date(edge.Node.CreatedAt)
-		annotations := []taskwarrior.Annotation{taskwarrior.Annotation{
+		annotations := []taskwarrior.Annotation{{
 			Entry:       entry,
 			Description: edge.Node.Permalink,
 		}}
@@ -64,7 +64,7 @@ func (q *OpenPullRequestsQuery) Tasks() ([]taskwarrior.Task, error) {
 			Description: edge.Node.Title,
 			Project:     "nexus",
 			Status:      "pending",
-			Tags:        []string{"github"},
+			Tags:        []string{"github", "next"},
 			Annotations: annotations,
 		})
 	}
