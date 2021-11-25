@@ -6,17 +6,17 @@ import (
 	"os"
 
 	"github.com/eraserhd/dotfiles/nexus/tools/pkg/github"
+	"github.com/eraserhd/dotfiles/nexus/tools/pkg/taskwarrior"
 )
 
 func main() {
 	var query github.OpenPullRequestsQuery
-	err := query.Fetch(os.Getenv("GITHUB_TOKEN"))
-	if err != nil {
+	if err := query.Fetch(os.Getenv("GITHUB_TOKEN")); err != nil {
 		panic(err)
 	}
 
-	tasks, err := query.Tasks()
-	if err != nil {
+	var tasks []taskwarrior.Task
+	if err := query.UpdateTasks(&tasks); err != nil {
 		panic(err)
 	}
 
