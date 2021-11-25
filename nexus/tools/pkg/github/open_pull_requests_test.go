@@ -11,6 +11,34 @@ import (
 	"github.com/eraserhd/dotfiles/nexus/tools/pkg/taskwarrior"
 )
 
+type (
+	Scenario struct {
+		t     *testing.T
+		query OpenPullRequestsQuery
+	}
+)
+
+func NewScenario(t *testing.T) *Scenario {
+	s := Scenario{
+		t: t,
+	}
+	if err := json.Unmarshal([]byte(singlePullWithId1), &s.query); err != nil {
+		s.t.Fatalf("unmarshal: %v", err)
+	}
+	return &s
+}
+
+func (s *Scenario) SingleTask() taskwarrior.Task {
+	var tasks taskwarrior.Tasks
+	if err := s.query.UpdateTasks(&tasks); err != nil {
+		s.t.Fatalf("wanted err == nil, got %v", err)
+	}
+	if len(tasks) != 1 {
+		s.t.Fatalf("wanted len(tasks) == 1, got %d", len(tasks))
+	}
+	return tasks[0]
+}
+
 func queryResults(t *testing.T, text string) OpenPullRequestsQuery {
 	var pulls OpenPullRequestsQuery
 	if err := json.Unmarshal([]byte(text), &pulls); err != nil {
@@ -65,7 +93,7 @@ const (
 )
 
 func Test_Uuid_is_repeatably_computed_from_PullRequest_Id(t *testing.T) {
-	task := singleTask(t, singlePullWithId1)
+	task := NewScenario(t).SingleTask()
 	var zeroUuid uuid.UUID
 	if task.Uuid == zeroUuid {
 		t.Errorf("wanted non-zero UUID, but got a zero UUID")
