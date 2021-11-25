@@ -92,17 +92,26 @@ func Test_UUID_is_unique_to_the_pull_request(t *testing.T) {
 	}
 }
 
-var uuidPattern = regexp.MustCompile(`^"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"$`)
+func (tt TestableTask) AsJSON() string {
+	bytes, err := json.Marshal(tt.Task)
+	if err != nil {
+		tt.t.Errorf("wanted err == nil, got %v", err)
+	}
+	return string(bytes)
+}
+
+func (tt TestableTask) JSONRepresentationContains(expr string) {
+	text := tt.AsJSON()
+	pattern := regexp.MustCompile(expr)
+	if !pattern.MatchString(text) {
+		tt.t.Errorf("Expected %q to match %q, but it did not", text, expr)
+	}
+}
 
 func Test_Task_Uuid_serialies_lower_case_and_dashed(t *testing.T) {
-	task := NewScenario(t).SingleTask()
-	bytes, err := json.Marshal(task.Uuid)
-	if err != nil {
-		t.Errorf("wanted err == nil, got %v", err)
-	}
-	if !uuidPattern.Match(bytes) {
-		t.Errorf("wanted uuidPattern.Match(%q)", string(bytes))
-	}
+	NewScenario(t).
+		SingleTask().
+		JSONRepresentationContains(`"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"`)
 }
 
 func Test_An_existing_task_is_not_created_twice(t *testing.T) {
