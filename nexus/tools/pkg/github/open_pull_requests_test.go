@@ -18,11 +18,30 @@ type (
 	}
 )
 
+const (
+	sampleQueryData = `{
+		"Organization": {
+			"Repository": {
+				"PullRequests": {
+					"Edges": [ {
+						"Node": {
+							"Id": "MDExOlB1bGxSZXF1ZXN0MjEwNzk3NTAx",
+							"CreatedAt": "2021-11-04T14:43:03Z",
+							"Title": "mw-bcts4-1574-97",
+							"Permalink": "https://example.com/pull/42"
+						}
+					} ]
+				}
+			}
+		}
+        }`
+)
+
 func NewScenario(t *testing.T) *Scenario {
 	s := Scenario{
 		t: t,
 	}
-	if err := json.Unmarshal([]byte(singlePullWithId1), &s.query); err != nil {
+	if err := json.Unmarshal([]byte(sampleQueryData), &s.query); err != nil {
 		s.t.Fatalf("unmarshal: %v", err)
 	}
 	return &s
@@ -51,39 +70,6 @@ func queryResults(t *testing.T, text string) OpenPullRequestsQuery {
 	}
 	return pulls
 }
-
-const (
-	singlePullWithId1 = `{
-		"Organization": {
-			"Repository": {
-				"PullRequests": {
-					"Edges": [ {
-						"Node": {
-							"Id": "MDExOlB1bGxSZXF1ZXN0MjEwNzk3NTAx",
-							"CreatedAt": "2021-11-04T14:43:03Z",
-							"Title": "mw-bcts4-1574-97",
-							"Permalink": "https://example.com/pull/42"
-						}
-					} ]
-				}
-			}
-		}
-        }`
-
-	singlePullWithId2 = `{
-		"Organization": {
-			"Repository": {
-				"PullRequests": {
-					"Edges": [ {
-						"Node": {
-							"Id": "MDExOlB1bGxSZXF1ZXN0MjE3MDE1MDk5"
-						}
-					} ]
-				}
-			}
-		}
-        }`
-)
 
 func Test_Uuid_is_repeatably_computed_from_PullRequest_Id(t *testing.T) {
 	task := NewScenario(t).SingleTask()
@@ -115,7 +101,7 @@ func Test_Task_Uuid_serialies_lower_case_and_dashed(t *testing.T) {
 }
 
 func Test_An_existing_task_is_not_created_twice(t *testing.T) {
-	pulls := queryResults(t, singlePullWithId1)
+	pulls := queryResults(t, sampleQueryData)
 	tasks := taskwarrior.Tasks{{
 		Uuid: uuid.MustParse("06292007-ace9-5854-ac4e-732370e890da"),
 	}}
