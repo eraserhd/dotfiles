@@ -150,15 +150,6 @@ func Test_Project_is_nexus(t *testing.T) {
 	}
 }
 
-func assertHasTag(t *testing.T, task taskwarrior.Task, tag string) {
-	for _, existingTag := range task.Tags {
-		if existingTag == tag {
-			return
-		}
-	}
-	t.Errorf("wanted tags to include %q, got %+v", tag, task.Tags)
-}
-
 func (tt TestableTask) HasTag(tag string) {
 	for _, existingTag := range tt.Tags {
 		if existingTag == tag {
