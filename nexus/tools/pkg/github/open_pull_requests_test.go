@@ -176,22 +176,20 @@ func Test_Has_next_tag(t *testing.T) {
 	NewScenario(t).SingleTask().HasTag("next")
 }
 
-func assertHasAnnotation(t *testing.T, task taskwarrior.Task, needle string) {
-	for _, s := range task.Annotations {
+func (tt TestableTask) HasAnnotation(needle string) {
+	for _, s := range tt.Annotations {
 		if needle == s.Description {
 			return
 		}
 	}
-	t.Errorf(`want annotations to include %q, got %+v`, needle, task.Annotations)
+	tt.t.Errorf(`want annotations to include %q, got %+v`, needle, tt.Annotations)
 }
 
 func Test_Annotation_contains_pull_request_URL(t *testing.T) {
-	task := NewScenario(t).SingleTask()
-	assertHasAnnotation(t, task.Task, "https://example.com/pull/42")
+	NewScenario(t).SingleTask().HasAnnotation("https://example.com/pull/42")
 }
 
 func Test_Annotation_contains_JIRA_URLs(t *testing.T) {
-	task := NewScenario(t).SingleTask()
-	assertHasAnnotation(t, task.Task, "https://jira.2u.com/browse/BCTS4-1574")
-	assertHasAnnotation(t, task.Task, "https://jira.2u.com/browse/BCTS4-97")
+	NewScenario(t).SingleTask().HasAnnotation("https://jira.2u.com/browse/BCTS4-1574")
+	NewScenario(t).SingleTask().HasAnnotation("https://jira.2u.com/browse/BCTS4-97")
 }
