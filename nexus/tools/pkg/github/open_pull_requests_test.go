@@ -13,8 +13,7 @@ import (
 
 func queryResults(t *testing.T, text string) OpenPullRequestsQuery {
 	var pulls OpenPullRequestsQuery
-	err := json.Unmarshal([]byte(text), &pulls)
-	if err != nil {
+	if err := json.Unmarshal([]byte(text), &pulls); err != nil {
 		t.Fatalf("unmarshal: %v", err)
 	}
 	return pulls
@@ -22,9 +21,8 @@ func queryResults(t *testing.T, text string) OpenPullRequestsQuery {
 
 func singleTask(t *testing.T, text string) taskwarrior.Task {
 	pulls := queryResults(t, text)
-	tasks := []taskwarrior.Task{}
-	err := pulls.UpdateTasks(&tasks)
-	if err != nil {
+	var tasks []taskwarrior.Task
+	if err := pulls.UpdateTasks(&tasks); err != nil {
 		t.Fatalf("wanted err == nil, got %v", err)
 	}
 	if len(tasks) != 1 {
