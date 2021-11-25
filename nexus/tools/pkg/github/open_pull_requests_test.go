@@ -17,7 +17,9 @@ type (
 		query OpenPullRequestsQuery
 	}
 
-	Task taskwarrior.Task
+	TestableTask struct {
+		taskwarrior.Task
+	}
 )
 
 const (
@@ -54,7 +56,7 @@ func (s *Scenario) WithId(id string) *Scenario {
 	return s
 }
 
-func (s *Scenario) SingleTask() Task {
+func (s *Scenario) SingleTask() TestableTask {
 	var tasks taskwarrior.Tasks
 	if err := s.query.UpdateTasks(&tasks); err != nil {
 		s.t.Fatalf("wanted err == nil, got %v", err)
@@ -62,7 +64,7 @@ func (s *Scenario) SingleTask() Task {
 	if len(tasks) != 1 {
 		s.t.Fatalf("wanted len(tasks) == 1, got %d", len(tasks))
 	}
-	return Task(tasks[0])
+	return TestableTask{tasks[0]}
 }
 
 func queryResults(t *testing.T, text string) OpenPullRequestsQuery {
@@ -158,12 +160,12 @@ func assertHasTag(t *testing.T, task taskwarrior.Task, tag string) {
 
 func Test_Has_github_tag(t *testing.T) {
 	task := NewScenario(t).SingleTask()
-	assertHasTag(t, taskwarrior.Task(task), "github")
+	assertHasTag(t, task.Task, "github")
 }
 
 func Test_Has_next_tag(t *testing.T) {
 	task := NewScenario(t).SingleTask()
-	assertHasTag(t, taskwarrior.Task(task), "next")
+	assertHasTag(t, task.Task, "next")
 }
 
 func assertHasAnnotation(t *testing.T, task taskwarrior.Task, needle string) {
@@ -177,11 +179,11 @@ func assertHasAnnotation(t *testing.T, task taskwarrior.Task, needle string) {
 
 func Test_Annotation_contains_pull_request_URL(t *testing.T) {
 	task := NewScenario(t).SingleTask()
-	assertHasAnnotation(t, taskwarrior.Task(task), "https://example.com/pull/42")
+	assertHasAnnotation(t, task.Task, "https://example.com/pull/42")
 }
 
 func Test_Annotation_contains_JIRA_URLs(t *testing.T) {
 	task := NewScenario(t).SingleTask()
-	assertHasAnnotation(t, taskwarrior.Task(task), "https://jira.2u.com/browse/BCTS4-1574")
-	assertHasAnnotation(t, taskwarrior.Task(task), "https://jira.2u.com/browse/BCTS4-97")
+	assertHasAnnotation(t, task.Task, "https://jira.2u.com/browse/BCTS4-1574")
+	assertHasAnnotation(t, task.Task, "https://jira.2u.com/browse/BCTS4-97")
 }
