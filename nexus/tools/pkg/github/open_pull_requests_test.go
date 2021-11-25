@@ -73,19 +73,22 @@ func (s *Scenario) SingleTask() TestableTask {
 	return TestableTask{s.t, s.tasks[0]}
 }
 
-func Test_Uuid_is_repeatably_computed_from_PullRequest_Id(t *testing.T) {
-	task := NewScenario(t).SingleTask()
+func Test_New_UUID_is_not_zero_UUID(t *testing.T) {
 	var zeroUuid uuid.UUID
-	if task.Uuid == zeroUuid {
+	if NewScenario(t).SingleTask().Uuid == zeroUuid {
 		t.Errorf("wanted non-zero UUID, but got a zero UUID")
 	}
-	task2 := NewScenario(t).SingleTask()
-	if task.Uuid != task2.Uuid {
+}
+
+func Test_UUID_is_repeatably_computed(t *testing.T) {
+	if NewScenario(t).SingleTask().Uuid != NewScenario(t).SingleTask().Uuid {
 		t.Error("wanted uuid to be repeatable, but it was not")
 	}
-	task3 := NewScenario(t).WithId("MDExOlB1bGxSZXF1ZXN0MjE3MDE1MDk5").SingleTask()
-	if task.Uuid == task3.Uuid {
-		t.Errorf("wanted task.Uuid != task3.Uuid, both are %v", task3.Uuid)
+}
+
+func Test_UUID_is_unique_to_the_pull_request(t *testing.T) {
+	if NewScenario(t).SingleTask().Uuid == NewScenario(t).WithId("MDExOlB1bGxSZXF1ZXN0MjE3MDE1MDk5").SingleTask().Uuid {
+		t.Error("wanted task.Uuid != task3.Uuid, both are same")
 	}
 }
 
