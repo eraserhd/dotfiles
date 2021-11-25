@@ -15,6 +15,7 @@ type (
 	Scenario struct {
 		t     *testing.T
 		query OpenPullRequestsQuery
+		tasks taskwarrior.Tasks
 	}
 
 	TestableTask struct {
@@ -58,14 +59,13 @@ func (s *Scenario) WithId(id string) *Scenario {
 }
 
 func (s *Scenario) SingleTask() TestableTask {
-	var tasks taskwarrior.Tasks
-	if err := s.query.UpdateTasks(&tasks); err != nil {
+	if err := s.query.UpdateTasks(&s.tasks); err != nil {
 		s.t.Fatalf("wanted err == nil, got %v", err)
 	}
-	if len(tasks) != 1 {
-		s.t.Fatalf("wanted len(tasks) == 1, got %d", len(tasks))
+	if len(s.tasks) != 1 {
+		s.t.Fatalf("wanted len(tasks) == 1, got %d", len(s.tasks))
 	}
-	return TestableTask{s.t, tasks[0]}
+	return TestableTask{s.t, s.tasks[0]}
 }
 
 func queryResults(t *testing.T, text string) OpenPullRequestsQuery {
