@@ -137,24 +137,23 @@ func has(needle string, haystack []taskwarrior.Annotation) bool {
 	return false
 }
 
-func Test_Has_github_tag(t *testing.T) {
-	task := singleTask(t, singlePullWithId1)
-	for _, tag := range task.Tags {
-		if tag == "github" {
+func assertHasTag(t *testing.T, task taskwarrior.Task, tag string) {
+	for _, existingTag := range task.Tags {
+		if existingTag == tag {
 			return
 		}
 	}
-	t.Error("wanted task.Tags to include \"github\"")
+	t.Errorf("wanted tags to include %q, got %+v", tag, task.Tags)
+}
+
+func Test_Has_github_tag(t *testing.T) {
+	task := singleTask(t, singlePullWithId1)
+	assertHasTag(t, task, "github")
 }
 
 func Test_Has_next_tag(t *testing.T) {
 	task := singleTask(t, singlePullWithId1)
-	for _, tag := range task.Tags {
-		if tag == "next" {
-			return
-		}
-	}
-	t.Error("wanted task.Tags to include \"github\"")
+	assertHasTag(t, task, "next")
 }
 
 func Test_Annotation_contains_pull_request_URL(t *testing.T) {

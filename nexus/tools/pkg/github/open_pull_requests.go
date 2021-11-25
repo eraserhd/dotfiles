@@ -57,7 +57,6 @@ func (q *OpenPullRequestsQuery) Tasks() ([]taskwarrior.Task, error) {
 				Description: jira.Link(ticket),
 			})
 		}
-
 		tasks = append(tasks, taskwarrior.Task{
 			Uuid:        uuid,
 			Entry:       taskwarrior.Date(edge.Node.CreatedAt),
