@@ -28,6 +28,11 @@ func NewScenario(t *testing.T) *Scenario {
 	return &s
 }
 
+func (s *Scenario) WithId(id string) *Scenario {
+	s.query.Organization.Repository.PullRequests.Edges[0].Node.Id = id
+	return s
+}
+
 func (s *Scenario) SingleTask() taskwarrior.Task {
 	var tasks taskwarrior.Tasks
 	if err := s.query.UpdateTasks(&tasks); err != nil {
@@ -45,18 +50,6 @@ func queryResults(t *testing.T, text string) OpenPullRequestsQuery {
 		t.Fatalf("unmarshal: %v", err)
 	}
 	return pulls
-}
-
-func singleTask(t *testing.T, text string) taskwarrior.Task {
-	pulls := queryResults(t, text)
-	var tasks taskwarrior.Tasks
-	if err := pulls.UpdateTasks(&tasks); err != nil {
-		t.Fatalf("wanted err == nil, got %v", err)
-	}
-	if len(tasks) != 1 {
-		t.Fatalf("wanted len(tasks) == 1, got %d", len(tasks))
-	}
-	return tasks[0]
 }
 
 const (
@@ -98,11 +91,11 @@ func Test_Uuid_is_repeatably_computed_from_PullRequest_Id(t *testing.T) {
 	if task.Uuid == zeroUuid {
 		t.Errorf("wanted non-zero UUID, but got a zero UUID")
 	}
-	task2 := singleTask(t, singlePullWithId1)
+	task2 := NewScenario(t).SingleTask()
 	if task.Uuid != task2.Uuid {
 		t.Error("wanted uuid to be repeatable, but it was not")
 	}
-	task3 := singleTask(t, singlePullWithId2)
+	task3 := NewScenario(t).WithId("MDExOlB1bGxSZXF1ZXN0MjE3MDE1MDk5").SingleTask()
 	if task.Uuid == task3.Uuid {
 		t.Errorf("wanted task.Uuid != task3.Uuid, both are %v", task3.Uuid)
 	}
@@ -111,7 +104,7 @@ func Test_Uuid_is_repeatably_computed_from_PullRequest_Id(t *testing.T) {
 var uuidPattern = regexp.MustCompile(`^"[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"$`)
 
 func Test_Task_Uuid_serialies_lower_case_and_dashed(t *testing.T) {
-	task := singleTask(t, singlePullWithId1)
+	task := NewScenario(t).SingleTask()
 	bytes, err := json.Marshal(task.Uuid)
 	if err != nil {
 		t.Errorf("wanted err == nil, got %v", err)
@@ -135,7 +128,7 @@ func Test_An_existing_task_is_not_created_twice(t *testing.T) {
 }
 
 func Test_Entry_date_is_pull_request_creation_date(t *testing.T) {
-	task := singleTask(t, singlePullWithId1)
+	task := NewScenario(t).SingleTask()
 	bytes, err := json.Marshal(task.Entry)
 	if err != nil {
 		t.Fatalf("wanted err == nil, got %v", err)
@@ -146,21 +139,21 @@ func Test_Entry_date_is_pull_request_creation_date(t *testing.T) {
 }
 
 func Test_Status_is_pending(t *testing.T) {
-	task := singleTask(t, singlePullWithId1)
+	task := NewScenario(t).SingleTask()
 	if task.Status != "pending" {
 		t.Errorf("wanted task.Status == \"pending\", got %q", task.Status)
 	}
 }
 
 func Test_Description_contains_pull_request_title(t *testing.T) {
-	task := singleTask(t, singlePullWithId1)
+	task := NewScenario(t).SingleTask()
 	if !strings.Contains(task.Description, "mw-bcts4-1574") {
 		t.Errorf("want strings.Contains(%q, \"mw-bcts4-1574\")", task.Description)
 	}
 }
 
 func Test_Project_is_nexus(t *testing.T) {
-	task := singleTask(t, singlePullWithId1)
+	task := NewScenario(t).SingleTask()
 	if task.Project != "nexus" {
 		t.Errorf("wanted task.Project == \"nexus\", got %q", task.Project)
 	}
@@ -176,12 +169,12 @@ func assertHasTag(t *testing.T, task taskwarrior.Task, tag string) {
 }
 
 func Test_Has_github_tag(t *testing.T) {
-	task := singleTask(t, singlePullWithId1)
+	task := NewScenario(t).SingleTask()
 	assertHasTag(t, task, "github")
 }
 
 func Test_Has_next_tag(t *testing.T) {
-	task := singleTask(t, singlePullWithId1)
+	task := NewScenario(t).SingleTask()
 	assertHasTag(t, task, "next")
 }
 
@@ -195,12 +188,12 @@ func assertHasAnnotation(t *testing.T, task taskwarrior.Task, needle string) {
 }
 
 func Test_Annotation_contains_pull_request_URL(t *testing.T) {
-	task := singleTask(t, singlePullWithId1)
+	task := NewScenario(t).SingleTask()
 	assertHasAnnotation(t, task, "https://example.com/pull/42")
 }
 
 func Test_Annotation_contains_JIRA_URLs(t *testing.T) {
-	task := singleTask(t, singlePullWithId1)
+	task := NewScenario(t).SingleTask()
 	assertHasAnnotation(t, task, "https://jira.2u.com/browse/BCTS4-1574")
 	assertHasAnnotation(t, task, "https://jira.2u.com/browse/BCTS4-97")
 }
