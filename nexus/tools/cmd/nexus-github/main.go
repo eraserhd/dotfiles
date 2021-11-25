@@ -15,7 +15,7 @@ func main() {
 		panic(err)
 	}
 
-	var tasks []taskwarrior.Task
+	var tasks taskwarrior.Tasks
 	if err := query.UpdateTasks(&tasks); err != nil {
 		panic(err)
 	}

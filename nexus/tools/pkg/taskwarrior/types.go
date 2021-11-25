@@ -22,6 +22,8 @@ type (
 		Tags        []string     `json:"tags"`
 		Annotations []Annotation `json:"annotations"`
 	}
+
+	Tasks []Task
 )
 
 func (d Date) MarshalJSON() ([]byte, error) {

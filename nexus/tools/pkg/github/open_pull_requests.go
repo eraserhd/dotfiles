@@ -41,7 +41,7 @@ func (q *OpenPullRequestsQuery) Fetch(token string) error {
 	return client.Query(context.Background(), q, nil)
 }
 
-func (q *OpenPullRequestsQuery) UpdateTasks(tasks *[]taskwarrior.Task) error {
+func (q *OpenPullRequestsQuery) UpdateTasks(tasks *taskwarrior.Tasks) error {
 	for _, edge := range q.Organization.Repository.PullRequests.Edges {
 		uuid := uuid.NewSHA1(prDomain, []byte(edge.Node.Id))
 		entry := taskwarrior.Date(edge.Node.CreatedAt)

@@ -21,7 +21,7 @@ func queryResults(t *testing.T, text string) OpenPullRequestsQuery {
 
 func singleTask(t *testing.T, text string) taskwarrior.Task {
 	pulls := queryResults(t, text)
-	var tasks []taskwarrior.Task
+	var tasks taskwarrior.Tasks
 	if err := pulls.UpdateTasks(&tasks); err != nil {
 		t.Fatalf("wanted err == nil, got %v", err)
 	}
