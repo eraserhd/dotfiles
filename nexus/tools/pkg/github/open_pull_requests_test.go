@@ -121,14 +121,9 @@ func Test_An_existing_task_is_not_created_twice(t *testing.T) {
 }
 
 func Test_Entry_date_is_pull_request_creation_date(t *testing.T) {
-	task := NewScenario(t).SingleTask()
-	bytes, err := json.Marshal(task.Entry)
-	if err != nil {
-		t.Fatalf("wanted err == nil, got %v", err)
-	}
-	if string(bytes) != `"20211104T144303Z"` {
-		t.Errorf("wanted task.Entry = \"20211104T144303Z\", got %q\n", string(bytes))
-	}
+	NewScenario(t).
+		SingleTask().
+		JSONRepresentationContains(`"20211104T144303Z"`)
 }
 
 func Test_Status_is_pending(t *testing.T) {
