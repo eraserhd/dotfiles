@@ -6,6 +6,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/cayleygraph/cayley"
+	"github.com/cayleygraph/quad"
+
 	"github.com/google/uuid"
 
 	"github.com/eraserhd/dotfiles/nexus/tools/pkg/taskwarrior"
@@ -71,6 +74,29 @@ func (s *Scenario) SingleTask() TestableTask {
 		s.t.Fatalf("wanted len(tasks) == 1, got %d", len(s.tasks))
 	}
 	return TestableTask{s.t, s.tasks[0]}
+}
+
+func (s *Scenario) QuadStore() *cayley.Handle {
+	h, err := cayley.NewMemoryGraph()
+	if err != nil {
+		s.t.Fatalf("error creating memory graph: %v", err)
+	}
+	if err := s.query.AddQuads(h); err != nil {
+		s.t.Fatalf("error getting quads: %v", err)
+	}
+	return h
+}
+
+func Test_Has_PR_Id(t *testing.T) {
+	qs := NewScenario(t).QuadStore()
+	p := cayley.StartPath(qs, quad.IRI("https://example.com/pull/42")).Out(quad.IRI("https://example.com/Id"))
+	v, err := p.Iterate(nil).FirstValue(qs)
+	if err != nil {
+		t.Fatalf("error getting result: %v", err)
+	}
+	if quad.NativeOf(v).(string) != "MDExOlB1bGxSZXF1ZXN0MjEwNzk3NTAx" {
+		t.Errorf("didn't work")
+	}
 }
 
 func Test_New_UUID_is_not_zero_UUID(t *testing.T) {
