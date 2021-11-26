@@ -5,6 +5,8 @@ import (
 	"os"
 	"time"
 
+	"github.com/cayleygraph/cayley"
+	"github.com/cayleygraph/quad"
 	"github.com/eraserhd/dotfiles/nexus/tools/pkg/jira"
 	"github.com/eraserhd/dotfiles/nexus/tools/pkg/taskwarrior"
 	"github.com/google/uuid"
@@ -63,6 +65,24 @@ func (q *OpenPullRequestsQuery) UpdateTasks(tasks *taskwarrior.Tasks) error {
 		task.Status = "pending"
 		task.Tags = []string{"github", "next"}
 		task.Annotations = annotations
+	}
+	return nil
+}
+
+const (
+	PullRequestId quad.IRI = "https://example.com/Id"
+	Title         quad.IRI = "https://example.com/Title"
+)
+
+func (q *OpenPullRequestsQuery) AddQuads(h *cayley.Handle) error {
+	for _, edge := range q.Organization.Repository.PullRequests.Edges {
+		id := quad.IRI(edge.Node.Permalink)
+		if err := h.AddQuad(quad.Make(id, PullRequestId, quad.String(edge.Node.Id), nil)); err != nil {
+			return err
+		}
+		if err := h.AddQuad(quad.Make(id, Title, quad.String(edge.Node.Title), nil)); err != nil {
+			return err
+		}
 	}
 	return nil
 }
