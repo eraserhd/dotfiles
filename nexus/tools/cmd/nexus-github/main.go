@@ -1,30 +1,45 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
+	"log"
 	"os"
 
+	"github.com/cayleygraph/cayley"
+	"github.com/cayleygraph/cayley/graph"
+	"github.com/cayleygraph/quad"
+	_ "github.com/cayleygraph/quad/nquads"
 	"github.com/eraserhd/dotfiles/nexus/tools/pkg/github"
-	"github.com/eraserhd/dotfiles/nexus/tools/pkg/taskwarrior"
+)
+
+const (
+	PullRequestId quad.IRI = "https://example.com/Id"
+	Title         quad.IRI = "https://example.com/Title"
 )
 
 func main() {
 	var query github.OpenPullRequestsQuery
 	if err := query.Fetch(os.Getenv("GITHUB_TOKEN")); err != nil {
-		panic(err)
+		log.Fatalln(err)
 	}
 
-	var tasks taskwarrior.Tasks
-	if err := query.UpdateTasks(&tasks); err != nil {
-		panic(err)
+	g, err := cayley.NewMemoryGraph()
+	if err != nil {
+		log.Fatalln(err)
 	}
 
-	for _, task := range tasks {
-		out, err := json.Marshal(task)
-		if err != nil {
-			panic(err)
-		}
-		fmt.Println(string(out))
+	for _, edge := range query.Organization.Repository.PullRequests.Edges {
+		id := quad.IRI(edge.Node.Permalink)
+		g.AddQuad(quad.Make(id, PullRequestId, quad.String(edge.Node.Id), nil))
+		g.AddQuad(quad.Make(id, Title, quad.String(edge.Node.Title), nil))
+	}
+
+	qr := graph.NewQuadStoreReader(g.QuadStore)
+	defer qr.Close()
+	format := quad.FormatByName("nquads")
+	w := format.Writer(os.Stdout)
+	defer w.Close()
+
+	if _, err := quad.Copy(w, qr); err != nil {
+		log.Fatalln(err)
 	}
 }

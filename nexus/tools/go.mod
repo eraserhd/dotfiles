@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	github.com/cayleygraph/cayley v0.7.7 // indirect
+	github.com/cayleygraph/quad v1.2.4 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/uuid v1.3.0
 	github.com/shurcooL/githubv4 v0.0.0-20211117020012-5800b9de5b8b
