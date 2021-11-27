@@ -54,21 +54,13 @@ func (q *OpenPullRequestsQuery) Fetch(token string) error {
 	return client.Query(context.Background(), q, nil)
 }
 
-func (q *OpenPullRequestsQuery) UpdateTasks(tasks *taskwarrior.Tasks) error {
-	h, err := cayley.NewMemoryGraph()
-	if err != nil {
-		return err
-	}
-	defer h.Close()
-	if err := q.AddQuads(h); err != nil {
-		return err
-	}
-	return cayley.StartPath(h).
+func UpdateTasks(handle *cayley.Handle, tasks *taskwarrior.Tasks) error {
+	return cayley.StartPath(handle).
 		Tag("pr").Out(NodeId).Tag("id").
 		Back("pr").Out(PullRequestTitle).Tag("title").
 		Back("pr").Out(PullRequestCreatedAt).Tag("createdAt").
 		Iterate(nil).
-		TagValues(h, func(result map[string]quad.Value) {
+		TagValues(handle, func(result map[string]quad.Value) {
 			pr := string(result["pr"].Native().(quad.IRI))
 			id := result["id"].Native().(string)
 			createdAt := result["createdAt"].Native().(time.Time)

@@ -68,7 +68,14 @@ func (s *Scenario) WithExistingTask(task taskwarrior.Task) *Scenario {
 }
 
 func (s *Scenario) SingleTask() TestableTask {
-	if err := s.query.UpdateTasks(&s.tasks); err != nil {
+	handle, err := cayley.NewMemoryGraph()
+	if err != nil {
+		s.t.Fatalf("could not create a memory graph: %v", err)
+	}
+	if err := s.query.AddQuads(handle); err != nil {
+		s.t.Fatalf("wanted err == nil, got %v", err)
+	}
+	if err := UpdateTasks(handle, &s.tasks); err != nil {
 		s.t.Fatalf("wanted err == nil, got %v", err)
 	}
 	if len(s.tasks) != 1 {
