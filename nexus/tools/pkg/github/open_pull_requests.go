@@ -14,6 +14,18 @@ import (
 	"golang.org/x/oauth2"
 )
 
+const (
+	IRIPrefix = `https://docs.github.com/en/graphql/reference/objects#`
+
+	NodePrefix          = IRIPrefix + `node.`
+	NodeId     quad.IRI = NodePrefix + `id`
+
+	PullRequestPrefix             = IRIPrefix + `pullrequest.`
+	PullRequestCreatedAt quad.IRI = PullRequestPrefix + `createdAt`
+	PullRequestTitle     quad.IRI = PullRequestPrefix + `title`
+	PullRequestPermalink quad.IRI = PullRequestPrefix + `permalink`
+)
+
 type (
 	OpenPullRequestsQuery struct {
 		Organization struct {
@@ -69,18 +81,16 @@ func (q *OpenPullRequestsQuery) UpdateTasks(tasks *taskwarrior.Tasks) error {
 	return nil
 }
 
-const (
-	PullRequestId quad.IRI = "https://example.com/Id"
-	Title         quad.IRI = "https://example.com/Title"
-)
-
 func (q *OpenPullRequestsQuery) AddQuads(h *cayley.Handle) error {
 	for _, edge := range q.Organization.Repository.PullRequests.Edges {
 		id := quad.IRI(edge.Node.Permalink)
-		if err := h.AddQuad(quad.Make(id, PullRequestId, quad.String(edge.Node.Id), nil)); err != nil {
+		if err := h.AddQuad(quad.Make(id, NodeId, quad.String(edge.Node.Id), nil)); err != nil {
 			return err
 		}
-		if err := h.AddQuad(quad.Make(id, Title, quad.String(edge.Node.Title), nil)); err != nil {
+		if err := h.AddQuad(quad.Make(id, PullRequestTitle, quad.String(edge.Node.Title), nil)); err != nil {
+			return err
+		}
+		if err := h.AddQuad(quad.Make(id, PullRequestCreatedAt, quad.Time(edge.Node.CreatedAt), nil)); err != nil {
 			return err
 		}
 	}

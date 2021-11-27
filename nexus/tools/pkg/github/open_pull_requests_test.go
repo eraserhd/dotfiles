@@ -89,7 +89,7 @@ func (s *Scenario) QuadStore() *cayley.Handle {
 
 func Test_Has_PR_Id(t *testing.T) {
 	qs := NewScenario(t).QuadStore()
-	p := cayley.StartPath(qs, quad.IRI("https://example.com/pull/42")).Out(quad.IRI("https://example.com/Id"))
+	p := cayley.StartPath(qs, quad.IRI("https://example.com/pull/42")).Out(NodeId)
 	v, err := p.Iterate(nil).FirstValue(qs)
 	if err != nil {
 		t.Fatalf("error getting result: %v", err)
