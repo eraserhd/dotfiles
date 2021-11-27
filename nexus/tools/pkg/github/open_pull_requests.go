@@ -73,7 +73,6 @@ func (q *OpenPullRequestsQuery) UpdateTasks(tasks *taskwarrior.Tasks) error {
 			id := result["id"].Native().(string)
 			createdAt := result["createdAt"].Native().(time.Time)
 			title := result["title"].Native().(string)
-
 			uuid := uuid.NewSHA1(prDomain, []byte(id))
 			task := tasks.FindOrCreateByUUID(uuid)
 			entry := taskwarrior.Date(createdAt)
