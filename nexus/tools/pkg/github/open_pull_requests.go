@@ -2,7 +2,6 @@ package github
 
 import (
 	"context"
-	"os"
 	"time"
 
 	"github.com/cayleygraph/cayley"
@@ -49,7 +48,7 @@ var prDomain = uuid.MustParse("fda3daa0-7252-4cce-883d-a8c438156032")
 
 func (q *OpenPullRequestsQuery) Fetch(token string) error {
 	httpClient := oauth2.NewClient(context.Background(), oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: os.Getenv("GITHUB_TOKEN")},
+		&oauth2.Token{AccessToken: token},
 	))
 	client := githubv4.NewClient(httpClient)
 	return client.Query(context.Background(), q, nil)
