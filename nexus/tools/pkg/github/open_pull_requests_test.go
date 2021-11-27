@@ -5,6 +5,7 @@ import (
 	"regexp"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/cayleygraph/cayley"
 	"github.com/cayleygraph/quad"
@@ -107,6 +108,10 @@ func Test_PR_entity_has_NodeId(t *testing.T) {
 
 func Test_PR_entity_has_title(t *testing.T) {
 	NewScenario(t).Has(PullRequestTitle, "mw-bcts4-1574-97")
+}
+
+func Test_PR_entity_has_createdAt(t *testing.T) {
+	NewScenario(t).Has(PullRequestCreatedAt, time.Date(2021, 11, 4, 14, 43, 3, 0, time.UTC))
 }
 
 func Test_New_UUID_is_not_zero_UUID(t *testing.T) {
