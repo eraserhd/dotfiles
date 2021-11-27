@@ -56,15 +56,33 @@ func (q *OpenPullRequestsQuery) Fetch(token string) error {
 }
 
 func (q *OpenPullRequestsQuery) UpdateTasks(tasks *taskwarrior.Tasks) error {
-	for _, edge := range q.Organization.Repository.PullRequests.Edges {
-		uuid := uuid.NewSHA1(prDomain, []byte(edge.Node.Id))
+	h, err := cayley.NewMemoryGraph()
+	if err != nil {
+		return err
+	}
+	defer h.Close()
+	if err := q.AddQuads(h); err != nil {
+		return err
+	}
+
+	path := cayley.StartPath(h).
+		Tag("pr").Out(NodeId).Tag("id").
+		Back("pr").Out(PullRequestTitle).Tag("title").
+		Back("pr").Out(PullRequestCreatedAt).Tag("createdAt")
+	err = path.Iterate(nil).TagValues(h, func(result map[string]quad.Value) {
+		pr := string(result["pr"].Native().(quad.IRI))
+		id := result["id"].Native().(string)
+		createdAt := result["createdAt"].Native().(time.Time)
+		title := result["title"].Native().(string)
+
+		uuid := uuid.NewSHA1(prDomain, []byte(id))
 		task := tasks.FindOrCreateByUUID(uuid)
-		entry := taskwarrior.Date(edge.Node.CreatedAt)
+		entry := taskwarrior.Date(createdAt)
 		annotations := []taskwarrior.Annotation{{
 			Entry:       entry,
-			Description: edge.Node.Permalink,
+			Description: pr,
 		}}
-		tickets, _ := jira.TicketsForBranchName(edge.Node.Title)
+		tickets, _ := jira.TicketsForBranchName(title)
 		for _, ticket := range tickets {
 			annotations = append(annotations, taskwarrior.Annotation{
 				Entry:       entry,
@@ -72,11 +90,14 @@ func (q *OpenPullRequestsQuery) UpdateTasks(tasks *taskwarrior.Tasks) error {
 			})
 		}
 		task.Entry = entry
-		task.Description = edge.Node.Title
+		task.Description = title
 		task.Project = "nexus"
 		task.Status = "pending"
 		task.Tags = []string{"github", "next"}
 		task.Annotations = annotations
+	})
+	if err != nil {
+		return err
 	}
 	return nil
 }
