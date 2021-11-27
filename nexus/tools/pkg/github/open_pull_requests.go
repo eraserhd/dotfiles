@@ -64,38 +64,38 @@ func (q *OpenPullRequestsQuery) UpdateTasks(tasks *taskwarrior.Tasks) error {
 	if err := q.AddQuads(h); err != nil {
 		return err
 	}
-
-	path := cayley.StartPath(h).
+	err = cayley.StartPath(h).
 		Tag("pr").Out(NodeId).Tag("id").
 		Back("pr").Out(PullRequestTitle).Tag("title").
-		Back("pr").Out(PullRequestCreatedAt).Tag("createdAt")
-	err = path.Iterate(nil).TagValues(h, func(result map[string]quad.Value) {
-		pr := string(result["pr"].Native().(quad.IRI))
-		id := result["id"].Native().(string)
-		createdAt := result["createdAt"].Native().(time.Time)
-		title := result["title"].Native().(string)
+		Back("pr").Out(PullRequestCreatedAt).Tag("createdAt").
+		Iterate(nil).
+		TagValues(h, func(result map[string]quad.Value) {
+			pr := string(result["pr"].Native().(quad.IRI))
+			id := result["id"].Native().(string)
+			createdAt := result["createdAt"].Native().(time.Time)
+			title := result["title"].Native().(string)
 
-		uuid := uuid.NewSHA1(prDomain, []byte(id))
-		task := tasks.FindOrCreateByUUID(uuid)
-		entry := taskwarrior.Date(createdAt)
-		annotations := []taskwarrior.Annotation{{
-			Entry:       entry,
-			Description: pr,
-		}}
-		tickets, _ := jira.TicketsForBranchName(title)
-		for _, ticket := range tickets {
-			annotations = append(annotations, taskwarrior.Annotation{
+			uuid := uuid.NewSHA1(prDomain, []byte(id))
+			task := tasks.FindOrCreateByUUID(uuid)
+			entry := taskwarrior.Date(createdAt)
+			annotations := []taskwarrior.Annotation{{
 				Entry:       entry,
-				Description: jira.Link(ticket),
-			})
-		}
-		task.Entry = entry
-		task.Description = title
-		task.Project = "nexus"
-		task.Status = "pending"
-		task.Tags = []string{"github", "next"}
-		task.Annotations = annotations
-	})
+				Description: pr,
+			}}
+			tickets, _ := jira.TicketsForBranchName(title)
+			for _, ticket := range tickets {
+				annotations = append(annotations, taskwarrior.Annotation{
+					Entry:       entry,
+					Description: jira.Link(ticket),
+				})
+			}
+			task.Entry = entry
+			task.Description = title
+			task.Project = "nexus"
+			task.Status = "pending"
+			task.Tags = []string{"github", "next"}
+			task.Annotations = annotations
+		})
 	if err != nil {
 		return err
 	}
