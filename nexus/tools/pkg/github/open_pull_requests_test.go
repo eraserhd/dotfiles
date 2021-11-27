@@ -101,8 +101,12 @@ func (s *Scenario) Has(predicate quad.IRI, object interface{}) {
 	}
 }
 
-func Test_Has_PR_Id(t *testing.T) {
+func Test_PR_entity_has_NodeId(t *testing.T) {
 	NewScenario(t).Has(NodeId, "MDExOlB1bGxSZXF1ZXN0MjEwNzk3NTAx")
+}
+
+func Test_PR_entity_has_title(t *testing.T) {
+	NewScenario(t).Has(PullRequestTitle, "mw-bcts4-1574-97")
 }
 
 func Test_New_UUID_is_not_zero_UUID(t *testing.T) {
