@@ -64,7 +64,7 @@ func (q *OpenPullRequestsQuery) UpdateTasks(tasks *taskwarrior.Tasks) error {
 	if err := q.AddQuads(h); err != nil {
 		return err
 	}
-	err = cayley.StartPath(h).
+	return cayley.StartPath(h).
 		Tag("pr").Out(NodeId).Tag("id").
 		Back("pr").Out(PullRequestTitle).Tag("title").
 		Back("pr").Out(PullRequestCreatedAt).Tag("createdAt").
@@ -96,10 +96,6 @@ func (q *OpenPullRequestsQuery) UpdateTasks(tasks *taskwarrior.Tasks) error {
 			task.Tags = []string{"github", "next"}
 			task.Annotations = annotations
 		})
-	if err != nil {
-		return err
-	}
-	return nil
 }
 
 func (q *OpenPullRequestsQuery) AddQuads(h *cayley.Handle) error {
