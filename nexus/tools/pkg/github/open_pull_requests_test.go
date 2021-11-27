@@ -87,16 +87,22 @@ func (s *Scenario) QuadStore() *cayley.Handle {
 	return h
 }
 
-func Test_Has_PR_Id(t *testing.T) {
-	qs := NewScenario(t).QuadStore()
-	p := cayley.StartPath(qs, quad.IRI("https://example.com/pull/42")).Out(NodeId)
-	v, err := p.Iterate(nil).FirstValue(qs)
+func (s *Scenario) Has(predicate quad.IRI, object interface{}) {
+	qs := NewScenario(s.t).QuadStore()
+	path := cayley.StartPath(qs, quad.IRI("https://example.com/pull/42")).Out(predicate)
+	result, err := path.Iterate(nil).FirstValue(qs)
 	if err != nil {
-		t.Fatalf("error getting result: %v", err)
+		s.t.Fatalf("error getting result: %v", err)
 	}
-	if quad.NativeOf(v).(string) != "MDExOlB1bGxSZXF1ZXN0MjEwNzk3NTAx" {
-		t.Errorf("didn't work")
+	value, _ := quad.AsValue(result)
+	wantValue, _ := quad.AsValue(object)
+	if wantValue.String() != value.String() {
+		s.t.Errorf("want %v, got %v", wantValue.String(), value.String())
 	}
+}
+
+func Test_Has_PR_Id(t *testing.T) {
+	NewScenario(t).Has(NodeId, "MDExOlB1bGxSZXF1ZXN0MjEwNzk3NTAx")
 }
 
 func Test_New_UUID_is_not_zero_UUID(t *testing.T) {
