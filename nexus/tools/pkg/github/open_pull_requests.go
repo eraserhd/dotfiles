@@ -54,6 +54,9 @@ func (q *OpenPullRequestsQuery) Fetch(token string) error {
 	return client.Query(context.Background(), q, nil)
 }
 
+// rules:
+// * UUID
+// * JIRA tickets
 func UpdateTasks(handle *cayley.Handle, tasks *taskwarrior.Tasks) error {
 	return cayley.StartPath(handle).
 		Tag("pr").Out(NodeId).Tag("id").
