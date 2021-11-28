@@ -6,6 +6,7 @@ import (
 
 	"github.com/cayleygraph/cayley"
 	"github.com/cayleygraph/quad"
+	"github.com/cayleygraph/quad/voc/rdf"
 	"github.com/eraserhd/dotfiles/nexus/tools/pkg/jira"
 	"github.com/eraserhd/dotfiles/nexus/tools/pkg/taskwarrior"
 	"github.com/google/uuid"
@@ -19,10 +20,10 @@ const (
 	NodePrefix          = IRIPrefix + `node.`
 	NodeId     quad.IRI = NodePrefix + `id`
 
-	PullRequestPrefix             = IRIPrefix + `pullrequest.`
-	PullRequestCreatedAt quad.IRI = PullRequestPrefix + `createdAt`
-	PullRequestTitle     quad.IRI = PullRequestPrefix + `title`
-	PullRequestPermalink quad.IRI = PullRequestPrefix + `permalink`
+	PullRequestType      quad.IRI = IRIPrefix + `pullrequest`
+	PullRequestCreatedAt quad.IRI = PullRequestType + `.createdAt`
+	PullRequestTitle     quad.IRI = PullRequestType + `.title`
+	PullRequestPermalink quad.IRI = PullRequestType + `.permalink`
 )
 
 type (
@@ -59,6 +60,7 @@ func (q *OpenPullRequestsQuery) Fetch(token string) error {
 // * JIRA tickets
 func UpdateTasks(handle *cayley.Handle, tasks *taskwarrior.Tasks) error {
 	return cayley.StartPath(handle).
+		Has(quad.IRI(rdf.Type), PullRequestType).
 		Tag("pr").Out(NodeId).Tag("id").
 		Back("pr").Out(PullRequestTitle).Tag("title").
 		Back("pr").Out(PullRequestCreatedAt).Tag("createdAt").
@@ -94,6 +96,9 @@ func UpdateTasks(handle *cayley.Handle, tasks *taskwarrior.Tasks) error {
 func (q *OpenPullRequestsQuery) AddQuads(h *cayley.Handle) error {
 	for _, edge := range q.Organization.Repository.PullRequests.Edges {
 		id := quad.IRI(edge.Node.Permalink)
+		if err := h.AddQuad(quad.Make(id, quad.IRI(rdf.Type), PullRequestType, nil)); err != nil {
+			return err
+		}
 		if err := h.AddQuad(quad.Make(id, NodeId, quad.String(edge.Node.Id), nil)); err != nil {
 			return err
 		}
