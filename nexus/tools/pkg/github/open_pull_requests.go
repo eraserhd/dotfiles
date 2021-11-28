@@ -8,6 +8,7 @@ import (
 	"github.com/cayleygraph/quad"
 	"github.com/cayleygraph/quad/voc/rdf"
 	"github.com/eraserhd/dotfiles/nexus/tools/pkg/jira"
+	"github.com/eraserhd/dotfiles/nexus/tools/pkg/rules"
 	"github.com/eraserhd/dotfiles/nexus/tools/pkg/taskwarrior"
 	"github.com/google/uuid"
 	"github.com/shurcooL/githubv4"
@@ -109,5 +110,6 @@ func (q *OpenPullRequestsQuery) AddQuads(h *cayley.Handle) error {
 			return err
 		}
 	}
-	return nil
+	_, err := rules.Process(h)
+	return err
 }
