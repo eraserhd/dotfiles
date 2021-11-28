@@ -3,7 +3,6 @@ package rules
 
 import (
 	"github.com/cayleygraph/cayley"
-	"github.com/cayleygraph/quad"
 	"sync"
 )
 
