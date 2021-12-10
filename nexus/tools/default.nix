@@ -5,5 +5,5 @@ buildGoModule {
 
   src = ./.;
 
-  vendorSha256 = "RNuU+7Ve585WxtZicQ9Ud4HVkivOYvSxklynQ1tlOqA=";
+  vendorSha256 = "pJsXTbbiq1+ulVHKKL7426N9E1p8siBD01cDSsN/+0o=";
 }
