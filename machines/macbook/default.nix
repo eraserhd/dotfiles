@@ -43,6 +43,16 @@
   local.plan9.terminal.enable = true;
   local.buildkite.enable = true;
 
+  launchd.user.agents.h_nexus = {
+    command = "/Users/jfelice/src/h_nexus/update.sh";
+    path = [ pkgs.git ];
+    serviceConfig = {
+      LowPriorityIO = true;
+      Nice = 10;
+      StartInterval = 60 * 15; # 15 minutes
+    };
+  };
+
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
