@@ -45,7 +45,7 @@
 
   launchd.user.agents.h_nexus = {
     command = "/Users/jfelice/src/h_nexus/update.sh";
-    path = [ pkgs.git ];
+    path = [ pkgs.git "/usr/bin" "/bin" ];
     serviceConfig = {
       LowPriorityIO = true;
       Nice = 10;
