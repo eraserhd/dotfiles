@@ -18,9 +18,14 @@ data set	file://$file
 plumb to web
 plumb start web $data
 
+# JIRA tickets turned into web links
+type is text
+data matches '([a-z][a-z]-)*[a-zA-Z][a-zA-Z0-9]+(-[0-9]+)+'
+plumb start sh -c 'plumb "`@nexus_tools@/bin/nexus-jira-link -1 '''$0'''`"'
+
 # urls go to web browser
 type is text
-data matches '(https?|ftp|file|gopher|mailto|news|nntp|telnet|wais|prospero)://[a-zA-Z0-9_@\-]+([.:][a-zA-Z0-9_@\-]+)*/?[a-zA-Z0-9_?,%#~&/\-+=]+([:.][a-zA-Z0-9_?,%#~&/\-+=]+)*'
+data matches '(https?|ftp|file|gopher|mailto|news|nntp|telnet|wais|prospero)://[a-zA-Z0-9_@\-]+([.:][a-zA-Z0-9_@\-]+)*/?[a-zA-Z0-9_?,$%#~&/\-+=]+([:.][a-zA-Z0-9_?,$%#~&/\-+=]+)*'
 plumb to web
 plumb start open-in-chrome-tab $0
 

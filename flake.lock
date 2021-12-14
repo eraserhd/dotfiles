@@ -7,16 +7,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1629839628,
-        "narHash": "sha256-XV2Q4+XiGizqi42LgfSK7gxuGPiFBFOFKmWXKq4PTak=",
-        "owner": "eraserhd",
+        "lastModified": 1634994402,
+        "narHash": "sha256-xmlCVVOYGpZoxgOqsDOVF0B0ASrnbNGVAEzID9qh2xo=",
+        "owner": "LnL7",
         "repo": "nix-darwin",
-        "rev": "998fbfc0398079326094a7f97e8d8745d0f49d82",
+        "rev": "44da835ac40dab5fd231298b59d83487382d2fab",
         "type": "github"
       },
       "original": {
-        "owner": "eraserhd",
-        "ref": "magic-mouse",
+        "owner": "LnL7",
+        "ref": "master",
         "repo": "nix-darwin",
         "type": "github"
       }
@@ -28,32 +28,32 @@
         ]
       },
       "locked": {
-        "lastModified": 1629813835,
-        "narHash": "sha256-91w5i+NTx5sOSdcdl0fD1r4K5p2T6fD7ChAM9dxfgf0=",
-        "owner": "eraserhd",
+        "lastModified": 1636978996,
+        "narHash": "sha256-5t5ZNRtlLpOta0jVyjpqENG2DmISyD90ZuanRIiTSu0=",
+        "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "7be8844df34909e999a5b8a6666e5091c1da222d",
+        "rev": "cbcb2976b69a4054a8cb2a4c26101ca337191999",
         "type": "github"
       },
       "original": {
-        "owner": "eraserhd",
-        "ref": "kitty-env",
+        "owner": "nix-community",
+        "ref": "master",
         "repo": "home-manager",
         "type": "github"
       }
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1629980031,
-        "narHash": "sha256-Ul2uJASBfFe/BBBJSDvvk6Y73pOIv0C9bzWa4D26DQo=",
-        "owner": "eraserhd",
+        "lastModified": 1636987358,
+        "narHash": "sha256-kCzhn68HjlVwTMtq70d5X6SBsZfTieqY4JrAGalLgSM=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "4d81b7a99c03715a8a868a70c342a8f557ff647f",
+        "rev": "ea9bc265b7501b61dce14ba731d09f34895cd2be",
         "type": "github"
       },
       "original": {
-        "owner": "eraserhd",
-        "ref": "weechat-edit",
+        "owner": "NixOS",
+        "ref": "master",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -73,11 +73,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1623097534,
-        "narHash": "sha256-YhpheOSb8/mREiJDrpZJKqeV1YuZDdzqV4ghSAphM3A=",
+        "lastModified": 1633636995,
+        "narHash": "sha256-VAekYmmBsLwQuI72jm7KgAP+Nz/bNJ4BfJpBmk6i6nw=",
         "ref": "develop",
-        "rev": "6dc1981e8691a4dbb854970196ef11864b247577",
-        "revCount": 67,
+        "rev": "bac00ec61be17fb40896993c0c212e798c79f10d",
+        "revCount": 68,
         "type": "git",
         "url": "ssh://git@github.com/2uinc/nix-2u"
       },

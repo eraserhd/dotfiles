@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+project="${PWD##*/}"
+task add +next project:"$project" "$@"

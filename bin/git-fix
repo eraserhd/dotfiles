@@ -1,9 +1,6 @@
 #!/bin/sh
 
 git status --porcelain |awk '
-    BEGIN{
-        FS = "??";
-    }
     substr($0, 1, 1) == "U" || substr($0, 2, 1) == "U" {
         filename = substr($0, 4);
         line_count = 0;

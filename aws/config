@@ -7,4 +7,14 @@ sdb = true
 [profile imp-sandbox]
 role_arn = arn:aws:iam::102456302505:role/Implementation-Team-Sandbox
 source_profile = default
-region=us-west-2
+region = us-west-2
+
+[profile trilogy-current]
+role_arn = arn:aws:iam::538064079876:role/l1-developers
+source_profile = default
+region = us-east-1
+
+[profile trilogy-new]
+role_arn = arn:aws:iam::631616465563:role/l1-developers
+source_profile = default
+region = us-west-2

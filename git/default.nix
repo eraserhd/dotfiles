@@ -4,7 +4,7 @@
   config = {
     environment.systemPackages = with pkgs; [
       gitFull
-      gitAndTools.hub
+      gitAndTools.gh
       #gitAndTools.gitout -- no scheme atm
       local.git-scripts
       git-crypt
@@ -21,7 +21,6 @@
     }) ];
 
     home-manager.users.jfelice = { pkgs, ... }: {
-      home.file.".config/hub".source = ./hub;
       home.file.".gitconfig".source = ./gitconfig;
       home.file.".config/git/ignore".text = ''
         .DS_Store

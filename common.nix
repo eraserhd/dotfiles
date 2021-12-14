@@ -8,6 +8,7 @@ with lib;
     ./anki
     ./aws
     ./browser
+    ./buildkite
     ./chromium
     ./clojure
     ./docker
@@ -33,6 +34,7 @@ with lib;
     ./networking/tls
     ./networking/update-dns
     ./networking/wifi
+    ./nexus
     ./nix
     ./npm
     ./postgres
@@ -40,6 +42,7 @@ with lib;
     ./shell
     ./taskwarrior
     ./tex
+    ./timeular
     ./tmux
     ./usb-overdrive
     ./vnc

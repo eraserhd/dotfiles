@@ -3,6 +3,8 @@
 with lib;
 let
   cfg = config.local.loginShell;
+
+  homeDirectory = config.users.users.jfelice.home;
 in {
   options = {
     local.systemDisplayName = mkOption {
@@ -64,7 +66,7 @@ in {
       }
 
       source_if_exists ~/.nix-profile/etc/profile.d/nix.sh
-      source ${toString ../bin/private.sh}
+      source ${homeDirectory}/src/dotfiles/bin/private.sh
 
       eval "$(2u shell initialize --zsh)"
       eval "$(broot --print-shell-function zsh)"
@@ -87,6 +89,8 @@ in {
       nix-prefetch-github
       posix_man_pages
       shellcheck
+      sqltools
+      tableize
       tree
       unzip
       wget

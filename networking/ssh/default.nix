@@ -44,6 +44,8 @@ with lib;
         *Xsession) ensureSshAgent;;
         esac
       '';
+
+      home.file.".ssh/config".source = ./ssh_config;
     };
   } // (if (builtins.hasAttr "launchd" options)
   then {
