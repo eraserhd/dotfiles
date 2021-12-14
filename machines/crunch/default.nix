@@ -23,6 +23,9 @@
     ];
 
   hardware.video.hidpi.enable = lib.mkDefault true;
+  hardware.enableRedistributableFirmware = true;
+  hardware.enableAllFirmware = true;
+  hardware.firmware = [ pkgs.wireless-regdb ];
 
   nix.maxJobs = 1;
   nix.buildCores = 20;
