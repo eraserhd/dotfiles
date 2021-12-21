@@ -45,7 +45,6 @@ with lib;
     ./timeular
     ./tmux
     ./usb-overdrive
-    ./vnc
     ./weechat
     ./x
     ./zsh
