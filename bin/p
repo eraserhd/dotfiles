@@ -1,5 +1,0 @@
-#!/bin/sh
-
-cd ~/src/centralpark
-
-PATH="./script:$PATH" exec "$@"
