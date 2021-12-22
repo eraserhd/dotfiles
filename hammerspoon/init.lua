@@ -85,3 +85,8 @@ not_sigils:start()
 mouse_follows_focus = hs.loadSpoon("MouseFollowsFocus")
 mouse_follows_focus:configure({})
 mouse_follows_focus:start()
+
+-- Start kitty if it is not open
+if hs.application.find('net.kovidgoyal.kitty') == nil then
+    hs.application.open('/run/current-system/Applications/kitty.app')
+end
