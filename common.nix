@@ -3,7 +3,6 @@
 with lib;
 {
   imports = [
-    ./1password
     ./3d
     ./anki
     ./browser
@@ -31,6 +30,7 @@ with lib;
     ./networking/wifi
     ./nexus
     ./nix
+    ./programs/1password
     ./programs/aws
     ./programs/clojure
     ./programs/gtypist
