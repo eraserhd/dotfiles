@@ -1,6 +1,4 @@
 alfred/license.txt filter=git-crypt diff=git-crypt
-aws/boto filter=git-crypt diff=git-crypt
-aws/credentials filter=git-crypt diff=git-crypt
 bin/checkpw filter=git-crypt diff=git-crypt
 bin/private.sh filter=git-crypt diff=git-crypt
 clojure/profiles.clj filter=git-crypt diff=git-crypt
@@ -18,6 +16,8 @@ networking/ssh/files/id_rsa-macbook filter=git-crypt diff=git-crypt
 networking/wifi/networks.nix filter=git-crypt diff=git-crypt
 npm/npmrc filter=git-crypt diff=git-crypt
 postgres/pgpass.conf filter=git-crypt diff=git-crypt
+programs/aws/boto filter=git-crypt diff=git-crypt
+programs/aws/credentials filter=git-crypt diff=git-crypt
 terraform/terraform.tfstate filter=git-crypt diff=git-crypt
 usb-overdrive/license.txt filter=git-crypt diff=git-crypt
 weechat/config/sec.conf filter=git-crypt diff=git-crypt

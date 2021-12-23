@@ -6,7 +6,6 @@ with lib;
     ./1password
     ./3d
     ./anki
-    ./aws
     ./browser
     ./buildkite
     ./chromium
@@ -35,6 +34,7 @@ with lib;
     ./nix
     ./npm
     ./postgres
+    ./programs/aws
     ./programs/gtypist
     ./programs/kakoune
     ./programs/kitty
