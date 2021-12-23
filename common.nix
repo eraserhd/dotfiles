@@ -22,7 +22,6 @@ with lib;
     ./gtypist
     ./hammerspoon
     ./i3
-    ./kitty
     ./linux
     ./macos
     ./modules/environment/xdg
@@ -38,6 +37,7 @@ with lib;
     ./npm
     ./postgres
     ./programs/kakoune
+    ./programs/kitty
     ./rlwrap
     ./shell
     ./taskwarrior
