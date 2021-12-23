@@ -9,7 +9,6 @@ with lib;
     ./browser
     ./buildkite
     ./chromium
-    ./clojure
     ./docker
     ./dogfood
     ./emacs
@@ -33,11 +32,12 @@ with lib;
     ./nexus
     ./nix
     ./npm
-    ./postgres
     ./programs/aws
+    ./programs/clojure
     ./programs/gtypist
     ./programs/kakoune
     ./programs/kitty
+    ./programs/postgres
     ./rlwrap
     ./shell
     ./taskwarrior
