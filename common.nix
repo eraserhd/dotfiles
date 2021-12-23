@@ -19,7 +19,6 @@ with lib;
     ./git
     ./gnupg
     ./go
-    ./gtypist
     ./hammerspoon
     ./i3
     ./linux
@@ -36,6 +35,7 @@ with lib;
     ./nix
     ./npm
     ./postgres
+    ./programs/gtypist
     ./programs/kakoune
     ./programs/kitty
     ./rlwrap
