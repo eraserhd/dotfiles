@@ -31,12 +31,12 @@ with lib;
     ./networking/wifi
     ./nexus
     ./nix
-    ./npm
     ./programs/aws
     ./programs/clojure
     ./programs/gtypist
     ./programs/kakoune
     ./programs/kitty
+    ./programs/npm
     ./programs/postgres
     ./rlwrap
     ./shell
