@@ -1,6 +1,5 @@
 bin/checkpw filter=git-crypt diff=git-crypt
 bin/private.sh filter=git-crypt diff=git-crypt
-clojure/profiles.clj filter=git-crypt diff=git-crypt
 fonts/Input-Font.zip filter=git-crypt diff=git-crypt
 networking/tls/*.key filter=git-crypt diff=git-crypt
 networking/ses-email/ses-user.nix filter=git-crypt diff=git-crypt
@@ -16,6 +15,7 @@ npm/npmrc filter=git-crypt diff=git-crypt
 postgres/pgpass.conf filter=git-crypt diff=git-crypt
 programs/aws/boto filter=git-crypt diff=git-crypt
 programs/aws/credentials filter=git-crypt diff=git-crypt
+programs/clojure/profiles.clj filter=git-crypt diff=git-crypt
 terraform/terraform.tfstate filter=git-crypt diff=git-crypt
 usb-overdrive/license.txt filter=git-crypt diff=git-crypt
 weechat/config/sec.conf filter=git-crypt diff=git-crypt
