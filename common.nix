@@ -38,6 +38,7 @@ with lib;
     ./programs/kitty
     ./programs/npm
     ./programs/postgres
+    ./programs/weechat
     ./rlwrap
     ./shell
     ./taskwarrior
@@ -45,7 +46,6 @@ with lib;
     ./timeular
     ./tmux
     ./usb-overdrive
-    ./weechat
     ./x
     ./zsh
   ];
