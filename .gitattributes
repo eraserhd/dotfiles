@@ -16,6 +16,6 @@ programs/aws/credentials filter=git-crypt diff=git-crypt
 programs/clojure/profiles.clj filter=git-crypt diff=git-crypt
 programs/npm/npmrc filter=git-crypt diff=git-crypt
 programs/postgres/pgpass.conf filter=git-crypt diff=git-crypt
+programs/usb-overdrive/license.txt filter=git-crypt diff=git-crypt
 programs/weechat/config/sec.conf filter=git-crypt diff=git-crypt
 terraform/terraform.tfstate filter=git-crypt diff=git-crypt
-usb-overdrive/license.txt filter=git-crypt diff=git-crypt
