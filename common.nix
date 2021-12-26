@@ -17,6 +17,7 @@ with lib;
     ./networking/update-dns
     ./networking/wifi
     ./nexus
+    ./pkg
     ./programs/1password
     ./programs/anki
     ./programs/aws
