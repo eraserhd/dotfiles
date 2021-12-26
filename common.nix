@@ -15,7 +15,6 @@ with lib;
     ./gnupg
     ./go
     ./hammerspoon
-    ./i3
     ./linux
     ./macos
     ./modules/environment/xdg
@@ -34,6 +33,7 @@ with lib;
     ./programs/buildkite
     ./programs/clojure
     ./programs/gtypist
+    ./programs/i3
     ./programs/kakoune
     ./programs/kitty
     ./programs/npm
