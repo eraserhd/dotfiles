@@ -5,7 +5,6 @@ with lib;
   imports = [
     ./3d
     ./browser
-    ./chromium
     ./docker
     ./dogfood
     ./emacs
@@ -31,6 +30,7 @@ with lib;
     ./programs/anki
     ./programs/aws
     ./programs/buildkite
+    ./programs/chromium
     ./programs/clojure
     ./programs/gtypist
     ./programs/i3
