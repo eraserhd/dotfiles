@@ -9,4 +9,4 @@ while read repo_url; do
   if [[ ! -d ~/src/"$dir" ]]; then
     ( cd ~/src ; git clone "$repo_url" )
   fi
-done <git/repos.txt
+done <programs/git/repos.txt

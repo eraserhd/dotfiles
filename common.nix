@@ -8,7 +8,6 @@ with lib;
     ./docker
     ./dogfood
     ./fonts
-    ./git
     ./gnupg
     ./go
     ./hammerspoon
@@ -32,6 +31,7 @@ with lib;
     ./programs/clojure
     ./programs/emacs
     ./programs/freecad
+    ./programs/git
     ./programs/gtypist
     ./programs/i3
     ./programs/kakoune

@@ -31,7 +31,7 @@ then
   git crypt unlock
 fi
 
-for installer in */install.sh
+for installer in programs/*/install.sh
 do
   $installer
 done
