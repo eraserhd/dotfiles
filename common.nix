@@ -5,7 +5,6 @@ with lib;
   imports = [
     ./3d
     ./browser
-    ./docker
     ./dogfood
     ./fonts
     ./gnupg
@@ -29,6 +28,7 @@ with lib;
     ./programs/buildkite
     ./programs/chromium
     ./programs/clojure
+    ./programs/docker
     ./programs/emacs
     ./programs/freecad
     ./programs/git
