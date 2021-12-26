@@ -6,8 +6,6 @@ with lib;
     ./browser
     ./dogfood
     ./fonts
-    ./os/nixos
-    ./os/nix-darwin
     ./modules/environment/xdg
     ./modules/bubbles
     ./networking/plan9

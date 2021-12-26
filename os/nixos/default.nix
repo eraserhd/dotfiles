@@ -2,6 +2,10 @@
 
 with lib;
 {
+  imports = [
+    ./modules
+  ];
+
   options = {
     local.bluetooth.enable = mkEnableOption "Bluetooth";
   };

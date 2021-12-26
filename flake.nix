@@ -16,7 +16,7 @@
       system = "x86_64-darwin";
       modules = [
         ./machines/macbook
-        ./modules/nix-darwin
+        ./os/nix-darwin
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -35,7 +35,7 @@
       system = "x86_64-linux";
       modules = [
         ./machines/crunch
-        ./modules/nixos
+        ./os/nixos
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
