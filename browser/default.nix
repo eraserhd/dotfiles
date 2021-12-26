@@ -13,7 +13,7 @@ with lib;
   config = {
     nixpkgs.overlays = [
       (self: super: {
-        open-in-chrome-tab = super.callPackage ./open-in-chrome-tab {};
+        open-in-chrome-tab = super.callPackage ../pkg/open-in-chrome-tab {};
       })
     ];
 
