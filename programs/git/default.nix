@@ -14,12 +14,6 @@
     # Needed for `hub browse`
     environment.variables.BROWSER = config.local.browserCommand;
 
-    nixpkgs.overlays = [ (self: super: {
-      local = (super.local or {}) // {
-        git-scripts = super.callPackage ./git-scripts {};
-      };
-    }) ];
-
     home-manager.users.jfelice = { pkgs, ... }: {
       home.file.".gitconfig".source = ./gitconfig;
       home.file.".config/git/ignore".text = ''
