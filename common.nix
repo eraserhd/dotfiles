@@ -38,12 +38,12 @@ with lib;
     ./programs/kitty
     ./programs/npm
     ./programs/postgres
+    ./programs/taskwarrior
     ./programs/tex
     ./programs/usb-overdrive
     ./programs/weechat
     ./rlwrap
     ./shell
-    ./taskwarrior
     ./timeular
     ./tmux
     ./x
