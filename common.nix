@@ -8,7 +8,6 @@ with lib;
     ./dogfood
     ./fonts
     ./gnupg
-    ./go
     ./linux
     ./macos
     ./modules/environment/xdg
@@ -31,6 +30,7 @@ with lib;
     ./programs/emacs
     ./programs/freecad
     ./programs/git
+    ./programs/go
     ./programs/gtypist
     ./programs/hammerspoon
     ./programs/i3
