@@ -3,7 +3,6 @@
 with lib;
 {
   imports = [
-    ./3d
     ./browser
     ./dogfood
     ./fonts
@@ -37,6 +36,7 @@ with lib;
     ./programs/kakoune
     ./programs/kitty
     ./programs/npm
+    ./programs/openscad
     ./programs/postgres
     ./programs/rlwrap
     ./programs/taskwarrior
