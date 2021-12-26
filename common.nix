@@ -4,7 +4,6 @@ with lib;
 {
   imports = [
     ./3d
-    ./anki
     ./browser
     ./buildkite
     ./chromium
@@ -31,6 +30,7 @@ with lib;
     ./nexus
     ./nix
     ./programs/1password
+    ./programs/anki
     ./programs/aws
     ./programs/clojure
     ./programs/gtypist
