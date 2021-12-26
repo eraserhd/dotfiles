@@ -17,7 +17,6 @@ with lib;
     ./networking/update-dns
     ./networking/wifi
     ./nexus
-    ./nix
     ./programs/1password
     ./programs/anki
     ./programs/aws
@@ -35,6 +34,7 @@ with lib;
     ./programs/i3
     ./programs/kakoune
     ./programs/kitty
+    ./programs/nix
     ./programs/npm
     ./programs/openscad
     ./programs/postgres
