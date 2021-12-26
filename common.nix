@@ -8,7 +8,6 @@ with lib;
     ./docker
     ./dogfood
     ./emacs
-    ./freecad
     ./fonts
     ./git
     ./gnupg
@@ -32,6 +31,7 @@ with lib;
     ./programs/buildkite
     ./programs/chromium
     ./programs/clojure
+    ./programs/freecad
     ./programs/gtypist
     ./programs/i3
     ./programs/kakoune
