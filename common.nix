@@ -7,7 +7,6 @@ with lib;
     ./browser
     ./docker
     ./dogfood
-    ./emacs
     ./fonts
     ./git
     ./gnupg
@@ -31,6 +30,7 @@ with lib;
     ./programs/buildkite
     ./programs/chromium
     ./programs/clojure
+    ./programs/emacs
     ./programs/freecad
     ./programs/gtypist
     ./programs/i3
