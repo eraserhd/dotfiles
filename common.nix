@@ -9,7 +9,6 @@ with lib;
     ./fonts
     ./gnupg
     ./go
-    ./hammerspoon
     ./linux
     ./macos
     ./modules/environment/xdg
@@ -33,6 +32,7 @@ with lib;
     ./programs/freecad
     ./programs/git
     ./programs/gtypist
+    ./programs/hammerspoon
     ./programs/i3
     ./programs/kakoune
     ./programs/kitty
