@@ -6,8 +6,8 @@ with lib;
     ./browser
     ./dogfood
     ./fonts
-    ./linux
-    ./macos
+    ./os/nixos
+    ./os/nix-darwin
     ./modules/environment/xdg
     ./modules/bubbles
     ./networking/plan9
