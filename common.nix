@@ -38,11 +38,11 @@ with lib;
     ./programs/kitty
     ./programs/npm
     ./programs/postgres
+    ./programs/rlwrap
     ./programs/taskwarrior
     ./programs/tex
     ./programs/usb-overdrive
     ./programs/weechat
-    ./rlwrap
     ./shell
     ./timeular
     ./tmux
