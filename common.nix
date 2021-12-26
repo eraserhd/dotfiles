@@ -41,11 +41,11 @@ with lib;
     ./programs/rlwrap
     ./programs/taskwarrior
     ./programs/tex
+    ./programs/timeular
     ./programs/tmux
     ./programs/usb-overdrive
     ./programs/weechat
     ./shell
-    ./timeular
     ./x
     ./zsh
   ];
