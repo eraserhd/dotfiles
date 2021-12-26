@@ -45,8 +45,8 @@ with lib;
     ./programs/tmux
     ./programs/usb-overdrive
     ./programs/weechat
+    ./programs/x
     ./shell
-    ./x
     ./zsh
   ];
 
