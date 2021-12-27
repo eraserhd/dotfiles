@@ -15,8 +15,8 @@
     darwinConfigurations."C02CW0J5ML87" = darwin.lib.darwinSystem {
       system = "x86_64-darwin";
       modules = [
-        ./machines/macbook
         ./os/nix-darwin
+        ./machines/macbook
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -34,8 +34,8 @@
     nixosConfigurations.crunch = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./machines/crunch
         ./os/nixos
+        ./machines/crunch
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
