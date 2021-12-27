@@ -29,7 +29,7 @@
       zstyle ':vcs_info:*' actionformats '(%b[%a])'
       setopt prompt_subst
       PROMPT='
-      %(?.%F{green}.%F{red}[%?] )%n@%m %1d ''${vcs_info_msg_0_}
+      %(?.%F{green}.%F{red})%* %? %n@%m %1d ''${vcs_info_msg_0_}
       ᐅ%f '
       RPS1=""
     '';
