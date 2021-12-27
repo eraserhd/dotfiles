@@ -1,10 +1,6 @@
 { config, inputs, pkgs, ... }:
 
 {
-  imports = [
-    ../../common.nix
-  ];
-
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/src/dotfiles/machines/macbook/default.nix
   environment.darwinConfig = "$HOME/src/dotfiles/machines/macbook/default.nix";

@@ -17,6 +17,7 @@
       modules = [
         ./os/nix-darwin
         ./machines/macbook
+        ./common.nix
         home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
@@ -36,6 +37,7 @@
       modules = [
         ./os/nixos
         ./machines/crunch
+        ./common.nix
         home-manager.nixosModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
