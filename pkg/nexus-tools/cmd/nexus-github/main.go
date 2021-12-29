@@ -1,13 +1,12 @@
 package main
 
 import (
-	"context"
 	"log"
 	"os"
 
 	"github.com/cayleygraph/cayley"
-	"github.com/cayleygraph/cayley/query"
-	_ "github.com/cayleygraph/cayley/query/gizmo"
+	"github.com/cayleygraph/quad"
+	"github.com/cayleygraph/quad/voc/rdf"
 	"github.com/eraserhd/dotfiles/nexus/tools/pkg/github"
 )
 
@@ -26,20 +25,12 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	it, err := query.Execute(context.TODO(), g, "gizmo", `g.V()
-          .has("<rdf:type>", "<https://docs.github.com/en/graphql/reference/objects#pullrequest>")
-          .all();`, query.Options{
-		Collation: query.REPL,
-	})
-	if err != nil {
-		log.Fatalln(err)
-	}
-	defer it.Close()
-
-	for it.Next(context.TODO()) {
-		log.Println(it.Result())
-	}
-	if err := it.Err(); err != nil {
+	if err := cayley.StartPath(g).
+		Has(quad.IRI(rdf.Type), github.PullRequestType).
+		Iterate(nil).
+		EachValue(g, func(v quad.Value) {
+			log.Println(v)
+		}); err != nil {
 		log.Fatalln(err)
 	}
 }
