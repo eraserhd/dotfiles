@@ -1,19 +1,19 @@
 package main
 
 import (
+	"context"
 	"log"
 	"os"
 
 	"github.com/cayleygraph/cayley"
-	"github.com/cayleygraph/cayley/graph"
-	"github.com/cayleygraph/quad"
-	_ "github.com/cayleygraph/quad/nquads"
+	"github.com/cayleygraph/cayley/query"
+	_ "github.com/cayleygraph/cayley/query/gizmo"
 	"github.com/eraserhd/dotfiles/nexus/tools/pkg/github"
 )
 
 func main() {
-	var query github.OpenPullRequestsQuery
-	if err := query.Fetch(os.Getenv("GITHUB_TOKEN")); err != nil {
+	var prs github.OpenPullRequestsQuery
+	if err := prs.Fetch(os.Getenv("GITHUB_TOKEN")); err != nil {
 		log.Fatalln(err)
 	}
 
@@ -22,17 +22,24 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	if err := query.AddQuads(g); err != nil {
+	if err := prs.AddQuads(g); err != nil {
 		log.Fatalln(err)
 	}
 
-	qr := graph.NewQuadStoreReader(g.QuadStore)
-	defer qr.Close()
-	format := quad.FormatByName("nquads")
-	w := format.Writer(os.Stdout)
-	defer w.Close()
+	it, err := query.Execute(context.TODO(), g, "gizmo", `g.V()
+          .has("<rdf:type>", "<https://docs.github.com/en/graphql/reference/objects#pullrequest>")
+          .all();`, query.Options{
+		Collation: query.REPL,
+	})
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer it.Close()
 
-	if _, err := quad.Copy(w, qr); err != nil {
+	for it.Next(context.TODO()) {
+		log.Println(it.Result())
+	}
+	if err := it.Err(); err != nil {
 		log.Fatalln(err)
 	}
 }
