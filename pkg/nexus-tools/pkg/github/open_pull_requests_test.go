@@ -12,7 +12,7 @@ import (
 type (
 	Scenario struct {
 		t     *testing.T
-		query OpenPullRequestsQuery
+		query openPullRequestsQuery
 	}
 )
 

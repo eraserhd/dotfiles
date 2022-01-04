@@ -110,7 +110,7 @@ func newQuadStore(path string, options graph.Options) (graph.QuadStore, error) {
 		}
 	}
 
-	var prs OpenPullRequestsQuery
+	var prs openPullRequestsQuery
 	if err := prs.Fetch(qs.githubToken); err != nil {
 		return nil, err
 	}
@@ -123,7 +123,7 @@ func newQuadStore(path string, options graph.Options) (graph.QuadStore, error) {
 }
 
 type (
-	OpenPullRequestsQuery struct {
+	openPullRequestsQuery struct {
 		Organization struct {
 			Repository struct {
 				PullRequests struct {
@@ -143,7 +143,7 @@ type (
 
 var prDomain = uuid.MustParse("fda3daa0-7252-4cce-883d-a8c438156032")
 
-func (q *OpenPullRequestsQuery) Fetch(token string) error {
+func (q *openPullRequestsQuery) Fetch(token string) error {
 	var httpClient *http.Client
 	if token == "" {
 		httpClient = &http.Client{}
@@ -156,7 +156,7 @@ func (q *OpenPullRequestsQuery) Fetch(token string) error {
 	return client.Query(context.Background(), q, nil)
 }
 
-func (q *OpenPullRequestsQuery) addQuads(qs graph.QuadStore) error {
+func (q *openPullRequestsQuery) addQuads(qs graph.QuadStore) error {
 	w, err := qs.NewQuadWriter()
 	if err != nil {
 		return err
