@@ -180,8 +180,9 @@ func (q *openPullRequestsQuery) addQuads(qs graph.QuadStore) error {
 	if err != nil {
 		return err
 	}
+	defer w.Close()
 	if _, err := w.WriteQuads(q.quads()); err != nil {
 		return err
 	}
-	return err
+	return nil
 }
