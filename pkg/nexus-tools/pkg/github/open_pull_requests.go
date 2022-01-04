@@ -115,7 +115,7 @@ func newQuadStore(path string, options graph.Options) (graph.QuadStore, error) {
 	}
 
 	var prs openPullRequestsQuery
-	if err := prs.Fetch(qs.githubToken); err != nil {
+	if err := prs.fetch(qs.githubToken); err != nil {
 		return nil, err
 	}
 
@@ -147,7 +147,7 @@ type (
 
 var prDomain = uuid.MustParse("fda3daa0-7252-4cce-883d-a8c438156032")
 
-func (q *openPullRequestsQuery) Fetch(token string) error {
+func (q *openPullRequestsQuery) fetch(token string) error {
 	var httpClient *http.Client
 	if token == "" {
 		httpClient = &http.Client{}
