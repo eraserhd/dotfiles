@@ -41,6 +41,8 @@ func init() {
 	})
 }
 
+var ReadOnlyError = errors.New("github store is read-only")
+
 type QuadStore struct {
 	memstore    graph.QuadStore
 	githubToken string
@@ -73,11 +75,11 @@ func (qs *QuadStore) QuadIteratorSize(ctx context.Context, d quad.Direction, ref
 }
 
 func (qs *QuadStore) ApplyDeltas(in []graph.Delta, opts graph.IgnoreOpts) error {
-	return qs.memstore.ApplyDeltas(in, opts)
+	return ReadOnlyError
 }
 
 func (qs *QuadStore) NewQuadWriter() (quad.WriteCloser, error) {
-	return qs.memstore.NewQuadWriter()
+	return nil, ReadOnlyError
 }
 
 func (qs *QuadStore) NodesAllIterator() graph.Iterator {
