@@ -45,7 +45,7 @@ type QuadStore struct {
 	githubToken string
 }
 
-// Namer
+// graph.Namer
 
 func (qs *QuadStore) ValueOf(v quad.Value) graph.Ref {
 	return qs.memstore.ValueOf(v)
@@ -55,12 +55,10 @@ func (qs *QuadStore) NameOf(ref graph.Ref) quad.Value {
 	return qs.memstore.NameOf(ref)
 }
 
+// graph.QuadIndexer
+
 func (qs *QuadStore) Quad(ref graph.Ref) quad.Quad {
 	return qs.memstore.Quad(ref)
-}
-
-func (qs *QuadStore) QuadDirection(id graph.Ref, d quad.Direction) graph.Ref {
-	return qs.memstore.QuadDirection(id, d)
 }
 
 func (qs *QuadStore) QuadIterator(d quad.Direction, ref graph.Ref) graph.Iterator {
@@ -70,6 +68,16 @@ func (qs *QuadStore) QuadIterator(d quad.Direction, ref graph.Ref) graph.Iterato
 func (qs *QuadStore) QuadIteratorSize(ctx context.Context, d quad.Direction, ref graph.Ref) (graph.Size, error) {
 	return qs.memstore.QuadIteratorSize(ctx, d, ref)
 }
+
+func (qs *QuadStore) QuadDirection(id graph.Ref, d quad.Direction) graph.Ref {
+	return qs.memstore.QuadDirection(id, d)
+}
+
+func (qs *QuadStore) Stats(ctx context.Context, exact bool) (graph.Stats, error) {
+	return qs.memstore.Stats(ctx, exact)
+}
+
+// graph.QuadStore
 
 func (qs *QuadStore) ApplyDeltas(in []graph.Delta, opts graph.IgnoreOpts) error {
 	return ReadOnlyError
@@ -85,10 +93,6 @@ func (qs *QuadStore) NodesAllIterator() graph.Iterator {
 
 func (qs *QuadStore) QuadsAllIterator() graph.Iterator {
 	return qs.memstore.QuadsAllIterator()
-}
-
-func (qs *QuadStore) Stats(ctx context.Context, exact bool) (graph.Stats, error) {
-	return qs.memstore.Stats(ctx, exact)
 }
 
 func (qs *QuadStore) Close() error {
