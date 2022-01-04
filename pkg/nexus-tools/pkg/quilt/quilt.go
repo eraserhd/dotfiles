@@ -22,7 +22,7 @@ func init() {
 func newQuadStore(path string, options graph.Options) (graph.QuadStore, error) {
 	var qs QuadStore
 	for _, suboptions := range options["substores"].([]map[string]interface{}) {
-		subtype, _ := suboptions["type"].(string)
+		subtype := suboptions["type"].(string)
 		subpath, _ := suboptions["path"].(string)
 		options, _ := suboptions["options"].(map[string]interface{})
 		subqs, err := cayley.NewGraph(subtype, subpath, options)
