@@ -12,7 +12,6 @@ import (
 	"github.com/cayleygraph/quad"
 	"github.com/cayleygraph/quad/voc/rdf"
 	"github.com/eraserhd/dotfiles/nexus/tools/pkg/jira"
-	"github.com/eraserhd/dotfiles/nexus/tools/pkg/rules"
 	"github.com/eraserhd/dotfiles/nexus/tools/pkg/taskwarrior"
 	"github.com/google/uuid"
 	"github.com/shurcooL/githubv4"
@@ -117,7 +116,9 @@ func newQuadStore(path string, options graph.Options) (graph.QuadStore, error) {
 		return nil, err
 	}
 
-	// Add quads
+	if err := prs.addQuads(qs.memstore); err != nil {
+		return nil, err
+	}
 
 	return &qs, nil
 }
@@ -194,22 +195,25 @@ func UpdateTasks(handle *cayley.Handle, tasks *taskwarrior.Tasks) error {
 		})
 }
 
-func (q *OpenPullRequestsQuery) AddQuads(h *cayley.Handle) error {
+func (q *OpenPullRequestsQuery) addQuads(qs graph.QuadStore) error {
+	w, err := qs.NewQuadWriter()
+	if err != nil {
+		return err
+	}
 	for _, edge := range q.Organization.Repository.PullRequests.Edges {
 		id := quad.IRI(edge.Node.Permalink)
-		if err := h.AddQuad(quad.Make(id, quad.IRI(rdf.Type), PullRequestType, nil)); err != nil {
+		if err := w.WriteQuad(quad.Make(id, quad.IRI(rdf.Type), PullRequestType, nil)); err != nil {
 			return err
 		}
-		if err := h.AddQuad(quad.Make(id, NodeId, quad.String(edge.Node.Id), nil)); err != nil {
+		if err := w.WriteQuad(quad.Make(id, NodeId, quad.String(edge.Node.Id), nil)); err != nil {
 			return err
 		}
-		if err := h.AddQuad(quad.Make(id, PullRequestTitle, quad.String(edge.Node.Title), nil)); err != nil {
+		if err := w.WriteQuad(quad.Make(id, PullRequestTitle, quad.String(edge.Node.Title), nil)); err != nil {
 			return err
 		}
-		if err := h.AddQuad(quad.Make(id, PullRequestCreatedAt, quad.Time(edge.Node.CreatedAt), nil)); err != nil {
+		if err := w.WriteQuad(quad.Make(id, PullRequestCreatedAt, quad.Time(edge.Node.CreatedAt), nil)); err != nil {
 			return err
 		}
 	}
-	_, err := rules.Process(h)
 	return err
 }

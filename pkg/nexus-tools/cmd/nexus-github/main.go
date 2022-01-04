@@ -11,22 +11,12 @@ import (
 )
 
 func main() {
-	var prs github.OpenPullRequestsQuery
-	if err := prs.Fetch(os.Getenv("GITHUB_TOKEN")); err != nil {
-		log.Fatalln(err)
-	}
-
 	g, err := cayley.NewGraph("github", "", map[string]interface{}{
 		"token": os.Getenv("GITHUB_TOKEN"),
 	})
 	if err != nil {
 		log.Fatalln(err)
 	}
-
-	if err := prs.AddQuads(g); err != nil {
-		log.Fatalln(err)
-	}
-
 	if err := cayley.StartPath(g).
 		Has(quad.IRI(rdf.Type), github.PullRequestType).
 		Iterate(nil).
