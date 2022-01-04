@@ -41,13 +41,63 @@ func init() {
 }
 
 type QuadStore struct {
-	graph.QuadStore
+	memstore graph.QuadStore
+}
+
+// Namer
+
+func (qs *QuadStore) ValueOf(v quad.Value) graph.Ref {
+	return qs.memstore.ValueOf(v)
+}
+
+func (qs *QuadStore) NameOf(ref graph.Ref) quad.Value {
+	return qs.memstore.NameOf(ref)
+}
+
+func (qs *QuadStore) Quad(ref graph.Ref) quad.Quad {
+	return qs.memstore.Quad(ref)
+}
+
+func (qs *QuadStore) QuadDirection(id graph.Ref, d quad.Direction) graph.Ref {
+	return qs.memstore.QuadDirection(id, d)
+}
+
+func (qs *QuadStore) QuadIterator(d quad.Direction, ref graph.Ref) graph.Iterator {
+	return qs.memstore.QuadIterator(d, ref)
+}
+
+func (qs *QuadStore) QuadIteratorSize(ctx context.Context, d quad.Direction, ref graph.Ref) (graph.Size, error) {
+	return qs.memstore.QuadIteratorSize(ctx, d, ref)
+}
+
+func (qs *QuadStore) ApplyDeltas(in []graph.Delta, opts graph.IgnoreOpts) error {
+	return qs.memstore.ApplyDeltas(in, opts)
+}
+
+func (qs *QuadStore) NewQuadWriter() (quad.WriteCloser, error) {
+	return qs.memstore.NewQuadWriter()
+}
+
+func (qs *QuadStore) NodesAllIterator() graph.Iterator {
+	return qs.memstore.NodesAllIterator()
+}
+
+func (qs *QuadStore) QuadsAllIterator() graph.Iterator {
+	return qs.memstore.QuadsAllIterator()
+}
+
+func (qs *QuadStore) Stats(ctx context.Context, exact bool) (graph.Stats, error) {
+	return qs.memstore.Stats(ctx, exact)
+}
+
+func (qs *QuadStore) Close() error {
+	return qs.memstore.Close()
 }
 
 func newQuadStore(path string, options graph.Options) (graph.QuadStore, error) {
 	var qs QuadStore
 	var err error
-	qs.QuadStore, err = graph.NewQuadStore("memstore", path, options)
+	qs.memstore, err = graph.NewQuadStore("memstore", path, options)
 	if err != nil {
 		return nil, err
 	}
