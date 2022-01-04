@@ -16,7 +16,7 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	g, err := cayley.NewMemoryGraph()
+	g, err := cayley.NewGraph("github", "", nil)
 	if err != nil {
 		log.Fatalln(err)
 	}

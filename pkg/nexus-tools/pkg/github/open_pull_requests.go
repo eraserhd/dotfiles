@@ -5,6 +5,8 @@ import (
 	"time"
 
 	"github.com/cayleygraph/cayley"
+	"github.com/cayleygraph/cayley/graph"
+	_ "github.com/cayleygraph/cayley/graph/memstore"
 	"github.com/cayleygraph/quad"
 	"github.com/cayleygraph/quad/voc/rdf"
 	"github.com/eraserhd/dotfiles/nexus/tools/pkg/jira"
@@ -16,6 +18,8 @@ import (
 )
 
 const (
+	QuadStoreType = "github"
+
 	IRIPrefix = `https://docs.github.com/en/graphql/reference/objects#`
 
 	NodePrefix          = IRIPrefix + `node.`
@@ -26,6 +30,29 @@ const (
 	PullRequestTitle     quad.IRI = PullRequestType + `.title`
 	PullRequestPermalink quad.IRI = PullRequestType + `.permalink`
 )
+
+func init() {
+	graph.RegisterQuadStore(QuadStoreType, graph.QuadStoreRegistration{
+		NewFunc:      newQuadStore,
+		UpgradeFunc:  nil,
+		InitFunc:     nil,
+		IsPersistent: false,
+	})
+}
+
+type QuadStore struct {
+	graph.QuadStore
+}
+
+func newQuadStore(path string, options graph.Options) (graph.QuadStore, error) {
+	var qs QuadStore
+	var err error
+	qs.QuadStore, err = graph.NewQuadStore("memstore", path, options)
+	if err != nil {
+		return nil, err
+	}
+	return &qs, nil
+}
 
 type (
 	OpenPullRequestsQuery struct {
