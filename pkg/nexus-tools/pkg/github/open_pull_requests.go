@@ -6,13 +6,10 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/cayleygraph/cayley"
 	"github.com/cayleygraph/cayley/graph"
 	_ "github.com/cayleygraph/cayley/graph/memstore"
 	"github.com/cayleygraph/quad"
 	"github.com/cayleygraph/quad/voc/rdf"
-	"github.com/eraserhd/dotfiles/nexus/tools/pkg/jira"
-	"github.com/eraserhd/dotfiles/nexus/tools/pkg/taskwarrior"
 	"github.com/google/uuid"
 	"github.com/shurcooL/githubv4"
 	"golang.org/x/oauth2"
@@ -157,44 +154,6 @@ func (q *OpenPullRequestsQuery) Fetch(token string) error {
 	}
 	client := githubv4.NewClient(httpClient)
 	return client.Query(context.Background(), q, nil)
-}
-
-// rules:
-// * UUID
-// * JIRA tickets
-func UpdateTasks(handle *cayley.Handle, tasks *taskwarrior.Tasks) error {
-	return cayley.StartPath(handle).
-		Has(quad.IRI(rdf.Type), PullRequestType).
-		Tag("pr").Out(NodeId).Tag("id").
-		Back("pr").Out(PullRequestTitle).Tag("title").
-		Back("pr").Out(PullRequestCreatedAt).Tag("createdAt").
-		Iterate(nil).
-		TagValues(handle, func(result map[string]quad.Value) {
-			pr := string(result["pr"].Native().(quad.IRI))
-			id := result["id"].Native().(string)
-			createdAt := result["createdAt"].Native().(time.Time)
-			title := result["title"].Native().(string)
-			uuid := uuid.NewSHA1(prDomain, []byte(id))
-			task := tasks.FindOrCreateByUUID(uuid)
-			entry := taskwarrior.Date(createdAt)
-			annotations := []taskwarrior.Annotation{{
-				Entry:       entry,
-				Description: pr,
-			}}
-			tickets, _ := jira.TicketsForBranchName(title)
-			for _, ticket := range tickets {
-				annotations = append(annotations, taskwarrior.Annotation{
-					Entry:       entry,
-					Description: jira.Link(ticket),
-				})
-			}
-			task.Entry = entry
-			task.Description = title
-			task.Project = "nexus"
-			task.Status = "pending"
-			task.Tags = []string{"github", "next"}
-			task.Annotations = annotations
-		})
 }
 
 func (q *OpenPullRequestsQuery) addQuads(qs graph.QuadStore) error {
