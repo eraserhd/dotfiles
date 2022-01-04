@@ -16,7 +16,9 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	g, err := cayley.NewGraph("github", "", nil)
+	g, err := cayley.NewGraph("github", "", map[string]interface{}{
+		"token": os.Getenv("GITHUB_TOKEN"),
+	})
 	if err != nil {
 		log.Fatalln(err)
 	}

@@ -2,6 +2,8 @@ package github
 
 import (
 	"context"
+	"errors"
+	"net/http"
 	"time"
 
 	"github.com/cayleygraph/cayley"
@@ -41,7 +43,8 @@ func init() {
 }
 
 type QuadStore struct {
-	memstore graph.QuadStore
+	memstore    graph.QuadStore
+	githubToken string
 }
 
 // Namer
@@ -101,6 +104,21 @@ func newQuadStore(path string, options graph.Options) (graph.QuadStore, error) {
 	if err != nil {
 		return nil, err
 	}
+	if x, found := options["token"]; found {
+		if token, ok := x.(string); ok {
+			qs.githubToken = token
+		} else {
+			return nil, errors.New("token for github quadstore should be a string")
+		}
+	}
+
+	var prs OpenPullRequestsQuery
+	if err := prs.Fetch(qs.githubToken); err != nil {
+		return nil, err
+	}
+
+	// Add quads
+
 	return &qs, nil
 }
 
@@ -126,9 +144,14 @@ type (
 var prDomain = uuid.MustParse("fda3daa0-7252-4cce-883d-a8c438156032")
 
 func (q *OpenPullRequestsQuery) Fetch(token string) error {
-	httpClient := oauth2.NewClient(context.Background(), oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: token},
-	))
+	var httpClient *http.Client
+	if token == "" {
+		httpClient = &http.Client{}
+	} else {
+		httpClient = oauth2.NewClient(context.Background(), oauth2.StaticTokenSource(
+			&oauth2.Token{AccessToken: token},
+		))
+	}
 	client := githubv4.NewClient(httpClient)
 	return client.Query(context.Background(), q, nil)
 }
