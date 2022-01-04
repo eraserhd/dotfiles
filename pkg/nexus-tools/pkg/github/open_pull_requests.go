@@ -160,25 +160,28 @@ func (q *openPullRequestsQuery) fetch(token string) error {
 	return client.Query(context.Background(), q, nil)
 }
 
+func (q *openPullRequestsQuery) quads() []quad.Quad {
+	var quads []quad.Quad
+	for _, edge := range q.Organization.Repository.PullRequests.Edges {
+		id := quad.IRI(edge.Node.Permalink)
+		quads = append(
+			quads,
+			quad.Make(id, quad.IRI(rdf.Type), PullRequestType, nil),
+			quad.Make(id, NodeId, quad.String(edge.Node.Id), nil),
+			quad.Make(id, PullRequestTitle, quad.String(edge.Node.Title), nil),
+			quad.Make(id, PullRequestCreatedAt, quad.Time(edge.Node.CreatedAt), nil),
+		)
+	}
+	return quads
+}
+
 func (q *openPullRequestsQuery) addQuads(qs graph.QuadStore) error {
 	w, err := qs.NewQuadWriter()
 	if err != nil {
 		return err
 	}
-	for _, edge := range q.Organization.Repository.PullRequests.Edges {
-		id := quad.IRI(edge.Node.Permalink)
-		if err := w.WriteQuad(quad.Make(id, quad.IRI(rdf.Type), PullRequestType, nil)); err != nil {
-			return err
-		}
-		if err := w.WriteQuad(quad.Make(id, NodeId, quad.String(edge.Node.Id), nil)); err != nil {
-			return err
-		}
-		if err := w.WriteQuad(quad.Make(id, PullRequestTitle, quad.String(edge.Node.Title), nil)); err != nil {
-			return err
-		}
-		if err := w.WriteQuad(quad.Make(id, PullRequestCreatedAt, quad.Time(edge.Node.CreatedAt), nil)); err != nil {
-			return err
-		}
+	if _, err := w.WriteQuads(q.quads()); err != nil {
+		return err
 	}
 	return err
 }
