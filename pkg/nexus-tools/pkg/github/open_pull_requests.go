@@ -147,15 +147,17 @@ type (
 
 var prDomain = uuid.MustParse("fda3daa0-7252-4cce-883d-a8c438156032")
 
-func (q *openPullRequestsQuery) fetch(token string) error {
-	var httpClient *http.Client
+func httpClient(token string) *http.Client {
 	if token == "" {
-		httpClient = &http.Client{}
-	} else {
-		httpClient = oauth2.NewClient(context.Background(), oauth2.StaticTokenSource(
-			&oauth2.Token{AccessToken: token},
-		))
+		return &http.Client{}
 	}
+	return oauth2.NewClient(context.Background(), oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: token},
+	))
+}
+
+func (q *openPullRequestsQuery) fetch(token string) error {
+	httpClient := httpClient(token)
 	client := githubv4.NewClient(httpClient)
 	return client.Query(context.Background(), q, nil)
 }
