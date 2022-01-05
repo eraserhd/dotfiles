@@ -23,34 +23,41 @@ func memstore(t *testing.T, quads []quad.Quad) graph.QuadStore {
 	return memstore
 }
 
-func Test_Can_create_quilt_backend(t *testing.T) {
-	qs, err := cayley.NewGraph("quilt", "", map[string]interface{}{
-		"substores": []graph.QuadStore{memstore(t, nil)},
+func quilt(t *testing.T, quads [][]quad.Quad) *cayley.Handle {
+	var substores []graph.QuadStore
+	for _, substoreQuads := range quads {
+		substores = append(substores, memstore(t, substoreQuads))
+	}
+	h, err := cayley.NewGraph("quilt", "", map[string]interface{}{
+		"substores": substores,
 	})
 	if err != nil {
-		t.Errorf("want err = nil, got %v", err)
+		t.Fatalf("wanted cayley.NewGraph() to succeed, but got %v", err)
 	}
+	return h
+}
+
+func Test_Can_create_quilt_backend(t *testing.T) {
+	qs := quilt(t, [][]quad.Quad{{}})
 	qs.Close()
 }
 
 func Test_aggregates_stats(t *testing.T) {
-	qs, err := cayley.NewGraph("quilt", "", map[string]interface{}{
-		"substores": []graph.QuadStore{
-			memstore(t, []quad.Quad{
-				quad.Make(quad.IRI("<s1>"), quad.IRI("<p1>"), quad.IRI("<o1>"), nil),
-			}),
-			memstore(t, []quad.Quad{
-				quad.Make(quad.IRI("<s2>"), quad.IRI("<p2>"), quad.IRI("<o2>"), nil),
-				quad.Make(quad.IRI("<s2>"), quad.IRI("<p2>"), quad.IRI("<o3>"), nil),
-			}),
+	qs := quilt(t, [][]quad.Quad{
+		{
+			quad.Make(quad.IRI("<s1>"), quad.IRI("<p1>"), quad.IRI("<o1>"), nil),
+		},
+		{
+			quad.Make(quad.IRI("<s2>"), quad.IRI("<p2>"), quad.IRI("<o2>"), nil),
+			quad.Make(quad.IRI("<s2>"), quad.IRI("<p2>"), quad.IRI("<o3>"), nil),
 		},
 	})
-	if err != nil {
-		t.Errorf("want err = nil, got %v", err)
-	}
 	defer qs.Close()
 
 	stats, err := qs.Stats(context.TODO(), false)
+	if err != nil {
+		t.Errorf("want qs.Stats() to suceed, got %v", err)
+	}
 	if stats.Nodes.Size != 7 {
 		t.Errorf("want stats.Node.Size = 7, got %d", stats.Nodes.Size)
 	}

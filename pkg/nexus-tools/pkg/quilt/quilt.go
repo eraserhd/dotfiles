@@ -60,6 +60,10 @@ func (qs *QuadStore) QuadDirection(id graph.Ref, d quad.Direction) graph.Ref {
 	return qs.substores[0].QuadDirection(id, d) //FIXME:
 }
 
+// Stats sums the stats for all substores in the quilt.
+//
+// It is possible for a node or a quad to appear in more than one store, so these stats
+// may overestimate slightly.
 func (qs *QuadStore) Stats(ctx context.Context, exact bool) (graph.Stats, error) {
 	result, err := qs.substores[0].Stats(ctx, exact)
 	for i := 1; i < len(qs.substores); i++ {
