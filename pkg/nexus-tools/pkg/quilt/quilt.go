@@ -15,6 +15,7 @@ const (
 func init() {
 	graph.RegisterQuadStore(QuadStoreType, graph.QuadStoreRegistration{
 		NewFunc: newQuadStore,
+		//FIXME: Other functions
 	})
 }
 
@@ -46,33 +47,33 @@ type QuadStore struct {
 // graph.Namer
 
 func (qs *QuadStore) ValueOf(v quad.Value) graph.Ref {
-	return qs.substores[0].ValueOf(v)
+	return qs.substores[0].ValueOf(v) //FIXME:
 }
 
 func (qs *QuadStore) NameOf(ref graph.Ref) quad.Value {
-	return qs.substores[0].NameOf(ref)
+	return qs.substores[0].NameOf(ref) //FIXME:
 }
 
 // graph.QuadIndexer
 
 func (qs *QuadStore) Quad(ref graph.Ref) quad.Quad {
-	return qs.substores[0].Quad(ref)
+	return qs.substores[0].Quad(ref) //FIXME:
 }
 
 func (qs *QuadStore) QuadIterator(d quad.Direction, ref graph.Ref) graph.Iterator {
-	return qs.substores[0].QuadIterator(d, ref)
+	return qs.substores[0].QuadIterator(d, ref) //FIXME:
 }
 
 func (qs *QuadStore) QuadIteratorSize(ctx context.Context, d quad.Direction, ref graph.Ref) (graph.Size, error) {
-	return qs.substores[0].QuadIteratorSize(ctx, d, ref)
+	return qs.substores[0].QuadIteratorSize(ctx, d, ref) //FIXME:
 }
 
 func (qs *QuadStore) QuadDirection(id graph.Ref, d quad.Direction) graph.Ref {
-	return qs.substores[0].QuadDirection(id, d)
+	return qs.substores[0].QuadDirection(id, d) //FIXME:
 }
 
 func (qs *QuadStore) Stats(ctx context.Context, exact bool) (graph.Stats, error) {
-	return qs.substores[0].Stats(ctx, exact)
+	return qs.substores[0].Stats(ctx, exact) //FIXME:
 }
 
 // graph.QuadStore
@@ -86,13 +87,19 @@ func (qs *QuadStore) NewQuadWriter() (quad.WriteCloser, error) {
 }
 
 func (qs *QuadStore) NodesAllIterator() graph.Iterator {
-	return qs.substores[0].NodesAllIterator()
+	return qs.substores[0].NodesAllIterator() //FIXME:
 }
 
 func (qs *QuadStore) QuadsAllIterator() graph.Iterator {
-	return qs.substores[0].QuadsAllIterator()
+	return qs.substores[0].QuadsAllIterator() //FIXME:
 }
 
 func (qs *QuadStore) Close() error {
-	return qs.substores[0].Close()
+	var err error
+	for i := range qs.substores {
+		if looperr := qs.substores[i].Close(); looperr != nil {
+			err = looperr
+		}
+	}
+	return err
 }
