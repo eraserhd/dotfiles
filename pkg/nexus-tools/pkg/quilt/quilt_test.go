@@ -65,3 +65,21 @@ func Test_aggregates_stats(t *testing.T) {
 		t.Errorf("want stats.Quads.Size = 3, got %d", stats.Quads.Size)
 	}
 }
+
+func Test_Namer_implementation_can_round_trip_values_from_different_substores(t *testing.T) {
+	qs := quilt(t, [][]quad.Quad{
+		{
+			quad.Make(quad.IRI("<s1>"), quad.IRI("<p1>"), quad.IRI("<o1>"), nil),
+		},
+		{
+			quad.Make(quad.IRI("<s2>"), quad.IRI("<p2>"), quad.IRI("<o2>"), nil),
+		},
+	})
+	defer qs.Close()
+
+	ref1 := qs.ValueOf(quad.IRI("<s1>"))
+	name1 := qs.NameOf(ref1)
+	if name1 != quad.IRI("<s1>") {
+		t.Errorf(`want NameOf(ref1) == quad.IRI("<s1>"), got name1 = %v`, name1)
+	}
+}
