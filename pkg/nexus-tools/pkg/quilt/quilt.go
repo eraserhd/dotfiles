@@ -4,7 +4,6 @@ package quilt
 import (
 	"context"
 
-	"github.com/cayleygraph/cayley"
 	"github.com/cayleygraph/cayley/graph"
 	"github.com/cayleygraph/quad"
 )
@@ -25,7 +24,7 @@ func newQuadStore(path string, options graph.Options) (graph.QuadStore, error) {
 		subtype := suboptions["type"].(string)
 		subpath, _ := suboptions["path"].(string)
 		options, _ := suboptions["options"].(map[string]interface{})
-		subqs, err := cayley.NewGraph(subtype, subpath, options)
+		subqs, err := graph.NewQuadStore(subtype, subpath, options)
 		if err != nil {
 			for _, subqs := range qs.substores {
 				subqs.Close()
