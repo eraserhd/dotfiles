@@ -77,9 +77,20 @@ func Test_Namer_implementation_can_round_trip_values_from_different_substores(t 
 	})
 	defer qs.Close()
 
-	ref1 := qs.ValueOf(quad.IRI("<s1>"))
-	name1 := qs.NameOf(ref1)
-	if name1 != quad.IRI("<s1>") {
-		t.Errorf(`want NameOf(ref1) == quad.IRI("<s1>"), got name1 = %v`, name1)
+	for _, iriname := range []string{
+		"<s1>",
+		"<p1>",
+		"<o1>",
+		"<s2>",
+		"<p2>",
+		"<o2>",
+	} {
+		ref := qs.ValueOf(quad.IRI(iriname))
+		name := qs.NameOf(ref)
+		if name != quad.IRI(iriname) {
+			t.Errorf(`want NameOf(ref) == quad.IRI(%q), got name1 = %v`, iriname, name)
+		}
 	}
 }
+
+// Node shared in different substores

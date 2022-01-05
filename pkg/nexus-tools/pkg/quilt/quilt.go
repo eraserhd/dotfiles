@@ -34,12 +34,30 @@ type QuadStore struct {
 
 // graph.Namer
 
+type quiltref struct {
+	substore int
+	subref   graph.Ref
+}
+
+var _ graph.Ref = quiltref{}
+
+func (qr quiltref) Key() interface{} { return qr }
+
 func (qs *QuadStore) ValueOf(v quad.Value) graph.Ref {
-	return qs.substores[0].ValueOf(v) //FIXME:
+	for i := range qs.substores {
+		if subref := qs.substores[i].ValueOf(v); subref != nil {
+			return quiltref{
+				substore: i,
+				subref:   subref,
+			}
+		}
+	}
+	return nil
 }
 
 func (qs *QuadStore) NameOf(ref graph.Ref) quad.Value {
-	return qs.substores[0].NameOf(ref) //FIXME:
+	qr := ref.(quiltref)
+	return qs.substores[qr.substore].NameOf(qr.subref)
 }
 
 // graph.QuadIndexer
