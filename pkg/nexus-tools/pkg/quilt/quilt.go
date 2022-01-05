@@ -21,19 +21,7 @@ func init() {
 
 func newQuadStore(path string, options graph.Options) (graph.QuadStore, error) {
 	var qs QuadStore
-	for _, suboptions := range options["substores"].([]map[string]interface{}) {
-		subtype := suboptions["type"].(string)
-		subpath, _ := suboptions["path"].(string)
-		options, _ := suboptions["options"].(map[string]interface{})
-		subqs, err := graph.NewQuadStore(subtype, subpath, options)
-		if err != nil {
-			for _, subqs := range qs.substores {
-				subqs.Close()
-			}
-			return nil, err
-		}
-		qs.substores = append(qs.substores, subqs)
-	}
+	qs.substores = options["substores"].([]graph.QuadStore)
 	if len(qs.substores) <= 0 {
 		panic("the quilt driver requires at least one substore configuration")
 	}
@@ -73,7 +61,18 @@ func (qs *QuadStore) QuadDirection(id graph.Ref, d quad.Direction) graph.Ref {
 }
 
 func (qs *QuadStore) Stats(ctx context.Context, exact bool) (graph.Stats, error) {
-	return qs.substores[0].Stats(ctx, exact) //FIXME:
+	result, err := qs.substores[0].Stats(ctx, exact)
+	for i := 1; i < len(qs.substores); i++ {
+		subresult, looperr := qs.substores[i].Stats(ctx, exact)
+		if looperr != nil {
+			err = looperr
+		}
+		result.Nodes.Exact = result.Nodes.Exact && subresult.Nodes.Exact
+		result.Nodes.Size += subresult.Nodes.Size
+		result.Quads.Exact = result.Quads.Exact && subresult.Quads.Exact
+		result.Quads.Size += subresult.Quads.Size
+	}
+	return result, err
 }
 
 // graph.QuadStore

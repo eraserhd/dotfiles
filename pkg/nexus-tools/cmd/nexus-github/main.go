@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/cayleygraph/cayley"
+	"github.com/cayleygraph/cayley/graph"
 	"github.com/cayleygraph/quad"
 	"github.com/cayleygraph/quad/voc/rdf"
 	"github.com/eraserhd/dotfiles/nexus/tools/pkg/github"
@@ -12,15 +13,15 @@ import (
 )
 
 func main() {
+	ghstore, err := graph.NewQuadStore("github", "", map[string]interface{}{
+		"token": os.Getenv("GITHUB_TOKEN"),
+	})
+	if err != nil {
+		log.Fatalln(err)
+	}
+
 	g, err := cayley.NewGraph("quilt", "", map[string]interface{}{
-		"substores": []map[string]interface{}{
-			{
-				"type": "github",
-				"options": map[string]interface{}{
-					"token": os.Getenv("GITHUB_TOKEN"),
-				},
-			},
-		},
+		"substores": []graph.QuadStore{ghstore},
 	})
 	if err != nil {
 		log.Fatalln(err)
