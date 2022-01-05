@@ -9,13 +9,23 @@ import (
 	"github.com/cayleygraph/quad"
 )
 
-func Test_Can_create_quilt_backend(t *testing.T) {
+func memstore(t *testing.T, quads []quad.Quad) graph.QuadStore {
 	memstore, err := graph.NewQuadStore("memstore", "", nil)
 	if err != nil {
-		t.Fatalf("want graph.NewQuadStore(\"memstore\", \"\", nil) = nil, got %v", err)
+		t.Fatalf("memstore1: want graph.NewQuadStore(\"memstore\", \"\", nil) = nil, got %v", err)
 	}
+	qw, err := memstore.NewQuadWriter()
+	if err != nil {
+		t.Fatalf("want memstore1.NewQuadWriter() to succeed, got %v", err)
+	}
+	defer qw.Close()
+	qw.WriteQuads(quads)
+	return memstore
+}
+
+func Test_Can_create_quilt_backend(t *testing.T) {
 	qs, err := cayley.NewGraph("quilt", "", map[string]interface{}{
-		"substores": []graph.QuadStore{memstore},
+		"substores": []graph.QuadStore{memstore(t, nil)},
 	})
 	if err != nil {
 		t.Errorf("want err = nil, got %v", err)
@@ -24,33 +34,15 @@ func Test_Can_create_quilt_backend(t *testing.T) {
 }
 
 func Test_aggregates_stats(t *testing.T) {
-	memstore1, err := graph.NewQuadStore("memstore", "", nil)
-	if err != nil {
-		t.Fatalf("memstore1: want graph.NewQuadStore(\"memstore\", \"\", nil) = nil, got %v", err)
-	}
-	qw1, err := memstore1.NewQuadWriter()
-	if err != nil {
-		t.Fatalf("want memstore1.NewQuadWriter() to succeed, got %v", err)
-	}
-	qw1.WriteQuad(quad.Make(quad.IRI("<s1>"), quad.IRI("<p1>"), quad.IRI("<o1>"), nil))
-	qw1.Close()
-
-	memstore2, err := graph.NewQuadStore("memstore", "", nil)
-	if err != nil {
-		t.Fatalf("want graph.NewQuadStore(\"memstore\", \"\", nil) = nil, got %v", err)
-	}
-	qw2, err := memstore1.NewQuadWriter()
-	if err != nil {
-		t.Fatalf("want memstore1.NewQuadWriter() to succeed, got %v", err)
-	}
-	qw2.WriteQuad(quad.Make(quad.IRI("<s1>"), quad.IRI("<p1>"), quad.IRI("<o1>"), nil))
-	qw2.WriteQuad(quad.Make(quad.IRI("<s1>"), quad.IRI("<p1>"), quad.IRI("<o2>"), nil))
-	qw2.Close()
-
 	qs, err := cayley.NewGraph("quilt", "", map[string]interface{}{
 		"substores": []graph.QuadStore{
-			memstore1,
-			memstore2,
+			memstore(t, []quad.Quad{
+				quad.Make(quad.IRI("<s1>"), quad.IRI("<p1>"), quad.IRI("<o1>"), nil),
+			}),
+			memstore(t, []quad.Quad{
+				quad.Make(quad.IRI("<s2>"), quad.IRI("<p2>"), quad.IRI("<o2>"), nil),
+				quad.Make(quad.IRI("<s2>"), quad.IRI("<p2>"), quad.IRI("<o3>"), nil),
+			}),
 		},
 	})
 	if err != nil {
@@ -59,11 +51,10 @@ func Test_aggregates_stats(t *testing.T) {
 	defer qs.Close()
 
 	stats, err := qs.Stats(context.TODO(), false)
-	if stats.Nodes.Size != 4 {
-		t.Errorf("want stats.Node.Size = 4, got %d", stats.Nodes.Size)
+	if stats.Nodes.Size != 7 {
+		t.Errorf("want stats.Node.Size = 7, got %d", stats.Nodes.Size)
 	}
-	if stats.Quads.Size != 2 {
-		t.Errorf("want stats.Quads.Size = 2, got %d", stats.Quads.Size)
+	if stats.Quads.Size != 3 {
+		t.Errorf("want stats.Quads.Size = 3, got %d", stats.Quads.Size)
 	}
-
 }
