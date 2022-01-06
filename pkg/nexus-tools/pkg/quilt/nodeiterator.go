@@ -62,14 +62,13 @@ func (qi *nodeIterator) Close() error {
 // graph.Iterator
 
 func (qi *nodeIterator) Next(ctx context.Context) bool {
-	found := false
-	for !found && qi.index < len(qi.subiterators) {
-		found = qi.subiterators[qi.index].Next(ctx)
-		if !found {
-			qi.index++
+	for qi.index < len(qi.subiterators) {
+		if qi.subiterators[qi.index].Next(ctx) {
+			return true
 		}
+		qi.index++
 	}
-	return found
+	return false
 }
 
 func (qi *nodeIterator) Contains(ctx context.Context, v graph.Ref) bool {
