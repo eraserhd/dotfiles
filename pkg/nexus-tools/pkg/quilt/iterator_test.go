@@ -16,15 +16,15 @@ func Test_NodesAllIterator_returns_all_substore_nodes(t *testing.T) {
 			quad.Make(quad.IRI("s2"), quad.IRI("p2"), quad.IRI("o2"), nil),
 		},
 	})
+	defer qs.Close()
 
 	it := qs.NodesAllIterator()
+	defer it.Close()
 
 	nodes := make(map[string]int, 10)
 	for it.Next(context.TODO()) {
 		nodes[qs.NameOf(it.Result()).String()] += 1
 	}
-
-	it.Close()
 
 	for _, nodename := range []string{
 		"<s1>",
@@ -39,6 +39,36 @@ func Test_NodesAllIterator_returns_all_substore_nodes(t *testing.T) {
 			t.Errorf("wanted %v to appear once, but it appeared %d times", nodename, n)
 		}
 	}
+}
 
-	qs.Close()
+// NextPath returns identical nodes inside a single substore
+// NextPath returns identical nodes across multiple substores
+// Reset rewinds the iterator correctly
+
+func Test_Contains_finds_nodes_in_originating_substore(t *testing.T) {
+	qs := quilt(t, [][]quad.Quad{
+		{
+			quad.Make(quad.IRI("s1"), quad.IRI("p1"), quad.IRI("o1"), nil),
+		},
+		{
+			quad.Make(quad.IRI("s2"), quad.IRI("p2"), quad.IRI("o2"), nil),
+		},
+	})
+	defer qs.Close()
+
+	it := qs.NodesAllIterator()
+	defer it.Close()
+
+	for _, iriname := range []string{
+		"s1",
+		"p1",
+		"o1",
+		"s2",
+		"p2",
+		"o2",
+	} {
+		if !it.Contains(context.TODO(), qs.ValueOf(quad.IRI(iriname))) {
+			t.Errorf("want it.Contains(%q) = true, got false", iriname)
+		}
+	}
 }

@@ -72,7 +72,8 @@ func (qi *iterator) Next(ctx context.Context) bool {
 }
 
 func (qi *iterator) Contains(ctx context.Context, v graph.Ref) bool {
-	panic("not implemented")
+	x := v.(quiltref)
+	return qi.subiterators[x.substore].Contains(ctx, x.subref)
 }
 
 func (qi *iterator) Reset() {
