@@ -115,7 +115,7 @@ func (qs *QuadStore) NodesAllIterator() graph.Iterator {
 	for i := range subiterators {
 		subiterators[i] = qs.substores[i].NodesAllIterator()
 	}
-	return newNodeIterator(subiterators)
+	return newIterator(subiterators)
 }
 
 func (qs *QuadStore) QuadsAllIterator() graph.Iterator {
