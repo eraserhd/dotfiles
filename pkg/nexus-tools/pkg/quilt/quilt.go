@@ -56,6 +56,9 @@ func (qs *QuadStore) ValueOf(v quad.Value) graph.Ref {
 }
 
 func (qs *QuadStore) NameOf(ref graph.Ref) quad.Value {
+	if ref == nil {
+		return nil
+	}
 	qr := ref.(quiltref)
 	return qs.substores[qr.substore].NameOf(qr.subref)
 }
@@ -108,7 +111,11 @@ func (qs *QuadStore) NewQuadWriter() (quad.WriteCloser, error) {
 }
 
 func (qs *QuadStore) NodesAllIterator() graph.Iterator {
-	return qs.substores[0].NodesAllIterator() //FIXME:
+	subiterators := make([]graph.Iterator, len(qs.substores))
+	for i := range subiterators {
+		subiterators[i] = qs.substores[i].NodesAllIterator()
+	}
+	return newNodeIterator(subiterators)
 }
 
 func (qs *QuadStore) QuadsAllIterator() graph.Iterator {
