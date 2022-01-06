@@ -98,5 +98,7 @@ func (qi *iterator) Optimize() (graph.Iterator, bool) {
 }
 
 func (qi *iterator) SubIterators() []graph.Iterator {
-	panic("not implemented")
+	result := make([]graph.Iterator, len(qi.subiterators))
+	copy(result, qi.subiterators)
+	return result
 }
