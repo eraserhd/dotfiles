@@ -85,7 +85,12 @@ func (qi *iterator) Stats() graph.IteratorStats {
 }
 
 func (qi *iterator) Size() (int64, bool) {
-	panic("not implemented")
+	var size int64
+	for i := range qi.subiterators {
+		subsize, _ := qi.subiterators[i].Size()
+		size += subsize
+	}
+	return size, false
 }
 
 func (qi *iterator) Optimize() (graph.Iterator, bool) {

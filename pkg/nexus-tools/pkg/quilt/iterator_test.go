@@ -72,3 +72,28 @@ func Test_Contains_finds_nodes_in_originating_substore(t *testing.T) {
 		}
 	}
 }
+
+func Test_Iterator_size_is_sum_of_subiterator_sizes(t *testing.T) {
+	qs := quilt(t, [][]quad.Quad{
+		{
+			quad.Make(quad.IRI("s1"), quad.IRI("p1"), quad.IRI("o1"), nil),
+		},
+		{
+			quad.Make(quad.IRI("s2"), quad.IRI("p2"), quad.IRI("o2"), nil),
+		},
+	})
+	defer qs.Close()
+
+	it := qs.NodesAllIterator()
+	defer it.Close()
+
+	n, exact := it.Size()
+	if exact {
+		t.Error("want it.Size() to report inexact (because of overcounting of chared nodes)")
+	}
+
+	if n < 6 || n > 8 {
+		// the 8 is because memstore appears to overestimate slightly??
+		t.Errorf("want it.Size() = (6 - 8, false) got (%d, %v)", n, exact)
+	}
+}
