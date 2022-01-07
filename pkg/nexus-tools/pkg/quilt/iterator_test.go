@@ -8,12 +8,12 @@ import (
 )
 
 func Test_NodesAllIterator_returns_all_substore_nodes(t *testing.T) {
-	qs := quilt(t, [][]quad.Quad{
+	qs := quilt(t, [][][]string{
 		{
-			quad.MakeRaw("<s1>", "<p1>", "<o1>", ""),
+			{"<s1>", "<p1>", "<o1>"},
 		},
 		{
-			quad.MakeRaw("<s2>", "<p2>", "<o2>", ""),
+			{"<s2>", "<p2>", "<o2>"},
 		},
 	})
 	defer qs.Close()
@@ -46,12 +46,12 @@ func Test_NodesAllIterator_returns_all_substore_nodes(t *testing.T) {
 // Reset rewinds the iterator correctly
 
 func Test_Contains_finds_nodes_in_originating_substore(t *testing.T) {
-	qs := quilt(t, [][]quad.Quad{
+	qs := quilt(t, [][][]string{
 		{
-			quad.MakeRaw("<s1>", "<p1>", "<o1>", ""),
+			{"<s1>", "<p1>", "<o1>"},
 		},
 		{
-			quad.MakeRaw("<s2>", "<p2>", "<o2>", ""),
+			{"<s2>", "<p2>", "<o2>"},
 		},
 	})
 	defer qs.Close()
@@ -74,12 +74,12 @@ func Test_Contains_finds_nodes_in_originating_substore(t *testing.T) {
 }
 
 func Test_Iterator_size_is_sum_of_subiterator_sizes(t *testing.T) {
-	qs := quilt(t, [][]quad.Quad{
+	qs := quilt(t, [][][]string{
 		{
-			quad.MakeRaw("s1", "p1", "o1", ""),
+			{"s1", "p1", "o1"},
 		},
 		{
-			quad.MakeRaw("s2", "p2", "o2", ""),
+			{"s2", "p2", "o2"},
 		},
 	})
 	defer qs.Close()

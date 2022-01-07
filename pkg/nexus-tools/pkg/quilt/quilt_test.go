@@ -2,6 +2,7 @@ package quilt
 
 import (
 	"context"
+	"fmt"
 	"testing"
 
 	"github.com/cayleygraph/cayley"
@@ -9,21 +10,31 @@ import (
 	"github.com/cayleygraph/quad"
 )
 
-func memstore(t *testing.T, quads []quad.Quad) graph.QuadStore {
+func memstore(t *testing.T, quads [][]string) graph.QuadStore {
 	memstore, err := graph.NewQuadStore("memstore", "", nil)
 	if err != nil {
-		t.Fatalf("memstore1: want graph.NewQuadStore(\"memstore\", \"\", nil) = nil, got %v", err)
+		t.Fatalf("memstore: want graph.NewQuadStore(\"memstore\", \"\", nil) = nil, got %v", err)
 	}
 	qw, err := memstore.NewQuadWriter()
 	if err != nil {
 		t.Fatalf("want memstore1.NewQuadWriter() to succeed, got %v", err)
 	}
 	defer qw.Close()
-	qw.WriteQuads(quads)
+	typedQuads := make([]quad.Quad, len(quads))
+	for i, single := range quads {
+		label := ""
+		if len(single) == 4 {
+			label = single[3]
+		} else if len(single) != 3 {
+			panic(fmt.Sprintf("bad quad, need 3 or 4 elements, but got %d", len(single)))
+		}
+		typedQuads[i] = quad.MakeRaw(single[0], single[1], single[2], label)
+	}
+	qw.WriteQuads(typedQuads)
 	return memstore
 }
 
-func quilt(t *testing.T, quads [][]quad.Quad) *cayley.Handle {
+func quilt(t *testing.T, quads [][][]string) *cayley.Handle {
 	var substores []graph.QuadStore
 	for _, substoreQuads := range quads {
 		substores = append(substores, memstore(t, substoreQuads))
@@ -38,18 +49,18 @@ func quilt(t *testing.T, quads [][]quad.Quad) *cayley.Handle {
 }
 
 func Test_Can_create_quilt_backend(t *testing.T) {
-	qs := quilt(t, [][]quad.Quad{{}})
+	qs := quilt(t, [][][]string{{}})
 	qs.Close()
 }
 
 func Test_aggregates_stats(t *testing.T) {
-	qs := quilt(t, [][]quad.Quad{
+	qs := quilt(t, [][][]string{
 		{
-			quad.MakeRaw("<s1>", "<p1>", "<o1>", ""),
+			{"<s1>", "<p1>", "<o1>"},
 		},
 		{
-			quad.MakeRaw("<s2>", "<p2>", "<o2>", ""),
-			quad.MakeRaw("<s2>", "<p2>", "<o3>", ""),
+			{"<s2>", "<p2>", "<o2>"},
+			{"<s2>", "<p2>", "<o3>"},
 		},
 	})
 	defer qs.Close()
@@ -67,12 +78,12 @@ func Test_aggregates_stats(t *testing.T) {
 }
 
 func Test_Namer_implementation_can_round_trip_values_from_different_substores(t *testing.T) {
-	qs := quilt(t, [][]quad.Quad{
+	qs := quilt(t, [][][]string{
 		{
-			quad.MakeRaw("<s1>", "<p1>", "<o1>", ""),
+			{"<s1>", "<p1>", "<o1>"},
 		},
 		{
-			quad.MakeRaw("<s2>", "<p2>", "<o2>", ""),
+			{"<s2>", "<p2>", "<o2>"},
 		},
 	})
 	defer qs.Close()
