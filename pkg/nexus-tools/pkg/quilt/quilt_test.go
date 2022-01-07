@@ -2,13 +2,22 @@ package quilt
 
 import (
 	"context"
-	"fmt"
 	"testing"
 
 	"github.com/cayleygraph/cayley"
 	"github.com/cayleygraph/cayley/graph"
 	"github.com/cayleygraph/quad"
 )
+
+func makeQuad(t *testing.T, single []string) quad.Quad {
+	label := ""
+	if len(single) == 4 {
+		label = single[3]
+	} else if len(single) != 3 {
+		t.Errorf("bad quad, need 3 or 4 elements, but got %d", len(single))
+	}
+	return quad.MakeRaw(single[0], single[1], single[2], label)
+}
 
 func memstore(t *testing.T, quads [][]string) graph.QuadStore {
 	memstore, err := graph.NewQuadStore("memstore", "", nil)
@@ -22,13 +31,7 @@ func memstore(t *testing.T, quads [][]string) graph.QuadStore {
 	defer qw.Close()
 	typedQuads := make([]quad.Quad, len(quads))
 	for i, single := range quads {
-		label := ""
-		if len(single) == 4 {
-			label = single[3]
-		} else if len(single) != 3 {
-			panic(fmt.Sprintf("bad quad, need 3 or 4 elements, but got %d", len(single)))
-		}
-		typedQuads[i] = quad.MakeRaw(single[0], single[1], single[2], label)
+		typedQuads[i] = makeQuad(t, single)
 	}
 	qw.WriteQuads(typedQuads)
 	return memstore
