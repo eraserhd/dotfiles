@@ -45,11 +45,11 @@ func Test_Can_create_quilt_backend(t *testing.T) {
 func Test_aggregates_stats(t *testing.T) {
 	qs := quilt(t, [][]quad.Quad{
 		{
-			quad.Make(quad.IRI("<s1>"), quad.IRI("<p1>"), quad.IRI("<o1>"), nil),
+			quad.MakeRaw("<s1>", "<p1>", "<o1>", ""),
 		},
 		{
-			quad.Make(quad.IRI("<s2>"), quad.IRI("<p2>"), quad.IRI("<o2>"), nil),
-			quad.Make(quad.IRI("<s2>"), quad.IRI("<p2>"), quad.IRI("<o3>"), nil),
+			quad.MakeRaw("<s2>", "<p2>", "<o2>", ""),
+			quad.MakeRaw("<s2>", "<p2>", "<o3>", ""),
 		},
 	})
 	defer qs.Close()
@@ -69,25 +69,25 @@ func Test_aggregates_stats(t *testing.T) {
 func Test_Namer_implementation_can_round_trip_values_from_different_substores(t *testing.T) {
 	qs := quilt(t, [][]quad.Quad{
 		{
-			quad.Make(quad.IRI("s1"), quad.IRI("p1"), quad.IRI("o1"), nil),
+			quad.MakeRaw("<s1>", "<p1>", "<o1>", ""),
 		},
 		{
-			quad.Make(quad.IRI("s2"), quad.IRI("p2"), quad.IRI("o2"), nil),
+			quad.MakeRaw("<s2>", "<p2>", "<o2>", ""),
 		},
 	})
 	defer qs.Close()
 
 	for _, iriname := range []string{
-		"s1",
-		"p1",
-		"o1",
-		"s2",
-		"p2",
-		"o2",
+		"<s1>",
+		"<p1>",
+		"<o1>",
+		"<s2>",
+		"<p2>",
+		"<o2>",
 	} {
-		ref := qs.ValueOf(quad.IRI(iriname))
+		ref := qs.ValueOf(quad.Raw(iriname))
 		name := qs.NameOf(ref)
-		if name != quad.IRI(iriname) {
+		if name != quad.Raw(iriname) {
 			t.Errorf(`want NameOf(ref) == quad.IRI(%q), got name1 = %v`, iriname, name)
 		}
 	}

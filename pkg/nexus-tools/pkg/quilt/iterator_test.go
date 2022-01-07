@@ -10,10 +10,10 @@ import (
 func Test_NodesAllIterator_returns_all_substore_nodes(t *testing.T) {
 	qs := quilt(t, [][]quad.Quad{
 		{
-			quad.Make(quad.IRI("s1"), quad.IRI("p1"), quad.IRI("o1"), nil),
+			quad.MakeRaw("<s1>", "<p1>", "<o1>", ""),
 		},
 		{
-			quad.Make(quad.IRI("s2"), quad.IRI("p2"), quad.IRI("o2"), nil),
+			quad.MakeRaw("<s2>", "<p2>", "<o2>", ""),
 		},
 	})
 	defer qs.Close()
@@ -48,10 +48,10 @@ func Test_NodesAllIterator_returns_all_substore_nodes(t *testing.T) {
 func Test_Contains_finds_nodes_in_originating_substore(t *testing.T) {
 	qs := quilt(t, [][]quad.Quad{
 		{
-			quad.Make(quad.IRI("s1"), quad.IRI("p1"), quad.IRI("o1"), nil),
+			quad.MakeRaw("<s1>", "<p1>", "<o1>", ""),
 		},
 		{
-			quad.Make(quad.IRI("s2"), quad.IRI("p2"), quad.IRI("o2"), nil),
+			quad.MakeRaw("<s2>", "<p2>", "<o2>", ""),
 		},
 	})
 	defer qs.Close()
@@ -60,14 +60,14 @@ func Test_Contains_finds_nodes_in_originating_substore(t *testing.T) {
 	defer it.Close()
 
 	for _, iriname := range []string{
-		"s1",
-		"p1",
-		"o1",
-		"s2",
-		"p2",
-		"o2",
+		"<s1>",
+		"<p1>",
+		"<o1>",
+		"<s2>",
+		"<p2>",
+		"<o2>",
 	} {
-		if !it.Contains(context.TODO(), qs.ValueOf(quad.IRI(iriname))) {
+		if !it.Contains(context.TODO(), qs.ValueOf(quad.Raw(iriname))) {
 			t.Errorf("want it.Contains(%q) = true, got false", iriname)
 		}
 	}
@@ -76,10 +76,10 @@ func Test_Contains_finds_nodes_in_originating_substore(t *testing.T) {
 func Test_Iterator_size_is_sum_of_subiterator_sizes(t *testing.T) {
 	qs := quilt(t, [][]quad.Quad{
 		{
-			quad.Make(quad.IRI("s1"), quad.IRI("p1"), quad.IRI("o1"), nil),
+			quad.MakeRaw("s1", "p1", "o1", ""),
 		},
 		{
-			quad.Make(quad.IRI("s2"), quad.IRI("p2"), quad.IRI("o2"), nil),
+			quad.MakeRaw("s2", "p2", "o2", ""),
 		},
 	})
 	defer qs.Close()
