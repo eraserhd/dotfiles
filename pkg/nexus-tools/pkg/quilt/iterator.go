@@ -80,7 +80,9 @@ func (qi *iterator) Reset() {
 }
 
 func (qi *iterator) Stats() graph.IteratorStats {
-	panic("not implemented")
+	var stats graph.IteratorStats
+	stats.Size, stats.ExactSize = qi.Size()
+	return stats
 }
 
 func (qi *iterator) Size() (int64, bool) {

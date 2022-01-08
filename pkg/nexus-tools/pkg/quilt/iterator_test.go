@@ -143,6 +143,27 @@ func Test_Iterator_size_is_sum_of_subiterator_sizes(t *testing.T) {
 	assert.LessOrEqual(t, n, int64(8), "FIXME: adjustment for memstore's inaccurate reporting")
 }
 
+func Test_Iterator_stats_has_same_values_for_sizes(t *testing.T) {
+	qs := quilt(t, [][][]string{
+		{
+			{"s1", "p1", "o1"},
+		},
+		{
+			{"s2", "p2", "o2"},
+		},
+	})
+	defer qs.Close()
+
+	it := qs.NodesAllIterator()
+	defer it.Close()
+
+	n, exact := it.Size()
+
+	stats := it.Stats()
+	assert.Equal(t, exact, stats.ExactSize)
+	assert.Equal(t, n, stats.Size)
+}
+
 func Test_Optimize_does_nothing(t *testing.T) {
 	qs := quilt(t, [][][]string{
 		{
