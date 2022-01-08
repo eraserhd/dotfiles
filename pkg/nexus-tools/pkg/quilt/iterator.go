@@ -79,10 +79,23 @@ func (qi *iterator) Reset() {
 	qi.index = 0
 }
 
+// Stats() returns average costs of substores, weighted by substore size
 func (qi *iterator) Stats() graph.IteratorStats {
-	var stats graph.IteratorStats
-	stats.Size, stats.ExactSize = qi.Size()
-	return stats
+	var totalSize int64
+	var totalNextCost int64
+	var totalContainsCost int64
+	for _, subiterator := range qi.subiterators {
+		substats := subiterator.Stats()
+		totalSize += substats.Size
+		totalNextCost += substats.Size * substats.NextCost
+		totalContainsCost += substats.Size * substats.ContainsCost
+	}
+	return graph.IteratorStats{
+		NextCost:     totalNextCost / totalSize,
+		ContainsCost: totalContainsCost / totalSize,
+		Size:         totalSize,
+		ExactSize:    false,
+	}
 }
 
 func (qi *iterator) Size() (int64, bool) {

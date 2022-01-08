@@ -164,8 +164,25 @@ func Test_Iterator_stats_has_same_values_for_sizes(t *testing.T) {
 	assert.Equal(t, n, stats.Size)
 }
 
-// Test_Iterator_ContainsCost_is_weighted_average
-// Test_Iterator_NextCost_is_weighted_average
+func Test_Iterator_Costs_are_weighted_average(t *testing.T) {
+	qs := quilt(t, [][][]string{
+		{
+			{"s1", "p1", "o1"},
+		},
+		{
+			{"s2", "p2", "o2"},
+		},
+	})
+	defer qs.Close()
+
+	it := qs.NodesAllIterator()
+	defer it.Close()
+
+	stats := it.Stats()
+	// This is not a very good test, since we aren't really testing the weighting
+	assert.Equal(t, 1, stats.ContainsCost)
+	assert.Equal(t, 1, stats.NextCost)
+}
 
 func Test_Optimize_does_nothing(t *testing.T) {
 	qs := quilt(t, [][][]string{
