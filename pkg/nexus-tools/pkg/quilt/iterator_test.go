@@ -53,9 +53,7 @@ func Test_Reset_can_rewind_the_iterator_from_anywhere(t *testing.T) {
 
 		it := qs.NodesAllIterator()
 
-		println("skip", skipNodes)
 		for i := 0; i < skipNodes; i++ {
-			println("i", i)
 			if !it.Next(context.TODO()) {
 				t.Error("want it.Next() = true, got false")
 			}
@@ -63,24 +61,19 @@ func Test_Reset_can_rewind_the_iterator_from_anywhere(t *testing.T) {
 
 		it.Reset()
 
-		nodes := make(map[string]int, 10)
+		var nodes []string
 		for it.Next(context.TODO()) {
-			nodes[qs.NameOf(it.Result()).String()] += 1
+			nodes = append(nodes, qs.NameOf(it.Result()).String())
 		}
 
-		for _, nodename := range []string{
+		assert.ElementsMatch(t, nodes, []string{
 			"<s1>",
 			"<p1>",
 			"<o1>",
 			"<s2>",
 			"<p2>",
 			"<o2>",
-		} {
-			n := nodes[nodename]
-			if n != 1 {
-				t.Errorf("wanted %v to appear once, but it appeared %d times", nodename, n)
-			}
-		}
+		})
 
 		it.Close()
 		qs.Close()
