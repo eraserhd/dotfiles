@@ -15,8 +15,8 @@ func makeQuad(t *testing.T, single []string) quad.Quad {
 	label := ""
 	if len(single) == 4 {
 		label = single[3]
-	} else if len(single) != 3 {
-		t.Errorf("bad quad, need 3 or 4 elements, but got %d", len(single))
+	} else {
+		require.Equal(t, len(single), 3, "bad quad spec, need 3 or 4 elements")
 	}
 	return quad.MakeRaw(single[0], single[1], single[2], label)
 }
@@ -43,9 +43,7 @@ func quilt(t *testing.T, quads [][][]string) *cayley.Handle {
 	h, err := cayley.NewGraph("quilt", "", map[string]interface{}{
 		"substores": substores,
 	})
-	if err != nil {
-		t.Fatalf("wanted cayley.NewGraph() to succeed, but got %v", err)
-	}
+	require.NoError(t, err, "wanted cayley.NewGraph() to succeed")
 	return h
 }
 
@@ -93,9 +91,7 @@ func Test_Namer_implementation_can_round_trip_values_from_different_substores(t 
 	} {
 		ref := qs.ValueOf(quad.Raw(iriname))
 		name := qs.NameOf(ref)
-		if name != quad.Raw(iriname) {
-			t.Errorf(`want NameOf(ref) == quad.IRI(%q), got name1 = %v`, iriname, name)
-		}
+		assert.Equalf(t, qs.NameOf(ref), quad.Raw(iriname), "want %q == quad.IRI(%q)", name, iriname)
 	}
 }
 
