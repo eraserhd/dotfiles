@@ -4,9 +4,19 @@ import (
 	"context"
 	"testing"
 
-	"github.com/cayleygraph/cayley/quad"
+	"github.com/cayleygraph/cayley/graph"
+	"github.com/cayleygraph/quad"
 	"github.com/stretchr/testify/assert"
 )
+
+func allIteratorNodes(qs graph.QuadStore, it graph.Iterator) []string {
+	defer it.Close()
+	var nodes []string
+	for it.Next(context.TODO()) {
+		nodes = append(nodes, qs.NameOf(it.Result()).String())
+	}
+	return nodes
+}
 
 func Test_NodesAllIterator_returns_all_substore_nodes(t *testing.T) {
 	qs := quilt(t, [][][]string{
@@ -19,15 +29,7 @@ func Test_NodesAllIterator_returns_all_substore_nodes(t *testing.T) {
 	})
 	defer qs.Close()
 
-	it := qs.NodesAllIterator()
-	defer it.Close()
-
-	var nodes []string
-	for it.Next(context.TODO()) {
-		nodes = append(nodes, qs.NameOf(it.Result()).String())
-	}
-
-	assert.ElementsMatch(t, nodes, []string{
+	assert.ElementsMatch(t, allIteratorNodes(qs, qs.NodesAllIterator()), []string{
 		"<s1>",
 		"<p1>",
 		"<o1>",
@@ -61,12 +63,7 @@ func Test_Reset_can_rewind_the_iterator_from_anywhere(t *testing.T) {
 
 		it.Reset()
 
-		var nodes []string
-		for it.Next(context.TODO()) {
-			nodes = append(nodes, qs.NameOf(it.Result()).String())
-		}
-
-		assert.ElementsMatch(t, nodes, []string{
+		assert.ElementsMatch(t, allIteratorNodes(qs, qs.NodesAllIterator()), []string{
 			"<s1>",
 			"<p1>",
 			"<o1>",
