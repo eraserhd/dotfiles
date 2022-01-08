@@ -41,7 +41,13 @@ func Test_NodesAllIterator_returns_all_substore_nodes(t *testing.T) {
 
 // NextPath returns identical nodes inside a single substore
 // NextPath returns identical nodes across multiple substores
-// Reset rewinds the iterator correctly
+
+func skipN(t *testing.T, it graph.Iterator, n int) {
+	for i := 0; i < n; i++ {
+		assert.True(t, it.Next(context.TODO()), "it.Next() should succeed")
+	}
+}
+
 func Test_Reset_can_rewind_the_iterator_from_anywhere(t *testing.T) {
 	for skipNodes := 0; skipNodes <= 6; skipNodes++ {
 		qs := quilt(t, [][][]string{
@@ -54,11 +60,7 @@ func Test_Reset_can_rewind_the_iterator_from_anywhere(t *testing.T) {
 		})
 
 		it := qs.NodesAllIterator()
-
-		for i := 0; i < skipNodes; i++ {
-			assert.True(t, it.Next(context.TODO()), "it.Next() should succeed")
-		}
-
+		skipN(t, it, skipNodes)
 		it.Reset()
 
 		assert.ElementsMatch(t, allIteratorNodes(qs, qs.NodesAllIterator()), []string{
@@ -70,7 +72,6 @@ func Test_Reset_can_rewind_the_iterator_from_anywhere(t *testing.T) {
 			"<o2>",
 		})
 
-		it.Close()
 		qs.Close()
 	}
 
