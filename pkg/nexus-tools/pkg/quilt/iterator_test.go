@@ -7,6 +7,7 @@ import (
 	"github.com/cayleygraph/cayley/graph"
 	"github.com/cayleygraph/quad"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func skipN(t *testing.T, it graph.Iterator, n int) {
@@ -180,8 +181,8 @@ func Test_Iterator_Costs_are_weighted_average(t *testing.T) {
 
 	stats := it.Stats()
 	// This is not a very good test, since we aren't really testing the weighting
-	assert.Equal(t, 1, stats.ContainsCost)
-	assert.Equal(t, 1, stats.NextCost)
+	assert.Equal(t, int64(1), stats.ContainsCost)
+	assert.Equal(t, int64(1), stats.NextCost)
 }
 
 func Test_Optimize_does_nothing(t *testing.T) {

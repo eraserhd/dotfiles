@@ -66,7 +66,8 @@ func (qs *QuadStore) NameOf(ref graph.Ref) quad.Value {
 // graph.QuadIndexer
 
 func (qs *QuadStore) Quad(ref graph.Ref) quad.Quad {
-	return qs.substores[0].Quad(ref) //FIXME:
+	x := ref.(quiltref)
+	return qs.substores[x.substore].Quad(x.subref)
 }
 
 func (qs *QuadStore) QuadIterator(d quad.Direction, ref graph.Ref) graph.Iterator {
@@ -119,7 +120,11 @@ func (qs *QuadStore) NodesAllIterator() graph.Iterator {
 }
 
 func (qs *QuadStore) QuadsAllIterator() graph.Iterator {
-	return qs.substores[0].QuadsAllIterator() //FIXME:
+	subiterators := make([]graph.Iterator, len(qs.substores))
+	for i := range subiterators {
+		subiterators[i] = qs.substores[i].QuadsAllIterator()
+	}
+	return newIterator(subiterators)
 }
 
 func (qs *QuadStore) Close() error {

@@ -97,3 +97,24 @@ func Test_Namer_implementation_can_round_trip_values_from_different_substores(t 
 
 // Node shared in different substores
 // Quad in different substores
+
+func Test_Quad_resolves_QuadsAllIterator_result_values(t *testing.T) {
+	qs := quilt(t, [][][]string{
+		{
+			{"<s1>", "<p1>", "<o1>"},
+		},
+		{
+			{"<s2>", "<p2>", "<o2>"},
+		},
+	})
+	defer qs.Close()
+
+	it := qs.QuadsAllIterator()
+	defer it.Close()
+
+	require.True(t, it.Next(context.TODO()))
+	assert.Equal(t, quad.MakeRaw("<s1>", "<p1>", "<o1>", ""), qs.Quad(it.Result()))
+	require.True(t, it.Next(context.TODO()))
+	assert.Equal(t, quad.MakeRaw("<s2>", "<p2>", "<o2>", ""), qs.Quad(it.Result()))
+	assert.False(t, it.Next(context.TODO()))
+}
