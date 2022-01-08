@@ -103,9 +103,8 @@ func Test_Contains_finds_nodes_in_all_substores(t *testing.T) {
 		"<p2>",
 		"<o2>",
 	} {
-		if !it.Contains(context.TODO(), qs.ValueOf(quad.Raw(iriname))) {
-			t.Errorf("want it.Contains(%q) = true, got false", iriname)
-		}
+		found := it.Contains(context.TODO(), qs.ValueOf(quad.Raw(iriname)))
+		assert.Truef(t, found, "want it.Contains(%q) to be true", iriname)
 	}
 }
 
@@ -124,12 +123,7 @@ func Test_Iterator_size_is_sum_of_subiterator_sizes(t *testing.T) {
 	defer it.Close()
 
 	n, exact := it.Size()
-	if exact {
-		t.Error("want it.Size() to report inexact (because of overcounting of chared nodes)")
-	}
-
-	if n < 6 || n > 8 {
-		// the 8 is because memstore appears to overestimate slightly??
-		t.Errorf("want it.Size() = (6 - 8, false) got (%d, %v)", n, exact)
-	}
+	assert.False(t, exact, "it.Size() should report inexact size (because of potentially overcounting shared nodes)")
+	assert.GreaterOrEqual(t, n, int64(6), "it.Size() should at least report the correct number of nodes")
+	assert.LessOrEqual(t, n, int64(8), "FIXME: adjustment for memstore's inaccurate reporting")
 }
