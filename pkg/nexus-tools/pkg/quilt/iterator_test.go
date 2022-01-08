@@ -164,6 +164,9 @@ func Test_Iterator_stats_has_same_values_for_sizes(t *testing.T) {
 	assert.Equal(t, n, stats.Size)
 }
 
+// Test_Iterator_ContainsCost_is_weighted_average
+// Test_Iterator_NextCost_is_weighted_average
+
 func Test_Optimize_does_nothing(t *testing.T) {
 	qs := quilt(t, [][][]string{
 		{
@@ -181,5 +184,4 @@ func Test_Optimize_does_nothing(t *testing.T) {
 	it2, changed := it.Optimize()
 	assert.False(t, changed, "optimize should not change the iterator")
 	assert.Equal(t, it, it2, "optimize should not change the iterator")
-
 }
