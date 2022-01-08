@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/cayleygraph/cayley/quad"
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_NodesAllIterator_returns_all_substore_nodes(t *testing.T) {
@@ -21,24 +22,19 @@ func Test_NodesAllIterator_returns_all_substore_nodes(t *testing.T) {
 	it := qs.NodesAllIterator()
 	defer it.Close()
 
-	nodes := make(map[string]int, 10)
+	var nodes []string
 	for it.Next(context.TODO()) {
-		nodes[qs.NameOf(it.Result()).String()] += 1
+		nodes = append(nodes, qs.NameOf(it.Result()).String())
 	}
 
-	for _, nodename := range []string{
+	assert.ElementsMatch(t, nodes, []string{
 		"<s1>",
 		"<p1>",
 		"<o1>",
 		"<s2>",
 		"<p2>",
 		"<o2>",
-	} {
-		n := nodes[nodename]
-		if n != 1 {
-			t.Errorf("wanted %v to appear once, but it appeared %d times", nodename, n)
-		}
-	}
+	})
 }
 
 // NextPath returns identical nodes inside a single substore
