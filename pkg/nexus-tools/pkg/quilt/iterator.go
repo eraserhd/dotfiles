@@ -97,7 +97,7 @@ func (qi *iterator) Size() (int64, bool) {
 }
 
 func (qi *iterator) Optimize() (graph.Iterator, bool) {
-	panic("not implemented")
+	return qi, false
 }
 
 func (qi *iterator) SubIterators() []graph.Iterator {
