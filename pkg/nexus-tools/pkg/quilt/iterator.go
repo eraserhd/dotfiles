@@ -39,9 +39,7 @@ func (qi *iterator) Result() graph.Ref {
 	}
 }
 
-func (qi *iterator) NextPath(ctx context.Context) bool {
-	panic("not implemented")
-}
+func (qi *iterator) NextPath(ctx context.Context) bool { return false }
 
 func (qi *iterator) Err() error {
 	return qi.subiterators[qi.index].Err()

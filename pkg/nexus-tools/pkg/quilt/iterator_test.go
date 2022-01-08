@@ -20,6 +20,9 @@ func allIteratorNodes(qs graph.QuadStore, it graph.Iterator) []string {
 	var nodes []string
 	for it.Next(context.TODO()) {
 		nodes = append(nodes, qs.NameOf(it.Result()).String())
+		for it.NextPath(context.TODO()) {
+			nodes = append(nodes, qs.NameOf(it.Result()).String())
+		}
 	}
 	return nodes
 }
@@ -63,9 +66,6 @@ func Test_NodesAllIterator_returns_all_substore_nodes(t *testing.T) {
 		"<o2>",
 	})
 }
-
-// NextPath returns identical nodes inside a single substore
-// NextPath returns identical nodes across multiple substores
 
 func Test_Reset_can_rewind_the_iterator_from_anywhere(t *testing.T) {
 	for skipNodes := 0; skipNodes <= 6; skipNodes++ {
