@@ -56,9 +56,7 @@ func Test_Reset_can_rewind_the_iterator_from_anywhere(t *testing.T) {
 		it := qs.NodesAllIterator()
 
 		for i := 0; i < skipNodes; i++ {
-			if !it.Next(context.TODO()) {
-				t.Error("want it.Next() = true, got false")
-			}
+			assert.True(t, it.Next(context.TODO()), "it.Next() should succeed")
 		}
 
 		it.Reset()
