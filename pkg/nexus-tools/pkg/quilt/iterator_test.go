@@ -24,6 +24,25 @@ func allIteratorNodes(qs graph.QuadStore, it graph.Iterator) []string {
 	return nodes
 }
 
+func Test_String_returns_a_static_name(t *testing.T) {
+	qs := quilt(t, [][][]string{
+		{
+			{"<s1>", "<p1>", "<o1>"},
+		},
+	})
+	defer qs.Close()
+
+	it := qs.NodesAllIterator()
+	defer it.Close()
+	name := it.String()
+	assert.NotZero(t, name)
+
+	it2 := qs.NodesAllIterator()
+	defer it2.Close()
+	name2 := it2.String()
+	assert.Equal(t, name, name2)
+}
+
 func Test_NodesAllIterator_returns_all_substore_nodes(t *testing.T) {
 	qs := quilt(t, [][][]string{
 		{

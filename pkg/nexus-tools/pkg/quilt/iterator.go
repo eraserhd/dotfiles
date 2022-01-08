@@ -23,7 +23,7 @@ func newIterator(subiterators []graph.Iterator) *iterator {
 // graph.IteratorBase
 
 func (qi *iterator) String() string {
-	panic("not implemented")
+	return "QuiltAllNodesIterator"
 }
 
 func (qi *iterator) TagResults(results map[string]graph.Ref) {
