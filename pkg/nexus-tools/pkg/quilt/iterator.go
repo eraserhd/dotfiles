@@ -77,7 +77,10 @@ func (qi *iterator) Contains(ctx context.Context, v graph.Ref) bool {
 }
 
 func (qi *iterator) Reset() {
-	panic("not implemented")
+	for i := 0; i <= qi.index && i < len(qi.subiterators); i++ {
+		qi.subiterators[i].Reset()
+	}
+	qi.index = 0
 }
 
 func (qi *iterator) Stats() graph.IteratorStats {
