@@ -26,9 +26,7 @@ func (qi *iterator) String() string {
 	return "QuiltAllNodesIterator"
 }
 
-func (qi *iterator) TagResults(results map[string]graph.Ref) {
-	panic("not implemented")
-}
+func (qi *iterator) TagResults(results map[string]graph.Ref) {}
 
 func (qi *iterator) Result() graph.Ref {
 	subresult := qi.subiterators[qi.index].Result()
