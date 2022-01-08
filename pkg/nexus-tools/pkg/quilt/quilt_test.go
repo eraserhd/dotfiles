@@ -7,6 +7,8 @@ import (
 	"github.com/cayleygraph/cayley"
 	"github.com/cayleygraph/cayley/graph"
 	"github.com/cayleygraph/quad"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func makeQuad(t *testing.T, single []string) quad.Quad {
@@ -21,13 +23,9 @@ func makeQuad(t *testing.T, single []string) quad.Quad {
 
 func memstore(t *testing.T, quads [][]string) graph.QuadStore {
 	memstore, err := graph.NewQuadStore("memstore", "", nil)
-	if err != nil {
-		t.Fatalf("memstore: want graph.NewQuadStore(\"memstore\", \"\", nil) = nil, got %v", err)
-	}
+	require.NoError(t, err, "memstore: want graph.NewQuadStore(\"memstore\", \"\", nil) to succeed")
 	qw, err := memstore.NewQuadWriter()
-	if err != nil {
-		t.Fatalf("want memstore1.NewQuadWriter() to succeed, got %v", err)
-	}
+	require.NoError(t, err, "want memstore1.NewQuadWriter() to succeed")
 	defer qw.Close()
 	typedQuads := make([]quad.Quad, len(quads))
 	for i, single := range quads {
@@ -69,15 +67,9 @@ func Test_aggregates_stats(t *testing.T) {
 	defer qs.Close()
 
 	stats, err := qs.Stats(context.TODO(), false)
-	if err != nil {
-		t.Errorf("want qs.Stats() to suceed, got %v", err)
-	}
-	if stats.Nodes.Size != 7 {
-		t.Errorf("want stats.Node.Size = 7, got %d", stats.Nodes.Size)
-	}
-	if stats.Quads.Size != 3 {
-		t.Errorf("want stats.Quads.Size = 3, got %d", stats.Quads.Size)
-	}
+	assert.NoError(t, err, "want qs.Stats() to suceed")
+	assert.Equal(t, stats.Nodes.Size, int64(7))
+	assert.Equal(t, stats.Quads.Size, int64(3))
 }
 
 func Test_Namer_implementation_can_round_trip_values_from_different_substores(t *testing.T) {
