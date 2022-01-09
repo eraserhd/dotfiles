@@ -137,8 +137,8 @@ func Test_QuadIterator_returns_results_from_all_substores(t *testing.T) {
 	require.NotNil(t, it)
 
 	require.True(t, it.Next(context.TODO()))
-	//FIXME: require.True(t, it.Next(context.TODO()))
-	//FIXME:require.False(t, it.Next(context.TODO()))
+	require.True(t, it.Next(context.TODO()))
+	require.False(t, it.Next(context.TODO()))
 }
 
 func Test_QuadDirection_works_for_quads_from_any_substore(t *testing.T) {

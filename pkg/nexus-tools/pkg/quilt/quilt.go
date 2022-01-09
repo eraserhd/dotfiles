@@ -79,8 +79,11 @@ func (qs *QuadStore) Quad(ref graph.Ref) quad.Quad {
 }
 
 func (qs *QuadStore) QuadIterator(d quad.Direction, ref graph.Ref) graph.Iterator {
-	qr := ref.(quiltref)
-	return qs.substores[qr[0].substore].QuadIterator(d, qr[0].subref)
+	var subiterators []graph.Iterator
+	for _, subref := range ref.(quiltref) {
+		subiterators = append(subiterators, qs.substores[subref.substore].QuadIterator(d, subref.subref))
+	}
+	return newIterator(subiterators)
 }
 
 func (qs *QuadStore) QuadIteratorSize(ctx context.Context, d quad.Direction, ref graph.Ref) (graph.Size, error) {
