@@ -118,3 +118,25 @@ func Test_Quad_resolves_QuadsAllIterator_result_values(t *testing.T) {
 	assert.Equal(t, quad.MakeRaw("<s2>", "<p2>", "<o2>", ""), qs.Quad(it.Result()))
 	assert.False(t, it.Next(context.TODO()))
 }
+
+func Test_QuadDirection_works_for_quads_from_any_substore(t *testing.T) {
+	qs := quilt(t, [][][]string{
+		{
+			{"<s1>", "<p1>", "<o1>"},
+		},
+		{
+			{"<s2>", "<p2>", "<o2>"},
+		},
+	})
+	defer qs.Close()
+
+	it := qs.QuadsAllIterator()
+	defer it.Close()
+	require.True(t, it.Next(context.TODO()))
+	ref1 := it.Result()
+
+	assert.Equal(t, qs.NameOf(qs.QuadDirection(ref1, quad.Subject)), quad.Raw("<s1>"))
+
+	require.True(t, it.Next(context.TODO()))
+	//ref2 := it.Result()
+}

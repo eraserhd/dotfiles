@@ -7,7 +7,6 @@ import (
 	"github.com/cayleygraph/cayley/graph"
 	"github.com/cayleygraph/quad"
 	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 func skipN(t *testing.T, it graph.Iterator, n int) {
