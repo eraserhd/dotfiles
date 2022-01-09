@@ -44,7 +44,7 @@ type quiltref []quiltsubref
 var _ graph.Ref = quiltref{}
 
 func (qr quiltref) Key() interface{} {
-	if len(qr) == 0 {
+	if qr == nil {
 		return nil
 	}
 	return qr[0]
