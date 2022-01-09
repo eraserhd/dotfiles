@@ -139,5 +139,8 @@ func Test_QuadDirection_works_for_quads_from_any_substore(t *testing.T) {
 	assert.Nil(t, qs.QuadDirection(ref1, quad.Label))
 
 	require.True(t, it.Next(context.TODO()))
-	//ref2 := it.Result()
+	ref2 := it.Result()
+
+	assert.Equal(t, qs.NameOf(qs.QuadDirection(ref2, quad.Subject)), quad.Raw("<s2>"))
+	assert.Nil(t, qs.QuadDirection(ref2, quad.Label))
 }
