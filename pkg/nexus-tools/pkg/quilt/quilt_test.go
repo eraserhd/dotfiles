@@ -95,7 +95,6 @@ func Test_Namer_implementation_can_round_trip_values_from_different_substores(t 
 	}
 }
 
-// Node shared in different substores
 // Quad in different substores
 
 func Test_Quad_resolves_QuadsAllIterator_result_values(t *testing.T) {
@@ -132,6 +131,7 @@ func Test_QuadIterator_returns_results_from_all_substores(t *testing.T) {
 	})
 	defer qs.Close()
 
+	// This test also ensures that qs.ValueOf() returns a ref that has subrefs for _all_ substores containing the node
 	it := qs.QuadIterator(quad.Subject, qs.ValueOf(quad.Raw("<s1>")))
 	defer it.Close()
 	require.NotNil(t, it)
