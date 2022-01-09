@@ -137,7 +137,9 @@ func Test_QuadIterator_returns_results_from_all_substores(t *testing.T) {
 	require.NotNil(t, it)
 
 	require.True(t, it.Next(context.TODO()))
+	require.Equal(t, quad.MakeRaw("<s1>", "<p1>", "<o1>", ""), qs.Quad(it.Result()))
 	require.True(t, it.Next(context.TODO()))
+	require.Equal(t, quad.MakeRaw("<s1>", "<p2>", "<o2>", ""), qs.Quad(it.Result()))
 	require.False(t, it.Next(context.TODO()))
 }
 
