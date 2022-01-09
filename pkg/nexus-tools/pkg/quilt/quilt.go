@@ -34,21 +34,30 @@ type QuadStore struct {
 
 // graph.Namer
 
-type quiltref struct {
+type quiltsubref struct {
 	substore int
 	subref   graph.Ref
 }
 
+type quiltref []quiltsubref
+
 var _ graph.Ref = quiltref{}
 
-func (qr quiltref) Key() interface{} { return qr }
+func (qr quiltref) Key() interface{} {
+	if len(qr) == 0 {
+		return nil
+	}
+	return qr[0]
+}
 
 func (qs *QuadStore) ValueOf(v quad.Value) graph.Ref {
 	for i := range qs.substores {
 		if subref := qs.substores[i].ValueOf(v); subref != nil {
 			return quiltref{
-				substore: i,
-				subref:   subref,
+				{
+					substore: i,
+					subref:   subref,
+				},
 			}
 		}
 	}
@@ -60,18 +69,19 @@ func (qs *QuadStore) NameOf(ref graph.Ref) quad.Value {
 		return nil
 	}
 	qr := ref.(quiltref)
-	return qs.substores[qr.substore].NameOf(qr.subref)
+	return qs.substores[qr[0].substore].NameOf(qr[0].subref)
 }
 
 // graph.QuadIndexer
 
 func (qs *QuadStore) Quad(ref graph.Ref) quad.Quad {
-	x := ref.(quiltref)
-	return qs.substores[x.substore].Quad(x.subref)
+	qr := ref.(quiltref)
+	return qs.substores[qr[0].substore].Quad(qr[0].subref)
 }
 
 func (qs *QuadStore) QuadIterator(d quad.Direction, ref graph.Ref) graph.Iterator {
-	return qs.substores[0].QuadIterator(d, ref) //FIXME:
+	qr := ref.(quiltref)
+	return qs.substores[qr[0].substore].QuadIterator(d, qr[0].subref)
 }
 
 func (qs *QuadStore) QuadIteratorSize(ctx context.Context, d quad.Direction, ref graph.Ref) (graph.Size, error) {
@@ -79,11 +89,14 @@ func (qs *QuadStore) QuadIteratorSize(ctx context.Context, d quad.Direction, ref
 }
 
 func (qs *QuadStore) QuadDirection(id graph.Ref, d quad.Direction) graph.Ref {
-	x := id.(quiltref)
-	if ref := qs.substores[x.substore].QuadDirection(x.subref, d); ref != nil {
+	qr := id.(quiltref)
+	//FIXME:
+	if ref := qs.substores[qr[0].substore].QuadDirection(qr[0].subref, d); ref != nil {
 		return quiltref{
-			substore: x.substore,
-			subref:   ref,
+			{
+				substore: qr[0].substore,
+				subref:   ref,
+			},
 		}
 	}
 	return nil

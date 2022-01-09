@@ -119,6 +119,28 @@ func Test_Quad_resolves_QuadsAllIterator_result_values(t *testing.T) {
 	assert.False(t, it.Next(context.TODO()))
 }
 
+func Test_QuadIterator_returns_results_from_all_substores(t *testing.T) {
+	qs := quilt(t, [][][]string{
+		{
+			{"<s1>", "<p1>", "<o1>"},
+			{"<s3>", "<p9>", "<o2>"},
+		},
+		{
+			{"<s1>", "<p2>", "<o2>"},
+			{"<s2>", "<p2>", "<o2>"},
+		},
+	})
+	defer qs.Close()
+
+	it := qs.QuadIterator(quad.Subject, qs.ValueOf(quad.Raw("<s1>")))
+	defer it.Close()
+	require.NotNil(t, it)
+
+	require.True(t, it.Next(context.TODO()))
+	//FIXME: require.True(t, it.Next(context.TODO()))
+	//FIXME:require.False(t, it.Next(context.TODO()))
+}
+
 func Test_QuadDirection_works_for_quads_from_any_substore(t *testing.T) {
 	qs := quilt(t, [][][]string{
 		{

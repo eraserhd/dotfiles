@@ -34,8 +34,10 @@ func (qi *iterator) Result() graph.Ref {
 		return nil
 	}
 	return quiltref{
-		substore: qi.index,
-		subref:   subresult,
+		{
+			substore: qi.index,
+			subref:   subresult,
+		},
 	}
 }
 
@@ -68,8 +70,8 @@ func (qi *iterator) Next(ctx context.Context) bool {
 }
 
 func (qi *iterator) Contains(ctx context.Context, v graph.Ref) bool {
-	x := v.(quiltref)
-	return qi.subiterators[x.substore].Contains(ctx, x.subref)
+	qr := v.(quiltref)
+	return qi.subiterators[qr[0].substore].Contains(ctx, qr[0].subref)
 }
 
 func (qi *iterator) Reset() {
