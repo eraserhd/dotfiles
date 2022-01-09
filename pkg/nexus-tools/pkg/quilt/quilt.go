@@ -51,17 +51,16 @@ func (qr quiltref) Key() interface{} {
 }
 
 func (qs *QuadStore) ValueOf(v quad.Value) graph.Ref {
+	var ref quiltref
 	for i := range qs.substores {
 		if subref := qs.substores[i].ValueOf(v); subref != nil {
-			return quiltref{
-				{
-					substore: i,
-					subref:   subref,
-				},
-			}
+			ref = append(ref, quiltsubref{substore: i, subref: subref})
 		}
 	}
-	return nil
+	if len(ref) == 0 {
+		return nil
+	}
+	return ref
 }
 
 func (qs *QuadStore) NameOf(ref graph.Ref) quad.Value {
