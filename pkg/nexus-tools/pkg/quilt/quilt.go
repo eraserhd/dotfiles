@@ -57,7 +57,7 @@ func (qs *QuadStore) ValueOf(v quad.Value) graph.Ref {
 			ref = append(ref, quiltsubref{substore: i, subref: subref})
 		}
 	}
-	if len(ref) == 0 {
+	if ref == nil {
 		return nil
 	}
 	return ref
