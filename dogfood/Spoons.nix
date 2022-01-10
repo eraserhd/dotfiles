@@ -1,7 +1,7 @@
 {
   owner = "eraserhd";
   repo = "Spoons";
-  rev = "f34b7b7bbc5180d5fe47626832371ebe6ce2cf39";
-  sha256 = "dgXcDde8inUMYWrgf4JiW/8m58DRXyoTdIrvnun+Hg0=";
+  rev = "ef22e0499d75c0402e0e0fcdd539e55b5387efbf";
+  sha256 = "VDA4SM/J0hXekaOAKaeTfQXdiFkjebFk5SGZx2Oc06c=";
   fetchSubmodules = true;
 }
