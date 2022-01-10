@@ -9,14 +9,16 @@ import (
 type iterator struct {
 	subiterators []graph.Iterator
 	index        int
+	broadenRef   func(graph.Ref) graph.Ref
 }
 
 var _ graph.Iterator = &iterator{}
 
-func newIterator(subiterators []graph.Iterator) *iterator {
+func newIterator(subiterators []graph.Iterator, broadenRef func(graph.Ref) graph.Ref) *iterator {
 	return &iterator{
 		subiterators: subiterators,
 		index:        0,
+		broadenRef:   broadenRef,
 	}
 }
 
@@ -33,12 +35,7 @@ func (qi *iterator) Result() graph.Ref {
 	if subresult == nil {
 		return nil
 	}
-	return quiltref{
-		{
-			substore: qi.index,
-			subref:   subresult,
-		},
-	}
+	return qi.broadenRef(quiltref{{substore: qi.index, subref: subresult}})
 }
 
 func (qi *iterator) NextPath(ctx context.Context) bool { return false }
@@ -71,6 +68,7 @@ func (qi *iterator) Next(ctx context.Context) bool {
 
 func (qi *iterator) Contains(ctx context.Context, v graph.Ref) bool {
 	qr := v.(quiltref)
+	//FIXME: find the one for the right substore?
 	return qi.subiterators[qr[0].substore].Contains(ctx, qr[0].subref)
 }
 

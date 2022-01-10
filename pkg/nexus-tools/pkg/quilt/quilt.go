@@ -83,7 +83,7 @@ func (qs *QuadStore) QuadIterator(d quad.Direction, ref graph.Ref) graph.Iterato
 	for _, subref := range ref.(quiltref) {
 		subiterators = append(subiterators, qs.substores[subref.substore].QuadIterator(d, subref.subref))
 	}
-	return newIterator(subiterators)
+	return newIterator(subiterators, qs.broadenQuadRef)
 }
 
 func (qs *QuadStore) QuadIteratorSize(ctx context.Context, d quad.Direction, ref graph.Ref) (graph.Size, error) {
@@ -137,7 +137,7 @@ func (qs *QuadStore) NodesAllIterator() graph.Iterator {
 	for i := range subiterators {
 		subiterators[i] = qs.substores[i].NodesAllIterator()
 	}
-	return newIterator(subiterators)
+	return newIterator(subiterators, qs.broadenNodeRef)
 }
 
 func (qs *QuadStore) QuadsAllIterator() graph.Iterator {
@@ -145,7 +145,7 @@ func (qs *QuadStore) QuadsAllIterator() graph.Iterator {
 	for i := range subiterators {
 		subiterators[i] = qs.substores[i].QuadsAllIterator()
 	}
-	return newIterator(subiterators)
+	return newIterator(subiterators, qs.broadenQuadRef)
 }
 
 func (qs *QuadStore) Close() error {
@@ -156,4 +156,12 @@ func (qs *QuadStore) Close() error {
 		}
 	}
 	return err
+}
+
+func (qs *QuadStore) broadenNodeRef(ref graph.Ref) graph.Ref {
+	return ref
+}
+
+func (qs *QuadStore) broadenQuadRef(ref graph.Ref) graph.Ref {
+	return ref
 }
