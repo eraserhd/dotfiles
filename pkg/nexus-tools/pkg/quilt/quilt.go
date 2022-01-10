@@ -91,17 +91,16 @@ func (qs *QuadStore) QuadIteratorSize(ctx context.Context, d quad.Direction, ref
 }
 
 func (qs *QuadStore) QuadDirection(id graph.Ref, d quad.Direction) graph.Ref {
-	qr := id.(quiltref)
-	//FIXME:
-	if ref := qs.substores[qr[0].substore].QuadDirection(qr[0].subref, d); ref != nil {
-		return quiltref{
-			{
-				substore: qr[0].substore,
-				subref:   ref,
-			},
+	var result quiltref
+	for _, subref := range id.(quiltref) {
+		if ref := qs.substores[subref.substore].QuadDirection(subref.subref, d); ref != nil {
+			result = append(result, quiltsubref{substore: subref.substore, subref: ref})
 		}
 	}
-	return nil
+	if result == nil {
+		return nil
+	}
+	return result
 }
 
 // Stats sums the stats for all substores in the quilt.

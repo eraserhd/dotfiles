@@ -168,3 +168,31 @@ func Test_QuadDirection_works_for_quads_from_any_substore(t *testing.T) {
 	assert.Equal(t, qs.NameOf(qs.QuadDirection(ref2, quad.Subject)), quad.Raw("<s2>"))
 	assert.Nil(t, qs.QuadDirection(ref2, quad.Label))
 }
+
+func FIXME_Test_QuadsAllIterator_and_QuadDirection_returns_multirefs_that_can_work_for_QuadIterator(t *testing.T) {
+	qs := quilt(t, [][][]string{
+		{
+			{"<s1>", "<p1>", "<o1>"},
+			{"<s3>", "<p9>", "<o2>"},
+		},
+		{
+			{"<s1>", "<p2>", "<o2>"},
+			{"<s2>", "<p2>", "<o2>"},
+		},
+	})
+	defer qs.Close()
+
+	allit := qs.QuadsAllIterator()
+	defer allit.Close()
+	require.True(t, allit.Next(context.TODO()))
+	qref := allit.Result()
+	s1ref := qs.QuadDirection(qref, quad.Subject)
+
+	it := qs.QuadIterator(quad.Subject, s1ref)
+	defer it.Close()
+	require.NotNil(t, it)
+
+	require.True(t, it.Next(context.TODO()))
+	require.True(t, it.Next(context.TODO()))
+	require.False(t, it.Next(context.TODO()))
+}
