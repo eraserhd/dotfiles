@@ -32,6 +32,7 @@ with lib;
     ./programs/i3
     ./programs/kakoune
     ./programs/kitty
+    ./programs/mutagen
     ./programs/nexus
     ./programs/nix
     ./programs/npm
