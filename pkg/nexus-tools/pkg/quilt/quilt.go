@@ -85,7 +85,7 @@ func (qs *QuadStore) QuadIterator(d quad.Direction, ref graph.Ref) iterator.Shap
 	for _, subref := range ref.(quiltref) {
 		subiterators = append(subiterators, qs.substores[subref.substore].QuadIterator(d, subref.subref))
 	}
-	return newIterator(subiterators, qs.broadenQuadRef)
+	return newShape(subiterators, qs.broadenQuadRef)
 }
 
 func (qs *QuadStore) QuadIteratorSize(ctx context.Context, d quad.Direction, ref graph.Ref) (refs.Size, error) {
@@ -139,7 +139,7 @@ func (qs *QuadStore) NodesAllIterator() iterator.Shape {
 	for i := range subiterators {
 		subiterators[i] = qs.substores[i].NodesAllIterator()
 	}
-	return newIterator(subiterators, qs.broadenNodeRef)
+	return newShape(subiterators, qs.broadenNodeRef)
 }
 
 func (qs *QuadStore) QuadsAllIterator() iterator.Shape {
@@ -147,7 +147,7 @@ func (qs *QuadStore) QuadsAllIterator() iterator.Shape {
 	for i := range subiterators {
 		subiterators[i] = qs.substores[i].QuadsAllIterator()
 	}
-	return newIterator(subiterators, qs.broadenQuadRef)
+	return newShape(subiterators, qs.broadenQuadRef)
 }
 
 func (qs *QuadStore) Close() error {

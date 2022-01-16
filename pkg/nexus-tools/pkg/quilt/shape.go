@@ -16,7 +16,7 @@ type shape struct {
 
 var _ iterator.Shape = &shape{}
 
-func newIterator(subiterators []iterator.Shape, broadenRef func(graph.Ref) graph.Ref) *shape {
+func newShape(subiterators []iterator.Shape, broadenRef func(graph.Ref) graph.Ref) *shape {
 	return &shape{
 		subiterators: subiterators,
 		index:        0,
@@ -27,7 +27,7 @@ func newIterator(subiterators []iterator.Shape, broadenRef func(graph.Ref) graph
 // iterator.ShapeBase
 
 func (qi *shape) String() string {
-	return "QuiltAllNodesIterator"
+	return "QuiltAggregateShape"
 }
 
 //func (qi *shape) TagResults(results map[string]graph.Ref) {}
@@ -40,7 +40,7 @@ func (qi *shape) String() string {
 //	return qi.broadenRef(quiltref{{substore: qi.index, subref: subresult}})
 //}
 
-func (qi *shape) NextPath(ctx context.Context) bool { return false }
+//func (qi *shape) NextPath(ctx context.Context) bool { return false }
 
 func (qi *shape) Iterate() iterator.Scanner {
 	panic("not implemented")
