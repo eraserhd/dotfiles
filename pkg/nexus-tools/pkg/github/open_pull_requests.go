@@ -7,7 +7,9 @@ import (
 	"time"
 
 	"github.com/cayleygraph/cayley/graph"
+	"github.com/cayleygraph/cayley/graph/iterator"
 	_ "github.com/cayleygraph/cayley/graph/memstore"
+	"github.com/cayleygraph/cayley/graph/refs"
 	"github.com/cayleygraph/quad"
 	"github.com/cayleygraph/quad/voc/rdf"
 	"github.com/google/uuid"
@@ -47,29 +49,29 @@ type QuadStore struct {
 
 // graph.Namer
 
-func (qs *QuadStore) ValueOf(v quad.Value) graph.Ref {
+func (qs *QuadStore) ValueOf(v quad.Value) (graph.Ref, error) {
 	return qs.memstore.ValueOf(v)
 }
 
-func (qs *QuadStore) NameOf(ref graph.Ref) quad.Value {
+func (qs *QuadStore) NameOf(ref graph.Ref) (quad.Value, error) {
 	return qs.memstore.NameOf(ref)
 }
 
 // graph.QuadIndexer
 
-func (qs *QuadStore) Quad(ref graph.Ref) quad.Quad {
+func (qs *QuadStore) Quad(ref graph.Ref) (quad.Quad, error) {
 	return qs.memstore.Quad(ref)
 }
 
-func (qs *QuadStore) QuadIterator(d quad.Direction, ref graph.Ref) graph.Iterator {
+func (qs *QuadStore) QuadIterator(d quad.Direction, ref graph.Ref) iterator.Shape {
 	return qs.memstore.QuadIterator(d, ref)
 }
 
-func (qs *QuadStore) QuadIteratorSize(ctx context.Context, d quad.Direction, ref graph.Ref) (graph.Size, error) {
+func (qs *QuadStore) QuadIteratorSize(ctx context.Context, d quad.Direction, ref graph.Ref) (refs.Size, error) {
 	return qs.memstore.QuadIteratorSize(ctx, d, ref)
 }
 
-func (qs *QuadStore) QuadDirection(id graph.Ref, d quad.Direction) graph.Ref {
+func (qs *QuadStore) QuadDirection(id graph.Ref, d quad.Direction) (graph.Ref, error) {
 	return qs.memstore.QuadDirection(id, d)
 }
 
@@ -87,11 +89,11 @@ func (qs *QuadStore) NewQuadWriter() (quad.WriteCloser, error) {
 	return nil, ReadOnlyError
 }
 
-func (qs *QuadStore) NodesAllIterator() graph.Iterator {
+func (qs *QuadStore) NodesAllIterator() iterator.Shape {
 	return qs.memstore.NodesAllIterator()
 }
 
-func (qs *QuadStore) QuadsAllIterator() graph.Iterator {
+func (qs *QuadStore) QuadsAllIterator() iterator.Shape {
 	return qs.memstore.QuadsAllIterator()
 }
 

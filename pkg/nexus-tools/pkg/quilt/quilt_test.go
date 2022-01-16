@@ -66,8 +66,8 @@ func Test_aggregates_stats(t *testing.T) {
 
 	stats, err := qs.Stats(context.TODO(), false)
 	assert.NoError(t, err, "want qs.Stats() to suceed")
-	assert.Equal(t, stats.Nodes.Size, int64(7))
-	assert.Equal(t, stats.Quads.Size, int64(3))
+	assert.Equal(t, stats.Nodes.Value, int64(7))
+	assert.Equal(t, stats.Quads.Value, int64(3))
 }
 
 func Test_Namer_implementation_can_round_trip_values_from_different_substores(t *testing.T) {
@@ -89,9 +89,11 @@ func Test_Namer_implementation_can_round_trip_values_from_different_substores(t 
 		"<p2>",
 		"<o2>",
 	} {
-		ref := qs.ValueOf(quad.Raw(iriname))
-		name := qs.NameOf(ref)
-		assert.Equalf(t, qs.NameOf(ref), quad.Raw(iriname), "want %q == quad.IRI(%q)", name, iriname)
+		ref, err := qs.ValueOf(quad.Raw(iriname))
+		assert.NoError(t, err)
+		name, err := qs.NameOf(ref)
+		assert.NoError(t, err)
+		assert.Equalf(t, name, quad.Raw(iriname), "want %q == quad.IRI(%q)", name, iriname)
 	}
 }
 
@@ -108,13 +110,17 @@ func Test_Quad_resolves_QuadsAllIterator_result_values(t *testing.T) {
 	})
 	defer qs.Close()
 
-	it := qs.QuadsAllIterator()
+	it := qs.QuadsAllIterator().Iterate()
 	defer it.Close()
 
 	require.True(t, it.Next(context.TODO()))
-	assert.Equal(t, quad.MakeRaw("<s1>", "<p1>", "<o1>", ""), qs.Quad(it.Result()))
+	q1, err := qs.Quad(it.Result())
+	require.NoError(t, err)
+	assert.Equal(t, quad.MakeRaw("<s1>", "<p1>", "<o1>", ""), q1)
 	require.True(t, it.Next(context.TODO()))
-	assert.Equal(t, quad.MakeRaw("<s2>", "<p2>", "<o2>", ""), qs.Quad(it.Result()))
+	q2, err := qs.Quad(it.Result())
+	require.NoError(t, err)
+	assert.Equal(t, quad.MakeRaw("<s2>", "<p2>", "<o2>", ""), q2)
 	assert.False(t, it.Next(context.TODO()))
 }
 
@@ -132,14 +138,18 @@ func Test_QuadIterator_returns_results_from_all_substores(t *testing.T) {
 	defer qs.Close()
 
 	// This test also ensures that qs.ValueOf() returns a ref that has subrefs for _all_ substores containing the node
-	it := qs.QuadIterator(quad.Subject, qs.ValueOf(quad.Raw("<s1>")))
+	value, err := qs.ValueOf(quad.Raw("<s1>"))
+	require.NoError(t, err)
+	it := qs.QuadIterator(quad.Subject, value).Iterate()
 	defer it.Close()
 	require.NotNil(t, it)
 
 	require.True(t, it.Next(context.TODO()))
-	require.Equal(t, quad.MakeRaw("<s1>", "<p1>", "<o1>", ""), qs.Quad(it.Result()))
+	q1, err := qs.Quad(it.Result())
+	require.Equal(t, quad.MakeRaw("<s1>", "<p1>", "<o1>", ""), q1)
 	require.True(t, it.Next(context.TODO()))
-	require.Equal(t, quad.MakeRaw("<s1>", "<p2>", "<o2>", ""), qs.Quad(it.Result()))
+	q2, err := qs.Quad(it.Result())
+	require.Equal(t, quad.MakeRaw("<s1>", "<p2>", "<o2>", ""), q2)
 	require.False(t, it.Next(context.TODO()))
 }
 
@@ -154,45 +164,59 @@ func Test_QuadDirection_works_for_quads_from_any_substore(t *testing.T) {
 	})
 	defer qs.Close()
 
-	it := qs.QuadsAllIterator()
+	it := qs.QuadsAllIterator().Iterate()
 	defer it.Close()
 	require.True(t, it.Next(context.TODO()))
 	ref1 := it.Result()
 
-	assert.Equal(t, qs.NameOf(qs.QuadDirection(ref1, quad.Subject)), quad.Raw("<s1>"))
-	assert.Nil(t, qs.QuadDirection(ref1, quad.Label))
+	ref1s, err := qs.QuadDirection(ref1, quad.Subject)
+	require.NoError(t, err)
+	ref1sName, err := qs.NameOf(ref1s)
+	require.NoError(t, err)
+	assert.Equal(t, ref1sName, quad.Raw("<s1>"))
+
+	ref1l, err := qs.QuadDirection(ref1, quad.Label)
+	require.NoError(t, err)
+	assert.Nil(t, ref1l)
 
 	require.True(t, it.Next(context.TODO()))
 	ref2 := it.Result()
 
-	assert.Equal(t, qs.NameOf(qs.QuadDirection(ref2, quad.Subject)), quad.Raw("<s2>"))
-	assert.Nil(t, qs.QuadDirection(ref2, quad.Label))
+	ref2s, err := qs.QuadDirection(ref2, quad.Subject)
+	require.NoError(t, err)
+	ref2sName, err := qs.NameOf(ref2s)
+	require.NoError(t, err)
+	assert.Equal(t, ref2sName, quad.Raw("<s2>"))
+
+	ref2l, err := qs.QuadDirection(ref2, quad.Label)
+	require.NoError(t, err)
+	assert.Nil(t, ref2l)
 }
 
-func FIXME_Test_QuadsAllIterator_and_QuadDirection_returns_multirefs_that_can_work_for_QuadIterator(t *testing.T) {
-	qs := quilt(t, [][][]string{
-		{
-			{"<s1>", "<p1>", "<o1>"},
-			{"<s3>", "<p9>", "<o2>"},
-		},
-		{
-			{"<s1>", "<p2>", "<o2>"},
-			{"<s2>", "<p2>", "<o2>"},
-		},
-	})
-	defer qs.Close()
-
-	allit := qs.QuadsAllIterator()
-	defer allit.Close()
-	require.True(t, allit.Next(context.TODO()))
-	qref := allit.Result()
-	s1ref := qs.QuadDirection(qref, quad.Subject)
-
-	it := qs.QuadIterator(quad.Subject, s1ref)
-	defer it.Close()
-	require.NotNil(t, it)
-
-	require.True(t, it.Next(context.TODO()))
-	require.True(t, it.Next(context.TODO()))
-	require.False(t, it.Next(context.TODO()))
-}
+//func FIXME_Test_QuadsAllIterator_and_QuadDirection_returns_multirefs_that_can_work_for_QuadIterator(t *testing.T) {
+//	qs := quilt(t, [][][]string{
+//		{
+//			{"<s1>", "<p1>", "<o1>"},
+//			{"<s3>", "<p9>", "<o2>"},
+//		},
+//		{
+//			{"<s1>", "<p2>", "<o2>"},
+//			{"<s2>", "<p2>", "<o2>"},
+//		},
+//	})
+//	defer qs.Close()
+//
+//	allit := qs.QuadsAllIterator().Iterate()
+//	defer allit.Close()
+//	require.True(t, allit.Next(context.TODO()))
+//	qref := allit.Result()
+//	s1ref := qs.QuadDirection(qref, quad.Subject)
+//
+//	it := qs.QuadIterator(quad.Subject, s1ref)
+//	defer it.Close()
+//	require.NotNil(t, it)
+//
+//	require.True(t, it.Next(context.TODO()))
+//	require.True(t, it.Next(context.TODO()))
+//	require.False(t, it.Next(context.TODO()))
+//}

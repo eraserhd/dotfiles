@@ -5,6 +5,8 @@ import (
 	"context"
 
 	"github.com/cayleygraph/cayley/graph"
+	"github.com/cayleygraph/cayley/graph/iterator"
+	"github.com/cayleygraph/cayley/graph/refs"
 	"github.com/cayleygraph/quad"
 )
 
@@ -50,22 +52,22 @@ func (qr quiltref) Key() interface{} {
 	return qr[0]
 }
 
-func (qs *QuadStore) ValueOf(v quad.Value) graph.Ref {
+func (qs *QuadStore) ValueOf(v quad.Value) (graph.Ref, error) {
 	var ref quiltref
 	for i := range qs.substores {
-		if subref := qs.substores[i].ValueOf(v); subref != nil {
+		if subref, err := qs.substores[i].ValueOf(v); err == nil && subref != nil {
 			ref = append(ref, quiltsubref{substore: i, subref: subref})
 		}
 	}
 	if ref == nil {
-		return nil
+		return nil, nil
 	}
-	return ref
+	return ref, nil
 }
 
-func (qs *QuadStore) NameOf(ref graph.Ref) quad.Value {
+func (qs *QuadStore) NameOf(ref graph.Ref) (quad.Value, error) {
 	if ref == nil {
-		return nil
+		return nil, nil
 	}
 	qr := ref.(quiltref)
 	return qs.substores[qr[0].substore].NameOf(qr[0].subref)
@@ -73,34 +75,34 @@ func (qs *QuadStore) NameOf(ref graph.Ref) quad.Value {
 
 // graph.QuadIndexer
 
-func (qs *QuadStore) Quad(ref graph.Ref) quad.Quad {
+func (qs *QuadStore) Quad(ref graph.Ref) (quad.Quad, error) {
 	qr := ref.(quiltref)
 	return qs.substores[qr[0].substore].Quad(qr[0].subref)
 }
 
-func (qs *QuadStore) QuadIterator(d quad.Direction, ref graph.Ref) graph.Iterator {
-	var subiterators []graph.Iterator
+func (qs *QuadStore) QuadIterator(d quad.Direction, ref graph.Ref) iterator.Shape {
+	var subiterators []iterator.Shape
 	for _, subref := range ref.(quiltref) {
 		subiterators = append(subiterators, qs.substores[subref.substore].QuadIterator(d, subref.subref))
 	}
 	return newIterator(subiterators, qs.broadenQuadRef)
 }
 
-func (qs *QuadStore) QuadIteratorSize(ctx context.Context, d quad.Direction, ref graph.Ref) (graph.Size, error) {
+func (qs *QuadStore) QuadIteratorSize(ctx context.Context, d quad.Direction, ref graph.Ref) (refs.Size, error) {
 	return qs.substores[0].QuadIteratorSize(ctx, d, ref) //FIXME:
 }
 
-func (qs *QuadStore) QuadDirection(id graph.Ref, d quad.Direction) graph.Ref {
+func (qs *QuadStore) QuadDirection(id graph.Ref, d quad.Direction) (graph.Ref, error) {
 	var result quiltref
 	for _, subref := range id.(quiltref) {
-		if ref := qs.substores[subref.substore].QuadDirection(subref.subref, d); ref != nil {
+		if ref, err := qs.substores[subref.substore].QuadDirection(subref.subref, d); err == nil && ref != nil {
 			result = append(result, quiltsubref{substore: subref.substore, subref: ref})
 		}
 	}
 	if result == nil {
-		return nil
+		return nil, nil
 	}
-	return result
+	return result, nil
 }
 
 // Stats sums the stats for all substores in the quilt.
@@ -115,9 +117,9 @@ func (qs *QuadStore) Stats(ctx context.Context, exact bool) (graph.Stats, error)
 			err = looperr
 		}
 		result.Nodes.Exact = result.Nodes.Exact && subresult.Nodes.Exact
-		result.Nodes.Size += subresult.Nodes.Size
+		result.Nodes.Value += subresult.Nodes.Value
 		result.Quads.Exact = result.Quads.Exact && subresult.Quads.Exact
-		result.Quads.Size += subresult.Quads.Size
+		result.Quads.Value += subresult.Quads.Value
 	}
 	return result, err
 }
@@ -132,16 +134,16 @@ func (qs *QuadStore) NewQuadWriter() (quad.WriteCloser, error) {
 	return qs.substores[0].NewQuadWriter()
 }
 
-func (qs *QuadStore) NodesAllIterator() graph.Iterator {
-	subiterators := make([]graph.Iterator, len(qs.substores))
+func (qs *QuadStore) NodesAllIterator() iterator.Shape {
+	subiterators := make([]iterator.Shape, len(qs.substores))
 	for i := range subiterators {
 		subiterators[i] = qs.substores[i].NodesAllIterator()
 	}
 	return newIterator(subiterators, qs.broadenNodeRef)
 }
 
-func (qs *QuadStore) QuadsAllIterator() graph.Iterator {
-	subiterators := make([]graph.Iterator, len(qs.substores))
+func (qs *QuadStore) QuadsAllIterator() iterator.Shape {
+	subiterators := make([]iterator.Shape, len(qs.substores))
 	for i := range subiterators {
 		subiterators[i] = qs.substores[i].QuadsAllIterator()
 	}

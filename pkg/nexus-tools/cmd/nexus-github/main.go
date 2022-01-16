@@ -29,8 +29,9 @@ func main() {
 	if err := cayley.StartPath(g).
 		Has(quad.IRI(rdf.Type), github.PullRequestType).
 		Iterate(nil).
-		EachValue(g, func(v quad.Value) {
+		EachValue(g, func(v quad.Value) error {
 			log.Println(v)
+			return nil
 		}); err != nil {
 		log.Fatalln(err)
 	}
