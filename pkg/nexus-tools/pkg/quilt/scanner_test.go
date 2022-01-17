@@ -22,6 +22,7 @@ func allIteratorNodes(t *testing.T, qs graph.QuadStore, it iterator.Scanner) []s
 			nodes = append(nodes, name.String())
 		}
 	}
+	assert.NoError(t, it.Err())
 	return nodes
 }
 

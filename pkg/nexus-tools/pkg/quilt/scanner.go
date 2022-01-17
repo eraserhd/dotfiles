@@ -30,6 +30,9 @@ func (qi *scanner) Result() refs.Ref {
 func (qi *scanner) NextPath(ctx context.Context) bool { return false }
 
 func (qi *scanner) Err() error {
+	if qi.index >= len(qi.subscanners) {
+		return nil
+	}
 	return qi.subscanners[qi.index].Err()
 }
 
