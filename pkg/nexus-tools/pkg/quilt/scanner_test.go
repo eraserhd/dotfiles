@@ -4,10 +4,76 @@ import (
 	"context"
 	"testing"
 
+	"github.com/cayleygraph/cayley/graph"
+	"github.com/cayleygraph/cayley/graph/iterator"
 	"github.com/stretchr/testify/assert"
 )
 
-// Test_Shape_String
+func skipN(t *testing.T, it iterator.Scanner, n int) {
+	for i := 0; i < n; i++ {
+		assert.True(t, it.Next(context.TODO()), "it.Next() should succeed")
+	}
+}
+
+func allIteratorNodes(t *testing.T, qs graph.QuadStore, it iterator.Scanner) []string {
+	defer it.Close()
+	var nodes []string
+	for it.Next(context.TODO()) {
+		name, err := qs.NameOf(it.Result())
+		assert.NoError(t, err)
+		nodes = append(nodes, name.String())
+		for it.NextPath(context.TODO()) {
+			name, err := qs.NameOf(it.Result())
+			assert.NoError(t, err)
+			nodes = append(nodes, name.String())
+		}
+	}
+	return nodes
+}
+
+func Test_Scanner_String_returns_a_static_name(t *testing.T) {
+	qs := quilt(t, [][][]string{
+		{
+			{"<s1>", "<p1>", "<o1>"},
+		},
+	})
+	defer qs.Close()
+
+	scanner := qs.NodesAllIterator().Iterate()
+	defer scanner.Close()
+	name := scanner.String()
+	assert.NotZero(t, name)
+
+	scanner2 := qs.NodesAllIterator().Iterate()
+	defer scanner2.Close()
+	name2 := scanner2.String()
+	assert.Equal(t, name, name2)
+}
+
+func Test_NodesAllIterator_returns_all_substore_nodes(t *testing.T) {
+	qs := quilt(t, [][][]string{
+		{
+			{"<s1>", "<p1>", "<o1>"},
+		},
+		{
+			{"<s2>", "<p2>", "<o2>"},
+		},
+	})
+	defer qs.Close()
+
+	scanner := qs.NodesAllIterator().Iterate()
+	defer scanner.Close()
+
+	assert.ElementsMatch(t, allIteratorNodes(t, qs, scanner), []string{
+		"<s1>",
+		"<p1>",
+		"<o1>",
+		"<s2>",
+		"<p2>",
+		"<o2>",
+	})
+}
+
 //func Test_Reset_can_rewind_the_iterator_from_anywhere(t *testing.T) {
 //	for skipNodes := 0; skipNodes <= 6; skipNodes++ {
 //		qs := quilt(t, [][][]string{
@@ -78,41 +144,3 @@ import (
 //	assert.Equal(t, exact, stats.Size.Exact)
 //	assert.Equal(t, n, stats.Size.Value)
 //}
-
-func Test_Iterator_Costs_are_weighted_average(t *testing.T) {
-	qs := quilt(t, [][][]string{
-		{
-			{"s1", "p1", "o1"},
-		},
-		{
-			{"s2", "p2", "o2"},
-		},
-	})
-	defer qs.Close()
-
-	it := qs.NodesAllIterator()
-
-	stats, err := it.Stats(context.TODO())
-	assert.NoError(t, err)
-	// This is not a very good test, since we aren't really testing the weighting
-	assert.Equal(t, int64(1), stats.ContainsCost)
-	assert.Equal(t, int64(1), stats.NextCost)
-}
-
-func Test_Optimize_does_nothing(t *testing.T) {
-	//FIXME(eraserhd): should optimize underlying shapes
-	qs := quilt(t, [][][]string{
-		{
-			{"s1", "p1", "o1"},
-		},
-		{
-			{"s2", "p2", "o2"},
-		},
-	})
-	defer qs.Close()
-
-	it := qs.NodesAllIterator()
-	it2, changed := it.Optimize(context.TODO())
-	assert.False(t, changed, "optimize should not change the iterator")
-	assert.Equal(t, it, it2, "optimize should not change the iterator")
-}
