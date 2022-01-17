@@ -34,5 +34,6 @@ func Test_Contains_finds_nodes_in_all_substores(t *testing.T) {
 		assert.NoError(t, err)
 		found := index.Contains(context.TODO(), value)
 		assert.Truef(t, found, "want it.Contains(%q) to be true", iriname)
+		assert.NoError(t, index.Err())
 	}
 }
