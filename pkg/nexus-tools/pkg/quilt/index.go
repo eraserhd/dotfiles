@@ -27,13 +27,11 @@ func (i *index) Contains(ctx context.Context, ref refs.Ref) bool {
 	return false
 }
 
+// These seem like vestiges?  But maybe not?
 func (i *index) Result() refs.Ref                    { return nil }
 func (i *index) NextPath(ctx context.Context) bool   { return false }
 func (i *index) TagResults(data map[string]refs.Ref) {}
-
-func (i *index) Err() error {
-	panic("not implemented")
-}
+func (i *index) Err() error                          { panic("not implemented") }
 
 func (i *index) Close() (err error) {
 	for _, subindex := range i.subindexes {
