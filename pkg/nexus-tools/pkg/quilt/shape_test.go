@@ -16,17 +16,17 @@ func skipN(t *testing.T, it iterator.Scanner, n int) {
 	}
 }
 
-func allIteratorNodes(qs graph.QuadStore, it iterator.Scanner) []string {
+func allIteratorNodes(t *testing.T, qs graph.QuadStore, it iterator.Scanner) []string {
 	defer it.Close()
 	var nodes []string
 	for it.Next(context.TODO()) {
-		if name, err := qs.NameOf(it.Result()); err != nil {
-			nodes = append(nodes, name.String())
-		}
+		name, err := qs.NameOf(it.Result())
+		assert.NoError(t, err)
+		nodes = append(nodes, name.String())
 		for it.NextPath(context.TODO()) {
-			if name, err := qs.NameOf(it.Result()); err != nil {
-				nodes = append(nodes, name.String())
-			}
+			name, err := qs.NameOf(it.Result())
+			assert.NoError(t, err)
+			nodes = append(nodes, name.String())
 		}
 	}
 	return nodes
@@ -62,7 +62,10 @@ func Test_NodesAllIterator_returns_all_substore_nodes(t *testing.T) {
 	})
 	defer qs.Close()
 
-	assert.ElementsMatch(t, allIteratorNodes(qs, qs.NodesAllIterator().Iterate()), []string{
+	scanner := qs.NodesAllIterator().Iterate()
+	defer scanner.Close()
+
+	assert.ElementsMatch(t, allIteratorNodes(t, qs, scanner), []string{
 		"<s1>",
 		"<p1>",
 		"<o1>",
@@ -87,7 +90,7 @@ func Test_NodesAllIterator_returns_all_substore_nodes(t *testing.T) {
 //		skipN(t, it, skipNodes)
 //		it.Reset()
 //
-//		assert.ElementsMatch(t, allIteratorNodes(qs, qs.NodesAllIterator()), []string{
+//		assert.ElementsMatch(t, allIteratorNodes(t, qs, qs.NodesAllIterator()), []string{
 //			"<s1>",
 //			"<p1>",
 //			"<o1>",
