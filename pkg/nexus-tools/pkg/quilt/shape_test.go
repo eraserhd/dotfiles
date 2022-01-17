@@ -9,49 +9,7 @@ import (
 
 // Test_Shape_String
 
-//func Test_Iterator_size_is_sum_of_subiterator_sizes(t *testing.T) {
-//	qs := quilt(t, [][][]string{
-//		{
-//			{"s1", "p1", "o1"},
-//		},
-//		{
-//			{"s2", "p2", "o2"},
-//		},
-//	})
-//	defer qs.Close()
-//
-//	it := qs.NodesAllIterator()
-//	defer it.Close()
-//
-//	n, exact := it.Size()
-//	assert.False(t, exact, "it.Size() should report inexact size (because of potentially overcounting shared nodes)")
-//	assert.GreaterOrEqual(t, n, int64(6), "it.Size() should at least report the correct number of nodes")
-//	assert.LessOrEqual(t, n, int64(8), "FIXME: adjustment for memstore's inaccurate reporting")
-//}
-
-//func Test_Iterator_stats_has_same_values_for_sizes(t *testing.T) {
-//	qs := quilt(t, [][][]string{
-//		{
-//			{"s1", "p1", "o1"},
-//		},
-//		{
-//			{"s2", "p2", "o2"},
-//		},
-//	})
-//	defer qs.Close()
-//
-//	it := qs.NodesAllIterator()
-//	defer it.Close()
-//
-//	n, exact := it.Size()
-//
-//	stats, err := it.Stats(context.TODO())
-//	assert.NoError(t, err)
-//	assert.Equal(t, exact, stats.Size.Exact)
-//	assert.Equal(t, n, stats.Size.Value)
-//}
-
-func Test_Iterator_Costs_are_weighted_average(t *testing.T) {
+func Test_Shape_Costs_are_weighted_average(t *testing.T) {
 	qs := quilt(t, [][][]string{
 		{
 			{"s1", "p1", "o1"},
@@ -71,7 +29,7 @@ func Test_Iterator_Costs_are_weighted_average(t *testing.T) {
 	assert.Equal(t, int64(1), stats.NextCost)
 }
 
-func Test_Optimize_does_nothing(t *testing.T) {
+func Test_Shape_Optimize_does_nothing(t *testing.T) {
 	//FIXME(eraserhd): should optimize underlying shapes
 	qs := quilt(t, [][][]string{
 		{
