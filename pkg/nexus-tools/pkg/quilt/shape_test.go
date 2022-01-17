@@ -8,34 +8,6 @@ import (
 )
 
 // Test_Shape_String
-//func Test_Reset_can_rewind_the_iterator_from_anywhere(t *testing.T) {
-//	for skipNodes := 0; skipNodes <= 6; skipNodes++ {
-//		qs := quilt(t, [][][]string{
-//			{
-//				{"<s1>", "<p1>", "<o1>"},
-//			},
-//			{
-//				{"<s2>", "<p2>", "<o2>"},
-//			},
-//		})
-//
-//		it := qs.NodesAllIterator().Iterate()
-//		skipN(t, it, skipNodes)
-//		it.Reset()
-//
-//		assert.ElementsMatch(t, allIteratorNodes(t, qs, qs.NodesAllIterator()), []string{
-//			"<s1>",
-//			"<p1>",
-//			"<o1>",
-//			"<s2>",
-//			"<p2>",
-//			"<o2>",
-//		})
-//
-//		qs.Close()
-//	}
-//
-//}
 
 //func Test_Iterator_size_is_sum_of_subiterator_sizes(t *testing.T) {
 //	qs := quilt(t, [][][]string{

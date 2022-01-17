@@ -52,10 +52,3 @@ func (qi *scanner) Next(ctx context.Context) bool {
 	}
 	return false
 }
-
-//func (qi *shape) Reset() {
-//	for i := 0; i <= qi.index && i < len(qi.subiterators); i++ {
-//		qi.subiterators[i].Reset()
-//	}
-//	qi.index = 0
-//}

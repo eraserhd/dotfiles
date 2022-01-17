@@ -9,12 +9,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func skipN(t *testing.T, it iterator.Scanner, n int) {
-	for i := 0; i < n; i++ {
-		assert.True(t, it.Next(context.TODO()), "it.Next() should succeed")
-	}
-}
-
 func allIteratorNodes(t *testing.T, qs graph.QuadStore, it iterator.Scanner) []string {
 	defer it.Close()
 	var nodes []string
@@ -73,35 +67,6 @@ func Test_NodesAllIterator_returns_all_substore_nodes(t *testing.T) {
 		"<o2>",
 	})
 }
-
-//func Test_Reset_can_rewind_the_iterator_from_anywhere(t *testing.T) {
-//	for skipNodes := 0; skipNodes <= 6; skipNodes++ {
-//		qs := quilt(t, [][][]string{
-//			{
-//				{"<s1>", "<p1>", "<o1>"},
-//			},
-//			{
-//				{"<s2>", "<p2>", "<o2>"},
-//			},
-//		})
-//
-//		it := qs.NodesAllIterator().Iterate()
-//		skipN(t, it, skipNodes)
-//		it.Reset()
-//
-//		assert.ElementsMatch(t, allIteratorNodes(t, qs, qs.NodesAllIterator()), []string{
-//			"<s1>",
-//			"<p1>",
-//			"<o1>",
-//			"<s2>",
-//			"<p2>",
-//			"<o2>",
-//		})
-//
-//		qs.Close()
-//	}
-//
-//}
 
 //func Test_Iterator_size_is_sum_of_subiterator_sizes(t *testing.T) {
 //	qs := quilt(t, [][][]string{
