@@ -40,14 +40,14 @@ func Test_String_returns_a_static_name(t *testing.T) {
 	})
 	defer qs.Close()
 
-	it := qs.NodesAllIterator().Iterate()
-	defer it.Close()
-	name := it.String()
+	scanner := qs.NodesAllIterator().Iterate()
+	defer scanner.Close()
+	name := scanner.String()
 	assert.NotZero(t, name)
 
-	it2 := qs.NodesAllIterator().Iterate()
-	defer it2.Close()
-	name2 := it2.String()
+	scanner2 := qs.NodesAllIterator().Iterate()
+	defer scanner2.Close()
+	name2 := scanner2.String()
 	assert.Equal(t, name, name2)
 }
 
