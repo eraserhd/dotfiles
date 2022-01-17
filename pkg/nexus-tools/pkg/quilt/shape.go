@@ -40,7 +40,11 @@ func (qi *shape) Iterate() iterator.Scanner {
 }
 
 func (qi *shape) Lookup() iterator.Index {
-	panic("not implemented")
+	var subindexes []iterator.Index
+	for _, shape := range qi.subiterators {
+		subindexes = append(subindexes, shape.Lookup())
+	}
+	return &index{subindexes: subindexes}
 }
 
 //func (qi *shape) Contains(ctx context.Context, v graph.Ref) bool {

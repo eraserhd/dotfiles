@@ -115,8 +115,8 @@ func Test_Contains_finds_nodes_in_all_substores(t *testing.T) {
 	})
 	defer qs.Close()
 
-	it := qs.NodesAllIterator().Lookup()
-	defer it.Close()
+	index := qs.NodesAllIterator().Lookup()
+	defer index.Close()
 
 	for _, iriname := range []string{
 		"<s1>",
@@ -128,7 +128,7 @@ func Test_Contains_finds_nodes_in_all_substores(t *testing.T) {
 	} {
 		value, err := qs.ValueOf(quad.Raw(iriname))
 		assert.NoError(t, err)
-		found := it.Contains(context.TODO(), value)
+		found := index.Contains(context.TODO(), value)
 		assert.Truef(t, found, "want it.Contains(%q) to be true", iriname)
 	}
 }
