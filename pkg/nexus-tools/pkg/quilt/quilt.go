@@ -36,22 +36,6 @@ type QuadStore struct {
 
 // graph.Namer
 
-type quiltsubref struct {
-	substore int
-	subref   graph.Ref
-}
-
-type quiltref []quiltsubref
-
-var _ graph.Ref = quiltref{}
-
-func (qr quiltref) Key() interface{} {
-	if qr == nil {
-		return nil
-	}
-	return qr[0]
-}
-
 func (qs *QuadStore) ValueOf(v quad.Value) (graph.Ref, error) {
 	var ref quiltref
 	for i := range qs.substores {
