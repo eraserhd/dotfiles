@@ -212,7 +212,6 @@ hook -group golang global WinSetOption filetype=go %{
     set-option window indentwidth 8
     set-option window expandtabs no
     set-option window curword_type lsp
-    hook -group golang window BufWritePre .* lsp-formatting-sync
     hook -once -always window WinSetOption filetype=(?!go).* %{
         set-option window curword_type normal
         unset-option window expandtabs
