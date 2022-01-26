@@ -481,13 +481,6 @@ hook -group clojure-objects global WinSetOption filetype=clojure %{
     map -docstring 'Run tests' window user t ': enter-user-mode clojure-test<ret>'
 }
 
-# Scheme
-# ‾‾‾‾‾‾
-
-hook -group scheme global WinSetOption filetype=scheme %{
-    set-option window indentwidth 2
-}
-
 # LSP
 # ‾‾‾
 
