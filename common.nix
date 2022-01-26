@@ -37,6 +37,7 @@ with lib;
     ./programs/nix
     ./programs/npm
     ./programs/openscad
+    ./programs/podman
     ./programs/postgres
     ./programs/rlwrap
     ./programs/taskwarrior
