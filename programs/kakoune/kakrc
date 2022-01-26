@@ -570,3 +570,10 @@ define-command \
 	N-sql %{
 	edit "nexus/services/core/sql/%arg{1}"
 }
+
+# Kubernetes
+# ‾‾‾‾‾‾‾‾‾‾
+
+hook global BufCreate .*/\.kube/config %{
+    set-option buffer filetype yaml
+}
