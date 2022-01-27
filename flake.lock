@@ -44,16 +44,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1643028177,
-        "narHash": "sha256-SWrkm8S1ktFMkeuPlpyQLM7E0vtszR3mNAMTffCMBIQ=",
-        "owner": "NixOS",
+        "lastModified": 1643310525,
+        "narHash": "sha256-UoUCL3PdI/a4wLTf74ksdBHpHcYxucvigLlvbUdiIwE=",
+        "owner": "eraserhd",
         "repo": "nixpkgs",
-        "rev": "454272e7ff8ae3aa638aac829ab2361811e039c3",
+        "rev": "2f57fa60942873918b3fa324e1d6cc4786633fe6",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "master",
+        "owner": "eraserhd",
+        "ref": "podman-gvproxy-path",
         "repo": "nixpkgs",
         "type": "github"
       }
