@@ -25,8 +25,8 @@
   hardware.enableAllFirmware = true;
   hardware.firmware = [ pkgs.wireless-regdb ];
 
-  nix.maxJobs = 1;
-  nix.buildCores = 20;
+  nix.settings.max-jobs = 2;
+  nix.settings.cores = 10;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
