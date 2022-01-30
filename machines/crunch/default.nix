@@ -52,6 +52,7 @@
   time.timeZone = "America/New_York";
 
   environment.systemPackages = with pkgs; [
+    k3s
     pinentry
   ];
 
@@ -81,6 +82,12 @@
       ClientAliveInterval 10
       StreamLocalBindUnlink yes
     '';
+  };
+
+  virtualisation.docker.enable = true;
+  services.k3s = {
+    enable = true;
+    role = "server";
   };
 
   #local.bluetooth.enable = true;
