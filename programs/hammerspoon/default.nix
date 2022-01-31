@@ -34,7 +34,10 @@ let
 in {
   config = (if (builtins.hasAttr "hammerspoon" options.services)
   then {
-    services.hammerspoon.enable = true;
+    services.hammerspoon = {
+      enable = true;
+      enableCommandLine = true;
+    };
 
     home-manager.users.jfelice = _: {
       home.file = {

@@ -1,2 +1,0 @@
-#!/bin/sh
-exec "/Applications/Hammerspoon.app/Contents/Resources/extensions/hs/ipc/bin/hs" "$@"
