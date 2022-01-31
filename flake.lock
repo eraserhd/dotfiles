@@ -44,16 +44,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1643310525,
-        "narHash": "sha256-UoUCL3PdI/a4wLTf74ksdBHpHcYxucvigLlvbUdiIwE=",
+        "lastModified": 1643311400,
+        "narHash": "sha256-jjjmgKwoNea4k/lyRPqrPxnplmJtgREa7ZFY9oaNKWA=",
         "owner": "eraserhd",
         "repo": "nixpkgs",
-        "rev": "2f57fa60942873918b3fa324e1d6cc4786633fe6",
+        "rev": "f098955b45afda03aa56ceb91bfa61771f209f08",
         "type": "github"
       },
       "original": {
         "owner": "eraserhd",
-        "ref": "podman-gvproxy-path",
+        "ref": "dogfood",
         "repo": "nixpkgs",
         "type": "github"
       }

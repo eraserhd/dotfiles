@@ -3,6 +3,7 @@
   config = {
     environment.systemPackages = with pkgs; [
       podman
+      podman-compose
 
       # dependencies
       qemu

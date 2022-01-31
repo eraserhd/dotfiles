@@ -2,7 +2,7 @@
   description = "eraserhd's machine configs";
 
   inputs = {
-    nixpkgs.url = "github:eraserhd/nixpkgs/podman-gvproxy-path";
+    nixpkgs.url = "github:eraserhd/nixpkgs/dogfood";
     darwin.url = "github:LnL7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/master";
