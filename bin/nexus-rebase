@@ -74,10 +74,6 @@ cmd_continue() {
 }
 
 cmd_start() {
-    if [ $# -lt 1 ]; then
-        printf 'nexus-rebase start: syntax is `nexus-rebase start BRANCH-TO-MERGE [BRANCH-TO-MERGE ...]`.\n' >&2
-        return 1
-    fi
     cloneTempNexus
     makeSteps "$@"
     cmd_continue
