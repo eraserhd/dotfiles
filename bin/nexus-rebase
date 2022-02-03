@@ -21,7 +21,6 @@ cloneTempNexus() {
     cd /tmp
     showOutputOnFail git clone git@github.com:coding-boot-camp/nexus.git
     cd nexus
-    touch .git/failed-branches.txt
 }
 
 applyPatches() {
@@ -31,58 +30,59 @@ applyPatches() {
     done
 }
 
-branchesToRebase() {
-    local branch
-    git branch -r |sed -e '
-        s,^  *origin/,,
-        / -> /d
-        /^master$/d
-        /^staging-/d
-        /^production-/d
-    '
+managedBranches() {
+    printf 'tools\n'
+    git log --reverse --format='%s' origin/master..origin/staging |sed -e 's/ .*$//'
 }
 
-rebaseBranch() {
+makeSteps() {
+    (
+        local patch
+        for patch in "$@"; do
+            printf 'applyPatch "%s"\n' "$path"
+        done
+        local branch
+        for branch in $(managedBranches); do
+            printf 'rebaseBranch "%s"\n' "$branch"
+        done
+    ) >.git/nexus-steps
+}
+
+do_applyPatch() {
+    local name="$1"
+    git cherry-pick "origin/$name"
+}
+
+do_rebaseBranch() {
     local branch="$1"
-    showOutputOnFail git checkout "$branch"
-    if ! git rebase --empty=drop master >/dev/null 2>&1; then
-        printf %s\\n "$branch" >>.git/failed-branches.txt
-        showOutputOnFail git rebase --abort
-        return 1
-    fi
+    git checkout "$branch"
+    git reset --hard "origin/$branch"
+    git rebase master
 }
 
-reportFailedBranches() {
-    printf 'Failed branches:\n' >&2
-    cat .git/failed-branches.txt >&2
-    printf '\n' >&2
+cmd_continue() {
+    local command
+    while true; do
+        if ! read -r command <.git/nexus-steps; then
+            break
+        fi
+        sed -i '' -e '1d' .git/nexus-steps
+
+        printf '== %s\n' "$command"
+        eval "do_$command"
+    done
 }
 
 cmd_start() {
     cloneTempNexus
-    applyPatches "$@"
-    exec 3< <(branchesToRebase)
-    while read -u 3 -r branch; do
-        printf 'Rebasing %s... ' "$branch"
-        if ! rebaseBranch "$branch"; then
-            printf 'FAILED\n'
-        else
-            printf 'ok\n'
-        fi
-    done
-    exec 3<&-
-    reportFailedBranches
-}
-
-cmd_failed() {
-    cd /tmp/nexus
-    reportFailedBranches
+    makeSteps "$@"
+    cmd_continue
 }
 
 cmd_push() {
     cd /tmp/nexus
     git push origin master
-    git push --force-with-lease origin $(branchesToRebase)
+    git push --force-with-lease origin $(managedBranches)
 }
 
 main() {
