@@ -19,7 +19,7 @@ cloneTempNexus() {
     printf 'Cloning nexus...\n'
     rm -rf /tmp/nexus
     cd /tmp
-    showOutputOnFail git clone git@github.com:coding-boot-camp/nexus.git
+    showOutputOnFail git clone git@github.com:2uinc/nexus.git
     cd nexus
 }
 
@@ -30,9 +30,11 @@ applyPatches() {
     done
 }
 
-managedBranches() {
-    printf 'tools\n'
+findManagedBranches() {
     git log --reverse --format='%s' origin/master..origin/staging |sed -e 's/ .*$//'
+    git for-each-ref --format='%(refname:strip=3)' 'refs/remotes/origin/staging-*'
+    printf 'staging\n'
+    printf 'tools\n'
 }
 
 makeSteps() {
@@ -42,7 +44,7 @@ makeSteps() {
             printf 'applyPatch "%s"\n' "$patch"
         done
         local branch
-        for branch in $(managedBranches); do
+        for branch in $(cat .git/managed-branches); do
             printf 'rebaseBranch "%s"\n' "$branch"
         done
     ) >.git/nexus-steps
@@ -57,25 +59,100 @@ do_rebaseBranch() {
     local branch="$1"
     git checkout "$branch"
     git reset --hard "origin/$branch"
-    git rebase master
+    local base='master'
+
+
+    git rebase "$base"
 }
 
 cmd_continue() {
-    local command
-    while true; do
-        if ! read -r command <.git/nexus-steps; then
-            break
-        fi
-        sed -i '' -e '1d' .git/nexus-steps
+    # FIXME: Refactor so queue is on disk!
 
-        printf '== %s\n' "$command"
-        eval "do_$command"
+    local root="$(git rev-parse origin/master)"
+    local queue=( "$root" )
+    local queueStart=0 queueEnd=1
+    local commit='' nextCommit=''
+    touch .git/nexus-rebase/done/"$root" # root is done by the reset below
+    while (( queueStart < queueEnd )); do
+        commit="${queue[$queueStart]}"
+        queueStart=$(( queueStart + 1 ))
+        for nextCommit in $(ls -1 .git/nexus-rebase/reverse-deps/"$commit" 2>/dev/null); do
+            queue[$queueEnd]="$nextCommit"
+            queueEnd=$(( queueEnd + 1 ))
+        done
+        if [ -e .git/nexus-rebase/done/"$commit" ]; then
+            continue
+        fi
+        printf '>> %s\n' "$commit"
+
+        local branches=( $(ls -1 .git/nexus-rebase/branches/"$commit" 2>/dev/null) )
+        local branch="${branches[0]}"
+
+        git checkout "$branch"
+        if ! git cherry-pick "$commit" >.git/nexus-rebase/cherry.txt 2>&1; then
+            if grep -q '^The previous cherry-pick is now empty,' .git/nexus-rebase/cherry.txt; then
+                git cherry-pick --skip
+            else
+                cat .git/nexus-rebase/cherry.txt >&2
+                exit 1
+            fi
+        fi
+        local newCommit="$(git rev-parse HEAD)"
+
+        local first=true
+        for branch in "${branches[@]}"; do
+            printf '  -- %s\n' "$branch"
+            if ! $first; then
+                git branch -f "$branch" "$newCommit"
+            fi
+            first=false
+        done
+
+        touch .git/nexus-rebase/done/"$commit"
     done
 }
 
 cmd_start() {
     cloneTempNexus
-    makeSteps "$@"
+
+    #FIXME: Make sure there's no local changes on said branches.
+
+    # Set up commit dependencies for topological sort.  The files in reverse-deps
+    # list all the commits based on top of the commit that is the name of the file.
+    # The files in branches name all of the branches that contain the commit that is
+    # the name of the file.
+    # The files in done are completion flags so that we can restart where we left off.
+    mkdir -p .git/nexus-rebase/{reverse-deps,branches,done}
+    local root="$(git rev-parse origin/master)" commit previousCommit branch
+    local branches=( $(findManagedBranches) )
+
+    for branch in "${branches[@]}"; do
+        previousCommit="$root"
+        exec 4< <(git log --reverse --format='%H' "origin/master..origin/$branch")
+        while read -r -u 4 commit; do
+            mkdir -p .git/nexus-rebase/reverse-deps/"$previousCommit"
+            touch .git/nexus-rebase/reverse-deps/"$previousCommit"/"$commit"
+            mkdir -p .git/nexus-rebase/branches/"$commit"
+            touch .git/nexus-rebase/branches/"$commit"/"$branch"
+            previousCommit="$commit"
+        done
+        exec 4<&-
+    done
+
+    # Check out all branches to ensure we have local copies and they are tracking origin
+    for branch in "${branches[@]}"; do
+        git checkout "$branch"
+        #FIXME: Make sure none have local modifications
+    done
+
+    # Reset all local copies of managed branches to master
+    git checkout master
+    for branch in "${branches[@]}"; do
+        git branch -f "$branch" "$root"
+    done
+
+    # Start the queue
+
     cmd_continue
 }
 
