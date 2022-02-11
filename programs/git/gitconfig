@@ -9,6 +9,8 @@
 	lineNumber = true
 [init]
 	defaultBranch = main
+[merge]
+	conflictstyle = diff3
 [rebase]
 	autosquash = true
 [rerere]
