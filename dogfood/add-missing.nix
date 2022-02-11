@@ -1,7 +1,6 @@
 {
   owner = "eraserhd";
   repo = "add-missing";
-  rev = "028aa3742e4fc4b5eac2d2abafa73380165694d0";
-  sha256 = "Z2lUj/IHJPKJM9Q8WjI6GPa6jIEVkR5MXDb9o/DqNJQ=";
-  fetchSubmodules = true;
+  rev = "1e49730970d9ed73045c5c93ecde26aa78513598";
+  sha256 = "pqY3MIVlQjLn1Gep0wXkgedL65f3P7Rb/uZOQlzEcVo=";
 }
