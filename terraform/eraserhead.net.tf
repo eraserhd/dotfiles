@@ -1,13 +1,11 @@
 provider "aws" {
     region  = "us-west-2"
     profile = "jason.m.felice"
-    version = "~> 2.40"
 }
 
 provider "aws" {
     region  = "us-east-1"
     profile = "jason.m.felice"
-    version = "~> 2.40"
     alias   = "us-east-1"
 }
 

@@ -13,3 +13,11 @@ resource "aws_route53_record" "_amazonses_crunch_eraserhead_net" {
     ttl      = 3600
     records  = [ "r8xzecfaQLfrrZaXnENC8vnsJsVBG2BUZ8gXLaojV04=" ]
 }
+
+resource "aws_route53_record" "crunch_eraserhead_net_aaaa" {
+    zone_id  = aws_route53_zone.eraserhead_net_zone.id
+    name     = "crunch"
+    type     = "AAAA"
+    ttl      = 3600
+    records  = [ "2600:1700:ad40:f7e9::42" ]
+}
