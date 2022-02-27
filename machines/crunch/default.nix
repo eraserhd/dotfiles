@@ -37,7 +37,6 @@
   local.systemDisplayName = "crunch";
 
   networking.useDHCP = false;
-  networking.interfaces.wlp65s0.useDHCP = true;
 
   networking = {
     hostName = "crunch";
@@ -46,6 +45,15 @@
     wireless = {
       enable = true;
       interfaces = [ "wlp65s0" ];
+    };
+    interfaces.wlp65s0 = {
+      useDHCP = true;
+      ipv6.addresses = [
+        {
+          address = "2600:1700:ad40:f7e9::42";
+          prefixLength = 64;
+        }
+      ];
     };
   };
 
