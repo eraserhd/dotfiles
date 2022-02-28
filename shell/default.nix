@@ -78,17 +78,17 @@ in {
 
     environment.systemPackages = with pkgs; [
       add-missing
-      ag
       bat
       broot
       direnv
       fzf
       jq
       killall
-      manpages
+      man-pages
       nix-prefetch-github
       posix_man_pages
       shellcheck
+      silver-searcher
       sqltools
       tableize
       tree
