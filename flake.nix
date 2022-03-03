@@ -43,6 +43,11 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
         }
+        {
+          nix.nixPath = [
+            "nixpkgs=${nixpkgs}"
+          ];
+        }
         twou.nixosModules
       ];
     };
