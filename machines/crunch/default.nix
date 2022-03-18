@@ -40,7 +40,12 @@
 
   networking = {
     hostName = "crunch";
-    nameservers = [ "8.8.8.8" "8.8.4.4" ];
+    nameservers = [
+      "2620:119:35::35"
+      "2620:119:53::53"
+      "208.67.222.222"
+      "208.67.220.220"
+    ];
     firewall.enable = false;
     wireless = {
       enable = true;
