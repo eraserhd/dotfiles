@@ -39,8 +39,6 @@ in {
 
   local.systemDisplayName = "crunch";
 
-  networking.useDHCP = false;
-
   networking = {
     hostName = "crunch";
     nameservers = [
@@ -62,6 +60,9 @@ in {
           prefixLength = 64;
         }
       ];
+    };
+    interfaces.enp6s0 = {
+      useDHCP = false;
     };
   };
 
