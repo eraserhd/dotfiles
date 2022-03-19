@@ -55,6 +55,7 @@ in {
     };
     interfaces.wlp65s0 = {
       useDHCP = true;
+      proxyARP = true;
       ipv6.addresses = [
         {
           address = networkParams.ip;
@@ -64,7 +65,32 @@ in {
     };
     interfaces.enp6s0 = {
       useDHCP = false;
+      proxyARP = true;
+      ipv4.addresses = [
+        {
+          address = "192.168.1.61";
+          prefixLength = 30;
+        }
+      ];
+      ipv6.addresses = [
+        {
+          address = "2600:1700:ad40:f7e8::42";
+          prefixLength = 112;
+        }
+      ];
     };
+  };
+
+  boot.kernel.sysctl = {
+    "net.ipv4.conf.all.forwarding" = true;
+    "net.ipv6.conf.all.forwarding" = true;
+
+    "net.ipv6.conf.all.accept_ra" = 0;
+    "net.ipv6.conf.all.autoconf" = 0;
+    "net.ipv6.conf.all.use_tempaddr" = 0;
+
+    "net.ipv6.conf.wlp65s0.accept_ra" = 2;
+    "net.ipv6.conf.wlp65s0.autoconf" = 1;
   };
 
   time.timeZone = "America/New_York";
@@ -134,6 +160,31 @@ in {
       ClientAliveCountMax 3
       ClientAliveInterval 10
       StreamLocalBindUnlink yes
+    '';
+  };
+
+  services.dhcpd4 = {
+    enable = true;
+    authoritative = true;
+    interfaces = [ "enp6s0" ];
+    extraConfig = ''
+      subnet 192.168.1.60 netmask 255.255.255.252 {
+        range 192.168.1.62 192.168.1.62;
+        option subnet-mask 255.255.255.252;
+        option broadcast-address 192.168.1.63;
+        option routers 192.168.1.61;
+        option domain-name-servers 208.67.222.222, 208.67.220.220;
+        option domain-name "${config.networking.domain}";
+      }
+    '';
+  };
+  services.radvd = {
+    enable = true;
+    config = ''
+      interface enp6s0 {
+        AdvSendAdvert on;
+        prefix 2600:1700:ad40:f7e8::/64 { };
+      };
     '';
   };
 
