@@ -19,5 +19,7 @@ resource "aws_route53_record" "crunch_eraserhead_net_aaaa" {
     name     = "crunch"
     type     = "AAAA"
     ttl      = 3600
-    records  = [ "2600:1700:ad40:f7e9::42" ]
+    records  = [
+      jsondecode(file("${path.module}/../machines/crunch/ip.json")).ip
+    ]
 }
