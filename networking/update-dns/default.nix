@@ -19,9 +19,18 @@ let
       printf '    DNS IP: %s\n' "$dns_ip"
       printf '\n'
 
+      hosted_zone_id=$(${pkgs.awscli}/bin/aws --profile=jason.m.felice route53 list-hosted-zones-by-name --dns-name="${config.networking.domain}." |sed -ne '
+        /^ *"Id": /{
+          s/^ *"Id": "//
+          s,/hostedzone/,,
+          s/",//
+          p
+        }
+      ')
+
       AWS_PROFILE=jason.m.felice \
       ${pkgs.awscli}/bin/aws route53 change-resource-record-sets \
-          --hosted-zone-id Z1035EO77EJRBA \
+          --hosted-zone-id "$hosted_zone_id" \
           --change-batch '{
           "Comment": "update-dns automatic update",
           "Changes": [ {
