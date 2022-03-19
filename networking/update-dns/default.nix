@@ -44,13 +44,19 @@ in {
   };
 
   config = mkIf cfg.enable (
-  if (builtins.hasAttr "cron" options.services)
+  if (builtins.hasAttr "systemd" options)
   then {
-    services.cron = {
-      enable = true;
-      systemCronJobs = [
-          "*/5 * * * *    jfelice  ${updateDNSScript}/bin/update-dns"
-      ];
+    systemd.services.updateDNS = {
+      serviceConfig.Type = "oneshot";
+      script = "${updateDNSScript}/bin/update-dns";
+    };
+    systemd.timers.updateDNS = {
+      wantedBy = [ "timers.target" ];
+      partOf = [ "updateDNS.service" ];
+      timerConfig = {
+        OnCalendar = "*-*-* *:*/5:00";
+        Unit = "updateDNS.service";
+      };
     };
   }
   else {
@@ -58,5 +64,6 @@ in {
       assertion = false;
       message = "local.updateDNS.enable is not supported on this system";
     } ];
-  });
+  }
+  );
 }

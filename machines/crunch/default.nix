@@ -180,6 +180,6 @@ in {
 
   local.plan9.cpu.enable = true;
   #local.sendOutgoingMailWithSES.enable = true;
-  #local.updateDNS.enable = true;
+  local.updateDNS.enable = true;
   local.tmux.paneZeroCommand = "weechat";
 }
