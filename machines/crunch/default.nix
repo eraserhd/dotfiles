@@ -40,6 +40,7 @@ in {
   local.systemDisplayName = "crunch";
 
   networking = {
+    domain = "eraserhead.net";
     hostName = "crunch";
     nameservers = [
       "2620:119:35::35"

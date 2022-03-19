@@ -6,7 +6,7 @@ let
 
   updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
     current_ip="$(${pkgs.curl}/bin/curl -s http://ipinfo.io/ip)"
-    dns_ip="$(${pkgs.host}/bin/host -t A ${config.networking.hostName}.eraserhead.net ns-112.awsdns-14.com |awk '$3 == "address"{print $4}')"
+    dns_ip="$(${pkgs.host}/bin/host -t A ${config.networking.hostName}.${config.networking.domain} ns-112.awsdns-14.com |awk '$3 == "address"{print $4}')"
     if [[ $current_ip = $dns_ip ]]; then
         exit 0
     fi
@@ -27,7 +27,7 @@ let
           "Changes": [ {
               "Action": "UPSERT",
               "ResourceRecordSet": {
-                  "Name": "${config.networking.hostName}.eraserhead.net",
+                  "Name": "${config.networking.hostName}.${config.networking.domain}",
                   "Type": "A",
                   "TTL": 300,
                   "ResourceRecords": [ { "Value": "'"$current_ip"'" } ]
