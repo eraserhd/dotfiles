@@ -55,7 +55,7 @@
       useDHCP = true;
       ipv6.addresses = [
         {
-          address = "2600:1700:ad40:f7e9::42";
+          address = "2600:1700:ad40:f7e0::42";
           prefixLength = 64;
         }
       ];
