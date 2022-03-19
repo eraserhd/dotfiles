@@ -1,6 +1,9 @@
 { config, lib, pkgs, ... }:
 
-{
+with lib;
+let
+  networkParams = importJSON ./ip.json;
+in {
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
@@ -55,7 +58,7 @@
       useDHCP = true;
       ipv6.addresses = [
         {
-          address = "2600:1700:ad40:f7e0::42";
+          address = networkParams.ip;
           prefixLength = 64;
         }
       ];
@@ -102,8 +105,8 @@
       fruit:wipe_intentionally_left_blank_rfork = yes
       fruit:delete_empty_adfiles = yes
       workgroup = WORKGROUP
-      server string = crunch
-      netbios name = crunch
+      server string = ${config.networking.hostName}
+      netbios name = ${config.networking.hostName}
       guest account = nobody
       map to guest = never
       log level = 1
