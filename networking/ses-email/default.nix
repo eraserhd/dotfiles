@@ -18,7 +18,9 @@ in {
       hostName = "email-smtp.us-west-2.amazonaws.com:587";
       domain = "${config.networking.hostName}.eraserhead.net";
       root = "jason.m.felice@gmail.com";
-    } // import ./ses-user.nix;
+      authUser = "AKIATJ6VYKJDVEPD7C75";
+      authPassFile = toString ./password;
+    };
   }
   else {
   });

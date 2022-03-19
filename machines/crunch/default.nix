@@ -180,7 +180,7 @@ in {
   system.stateVersion = "21.05";
 
   local.plan9.cpu.enable = true;
-  #local.sendOutgoingMailWithSES.enable = true;
+  local.sendOutgoingMailWithSES.enable = true;
   local.updateDNS.enable = true;
   local.tmux.paneZeroCommand = "weechat";
 }
