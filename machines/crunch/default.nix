@@ -63,7 +63,7 @@ in {
         }
       ];
     };
-    interfaces.enp6s0 = {
+    interfaces.enp9s0 = {
       useDHCP = false;
       proxyARP = true;
       ipv4.addresses = [
@@ -166,7 +166,7 @@ in {
   services.dhcpd4 = {
     enable = true;
     authoritative = true;
-    interfaces = [ "enp6s0" ];
+    interfaces = [ "enp9s0" ];
     extraConfig = ''
       subnet 192.168.1.60 netmask 255.255.255.252 {
         range 192.168.1.62 192.168.1.62;
@@ -181,7 +181,7 @@ in {
   services.radvd = {
     enable = true;
     config = ''
-      interface enp6s0 {
+      interface enp9s0 {
         AdvSendAdvert on;
         prefix 2600:1700:ad40:f7e8::/64 { };
       };
