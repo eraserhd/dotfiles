@@ -68,14 +68,14 @@ in {
       proxyARP = true;
       ipv4.addresses = [
         {
-          address = "192.168.1.61";
+          address = "10.156.1.61";
           prefixLength = 30;
         }
       ];
       ipv6.addresses = [
         {
           address = "2600:1700:ad40:f7e8::42";
-          prefixLength = 112;
+          prefixLength = 64;
         }
       ];
     };
@@ -168,11 +168,11 @@ in {
     authoritative = true;
     interfaces = [ "enp9s0" ];
     extraConfig = ''
-      subnet 192.168.1.60 netmask 255.255.255.252 {
-        range 192.168.1.62 192.168.1.62;
+      subnet 10.156.1.60 netmask 255.255.255.252 {
+        range 10.156.1.62 10.156.1.62;
         option subnet-mask 255.255.255.252;
-        option broadcast-address 192.168.1.63;
-        option routers 192.168.1.61;
+        option broadcast-address 10.156.1.63;
+        option routers 10.156.1.61;
         option domain-name-servers 208.67.222.222, 208.67.220.220;
         option domain-name "${config.networking.domain}";
       }
@@ -183,7 +183,13 @@ in {
     config = ''
       interface enp9s0 {
         AdvSendAdvert on;
-        prefix 2600:1700:ad40:f7e8::/64 { };
+        MaxRtrAdvInterval 30;
+        prefix 2600:1700:ad40:f7e8::/64 {
+          AdvOnLink on;
+          AdvAutonomous on;
+        };
+        RDNSS 2620:119:35::35 2620:119:53::53 {
+        };
       };
     '';
   };
