@@ -64,7 +64,8 @@ in {
       wantedBy = [ "timers.target" ];
       partOf = [ "updateDNS.service" ];
       timerConfig = {
-        OnCalendar = "*-*-* *:03/5:00";
+        OnBootSec = "1min";
+        OnUnitActiveSec = "5min";
         Unit = "updateDNS.service";
       };
     };
