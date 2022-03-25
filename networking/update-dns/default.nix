@@ -5,8 +5,9 @@ let
   cfg = config.local.updateDNS;
 
   updateDNSScript = pkgs.writeShellScriptBin "update-dns" ''
-    current_ip="$(${pkgs.curl}/bin/curl -s http://ipinfo.io/ip)"
-    dns_ip="$(${pkgs.host}/bin/host -t A ${config.networking.hostName}.${config.networking.domain} ns-112.awsdns-14.com |awk '$3 == "address"{print $4}')"
+    export PATH="${pkgs.gawk}/bin:${pkgs.awscli}/bin:${pkgs.curl}/bin:${pkgs.host}/bin:${pkgs.ssmtp}/bin:$PATH"
+    current_ip="$(curl -s http://ipinfo.io/ip)"
+    dns_ip="$(host -t A ${config.networking.hostName}.${config.networking.domain} ns-112.awsdns-14.com |awk '$3 == "address"{print $4}')"
     if [[ $current_ip = $dns_ip ]]; then
         exit 0
     fi
@@ -19,7 +20,7 @@ let
       printf '    DNS IP: %s\n' "$dns_ip"
       printf '\n'
 
-      hosted_zone_id=$(${pkgs.awscli}/bin/aws --profile=jason.m.felice route53 list-hosted-zones-by-name --dns-name="${config.networking.domain}." |sed -ne '
+      hosted_zone_id=$(aws --profile=jason.m.felice route53 list-hosted-zones-by-name --dns-name="${config.networking.domain}." |sed -ne '
         /^ *"Id": /{
           s/^ *"Id": "//
           s,/hostedzone/,,
@@ -29,7 +30,7 @@ let
       ')
 
       AWS_PROFILE=jason.m.felice \
-      ${pkgs.awscli}/bin/aws route53 change-resource-record-sets \
+      aws route53 change-resource-record-sets \
           --hosted-zone-id "$hosted_zone_id" \
           --change-batch '{
           "Comment": "update-dns automatic update",
@@ -63,7 +64,7 @@ in {
       wantedBy = [ "timers.target" ];
       partOf = [ "updateDNS.service" ];
       timerConfig = {
-        OnCalendar = "*-*-* *:*/5:00";
+        OnCalendar = "*-*-* *:03/5:00";
         Unit = "updateDNS.service";
       };
     };
