@@ -71,6 +71,10 @@ in {
           address = "10.156.1.61";
           prefixLength = 30;
         }
+        {
+          address = "54.169.127.129";
+          prefixLength = 32;
+        }
       ];
       ipv6.addresses = [
         {
