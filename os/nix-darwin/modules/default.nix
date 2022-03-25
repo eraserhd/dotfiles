@@ -2,5 +2,6 @@
 {
   imports = [
     ./hammerspoon
+    ./schedule
   ];
 }

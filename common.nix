@@ -6,14 +6,15 @@ with lib;
     ./browser
     ./dogfood
     ./fonts
-    ./modules/environment/xdg
     ./modules/bubbles
+    ./modules/environment/xdg
     ./networking/plan9
     ./networking/ses-email
     ./networking/ssh
     ./networking/tls
     ./networking/update-dns
     ./networking/wifi
+    ./os/common
     ./pkg
     ./programs/1password
     ./programs/anki
