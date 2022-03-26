@@ -1,6 +1,7 @@
 {
   imports = [
     ./homebrew
+    ./networking
     ./schedule
   ];
 }

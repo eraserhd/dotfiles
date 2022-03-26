@@ -42,7 +42,6 @@ in {
   networking = {
     domain = "eraserhead.net";
     hostName = "crunch";
-    nameservers = config.local.networking.nameservers;
     firewall.enable = false;
     wireless = {
       enable = true;
