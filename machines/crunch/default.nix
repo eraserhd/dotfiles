@@ -53,7 +53,10 @@ in {
       enable = true;
       interfaces = [ "wlp65s0" ];
     };
-    defaultGateway = "10.156.1.1";
+    defaultGateway = {
+      address = "10.156.1.1";
+      interface = "wlp65s0";
+    };
     interfaces.wlp65s0 = {
       useDHCP = false;
       proxyARP = true;
@@ -195,7 +198,7 @@ in {
       interface enp9s0 {
         AdvSendAdvert on;
         MaxRtrAdvInterval 30;
-        prefix 2600:1700:ad40:f7e8::/64 {
+        prefix 2600:1700:ad40:f7e9::/64 {
           AdvOnLink on;
           AdvAutonomous on;
         };
