@@ -53,13 +53,20 @@ in {
       enable = true;
       interfaces = [ "wlp65s0" ];
     };
+    defaultGateway = "10.156.1.1";
     interfaces.wlp65s0 = {
-      useDHCP = true;
+      useDHCP = false;
       proxyARP = true;
       ipv6.addresses = [
         {
           address = networkParams.ip;
           prefixLength = 64;
+        }
+      ];
+      ipv4.addresses = [
+        {
+          address = "10.156.1.42";
+          prefixLength = 24;
         }
       ];
     };
@@ -78,7 +85,7 @@ in {
       ];
       ipv6.addresses = [
         {
-          address = "2600:1700:ad40:f7e8::42";
+          address = "2600:1700:ad40:f7e9::42";
           prefixLength = 64;
         }
       ];
