@@ -8,6 +8,7 @@ with lib;
     ./fonts
     ./modules/bubbles
     ./modules/environment/xdg
+    ./networking
     ./networking/plan9
     ./networking/ses-email
     ./networking/ssh
