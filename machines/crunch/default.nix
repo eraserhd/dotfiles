@@ -9,19 +9,17 @@ in {
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/95594027-89fd-4f8c-966e-da035aa59b87";
-      fsType = "ext4";
-    };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/3624-3954";
-      fsType = "vfat";
-    };
-
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/05c1d59b-9cfc-4767-b8e3-4d4f99859411"; }
-    ];
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/95594027-89fd-4f8c-966e-da035aa59b87";
+    fsType = "ext4";
+  };
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/3624-3954";
+    fsType = "vfat";
+  };
+  swapDevices = [{
+    device = "/dev/disk/by-uuid/05c1d59b-9cfc-4767-b8e3-4d4f99859411";
+  }];
 
   hardware.video.hidpi.enable = lib.mkDefault true;
   hardware.enableRedistributableFirmware = true;
