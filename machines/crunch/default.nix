@@ -206,6 +206,14 @@ in {
     role = "server";
   };
 
+  local.scheduledJobs.h_nexus = {
+    period = "15min";
+    path = [ pkgs.git ];
+    script = ''
+      /home/jfelice/src/h_nexus/update.sh
+    '';
+  };
+
   #local.bluetooth.enable = true;
   #local.services.X11.enable = true;
   #services.xserver.videoDrivers = [ "nvidia" ];
