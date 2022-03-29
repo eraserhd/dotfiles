@@ -1,0 +1,7 @@
+KITTY = "\
+set terminal pngcairo enhanced ;\
+set autoscale ;\
+set samples 1000 ;\
+set output '|kitty +kitten icat --stdin yes' ;\
+"
+

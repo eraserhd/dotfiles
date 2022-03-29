@@ -28,6 +28,7 @@ with lib;
     ./programs/freecad
     ./programs/git
     ./programs/gnupg
+    ./programs/gnuplot
     ./programs/go
     ./programs/gtypist
     ./programs/hammerspoon
