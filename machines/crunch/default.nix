@@ -208,7 +208,7 @@ in {
 
   local.scheduledJobs.h_nexus = {
     period = "15min";
-    path = [ pkgs.git ];
+    path = [ pkgs.bash pkgs.git ];
     script = ''
       /home/jfelice/src/h_nexus/update.sh
     '';
