@@ -23,6 +23,7 @@ with lib;
     ./programs/buildkite
     ./programs/chromium
     ./programs/clojure
+    ./programs/cue
     ./programs/docker
     ./programs/emacs
     ./programs/freecad
