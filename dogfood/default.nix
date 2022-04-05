@@ -33,6 +33,9 @@ in
         # broken.
         plan9port = super.callPackage ./plan9port {};
 
+        # Still need 1password 1.*, until we updated nix-2u
+        _1password = super.callPackage ./1password {};
+
         # lxml / beautifulsoup4 fails to build on Darwin
         # https://github.com/NixOS/nixpkgs/issues/137678
         python39 = super.python39.override {
