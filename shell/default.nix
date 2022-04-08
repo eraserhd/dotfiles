@@ -65,6 +65,26 @@ in {
           fi
       }
 
+      _ssh_term() {
+        if ! [ "$TERM" = "xterm-kitty" ]; then
+           printf '%s' "$TERM"
+           return
+        fi
+        while [ $# -gt 0 ]; do
+          case "$1" in
+            crunch|crunch.local|crunch.eraserhead.net)
+              printf 'xterm-kitty'
+              return
+              ;;
+          esac
+          shift
+        done
+        printf 'xterm'
+      }
+      ssh() {
+        TERM="$(_ssh_term "$@")" command ssh "$@"
+      }
+
       source_if_exists ~/.nix-profile/etc/profile.d/nix.sh
       source ${homeDirectory}/src/dotfiles/bin/private.sh
 
