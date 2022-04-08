@@ -246,6 +246,18 @@ in {
     jfelice  ALL=(ALL:ALL) NOPASSWD: ALL
   '';
 
+  services.nfs.server = {
+    enable = true;
+    exports = ''
+      /srv/exports     10.156.1.62(rw,fsid=0,no_subtree_check)
+      /srv/exports/src 10.156.1.62(rw,nohide,insecure,no_subtree_check,all_squash,anonuid=904137886,anongid=151928526)
+    '';
+  };
+  fileSystems."/home/jfelice/src" = {
+    device = "/srv/exports/src";
+    options = [ "bind" ];
+  };
+
   home-manager.verbose = true;
 
   system.stateVersion = "21.05";
