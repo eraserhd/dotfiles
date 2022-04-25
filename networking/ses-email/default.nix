@@ -9,17 +9,21 @@ in {
   };
 
   config = mkIf cfg.enable
-  (if (builtins.hasAttr "ssmtp" options.services)
+  (if (builtins.hasAttr "msmtp" options.services)
   then {
-    services.ssmtp = {
+    services.msmtp = {
       enable = true;
-      useTLS = true;
-      useSTARTTLS = true;
-      hostName = "email-smtp.us-west-2.amazonaws.com:587";
-      domain = "${config.networking.hostName}.${config.networking.domain}";
-      root = "jason.m.felice@gmail.com";
-      authUser = "AKIATJ6VYKJDVEPD7C75";
-      authPassFile = toString ./password;
+      accounts.default = {
+        auth = true;
+        user = "AKIATJ6VYKJDVEPD7C75";
+        password = builtins.readFile ./password;
+        host = "email-smtp.us-west-2.amazonaws.com:587";
+        domain = "${config.networking.hostName}.${config.networking.domain}";
+        port = 587;
+        tls = true;
+        tls_starttls = true;
+        from = "jason.m.felice@gmail.com";
+      };
     };
   }
   else {
