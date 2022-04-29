@@ -38,7 +38,7 @@ in {
           pushd ~/src/dotfiles >/dev/null
           nixos-rebuild build --flake $HOME/src/dotfiles || return $?
           if [ "$($readlink_bin -f /run/current-system)" != "$($readlink_bin -f ./result)" ]; then
-            sudo nixos-rebuild switch --flake $HOME/src/dotfiles || return $?
+            nixos-rebuild switch --use-remote-sudo --flake $HOME/src/dotfiles || return $?
           fi
           popd >/dev/null
         fi
