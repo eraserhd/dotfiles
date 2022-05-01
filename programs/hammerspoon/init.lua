@@ -17,14 +17,6 @@ local function rerun_last_command()
   kitty("send-text --match=title:kak_repl_window '\x10\x0d'")
 end
 
-local function ignore_notification()
-  hs.execute("notification --close", true)
-end
-
-local function activate_notification()
-  hs.execute("notification --activate", true)
-end
-
 local function focus_window(window)
   window:focus()
   if hs.window.focusedWindow() ~= window then
@@ -66,8 +58,6 @@ not_sigils:configure({
   },
   mode_keys = {
     [{{'shift'}, 'f'}]  = toggle_full_screen,
-    [{{'shift'}, 'i'}]  = ignore_notification,
-    [{{'shift'}, 'n'}]  = activate_notification,
     [{{}, '-'}]         = split_horizontally,
     [{{'shift'}, '\\'}] = split_vertically,
     [{{}, 'v'}]         = paste_as_keystrokes,
