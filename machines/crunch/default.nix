@@ -124,41 +124,6 @@ in {
     publish.workstation = true;
   };
 
-  services.samba = {
-    enable = true;
-    securityType = "user";
-    extraConfig = ''
-      min protocol = SMB2
-      ea support = yes
-      vfs objects = fruit streams_xattr
-      fruit:metadata = stream
-      fruit:model = MacSambda
-      fruit:veto_appledouble = no
-      fruit:posix_rename = yes
-      fruit:zero_file_id = yes
-      fruit:wipe_intentionally_left_blank_rfork = yes
-      fruit:delete_empty_adfiles = yes
-      workgroup = WORKGROUP
-      server string = ${config.networking.hostName}
-      netbios name = ${config.networking.hostName}
-      guest account = nobody
-      map to guest = never
-      log level = 1
-    '';
-    shares = {
-      src = {
-        path = "/home/jfelice/src";
-        browseable = "yes";
-        "read only" = "no";
-        "guest ok" = "no";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        "force user" = "jfelice";
-        "force group" = "users";
-      };
-    };
-  };
-
   services.openssh = {
     enable = true;
     ports = [ 22 443 ];
