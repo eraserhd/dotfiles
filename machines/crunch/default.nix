@@ -227,6 +227,8 @@ in {
   users.mutableUsers = false;
   users.users = {
     jfelice = {
+      uid = 904137886;
+      group = "twou";
       hashedPassword = "$6$Cxax2Zmac07km0Va$uxfyX2/DsdPPc6VAfF8tuNDafQ.FTlvGRc2h.1Xoh00HSUxVCl8nGkVpwDo9fysg3IHOxiYnKh.o/1qK8CWmy.";
       isNormalUser = true;
       home = "/home/jfelice";
@@ -241,6 +243,7 @@ in {
     };
     root.openssh.authorizedKeys.keys = config.local.authorizedKeys.jfelice;
   };
+  users.groups.twou.gid = 151928526;
 
   security.sudo.extraConfig = ''
     jfelice  ALL=(ALL:ALL) NOPASSWD: ALL
