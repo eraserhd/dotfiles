@@ -114,6 +114,7 @@ in {
       tree
       unzip
       wget
+      zip
     ];
   } // (if (builtins.hasAttr "defaultUserShell" options.users)
   then {
