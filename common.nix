@@ -47,7 +47,6 @@ with lib;
     ./programs/tex
     ./programs/timeular
     ./programs/tmux
-    ./programs/usb-overdrive
     ./programs/weechat
     ./programs/x
     ./programs/zsh
