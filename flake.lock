@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "add-missing": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1652367677,
+        "narHash": "sha256-CME8vEhhpH5C6XWQELe2GyKT/y2wG+4jKfLWLdUUI9A=",
+        "owner": "eraserhd",
+        "repo": "add-missing",
+        "rev": "776fd7757e90cd2420fb396d906e71085766a1e2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "eraserhd",
+        "repo": "add-missing",
+        "type": "github"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -18,6 +39,21 @@
         "owner": "LnL7",
         "ref": "master",
         "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
+    "flake-utils": {
+      "locked": {
+        "lastModified": 1649676176,
+        "narHash": "sha256-OWKJratjt2RW151VUlJPRALb7OU2S5s+f0vLj4o1bHM=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "a4b154ebbdc88c8498a5c7b01589addc9e9cb678",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
         "type": "github"
       }
     },
@@ -60,6 +96,7 @@
     },
     "root": {
       "inputs": {
+        "add-missing": "add-missing",
         "darwin": "darwin",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs",

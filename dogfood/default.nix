@@ -10,8 +10,6 @@ in
   config = {
     nixpkgs.overlays = [
       (self: super: rec {
-        add-missing = dogfood super ./add-missing.nix {};
-
         kakoune-unwrapped = super.kakoune-unwrapped.overrideAttrs (oldAttrs: {
           src = super.pkgs.fetchFromGitHub (import ./kakoune.nix);
           enableParallelBuilding = true;

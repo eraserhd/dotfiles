@@ -9,9 +9,18 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     twou.url = "git+ssh://git@github.com/2uinc/nix-2u?ref=develop";
     twou.inputs.nixpkgs.follows = "nixpkgs";
+
+    add-missing.url = "github:eraserhd/add-missing";
+    add-missing.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs  = { self, nixpkgs, darwin, home-manager, twou }: {
+  outputs  = { self, nixpkgs, darwin, home-manager, twou, add-missing }:
+    let
+      homeManagerConfig = {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+      };
+    in {
     darwinConfigurations."C02CW0J5ML87" = darwin.lib.darwinSystem {
       system = "x86_64-darwin";
       modules = [
@@ -19,14 +28,14 @@
         ./machines/macbook
         ./common.nix
         home-manager.darwinModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-        }
+        homeManagerConfig
         {
           nix.nixPath = {
             inherit nixpkgs darwin;
           };
+        }
+        {
+          nixpkgs.overlays = [ add-missing.overlays.default ];
         }
         twou.darwinModules
       ];
@@ -39,14 +48,14 @@
         ./machines/crunch
         ./common.nix
         home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-        }
+        homeManagerConfig
         {
           nix.nixPath = [
             "nixpkgs=${nixpkgs}"
           ];
+        }
+        {
+          nixpkgs.overlays = [ add-missing.overlays.default ];
         }
         twou.nixosModules
       ];
