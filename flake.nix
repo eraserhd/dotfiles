@@ -7,7 +7,7 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    twou.url = "git+ssh://git@github.com/2uinc/nix-2u?ref=develop";
+    twou.url = "git+ssh://git@github.com/2uinc/nix-2u?ref=main";
     twou.inputs.nixpkgs.follows = "nixpkgs";
 
     add-missing.url = "github:eraserhd/add-missing";
@@ -37,7 +37,7 @@
         {
           nixpkgs.overlays = [ add-missing.overlays.default ];
         }
-        twou.darwinModules
+        twou.darwinModules.default
       ];
     };
 
@@ -57,7 +57,7 @@
         {
           nixpkgs.overlays = [ add-missing.overlays.default ];
         }
-        twou.nixosModules
+        twou.nixosModules.default
       ];
     };
   };

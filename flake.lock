@@ -57,6 +57,21 @@
         "type": "github"
       }
     },
+    "flake-utils_2": {
+      "locked": {
+        "lastModified": 1652776076,
+        "narHash": "sha256-gzTw/v1vj4dOVbpBSJX4J0DwUR6LIyXo7/SuuTJp1kM=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "04c1b180862888302ddfb2e3ad9eaa63afc60cf8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -105,21 +120,22 @@
     },
     "twou": {
       "inputs": {
+        "flake-utils": "flake-utils_2",
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1651251632,
-        "narHash": "sha256-MYhmFfqxPGrB+gc4984unVmmXoHUBCzNyMGB7G0jekI=",
-        "ref": "develop",
-        "rev": "3f73481945ce627bd778583239545671f4c7067b",
-        "revCount": 75,
+        "lastModified": 1652798564,
+        "narHash": "sha256-yX79CoBBZhnhTOv77+u7mOgHSReTc8dF/84yCdBH9KM=",
+        "ref": "main",
+        "rev": "3563ad56e1042a9b94dd65a614752c4a29bbd7a0",
+        "revCount": 80,
         "type": "git",
         "url": "ssh://git@github.com/2uinc/nix-2u"
       },
       "original": {
-        "ref": "develop",
+        "ref": "main",
         "type": "git",
         "url": "ssh://git@github.com/2uinc/nix-2u"
       }
