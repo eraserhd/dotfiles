@@ -25,6 +25,12 @@ let
 in {
   config = {
     environment.systemPackages = with pkgs; [ kitty ];
+    environment.interactiveShellInit = ''
+      ssh() {
+        kitty +kitten ssh "$@"
+      }
+    '';
+
     home-manager.users.jfelice = { pkgs, ... }: {
       programs.kitty = {
         enable = true;
