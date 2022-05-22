@@ -100,7 +100,8 @@ in {
           color15 = "#bfc7d5";
         };
         keybindings = {
-          "shift+ctrl+h" = "launch --stdin-add-formatting --stdin-source=@screen_scrollback --cwd=current --type=overlay kak-scrollback-pager @scrolled-by @cursor-x @cursor-y @line-count";
+          "shift+ctrl+g" = "launch --stdin-add-formatting --stdin-source=@screen_scrollback --cwd=current --type=overlay kak-scrollback-pager @scrolled-by @cursor-x @cursor-y @line-count";
+          "shift+ctrl+h" = "launch --stdin-add-formatting --stdin-source=@last_cmd_output --cwd=current --type=overlay kak-scrollback-pager @scrolled-by @cursor-x @cursor-y @line-count";
         };
         environment = environment "jfelice";
       } // (if pkgs.stdenv.isDarwin
