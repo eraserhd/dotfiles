@@ -24,6 +24,17 @@ let
   homeDirectory = config.users.users.jfelice.home;
 in {
   config = {
+
+    ## FIXME: Remove once 0.25.0 is merged
+    nixpkgs.overlays = [
+      (self: super: {
+        kitty = super.callPackage ./kitty.nix {
+          harfbuzz = pkgs.harfbuzz.override { withCoreText = pkgs.stdenv.isDarwin; };
+          inherit (pkgs.darwin.apple_sdk.frameworks) Cocoa CoreGraphics Foundation IOKit Kernel OpenGL;
+        };
+      })
+    ];
+
     environment.systemPackages = with pkgs; [ kitty ];
     environment.interactiveShellInit = ''
       ssh() {
@@ -61,6 +72,9 @@ in {
 
           macos_option_as_alt = true;
           macos_thicken_font = "0.5";
+
+          shell_integration = "enabled";
+          clipboard_control = "write-clipboard read-clipboard";
 
           foreground = "#bfc7d5";
           background = "#14161f";
