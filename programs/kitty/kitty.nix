@@ -87,6 +87,7 @@ buildPythonApplication rec {
       url = "https://github.com/kovidgoyal/kitty/commit/eb84990f5a8edc458e04d24cc1cda05316d74ceb.patch";
       sha256 = "sha256-eOANfhGPMoN4FqxtIGDBu5X0O3RPLABDnL+LKqSLROI=";
     })
+    ./0001-Restore-write-permissions-in-tarball.patch
   ] ++ lib.optional stdenv.isDarwin [
     # Get's `test_ssh_shell_integration` to pass.
     ./zsh-compinit.patch
