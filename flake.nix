@@ -12,53 +12,56 @@
 
     add-missing.url = "github:eraserhd/add-missing";
     add-missing.inputs.nixpkgs.follows = "nixpkgs";
+    window-sigils.url = "github:eraserhd/window-sigils";
+    window-sigils.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs  = { self, nixpkgs, darwin, home-manager, twou, add-missing }:
+  outputs  = { self, nixpkgs, darwin, home-manager, twou, add-missing, window-sigils }:
     let
       homeManagerConfig = {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
       };
     in {
-    darwinConfigurations."C02CW0J5ML87" = darwin.lib.darwinSystem {
-      system = "x86_64-darwin";
-      modules = [
-        ./os/nix-darwin
-        ./machines/macbook
-        ./common.nix
-        home-manager.darwinModules.home-manager
-        homeManagerConfig
-        {
-          nix.nixPath = {
-            inherit nixpkgs darwin;
-          };
-        }
-        {
-          nixpkgs.overlays = [ add-missing.overlays.default ];
-        }
-        twou.darwinModules.default
-      ];
-    };
+      darwinConfigurations."C02CW0J5ML87" = darwin.lib.darwinSystem {
+        system = "x86_64-darwin";
+        modules = [
+          ./os/nix-darwin
+          ./machines/macbook
+          ./common.nix
+          home-manager.darwinModules.home-manager
+          homeManagerConfig
+          {
+            nix.nixPath = {
+              inherit nixpkgs darwin;
+            };
+          }
+          {
+            nixpkgs.overlays = [ add-missing.overlays.default ];
+          }
+          twou.darwinModules.default
+          window-sigils.darwinModules.default
+        ];
+      };
 
-    nixosConfigurations.crunch = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./os/nixos
-        ./machines/crunch
-        ./common.nix
-        home-manager.nixosModules.home-manager
-        homeManagerConfig
-        {
-          nix.nixPath = [
-            "nixpkgs=${nixpkgs}"
-          ];
-        }
-        {
-          nixpkgs.overlays = [ add-missing.overlays.default ];
-        }
-        twou.nixosModules.default
-      ];
+      nixosConfigurations.crunch = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        modules = [
+          ./os/nixos
+          ./machines/crunch
+          ./common.nix
+          home-manager.nixosModules.home-manager
+          homeManagerConfig
+          {
+            nix.nixPath = [
+              "nixpkgs=${nixpkgs}"
+            ];
+          }
+          {
+            nixpkgs.overlays = [ add-missing.overlays.default ];
+          }
+          twou.nixosModules.default
+        ];
+      };
     };
-  };
 }
