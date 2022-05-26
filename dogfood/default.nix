@@ -16,7 +16,6 @@ in
         });
 
         kakounePlugins = super.kakounePlugins // {
-          kak-ansi = dogfood super ./kak-ansi.nix {};
           kak-fzf = super.kakounePlugins.kak-fzf.overrideAttrs (oldAttrs: {
             src = super.pkgs.fetchFromGitHub (import ./fzf.kak.nix);
           });
