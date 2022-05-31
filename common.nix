@@ -24,6 +24,7 @@ with lib;
     ./programs/chromium
     ./programs/clojure
     ./programs/cue
+    ./programs/discord
     ./programs/docker
     ./programs/emacs
     ./programs/freecad
