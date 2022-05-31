@@ -41,6 +41,7 @@ with lib;
     ./programs/nix
     ./programs/npm
     ./programs/openscad
+    ./programs/pop
     ./programs/postgres
     ./programs/rlwrap
     ./programs/taskwarrior
