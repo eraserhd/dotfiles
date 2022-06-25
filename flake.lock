@@ -103,20 +103,6 @@
         "type": "github"
       }
     },
-    "flake-utils_4": {
-      "locked": {
-        "lastModified": 1652776076,
-        "narHash": "sha256-gzTw/v1vj4dOVbpBSJX4J0DwUR6LIyXo7/SuuTJp1kM=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "04c1b180862888302ddfb2e3ad9eaa63afc60cf8",
-        "type": "github"
-      },
-      "original": {
-        "id": "flake-utils",
-        "type": "indirect"
-      }
-    },
     "home-manager": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -218,8 +204,7 @@
         "home-manager": "home-manager",
         "kak-ansi": "kak-ansi",
         "nixpkgs": "nixpkgs",
-        "twou": "twou",
-        "window-sigils": "window-sigils"
+        "twou": "twou"
       }
     },
     "twou": {
@@ -256,27 +241,6 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "window-sigils": {
-      "inputs": {
-        "flake-utils": "flake-utils_4",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1654471981,
-        "narHash": "sha256-ucMuKoRBkg84HgpPgLL0JX4r6JPNkbB0i0k+IRxXR4c=",
-        "owner": "eraserhd",
-        "repo": "window-sigils",
-        "rev": "4deb87e5f48f6e650dab9f48983924ce1818a4fa",
-        "type": "github"
-      },
-      "original": {
-        "owner": "eraserhd",
-        "repo": "window-sigils",
         "type": "github"
       }
     }

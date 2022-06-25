@@ -14,11 +14,9 @@
     add-missing.inputs.nixpkgs.follows = "nixpkgs";
     kak-ansi.url = "github:eraserhd/kak-ansi";
     kak-ansi.inputs.nixpkgs.follows = "nixpkgs";
-    window-sigils.url = "github:eraserhd/window-sigils";
-    window-sigils.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs  = { self, nixpkgs, darwin, home-manager, twou, add-missing, kak-ansi, window-sigils }:
+  outputs  = { self, nixpkgs, darwin, home-manager, twou, add-missing, kak-ansi }:
     let
       homeManagerConfig = {
         home-manager.useGlobalPkgs = true;
@@ -45,7 +43,6 @@
             ];
           }
           twou.darwinModules.default
-          window-sigils.darwinModules.default
         ];
       };
 
