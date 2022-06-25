@@ -38,9 +38,20 @@ with lib;
     #boot.loader.grub.version = 2;
     boot.cleanTmpDir = true;
 
-    local.systemDisplayName = "parasite";
+    local.systemDisplayName = networking.hostName;
 
     networking.useDHCP = lib.mkDefault true;
+    networking = {
+      domain = "eraserhead.net";
+      hostName = "parasite";
+      firewall.enable = false;
+      interfaces.enp0s2 = {
+        useDHCP = true;
+      };
+      defaultGateway = {
+        interface = "enp0s2";
+      };
+    };
 
     time.timeZone = "America/New_York";
 
@@ -62,11 +73,25 @@ with lib;
     #local.bluetooth.enable = true;
 
     local.services.X11.enable = true;
-    services.xserver.videoDrivers = [ "virtio" ];
-    services.xserver.resolutions = [
-      { x = 3840; y = 2160; }
-      { x = 1024; y = 768; }
-    ];
+    services.xserver = {
+      videoDrivers = [ "virtio" ];
+      resolutions = [
+        { x = 3840; y = 2160; }
+        { x = 1024; y = 768; }
+      ];
+      extraConfig = ''
+        Modeline "3840x2160_60.00" 712.75 3840 4160 4576 5312 2160 2163 2168 2237 -hsync +vsync
+      '';
+      xrandrHeads = [
+        {
+          output = "Virtual-1";
+          primary = true;
+        }
+        {
+          output = "Virtual-2";
+        }
+      ];
+    };
 
     nix.nixPath = [
       "nixos-config=/home/jfelice/src/dotfiles/machines/parasite/default.nix"
