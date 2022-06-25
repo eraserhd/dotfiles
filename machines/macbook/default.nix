@@ -10,10 +10,6 @@
     darwin-config = "$HOME/src/dotfiles/machines/macbook/default.nix";
   } ];
 
-  # Auto upgrade nix package and the daemon service.
-  # services.nix-daemon.enable = true;
-  # nix.package = pkgs.nix;
-
   local.systemDisplayName = "macbook";
 
   programs.bash.enable = true;
