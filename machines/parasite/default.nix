@@ -15,13 +15,21 @@ with lib;
     # Needed for https://github.com/NixOS/nixpkgs/issues/58959
     boot.supportedFilesystems = lib.mkForce [ "brtfs" "reiserfs" "vfat" "f2fs" "xfs" "ntfs" "cifs" ];
 
-    fileSystems."/" = {
-      device = "/dev/disk/by-label/nixos";
-      fsType = "ext4";
-    };
-    fileSystems."/boot" = {
-      device = "/dev/disk/by-label/boot";
-      fsType = "vfat";
+    #fileSystems."/" = {
+    #  device = "/dev/disk/by-label/nixos";
+    #  fsType = "ext4";
+    #};
+    #fileSystems."/boot" = {
+    #  device = "/dev/disk/by-label/boot";
+    #  fsType = "vfat";
+    #};
+    fileSystems."/home/jfelice/src" = {
+      device = "hostsrc";
+      fsType = "9p";
+      options = [
+        "trans=virtio"
+        "version=9p2000.L"
+      ];
     };
     swapDevices = [{
       device = "/dev/disk/by-label/swap";
@@ -38,7 +46,7 @@ with lib;
     #boot.loader.grub.version = 2;
     boot.cleanTmpDir = true;
 
-    local.systemDisplayName = networking.hostName;
+    local.systemDisplayName = config.networking.hostName;
 
     networking.useDHCP = lib.mkDefault true;
     networking = {
@@ -48,14 +56,12 @@ with lib;
       interfaces.enp0s2 = {
         useDHCP = true;
       };
-      defaultGateway = {
-        interface = "enp0s2";
-      };
     };
 
     time.timeZone = "America/New_York";
 
     environment.systemPackages = with pkgs; [
+      _9pfs
       k3s
       pinentry
     ];
@@ -70,28 +76,7 @@ with lib;
 
     virtualisation.docker.enable = true;
 
-    #local.bluetooth.enable = true;
-
-    local.services.X11.enable = true;
-    services.xserver = {
-      videoDrivers = [ "virtio" ];
-      resolutions = [
-        { x = 3840; y = 2160; }
-        { x = 1024; y = 768; }
-      ];
-      extraConfig = ''
-        Modeline "3840x2160_60.00" 712.75 3840 4160 4576 5312 2160 2163 2168 2237 -hsync +vsync
-      '';
-      xrandrHeads = [
-        {
-          output = "Virtual-1";
-          primary = true;
-        }
-        {
-          output = "Virtual-2";
-        }
-      ];
-    };
+    services.xrdp.enable = true;
 
     nix.nixPath = [
       "nixos-config=/home/jfelice/src/dotfiles/machines/parasite/default.nix"
