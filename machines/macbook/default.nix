@@ -42,6 +42,7 @@
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
   system.stateVersion = 4;
+  home-manager.users.jfelice.home.stateVersion = "22.05";
 
   # You should generally set this to the total number of logical cores in your system.
   # $ sysctl -n hw.ncpu
