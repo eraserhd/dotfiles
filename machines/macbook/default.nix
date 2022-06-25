@@ -26,15 +26,13 @@
 
   environment.xdgRuntimeDir.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    qemu
-  ];
-
   users.users.jfelice = {
     name = "jfelice";        # Needed by home-manager
     home = "/Users/jfelice";
     shell = pkgs.zsh;
   };
+
+  homebrew.brews = [ "qemu" ];
 
   local.plan9.terminal.enable = true;
   local.buildkite.enable = true;
