@@ -7,9 +7,9 @@ with lib;
   ];
 
   config = {
-    boot.initrd.availableKernelModules = [ "virtio_pci" "ahci" "sr_mod" "virtio_blk" ];
+    boot.initrd.availableKernelModules = [ "virtio_pci" "ahci" "sr_mod" "virtio_blk" "virtio_gpu" ];
     boot.initrd.kernelModules = [ ];
-    boot.kernelModules = [ "kvm-amd" ];
+    boot.kernelModules = [ "kvm-amd" "kvm-intel" "kvm_amd" "kvm_intel" ];
     boot.extraModulePackages = [ ];
 
     # Needed for https://github.com/NixOS/nixpkgs/issues/58959
@@ -27,7 +27,6 @@ with lib;
       device = "/dev/disk/by-label/swap";
     }];
 
-    hardware.video.hidpi.enable = lib.mkDefault true;
     hardware.enableRedistributableFirmware = true;
     hardware.enableAllFirmware = true;
     hardware.firmware = [ pkgs.wireless-regdb ];
@@ -64,6 +63,10 @@ with lib;
 
     local.services.X11.enable = true;
     services.xserver.videoDrivers = [ "virtio" ];
+    services.xserver.resolutions = [
+      { x = 3840; y = 2160; }
+      { x = 1024; y = 768; }
+    ];
 
     nix.nixPath = [
       "nixos-config=/home/jfelice/src/dotfiles/machines/parasite/default.nix"
