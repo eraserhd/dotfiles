@@ -30,6 +30,10 @@
 
   environment.xdgRuntimeDir.enable = true;
 
+  environment.systemPackages = with pkgs; [
+    qemu
+  ];
+
   users.users.jfelice = {
     name = "jfelice";        # Needed by home-manager
     home = "/Users/jfelice";
