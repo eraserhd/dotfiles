@@ -62,9 +62,16 @@ with lib;
 
     environment.systemPackages = with pkgs; [
       _9pfs
-      k3s
       pinentry
+
+      # vncserver, etc.
+      tigervnc
+      xorg.xinit
     ];
+
+    local.services.X11.enable = true;
+    services.xserver.autorun = false;
+    services.xserver.displayManager.startx.enable = true;
 
     documentation.dev.enable = true;
 
@@ -75,8 +82,6 @@ with lib;
     };
 
     virtualisation.docker.enable = true;
-
-    services.xrdp.enable = true;
 
     nix.nixPath = [
       "nixos-config=/home/jfelice/src/dotfiles/machines/parasite/default.nix"

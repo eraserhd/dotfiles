@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+exec vncserver :1 -geometry 3840x2160 -depth 32 -basehttpport 5910
