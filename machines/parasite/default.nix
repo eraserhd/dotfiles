@@ -2,34 +2,23 @@
 
 with lib;
 {
-  imports = [
-    "${modulesPath}/profiles/qemu-guest.nix"
-  ];
-
   config = {
-    boot.initrd.availableKernelModules = [ "virtio_pci" "ahci" "sr_mod" "virtio_blk" "virtio_gpu" ];
-    boot.initrd.kernelModules = [ ];
-    boot.kernelModules = [ "kvm-amd" "kvm-intel" "kvm_amd" "kvm_intel" ];
-    boot.extraModulePackages = [ ];
+    boot.initrd.availableKernelModules = [ "ata_piix" "ohci_pci" "sd_mod" "sr_mod" ];
+    boot.initrd.kernelModules = [];
+    boot.kernelModules = [];
+    boot.extraModulePackages = [];
 
     # Needed for https://github.com/NixOS/nixpkgs/issues/58959
     boot.supportedFilesystems = lib.mkForce [ "brtfs" "reiserfs" "vfat" "f2fs" "xfs" "ntfs" "cifs" ];
 
-    #fileSystems."/" = {
-    #  device = "/dev/disk/by-label/nixos";
-    #  fsType = "ext4";
-    #};
-    #fileSystems."/boot" = {
-    #  device = "/dev/disk/by-label/boot";
-    #  fsType = "vfat";
-    #};
-    fileSystems."/home/jfelice/src" = {
-      device = "hostsrc";
-      fsType = "9p";
-      options = [
-        "trans=virtio"
-        "version=9p2000.L"
-      ];
+    boot.loader.grub.enable = true;
+    boot.loader.grub.version = 2;
+    boot.loader.grub.device = "/dev/sda";
+    virtualisation.virtualbox.guest.enable = true;
+
+    fileSystems."/" = {
+      device = "/dev/disk/by-label/nixos";
+      fsType = "ext4";
     };
     swapDevices = [{
       device = "/dev/disk/by-label/swap";

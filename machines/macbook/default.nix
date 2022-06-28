@@ -32,7 +32,10 @@
     shell = pkgs.zsh;
   };
 
-  homebrew.brews = [ "qemu" ];
+  homebrew.casks = [
+    "virtualbox"
+    "virtualbox-extension-pack"
+  ];
 
   local.plan9.terminal.enable = true;
   local.buildkite.enable = true;

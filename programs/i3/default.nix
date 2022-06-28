@@ -2,10 +2,6 @@
 
 {
   config = {
-    services.xrdp.defaultWindowManager = ''
-      ${pkgs.i3}/bin/i3
-    '';
-
     home-manager.users.jfelice = { pkgs, ... }: {
       home.file.".config/i3/config".text = let
         homeDirectory = config.users.users.jfelice.home;

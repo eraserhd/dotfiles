@@ -112,3 +112,12 @@ App Store
 * Lots of systemctl --user restart gpg-agent
 * git crypt unlock -- works!!
 
+2022 Parasite
+-------------
+
+* Install NixOS in VM
+* Mounted host src on /root/src (no users yet)
+* nix-shell -p git git-crypt kakoune
+* Copy SSH keys
+* nixos-rebuild build --flake ./#parasite 
+
