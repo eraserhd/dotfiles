@@ -49,7 +49,6 @@ with lib;
     ./programs/tex
     ./programs/timeular
     ./programs/tmux
-    ./programs/weechat
     ./programs/x
     ./programs/zsh
     ./shell
