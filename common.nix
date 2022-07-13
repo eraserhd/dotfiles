@@ -44,6 +44,7 @@ with lib;
     ./programs/pop
     ./programs/postgres
     ./programs/rlwrap
+    ./programs/slack
     ./programs/taskwarrior
     ./programs/tex
     ./programs/timeular
