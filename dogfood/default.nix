@@ -28,7 +28,7 @@ in
         # Use old plan9port for Darwin, because plan9port removed support
         # for Mac OS 10.12, and Nixpkgs requires it, so the package is marked
         # broken.
-        plan9port = super.callPackage ./plan9port {};
+        #plan9port = super.callPackage ./plan9port {};
 
         # lxml / beautifulsoup4 fails to build on Darwin
         # https://github.com/NixOS/nixpkgs/issues/137678
