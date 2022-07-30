@@ -9,6 +9,7 @@ with lib;
     ./modules/bubbles
     ./modules/environment/xdg
     ./networking
+    ./networking/nats
     ./networking/plan9
     ./networking/ses-email
     ./networking/ssh
@@ -37,6 +38,7 @@ with lib;
     ./programs/i3
     ./programs/kakoune
     ./programs/kitty
+    ./programs/nats
     ./programs/nexus
     ./programs/nix
     ./programs/npm
