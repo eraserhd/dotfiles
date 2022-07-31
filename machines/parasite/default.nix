@@ -102,7 +102,6 @@ with lib;
     system.stateVersion = "22.05";
     home-manager.users.jfelice.home.stateVersion = "22.05";
 
-    local.plan9.cpu.enable = true;
     local.tmux.paneZeroCommand = "weechat";
   };
 }

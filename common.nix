@@ -10,7 +10,6 @@ with lib;
     ./modules/environment/xdg
     ./networking
     ./networking/nats
-    ./networking/plan9
     ./networking/ses-email
     ./networking/ssh
     ./networking/tls
