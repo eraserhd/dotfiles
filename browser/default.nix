@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 {
@@ -8,9 +8,26 @@ with lib;
       type = types.str;
       default = "open";
     };
+
+    local.openURLsInChrome = mkEnableOption "Open URLs in Chrome";
   };
 
-  config = {
+  config = mkIf config.local.openURLsInChrome {
+    launchd.agents.open-in-chrome-tab = {
+      path = with pkgs; [
+        natscli
+        open-in-chrome-tab
+      ];
+      script = ''
+        export PATH="$PATH":/usr/bin
+        nats sub -r browser.open |while read -r url; do
+          open-in-chrome-tab "$url"
+        done
+      '';
+      serviceConfig = {
+        KeepAlive = true;
+      };
+    };
     environment.systemPackages = mkIf pkgs.stdenv.isDarwin [ pkgs.open-in-chrome-tab ];
   };
 }
