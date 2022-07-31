@@ -2,6 +2,8 @@
 
 {
   config = {
-    environment.systemPackages = [ pkgs.natscli ];
+    environment.systemPackages = with pkgs; [
+      natscli
+    ];
   };
 }
