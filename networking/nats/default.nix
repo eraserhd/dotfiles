@@ -1,9 +1,11 @@
-{ ... }:
+{ config, ... }:
 
 {
   config = {
     services.nats = {
       enable = true;
+      serverName = config.local.systemDisplayName;
+
       jetstream = true;
       settings = {
         leafnodes = {
