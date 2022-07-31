@@ -1,4 +1,4 @@
-{ config, ... }:
+{ pkgs, config, ... }:
 
 {
   config = {
@@ -16,5 +16,7 @@
         };
       };
     };
+
+    local.browserCommand = "${pkgs.natscli}/bin/nats pub browser.open";
   };
 }
