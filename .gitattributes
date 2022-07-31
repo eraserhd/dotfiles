@@ -1,6 +1,7 @@
 bin/checkpw filter=git-crypt diff=git-crypt
 bin/private.sh filter=git-crypt diff=git-crypt
 fonts/Input-Font.zip filter=git-crypt diff=git-crypt
+networking/nats/ngs.creds filter=git-crypt diff=git-crypt
 networking/tls/*.key filter=git-crypt diff=git-crypt
 networking/ses-email/password filter=git-crypt diff=git-crypt
 networking/ssh/files/id_dsa filter=git-crypt diff=git-crypt
