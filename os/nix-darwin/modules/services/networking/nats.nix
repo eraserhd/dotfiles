@@ -92,67 +92,36 @@ in {
       jetstream = optionalAttrs cfg.jetstream { store_dir = cfg.dataDir; };
     };
 
-    #systemd.services.nats = {
-    #  description = "NATS messaging system";
-    #  wantedBy = [ "multi-user.target" ];
-    #  after = [ "network.target" ];
+    launchd.daemons.nats = {
+      command = "${pkgs.nats-server}/bin/nats-server -c ${configFile}";
+      serviceConfig = {
+        KeepAlive = true;
+        UserName = cfg.user;
+        GroupName = cfg.group;
+      };
+    };
 
-    #  serviceConfig = mkMerge [
-    #    (mkIf (cfg.dataDir == "/var/lib/nats") {
-    #      StateDirectory = "nats";
-    #      StateDirectoryMode = "0750";
-    #    })
-    #    {
-    #      Type = "simple";
-    #      ExecStart = "${pkgs.nats-server}/bin/nats-server -c ${configFile}";
-    #      ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
-    #      ExecStop = "${pkgs.coreutils}/bin/kill -SIGINT $MAINPID";
-    #      Restart = "on-failure";
+    users.users = mkIf (cfg.user == "nats") {
+      nats = {
+        uid = 4222;
+        description = "NATS daemon user";
+        createHome = true;
+        home = cfg.dataDir;
+      } // (if cfg.group == "nats"
+            then { gid = 4222; }
+            else {});
+    };
 
-    #      User = cfg.user;
-    #      Group = cfg.group;
+    users.knownUsers = [ "nats" ];
+    users.knownGroups = [ "nats" ];
 
-    #      # Hardening
-    #      CapabilityBoundingSet = "";
-    #      LimitNOFILE = 800000; # JetStream requires 2 FDs open per stream.
-    #      LockPersonality = true;
-    #      MemoryDenyWriteExecute = true;
-    #      NoNewPrivileges = true;
-    #      PrivateDevices = true;
-    #      PrivateTmp = true;
-    #      PrivateUsers = true;
-    #      ProcSubset = "pid";
-    #      ProtectClock = true;
-    #      ProtectControlGroups = true;
-    #      ProtectHome = true;
-    #      ProtectHostname = true;
-    #      ProtectKernelLogs = true;
-    #      ProtectKernelModules = true;
-    #      ProtectKernelTunables = true;
-    #      ProtectProc = "invisible";
-    #      ProtectSystem = "strict";
-    #      ReadOnlyPaths = [ ];
-    #      ReadWritePaths = [ cfg.dataDir ];
-    #      RestrictAddressFamilies = [ "AF_INET" "AF_INET6" ];
-    #      RestrictNamespaces = true;
-    #      RestrictRealtime = true;
-    #      RestrictSUIDSGID = true;
-    #      SystemCallFilter = [ "@system-service" "~@privileged" "~@resources" ];
-    #      UMask = "0077";
-    #    }
-    #  ];
-    #};
-
-    #users.users = mkIf (cfg.user == "nats") {
-    #  nats = {
-    #    description = "NATS daemon user";
-    #    isSystemUser = true;
-    #    group = cfg.group;
-    #    home = cfg.dataDir;
-    #  };
-    #};
-
-    users.groups = mkIf (cfg.group == "nats") { nats = { }; };
+    users.groups = mkIf (cfg.group == "nats") {
+      nats = {
+        gid = 4222;
+        description = "NATS daemon group";
+        members = [ cfg.user ];
+      };
+    };
   };
 
 }
