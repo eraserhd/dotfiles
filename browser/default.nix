@@ -30,7 +30,7 @@ with lib;
            KeepAlive = true;
          };
        };
-       environment.systemPackages = pkgs.open-in-chrome-tab;
+       environment.systemPackages = [ pkgs.open-in-chrome-tab ];
      }
      else {
        assertions = [{
