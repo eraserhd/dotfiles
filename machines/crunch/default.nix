@@ -102,7 +102,6 @@ in {
   time.timeZone = "America/New_York";
 
   environment.systemPackages = with pkgs; [
-    k3s
     pinentry
   ];
 
@@ -167,10 +166,8 @@ in {
   };
 
   virtualisation.docker.enable = true;
-  services.k3s = {
-    enable = true;
-    role = "server";
-  };
+
+  local.kubernetes.enable = true;
 
   local.scheduledJobs.h_nexus = {
     period = "15min";
