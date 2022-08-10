@@ -15,6 +15,13 @@ func TestParseAttributes(t *testing.T) {
                         input: "",
                         output: map[string]string{},
                 },
+                {
+                        input: "foo=bar baz=quux",
+                        output: map[string]string{
+                                "foo": "bar",
+                                "baz": "quux",
+                        },
+                },
         } {
                 t.Run(fmt.Sprintf("parsing %q", testCase.input), func (t *testing.T) {
                         out, err := ParseAttributes(testCase.input)
