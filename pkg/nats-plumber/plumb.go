@@ -66,14 +66,15 @@ func tokenize(s string) ([]string, error) {
 	return result, nil
 }
 
+// ParseAttributes splits s into tokens, honoring standard plan9 quoting and
+// tokenization rules, then stores each name=value token into an attribute
+// map.
 func ParseAttributes(s string) (map[string]string, error) {
 	result := make(map[string]string)
-
 	tokens, err := tokenize(s)
 	if err != nil {
 		return result, err
 	}
-
 	for _, token := range tokens {
 		parts := strings.SplitN(token, "=", 2)
 		if len(parts) != 2 {
@@ -81,6 +82,5 @@ func ParseAttributes(s string) (map[string]string, error) {
 		}
 		result[parts[0]] = parts[1]
 	}
-
 	return result, nil
 }
