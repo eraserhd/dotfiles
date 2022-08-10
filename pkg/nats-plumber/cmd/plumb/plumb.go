@@ -8,6 +8,8 @@ import (
 	"os"
 	"strings"
 
+	"github.com/nats-io/nats.go"
+
 	"github.com/eraserhd/dotfiles/pkg/nats-plumber"
 )
 
@@ -54,7 +56,13 @@ func main() {
 		log.Fatalf("encoding JSON: %v", err)
 	}
 
-	println(string(bytes))
+	nc, err := nats.Connect(nats.DefaultURL)
+	if err != nil {
+		log.Fatalf("connecting to NATS: %v", err)
+	}
+	defer nc.Close()
 
-	// Open NATS
+	if err := nc.Publish("plumb", bytes); err != nil {
+		log.Fatalf("sending NATS message: %v", err)
+	}
 }
