@@ -1,0 +1,29 @@
+package nats_plumber
+
+import (
+        "fmt"
+        "reflect"
+        "testing"
+)
+
+func TestParseAttributes(t *testing.T) {
+        for _, testCase := range []struct{
+                input string
+                output map[string]string
+        }{
+                {
+                        input: "",
+                        output: map[string]string{},
+                },
+        } {
+                t.Run(fmt.Sprintf("parsing %q", testCase.input), func (t *testing.T) {
+                        out, err := ParseAttributes(testCase.input)
+                        if err != nil {
+                                t.Errorf("parse error: %v", err)
+                        }
+                        if !reflect.DeepEqual(testCase.output, out) {
+                                t.Errorf("wrong output.  Expected:\n%v\nGot:\n%v", testCase.output, out)
+                        }
+                })
+        }
+}
