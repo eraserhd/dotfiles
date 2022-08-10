@@ -22,7 +22,8 @@ type Message struct {
 }
 
 var (
-	NoEqualsError = errors.New("no '=' in attribute string")
+	NoEqualsError          = errors.New("no '=' in attribute string")
+	UnterminatedQuoteError = errors.New("unterminated quote")
 )
 
 func tokenize(s string) ([]string, error) {
@@ -52,6 +53,9 @@ func tokenize(s string) ([]string, error) {
 				result[len(result)-1] += string(ch)
 			}
 		}
+	}
+	if state == tokenizeStateInQuote {
+		return result, UnterminatedQuoteError
 	}
 	return result, nil
 }
