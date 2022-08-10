@@ -51,7 +51,7 @@ func main() {
 		msg.Data = strings.Join(flag.Args(), " ")
 	}
 
-	bytes, err := json.Marshal(msg)
+	bytes, err := json.MarshalIndent(msg, "", "  ")
 	if err != nil {
 		log.Fatalf("encoding JSON: %v", err)
 	}
