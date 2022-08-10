@@ -2,9 +2,14 @@ package nats_plumber
 
 import (
 	"errors"
-	"io"
 	"strings"
 	"unicode"
+)
+
+const (
+	tokenizeStateInWhitespace = iota
+	tokenizeStateInToken
+	tokenizeStateInQuote
 )
 
 type Message struct {
@@ -17,27 +22,38 @@ type Message struct {
 }
 
 var (
-        NoEqualsError = errors.New("no '=' in attribute string")
+	NoEqualsError = errors.New("no '=' in attribute string")
 )
 
-func skipWhitespace(rdr *strings.Reader) error {
-	for {
-		ch, _, err := rdr.ReadRune()
-		if errors.Is(err, io.EOF) {
-			return err
-		}
-		if unicode.IsSpace(ch) {
-			continue
-		}
-		return rdr.UnreadRune()
-	}
-}
-
 func tokenize(s string) ([]string, error) {
-        if s == "" {
-                return []string{}, nil
-        }
-	return strings.Split(s, " "), nil
+	state := tokenizeStateInWhitespace
+	result := []string{}
+	for _, ch := range s {
+		switch state {
+		case tokenizeStateInWhitespace:
+			if ch == '\'' {
+				state = tokenizeStateInQuote
+			} else if !unicode.IsSpace(ch) {
+				state = tokenizeStateInToken
+				result = append(result, string(ch))
+			}
+		case tokenizeStateInToken:
+			if ch == '\'' {
+				state = tokenizeStateInQuote
+			} else if unicode.IsSpace(ch) {
+				state = tokenizeStateInWhitespace
+			} else {
+				result[len(result)-1] += string(ch)
+			}
+		case tokenizeStateInQuote:
+			if ch == '\'' {
+				state = tokenizeStateInToken
+			} else {
+				result[len(result)-1] += string(ch)
+			}
+		}
+	}
+	return result, nil
 }
 
 func ParseAttributes(s string) (map[string]string, error) {
