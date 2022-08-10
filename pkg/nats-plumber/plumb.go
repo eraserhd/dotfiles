@@ -8,3 +8,9 @@ type Message struct {
 	Data             string            `json:"data"`
 	Attributes       map[string]string `json:"attributes"`
 }
+
+func ParseAttributes(s string) (map[string]string, error) {
+	result := make(map[string]string)
+
+	return result, nil
+}

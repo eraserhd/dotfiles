@@ -20,12 +20,6 @@ var (
 	showdata  = flag.Bool("i", false, "read data from stdin and add action=showdata attribute if not already set")
 )
 
-func ParseAttributes(s string) (map[string]string, error) {
-	result := make(map[string]string)
-
-	return result, nil
-}
-
 func main() {
 	flag.Parse()
 
@@ -37,7 +31,7 @@ func main() {
 	}
 
 	var err error
-	msg.Attributes, err = ParseAttributes(*attr)
+	msg.Attributes, err = nats_plumber.ParseAttributes(*attr)
 	if err != nil {
 		log.Fatalf("parsing attributes: %v", err)
 	}
