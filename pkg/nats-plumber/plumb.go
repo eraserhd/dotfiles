@@ -28,6 +28,7 @@ var (
 
 func tokenize(s string) ([]string, error) {
 	state := tokenizeStateInWhitespace
+	nextQuoteIsLiteral := false
 	result := []string{}
 	for _, ch := range s {
 		switch state {
@@ -39,16 +40,21 @@ func tokenize(s string) ([]string, error) {
 				result = append(result, string(ch))
 			}
 		case tokenizeStateInToken:
-			if ch == '\'' {
+			if ch == '\'' && nextQuoteIsLiteral {
+				result[len(result)-1] += "'"
+				state = tokenizeStateInQuote
+			} else if ch == '\'' && !nextQuoteIsLiteral {
 				state = tokenizeStateInQuote
 			} else if unicode.IsSpace(ch) {
 				state = tokenizeStateInWhitespace
 			} else {
 				result[len(result)-1] += string(ch)
 			}
+			nextQuoteIsLiteral = false
 		case tokenizeStateInQuote:
 			if ch == '\'' {
 				state = tokenizeStateInToken
+				nextQuoteIsLiteral = true
 			} else {
 				result[len(result)-1] += string(ch)
 			}
