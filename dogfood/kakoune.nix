@@ -1,6 +1,6 @@
 {
   owner = "eraserhd";
   repo = "kakoune";
-  rev = "e83dbdcd2cbddb30ac63ec503c76b46b80ffe44d";
-  sha256 = "xJKIJaHUw+jei4i/nBEsNRMVnIOr3TZfffCAGHoZPWE=";
+  rev = "31e9fc3cefcbea03d4eaad75ed0dab3da8f3dc6f";
+  sha256 = "kY/b+BHZtUj2rYfJv7edmF56jVYMLFb17aJEWNKqOaI=";
 }
