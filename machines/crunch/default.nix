@@ -65,38 +65,6 @@ in {
         }
       ];
     };
-    interfaces.enp9s0 = {
-      useDHCP = false;
-      proxyARP = true;
-      ipv4.addresses = [
-        {
-          address = "10.156.1.61";
-          prefixLength = 30;
-        }
-        {
-          address = "54.169.127.129";
-          prefixLength = 32;
-        }
-      ];
-      ipv6.addresses = [
-        {
-          address = "2600:1700:ad40:f7e9::42";
-          prefixLength = 64;
-        }
-      ];
-    };
-  };
-
-  boot.kernel.sysctl = {
-    "net.ipv4.conf.all.forwarding" = true;
-    "net.ipv6.conf.all.forwarding" = true;
-
-    "net.ipv6.conf.all.accept_ra" = 0;
-    "net.ipv6.conf.all.autoconf" = 0;
-    "net.ipv6.conf.all.use_tempaddr" = 0;
-
-    "net.ipv6.conf.wlp65s0.accept_ra" = 2;
-    "net.ipv6.conf.wlp65s0.autoconf" = 1;
   };
 
   time.timeZone = "America/New_York";
@@ -131,37 +99,6 @@ in {
       ClientAliveCountMax 3
       ClientAliveInterval 10
       StreamLocalBindUnlink yes
-    '';
-  };
-
-  services.dhcpd4 = {
-    enable = true;
-    authoritative = true;
-    interfaces = [ "enp9s0" ];
-    extraConfig = ''
-      subnet 10.156.1.60 netmask 255.255.255.252 {
-        range 10.156.1.62 10.156.1.62;
-        option subnet-mask 255.255.255.252;
-        option broadcast-address 10.156.1.63;
-        option routers 10.156.1.61;
-        option domain-name-servers 208.67.222.222, 208.67.220.220;
-        option domain-name "${config.networking.domain}";
-      }
-    '';
-  };
-  services.radvd = {
-    enable = true;
-    config = ''
-      interface enp9s0 {
-        AdvSendAdvert on;
-        MaxRtrAdvInterval 30;
-        prefix 2600:1700:ad40:f7e9::/64 {
-          AdvOnLink on;
-          AdvAutonomous on;
-        };
-        RDNSS 2620:119:35::35 2620:119:53::53 {
-        };
-      };
     '';
   };
 
@@ -212,13 +149,6 @@ in {
     jfelice  ALL=(ALL:ALL) NOPASSWD: ALL
   '';
 
-  services.nfs.server = {
-    enable = true;
-    exports = ''
-      /srv/exports     10.156.1.62(rw,fsid=0,no_subtree_check)
-      /srv/exports/src 10.156.1.62(rw,nohide,insecure,no_subtree_check,all_squash,anonuid=904137886,anongid=151928526)
-    '';
-  };
   fileSystems."/home/jfelice/src" = {
     device = "/srv/exports/src";
     options = [ "bind" ];
