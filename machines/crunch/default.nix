@@ -149,11 +149,6 @@ in {
     jfelice  ALL=(ALL:ALL) NOPASSWD: ALL
   '';
 
-  fileSystems."/home/jfelice/src" = {
-    device = "/srv/exports/src";
-    options = [ "bind" ];
-  };
-
   home-manager.verbose = true;
 
   system.stateVersion = "21.05";
