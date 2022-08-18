@@ -23,7 +23,6 @@ in {
   then {
     homebrew.casks = [
       "openscad"
-      "ultimaker-cura"
     ];
     environment.systemPackages = [
       openscad-cli
