@@ -7,11 +7,6 @@
 
   config = (if (builtins.hasAttr "launchd" options)
   then {
-    homebrew.casks = [
-      "caffeine"
-      "osxfuse"
-    ];
-
     system.defaults.finder.AppleShowAllExtensions = true;
     system.defaults.finder._FXShowPosixPathInTitle = true;
     system.defaults.magicmouse.MouseButtonMode = "TwoButton";

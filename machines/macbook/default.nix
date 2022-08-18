@@ -32,11 +32,6 @@
     shell = pkgs.zsh;
   };
 
-  homebrew.casks = [
-    "virtualbox"
-    "virtualbox-extension-pack"
-  ];
-
   local.buildkite.enable = true;
   local.openURLsInChrome = true;
   local.kubernetes.enable = true;
