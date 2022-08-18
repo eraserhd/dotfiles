@@ -17,17 +17,13 @@ with lib;
     ./os/common
     ./pkg
     ./programs/1password
-    ./programs/anki
     ./programs/argocd
     ./programs/aws
     ./programs/buildkite
     ./programs/chromium
     ./programs/clojure
     ./programs/cue
-    ./programs/discord
-    ./programs/docker
     ./programs/emacs
-    ./programs/freecad
     ./programs/git
     ./programs/gnupg
     ./programs/gnuplot
@@ -49,7 +45,6 @@ with lib;
     ./programs/slack
     ./programs/taskwarrior
     ./programs/tex
-    ./programs/timeular
     ./programs/tmux
     ./programs/x
     ./programs/zsh
