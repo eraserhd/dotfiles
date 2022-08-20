@@ -18,6 +18,7 @@ with lib;
     ./pkg
     ./programs/1password
     ./programs/anki
+    ./programs/argocd
     ./programs/aws
     ./programs/buildkite
     ./programs/chromium
