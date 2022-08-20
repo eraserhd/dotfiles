@@ -9,7 +9,6 @@ with lib;
     ./modules/bubbles
     ./modules/environment/xdg
     ./networking
-    ./networking/nats
     ./networking/ses-email
     ./networking/ssh
     ./networking/tls
