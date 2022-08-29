@@ -165,34 +165,14 @@ define-command -override wrap %{
 # System clipboard handling
 # ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 
-define-command -override -hidden copy-snarf-to-dquote %{
-    evaluate-commands %sh{
-        snarf="$(9 9p read snarf/snarf && printf x)"
-        if [ $? -ne 0 ]; then
-            exit
-        fi
-        if [ ! "$snarf" = "${kak_main_reg_dquote}x" ]; then
-            printf "set-register dquote '"
-            printf %s "${snarf%x}" |sed -e "s/'/''/g"
-            printf "'\n"
-        fi
+#FIXME: Need to retrieve clipboard on FocusIn?
+
+hook -group clipboard global RegisterModified '"' %{
+    nop %sh{
+        encoded=$(printf %s "$kak_main_reg_dquote" |base64 |tr -d '\n')
+        printf '\e]52;;%s\e\\' "$encoded" >/dev/tty
     }
 }
-
-declare-option -hidden str snarf_last_dquote
-define-command -override -hidden copy-dquote-to-snarf %{
-    evaluate-commands %sh{
-        if [ ! "$kak_main_reg_dquote" = "$kak_opt_snarf_last_dquote" ]; then
-            printf %s "$kak_main_reg_dquote" |9 9p write snarf/snarf
-            printf "set-option global snarf_last_dquote '"
-            printf %s "$kak_main_reg_dquote" |LC_ALL=C sed -e "s/'/''/g"
-            printf "'\n"
-        fi
-    }
-}
-
-hook -group snarf global FocusIn .* copy-snarf-to-dquote
-hook -group snarf global RegisterModified '"' copy-dquote-to-snarf
 
 # Makefile
 # ‾‾‾‾‾‾‾‾
