@@ -1,23 +1,21 @@
 eraserhd's dotfiles
 ===================
 
-The organization and a lot of scripts were stolen from https://github.com/holman/dotfiles.
-
 Manual Installation Steps (Still)
 ---------------------------------
 
 - Install developer tools (clone https:// URL prompted me)
 - Run git clone again
 - manually install homebrew by running the line in script/boostrap
+- manually install nix
+- nix-env -i gnupg git-crypt
+
 - Manually brew install 1Password
-- Scan code from phone code
-- brew install gnupg
+- Scan code from phone code - entered code in app, actually
 - gpg --import --allow-secret-key-import private-key.txt # downloaded from 1Password
 - gpg --import public-key.txt # downloaded from 1Password
-- brew install git-crypt
 
-- Had to restart Google Chrome (already installed by IT) for 1Password to work
-- Needed to use SMS for 2FA for 2u Google
+- Had to restart Google Chrome (already installed by IT) for 1Password to work -- had to update plugin
 - git crypt unlock (working directory needed to be clean, needed to git reset --hard from failed git submodule update)
 
 - Install Nix multi-user: `sh <(curl -L https://nixos.org/nix/install) --daemon`
@@ -31,11 +29,6 @@ Manual Installation Steps (Still)
 - java wasn't installed, but cask thoght it was.  brew cask reinstall java worked.
 - 1p, needed to "Enable integration with 3rd Party Apps", then in Alfred,
   click around to get that stuff back.
-
-App Store
----------
-
-* Better Snap Tool
 
 
 2020 Install
