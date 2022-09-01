@@ -23,8 +23,8 @@
         home-manager.useUserPackages = true;
       };
     in {
-      darwinConfigurations."C02CW0J5ML87" = darwin.lib.darwinSystem {
-        system = "x86_64-darwin";
+      darwinConfigurations."C02FV0KUQ05Q" = darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
         modules = [
           ./os/nix-darwin
           ./machines/macbook
@@ -42,7 +42,7 @@
               kak-ansi.overlays.default
             ];
           }
-          twou.darwinModules.default
+          #twou.darwinModules.default
         ];
       };
 

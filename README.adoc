@@ -18,17 +18,20 @@ Manual Installation Steps (Still)
 - Had to restart Google Chrome (already installed by IT) for 1Password to work -- had to update plugin
 - git crypt unlock (working directory needed to be clean, needed to git reset --hard from failed git submodule update)
 
-- Install Nix multi-user: `sh <(curl -L https://nixos.org/nix/install) --daemon`
-- Install nix-darwin: `nix-build -I darwin-config=macbook.nix -I nixpkgs
+- Install Nix multi-user: `sh <(curl -L https://nixos.org/nix/install)`
+- `ssh-add ./networking/ssh/files/id_rsa`
 
-- Run ssh/install.sh works!
+- was building for the wrongs system, changed hostname for macbook and changed system to aarch64-darwin, but
+  the twou package no longer worked because the flake doesn't have support for it, so commented it out.
+
+- `nix build --extra-experimental-features "nix-command flakes" ./#darwinConfigurations#C02CW0J5ML87.system`
+
 - chsh -s /run/current-system/sw/bin/zsh
 
 - Switch remote to git@github.com:eraserhd/dotfiles.git ('cause we now have SSH).
 - Found no ~/src/data, reran git/install.sh by itself. "authenticity of host 'eraserhead.net (nn.nn." from SSH!) Why?
 - java wasn't installed, but cask thoght it was.  brew cask reinstall java worked.
-- 1p, needed to "Enable integration with 3rd Party Apps", then in Alfred,
-  click around to get that stuff back.
+- 1p, needed to "Enable integration with 3rd Party Apps"
 
 
 2020 Install
