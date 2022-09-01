@@ -38,7 +38,6 @@ with lib;
     ./programs/nexus
     ./programs/nix
     ./programs/npm
-    ./programs/openscad
     ./programs/pop
     ./programs/postgres
     ./programs/rlwrap
