@@ -19,7 +19,7 @@
       "com.apple.keyboard.fnState" = true;
     };
 
-    users.nix.configureBuildUsers = true;
+    nix.configureBuildUsers = true;
   }
   else {
   });
