@@ -57,9 +57,6 @@ in {
 
       source_if_exists ~/.nix-profile/etc/profile.d/nix.sh
       source ${homeDirectory}/src/dotfiles/bin/private.sh
-
-      eval "$(2u shell initialize --zsh)"
-      eval "$(broot --print-shell-function zsh)"
     '';
 
     environment.variables = {

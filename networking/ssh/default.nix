@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ options, lib, ... }:
 
 with lib;
 {
@@ -9,55 +9,58 @@ with lib;
     };
   };
 
-  config = {
-    local.authorizedKeys = {
-      alex = [
-        (builtins.readFile ./files/id_rsa.pub-alex)
-      ];
-      jfelice = [
-        (builtins.readFile ./files/id_rsa.pub)
-        (builtins.readFile ./files/id_dsa.pub)
-        (builtins.readFile ./files/id_rsa-backup.pub)
-        (builtins.readFile ./files/id_rsa-workingcopy.pub)
-        (builtins.readFile ./files/id_rsa-terminus-iphone.pub)
-        ("COMMAND=\"#{pkgs.coreutils}/bin/false\" " + (builtins.readFile ./files/id_rsa-macbook.pub))
-      ];
-    };
+  config = mkMerge [
+    {
+      local.authorizedKeys = {
+        alex = [
+          (builtins.readFile ./files/id_rsa.pub-alex)
+        ];
+        jfelice = [
+          (builtins.readFile ./files/id_rsa.pub)
+          (builtins.readFile ./files/id_dsa.pub)
+          (builtins.readFile ./files/id_rsa-backup.pub)
+          (builtins.readFile ./files/id_rsa-workingcopy.pub)
+          (builtins.readFile ./files/id_rsa-terminus-iphone.pub)
+          ("COMMAND=\"#{pkgs.coreutils}/bin/false\" " + (builtins.readFile ./files/id_rsa-macbook.pub))
+        ];
+      };
 
-    home-manager.users.jfelice = { pkgs, ... }: {
-      # .profile is sourced by Xsession, I'm told
-      home.file.".profile".text = ''
-        isSshAgentAlive() {
-          if [ -z "$SSH_AGENT_PID" ]; then
-            return 1
-          fi
-          ps -p "$SSH_AGENT_PID" |grep -q ssh-agent
-        }
+      home-manager.users.jfelice = { pkgs, ... }: {
+        # .profile is sourced by Xsession, I'm told
+        home.file.".profile".text = ''
+          isSshAgentAlive() {
+            if [ -z "$SSH_AGENT_PID" ]; then
+              return 1
+            fi
+            ps -p "$SSH_AGENT_PID" |grep -q ssh-agent
+          }
 
-        ensureSshAgent() {
-          if ! isSshAgentAlive; then
-            eval "$(ssh-agent)"
-          fi
-        }
+          ensureSshAgent() {
+            if ! isSshAgentAlive; then
+              eval "$(ssh-agent)"
+            fi
+          }
 
-        case "$0" in
-        *Xsession) ensureSshAgent;;
-        esac
-      '';
+          case "$0" in
+          *Xsession) ensureSshAgent;;
+          esac
+        '';
 
-      home.file.".ssh/config".source = ./ssh_config;
-    };
-  } // (if (builtins.hasAttr "launchd" options)
-  then {
-    system.activationScripts.extraUserActivation.text = ''
-      mkdir -p ~/.ssh
-      chmod 700 ~/.ssh
+        home.file.".ssh/config".source = ./ssh_config;
+      };
+    }
+    (if (builtins.hasAttr "launchd" options)
+     then {
+       system.activationScripts.extraUserActivation.text = ''
+         mkdir -p ~/.ssh
+         chmod 700 ~/.ssh
 
-      cp -ap ${toString ./files}/* ~/.ssh/
-      chmod 600 ~/.ssh/id_*
-    '';
-  }
-  else {
-    # FIXME: NixOS activation as above
-  });
+         cp -ap ${toString ./files}/* ~/.ssh/
+         chmod 600 ~/.ssh/id_*
+       '';
+     }
+     else {
+       # FIXME: NixOS activation as above
+     })
+   ];
 }
