@@ -39,6 +39,7 @@ with lib;
     ./programs/npm
     ./programs/pop
     ./programs/postgres
+    ./programs/rancher
     ./programs/rlwrap
     ./programs/taskwarrior
     ./programs/tex
