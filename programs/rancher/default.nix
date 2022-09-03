@@ -1,0 +1,7 @@
+{ ... }:
+
+{
+  config = {
+    homebrew.casks = [ "rancher" ];
+  };
+}
