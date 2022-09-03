@@ -2,6 +2,7 @@
 {
   imports = [
     ./hammerspoon
+    ./rancher
     ./schedule
   ];
 }
