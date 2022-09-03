@@ -23,7 +23,6 @@ with lib;
     ./programs/chromium
     ./programs/clojure
     ./programs/cue
-    ./programs/emacs
     ./programs/git
     ./programs/gnupg
     ./programs/gnuplot
