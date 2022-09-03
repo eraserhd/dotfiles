@@ -68,28 +68,5 @@
           twou.nixosModules.default
         ];
       };
-
-      nixosConfigurations.parasite = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./os/nixos
-          ./machines/parasite
-          ./common.nix
-          home-manager.nixosModules.home-manager
-          homeManagerConfig
-          {
-            nix.nixPath = [
-              "nixpkgs=${nixpkgs}"
-            ];
-          }
-          {
-            nixpkgs.overlays = [
-              add-missing.overlays.default
-              kak-ansi.overlays.default
-            ];
-          }
-          twou.nixosModules.default
-        ];
-      };
     };
 }
