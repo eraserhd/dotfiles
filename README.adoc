@@ -5,9 +5,9 @@ Manual Installation Steps (Still)
 ---------------------------------
 
 - Install developer tools (clone https:// URL prompted me)
-- Run git clone again
+- `git clone https://github.com/eraserhd/dotfiles`
 - manually install homebrew by running the line in script/boostrap
-- manually install nix
+- Install Nix multi-user: `sh <(curl -L https://nixos.org/nix/install)`
 - nix-env -i gnupg git-crypt
 
 - Manually brew install 1Password
@@ -15,86 +15,24 @@ Manual Installation Steps (Still)
 - gpg --import --allow-secret-key-import private-key.txt # downloaded from 1Password
 - gpg --import public-key.txt # downloaded from 1Password
 
-- Had to restart Google Chrome (already installed by IT) for 1Password to work -- had to update plugin
 - git crypt unlock (working directory needed to be clean, needed to git reset --hard from failed git submodule update)
 
-- Install Nix multi-user: `sh <(curl -L https://nixos.org/nix/install)`
 - `ssh-add ./networking/ssh/files/id_rsa`
 
 - was building for the wrongs system, changed hostname for macbook and changed system to aarch64-darwin, but
   the twou package no longer worked because the flake doesn't have support for it, so commented it out.
 
 - `nix build --extra-experimental-features "nix-command flakes" ./#darwinConfigurations#C02CW0J5ML87.system`
+- ./result/sw/bin/darwin-rebuild switch
 
 - chsh -s /run/current-system/sw/bin/zsh
 
 - Switch remote to git@github.com:eraserhd/dotfiles.git ('cause we now have SSH).
+- nix-env -e gnupg
+- nix-env -e git-crypt
+
 - Found no ~/src/data, reran git/install.sh by itself. "authenticity of host 'eraserhead.net (nn.nn." from SSH!) Why?
-- java wasn't installed, but cask thoght it was.  brew cask reinstall java worked.
 - 1p, needed to "Enable integration with 3rd Party Apps"
-
-
-2020 Install
-------------
-
-* Install developer tools (xcode-select --install)
-* Install nix
-* Install homebrew
-
-* brew cask install 1password
-
-* Unlock 1password with camera from phone
-
-* Download gpg key
-* Download RSA key
-
-* eval $(ssh-agent)
-* ssh-add /path/to/RSA-key
-
-* git clone git@github.com:eraserhd/dotfiles.git
-
-* nix-env -i gnupg
-* nix-env -i git-crypt
-* gpg --import /path/to/gpg.key
-* git crypt unlock
-* git submodule init
-* git submodule update
-
-* Update $NIX_PATH
-  * darwin
-  * darwin-config
-  * nixpkgs
-* nix-build ./nix-darwin -A system
-* printf 'run\tprivate/var/run\n' |sudo tee -a /etc/synthetic.conf
-* /System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -B
-
-* sudo rm /etc/shells /etc/nix/nix.conf
-* sudo mv /etc/bashrc{,.orig}
-* sudo mv /etc/zshrc{,.orig}
-
-* ./result/sw/bin/darwin-rebuild switch
-* chsh -s /run/current-system/sw/bin/zsh
-
-* Pair headphones
-* Pair AirPods
-
-* nix-env -e gnupg
-* nix-env -e git-crypt
-
-* Change laptop display UUID in yabai-config
-
-* Log out then in
-
-* VPN signin, then change password back
-* op signin
-
-* sudo chown -R 755 /usr/local/share/zsh # Remove compinit warnings
-
-* Create "Focus" space manually
-* Add fingerprints
-
-* Enable Switch to Desktop N key shortcuts in Keyboard preferences Mission
-  Control item
 
 2021 Crunch
 -----------
