@@ -32,7 +32,6 @@ with lib;
     ./programs/i3
     ./programs/kakoune
     ./programs/kitty
-    ./programs/kubernetes
     ./programs/nats
     ./programs/nexus
     ./programs/nix

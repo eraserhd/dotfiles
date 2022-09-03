@@ -34,7 +34,7 @@
 
   local.buildkite.enable = true;
   local.openURLsInChrome = true;
-  local.rancherDesktop.enable = true;
+  local.kubernetes.enable = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog

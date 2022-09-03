@@ -2,7 +2,7 @@
 {
   imports = [
     ./hammerspoon
-    ./rancher
+    ./kubernetes
     ./schedule
   ];
 }

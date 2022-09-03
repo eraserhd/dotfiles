@@ -2,10 +2,10 @@
 
 with lib;
 let
-  cfg = config.local.rancherDesktop;
+  cfg = config.local.kubernetes;
 in {
   options = {
-    local.rancherDesktop.enable = mkEnableOption "Rancher";
+    local.kubernetes.enable = mkEnableOption "Rancher";
   };
 
   config = mkIf cfg.enable {
