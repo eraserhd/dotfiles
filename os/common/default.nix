@@ -1,6 +1,7 @@
 {
   imports = [
-    ./modules/schedule
+    ./modules/kubernetes
     ./modules/networking
+    ./modules/schedule
   ];
 }
