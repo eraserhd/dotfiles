@@ -1,38 +1,35 @@
-{ lib, config, ... }:
+{ lib, config, pkgs, ... }:
 
 with lib;
 let
   manifests = config.services.k3s.manifests;
+
+  manifestDir = "/var/lib/rancher/k3s/server/manifests";
+
+  installManifest = path: ''
+    if [[ -d "${path}" ]]; then
+      ${pkgs.rsync}/bin/rsync -q '${path}'/* /var/lib
+    else
+      name="${path}"
+      name="''${name##*/}"
+      name="''${name#*-}"
+      cp "${path}" "${manifestDir}/$name"
+    fi
+  '';
 in {
   options = {
     services.k3s.manifests = mkOption {
       type = types.listOf types.package;
       default = [];
       description = ''
-        Manifest packages to set up in /var/lib/rancher/k3s/server/manifests before boot.
+        Manifest packages to set up in /var/lib/rancher/k3s/server/manifests on activation.
       '';
     };
   };
 
   config = {
-    nixpkgs.overlays = [
-      (self: super: {
-        k3s = super.symlinkJoin {
-          name = "k3s";
-          paths = [ super.k3s ];
-          buildInputs = [ super.rsync ];
-          postBuild = ''
-            mv $out/bin/k3s $out/bin/.k3s-wrapped-with-manifests
-            cat >$out/bin/k3s <<EOF
-            #!/bin/bash
-            ${concatMapStringsSep "\n" (path: "rsync -q '${path}'/* /var/lib/rancher/k3s/server/manifests/") manifests}
-            exec $out/bin/.k3s-wrapped-with-manifests "\$@"
-            EOF
-            chmod +x $out/bin/k3s
-            patchShebangs $out/bin/k3s
-          '';
-        };
-      })
-    ];
+    system.activationScripts.k3s-manifests = {
+      text = concatMapStringsSep "\n" installManifest manifests;
+    };
   };
 }

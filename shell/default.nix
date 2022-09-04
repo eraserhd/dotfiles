@@ -57,6 +57,10 @@ in {
 
       source_if_exists ~/.nix-profile/etc/profile.d/nix.sh
       source ${homeDirectory}/src/dotfiles/bin/private.sh
+
+      k() {
+        kubectl "$@"
+      }
     '';
 
     environment.variables = {
