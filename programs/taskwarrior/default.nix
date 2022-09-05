@@ -3,10 +3,8 @@
 {
   config = {
     environment.interactiveShellInit = ''
-      tn() {
-        task add +next priority:H "$*"
-      }
-    ''
+      alias tn='task add +next priority:H'
+    '';
     home-manager.users.jfelice = { pkgs, ... }: {
       programs.taskwarrior = {
         enable = true;
