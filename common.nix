@@ -17,7 +17,6 @@ with lib;
     ./os/common
     ./pkg
     ./programs/1password
-    ./programs/argocd
     ./programs/aws
     ./programs/buildkite
     ./programs/chromium
