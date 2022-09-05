@@ -7,14 +7,16 @@ let
   manifestDir = "/var/lib/rancher/k3s/server/manifests";
 
   installManifest = path: ''
+    set -x
     if [[ -d "${path}" ]]; then
-      ${pkgs.rsync}/bin/rsync -q '${path}'/* /var/lib
+      ${pkgs.rsync}/bin/rsync -q '${path}'/* '${manifestDir}'
     else
       name="${path}"
       name="''${name##*/}"
       name="''${name#*-}"
       cp "${path}" "${manifestDir}/$name"
     fi
+    set +x
   '';
 in {
   options = {
