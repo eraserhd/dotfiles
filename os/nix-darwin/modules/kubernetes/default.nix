@@ -2,14 +2,15 @@
 
 with lib;
 let
-  cfg = config.local.kubernetes;
+  cfg = config.services.k3s;
 in {
   options = {
-    local.kubernetes.enable = mkEnableOption "Rancher";
+    services.k3s.enable = mkEnableOption "k3s via Rancher Desktop";
   };
 
   config = mkIf cfg.enable {
     homebrew.casks = [ "rancher" ];
+
     environment.systemPath = [ "~/.rd/bin" ];
   };
 }
