@@ -10,6 +10,8 @@ spec:
   valuesContent: |-
     nats:
       image: "nats:2.8.4-alpine"
+      externalAccess: true
+      advertise: false
       jetstream:
         enabled: true
         memStorage:
