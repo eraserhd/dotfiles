@@ -28,11 +28,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1661882940,
-        "narHash": "sha256-4LaVFnV22WrOA0aolqqk9dXrM8crikcrLQt29G18F7M=",
+        "lastModified": 1662478528,
+        "narHash": "sha256-Myjd0HPL5lXri3NXOcJ6gP7IKod2eMweQBKM4uxgEGw=",
         "owner": "LnL7",
         "repo": "nix-darwin",
-        "rev": "80cec5115aae74accc4ccfb9f84306d7863f0632",
+        "rev": "3b69bf3cc26ae19de847bfe54d6ab22d7381a90a",
         "type": "github"
       },
       "original": {
@@ -95,11 +95,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1662396970,
-        "narHash": "sha256-N1LKxBqKmWSM/YFSROAmhotZVTUt0d6yF3opFc/XcN8=",
+        "lastModified": 1662472236,
+        "narHash": "sha256-epA5KzVUxw9ZV+st2aU4oFfJGyIcYleTpX28wsCQQP4=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "583a99f0166e3e5df9539b972091830bb9faf6b8",
+        "rev": "de94878b6b83f7f2cfda9cdff005417a6d7ac82c",
         "type": "github"
       },
       "original": {
@@ -132,11 +132,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1662469574,
-        "narHash": "sha256-RdPLDW/btKGOjCNqmYm3Iolz+EXQWinfg/4KoWuegmc=",
+        "lastModified": 1662479970,
+        "narHash": "sha256-KU0M67bVUg5tnjIGf+WaqOIzfTDPe8d5sMCGwRn+uLU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "69eff3dfa35aaf9384c5bec10ec66e0ec5d2a267",
+        "rev": "26a1251e03092d97168b28cf92f05a493a886323",
         "type": "github"
       },
       "original": {
@@ -164,11 +164,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1653597294,
-        "narHash": "sha256-QVZqKOsodT2ym5y0n0fXHSj4DjaD/i9hS4rJmuO3oZQ=",
+        "lastModified": 1662480595,
+        "narHash": "sha256-bCn2qXyA/gQI09b4Bwm60rlt9VOO/f9GLVypJZS6ycY=",
         "ref": "main",
-        "rev": "89bc78b8f2e3107168d2ec4499434febcceecd9e",
-        "revCount": 82,
+        "rev": "1e1705102938c2789ae60fe5f046597b2cb65861",
+        "revCount": 86,
         "type": "git",
         "url": "ssh://git@github.com/2uinc/nix-2u"
       },

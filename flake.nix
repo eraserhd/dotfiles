@@ -42,7 +42,7 @@
               kak-ansi.overlays.default
             ];
           }
-          #twou.darwinModules.default
+          twou.darwinModules.default
         ];
       };
 
