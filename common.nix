@@ -32,7 +32,6 @@ with lib;
     ./programs/kakoune
     ./programs/kitty
     ./programs/nats
-    ./programs/nexus
     ./programs/nix
     ./programs/npm
     ./programs/pop
