@@ -2,13 +2,12 @@
 
 with lib;
 let
-  manifests = config.services.k3s.manifests;
+  cfg = config.services.k3s;
 
-  kubeconfig = "/etc/rancher/k3s/k3s.yaml";
-
-  installManifest = path: ''
-    ${pkgs.kubectl}/bin/kubectl --kubeconfig=${kubeconfig} apply -f ${path}
+  defaultKubectlWrapper = pkgs.writeShellScriptBin "kubectl" ''
+    exec ${pkgs.kubectl}/bin/kubectl --kubeconfig="/etc/rancher/k3s/k3s.yaml" "$@"
   '';
+
 in {
   options = {
     services.k3s.manifests = mkOption {
@@ -18,15 +17,21 @@ in {
         Manifest to apply on activation.
       '';
     };
+
+    services.k3s.localKubectlWrapper = mkOption {
+      type = types.package;
+      default = defaultKubectlWrapper;
+      description = ''
+        Wrapper for kubectl used to apply manifests on activation.
+      '';
+    };
   };
 
   config = {
-    system.activationScripts.k3s-manifests = {
+    system.activationScripts.postUserActivation = {
       text = ''
-        if [[ -f ${kubeconfig} ]]; then
-          printf '\e[36mInstalling k3s manifests...\e[0m\n'
-          ${concatMapStringsSep "\n" installManifest manifests}
-        fi
+        printf '\e[36mInstalling k3s manifests...\e[0m\n'
+        ${concatMapStringsSep "\n" (manifest: "${cfg.localKubectlWrapper}/bin/kubectl apply -f \"${manifest}\"") cfg.manifests}
       '';
     };
   };

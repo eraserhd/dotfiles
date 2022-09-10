@@ -28,5 +28,12 @@ in {
     homebrew.casks = [ "rancher" ];
     environment.systemPackages = with pkgs; [ rancher-wrapper ];
     nixpkgs.overlays = [ useRancherToolsOverlay ];
+
+    services.k3s.localKubectlWrapper = pkgs.writeShellScriptBin "kubectl" ''
+      kubeconfig="$(mktemp)"
+      trap "rm -f $kubeconfig" EXIT
+      ${pkgs.rancher-wrapper}/bin/rdctl shell sudo cat /etc/rancher/k3s/k3s.yaml >"$kubeconfig"
+      ${pkgs.rancher-wrapper}/bin/kubectl --kubeconfig="$kubeconfig" "$@"
+    '';
   };
 }
