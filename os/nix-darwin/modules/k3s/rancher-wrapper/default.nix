@@ -26,6 +26,7 @@ stdenv.mkDerivation {
       )>"$out/bin/$command"
     done
     chmod +x $out/bin/*
+
     runHook postInstall
   '';
 }

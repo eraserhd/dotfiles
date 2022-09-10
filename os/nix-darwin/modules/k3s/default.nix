@@ -29,6 +29,18 @@ in {
     environment.systemPackages = with pkgs; [ rancher-wrapper ];
     nixpkgs.overlays = [ useRancherToolsOverlay ];
 
+    programs.zsh.interactiveShellInit = ''
+      autoload -Uz compinit
+      compinit
+      source <(${pkgs.rancher-wrapper}/bin/kubectl completion zsh)
+    '';
+    programs.bash.interactiveShellInit = ''
+      source <(${pkgs.rancher-wrapper}/bin/kubectl completion bash)
+    '';
+    programs.fish.interactiveShellInit = ''
+      ${pkgs.rancher-wrapper}/bin/kubectl completion fish |source
+    '';
+
     system.activationScripts.postUserActivation = {
       text = ''
         printf '\e[36mInstalling k3s manifests...\e[0m\n'
