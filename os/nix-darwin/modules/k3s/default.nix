@@ -29,11 +29,15 @@ in {
     environment.systemPackages = with pkgs; [ rancher-wrapper ];
     nixpkgs.overlays = [ useRancherToolsOverlay ];
 
-    services.k3s.localKubectlWrapper = pkgs.writeShellScriptBin "kubectl" ''
-      kubeconfig="$(mktemp)"
-      trap "rm -f $kubeconfig" EXIT
-      ${pkgs.rancher-wrapper}/bin/rdctl shell sudo cat /etc/rancher/k3s/k3s.yaml >"$kubeconfig"
-      ${pkgs.rancher-wrapper}/bin/kubectl --kubeconfig="$kubeconfig" "$@"
-    '';
+    system.activationScripts.postUserActivation = {
+      text = ''
+        printf '\e[36mInstalling k3s manifests...\e[0m\n'
+        kubeconfig="$(mktemp)"
+        ${pkgs.rancher-wrapper}/bin/rdctl shell sudo cat /etc/rancher/k3s/k3s.yaml >"$kubeconfig"
+        ${concatMapStringsSep "\n" (manifest: ''
+          ${pkgs.rancher-wrapper}/bin/kubectl --kubeconfig="$kubeconfig" apply -f "${manifest}"
+        '') cfg.manifests}
+      '';
+    };
   };
 }

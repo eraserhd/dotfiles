@@ -104,15 +104,7 @@ in {
 
   virtualisation.docker.enable = true;
 
-  local.kubernetes.enable = true;
-
-  local.scheduledJobs.h_nexus = {
-    period = "15min";
-    path = [ pkgs.bash pkgs.git ];
-    script = ''
-      /home/jfelice/src/h_nexus/update.sh
-    '';
-  };
+  services.k3s.enable = true;
 
   #local.bluetooth.enable = true;
   #local.services.X11.enable = true;

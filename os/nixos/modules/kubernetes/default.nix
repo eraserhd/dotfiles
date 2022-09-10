@@ -2,16 +2,20 @@
 
 with lib;
 let
-  cfg = config.local.kubernetes;
+  cfg = config.services.k3s;
 in {
-  options = {
-    local.kubernetes.enable = mkEnableOption "kubernetes";
-  };
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ k3s kubectl ];
     services.k3s = {
-      enable = true;
       role = "server";
+    };
+    system.activationScripts.k3s-manifests = {
+      text = ''
+        printf '\e[36mInstalling k3s manifests...\e[0m\n'
+        ${concatMapStringsSep "\n" (manifest: ''
+          ${pkgs.kubectl}/bin/kubectl --kubeconfig="/etc/rancher/k3s/k3s.yaml" apply -f "${manifest}"
+        '') cfg.manifests}
+      '';
     };
   };
 }
