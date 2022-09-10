@@ -8,7 +8,7 @@ in {
     local.kubernetes.enable = mkEnableOption "kubernetes";
   };
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ k3s ];
+    environment.systemPackages = with pkgs; [ k3s kubectl ];
     services.k3s = {
       enable = true;
       role = "server";
