@@ -2,7 +2,7 @@
 {
   imports = [
     ./hammerspoon
-    ./kubernetes
+    ./k3s
     ./schedule
   ];
 }
