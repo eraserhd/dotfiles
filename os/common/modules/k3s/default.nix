@@ -4,19 +4,10 @@ with lib;
 let
   manifests = config.services.k3s.manifests;
 
-  manifestDir = "/var/lib/rancher/k3s/server/manifests";
+  kubeconfig = "/etc/rancher/k3s/k3s.yaml";
 
   installManifest = path: ''
-    set -x
-    if [[ -d "${path}" ]]; then
-      ${pkgs.rsync}/bin/rsync -q '${path}'/* '${manifestDir}'
-    else
-      name="${path}"
-      name="''${name##*/}"
-      name="''${name#*-}"
-      cp "${path}" "${manifestDir}/$name"
-    fi
-    set +x
+    ${pkgs.kubectl}/bin/kubectl --kubeconfig=${kubeconfig} apply -f ${path}
   '';
 in {
   options = {
@@ -24,14 +15,19 @@ in {
       type = types.listOf types.package;
       default = [];
       description = ''
-        Manifest packages to set up in /var/lib/rancher/k3s/server/manifests on activation.
+        Manifest to apply on activation.
       '';
     };
   };
 
   config = {
     system.activationScripts.k3s-manifests = {
-      text = concatMapStringsSep "\n" installManifest manifests;
+      text = ''
+        if [[ -f ${kubeconfig} ]]; then
+          printf '\e[36mInstalling k3s manifests...\e[0m\n'
+          ${concatMapStringsSep "\n" installManifest manifests}
+        fi
+      '';
     };
   };
 }
