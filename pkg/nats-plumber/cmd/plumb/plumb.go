@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"github.com/nats-io/nats.go"
 
@@ -17,7 +18,7 @@ import (
 var (
 	attr      = flag.String("a", "", "set message attributes")
 	src       = flag.String("s", "plumb", "set message source (default is plumb)")
-	dst       = flag.String("d", "plumber", "set message destination (default is plumber)")
+	dst       = flag.String("d", "", "set message destination (default is plumb.click or plumb.showdata if -i)")
 	mediaType = flag.String("t", "text/plain", "set the media type (default is text/plain)")
 	wdir      = flag.String("w", "", "set message working directory (default is current directory)")
 	showdata  = flag.Bool("i", false, "read data from stdin and add action=showdata attribute if not already set")
@@ -50,11 +51,14 @@ func workingDirectory() (string, error) {
 func main() {
 	flag.Parse()
 
-	action := "click"
-	if *showdata {
-		action = "showdata"
+	subject := *dst
+	if subject == "" {
+		if *showdata {
+			subject = "plumb.showdata"
+		} else {
+			subject = "plumb.click"
+		}
 	}
-	subject := fmt.Sprintf("plumb.%s.%s", action, *dst)
 
 	msg := nats.NewMsg(subject)
 	msg.Header.Add("Source", *src)
@@ -89,7 +93,7 @@ func main() {
 	}
 	defer nc.Close()
 
-	if err := nc.PublishMsg(msg); err != nil {
+	if _, err := nc.RequestMsg(msg, time.Second * 10); err != nil {
 		log.Fatalf("sending NATS message: %v", err)
 	}
 }
