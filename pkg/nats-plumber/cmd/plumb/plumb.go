@@ -1,8 +1,8 @@
 package main
 
 import (
-	"encoding/json"
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -22,38 +22,51 @@ var (
 	showdata  = flag.Bool("i", false, "read data from stdin and add action=showdata attribute if not already set")
 )
 
+func workingDirectory() (string, error) {
+	if *wdir != "" {
+		return *wdir, nil
+	}
+	hostname, _ := os.Hostname()
+	dir, err := os.Getwd()
+	if err != nil {
+		return "", err
+	}
+	return fmt.Sprintf("file://%s%s", hostname, dir), nil
+}
+
 func main() {
 	flag.Parse()
 
-	msg := nats_plumber.Message{
-		Source:           *src,
-		Destination:      *dst,
-		MediaType:        *mediaType,
-		WorkingDirectory: *wdir,
+	subject := "plumb.click"
+	if *showdata {
+		subject = "plumb.showdata"
 	}
 
-	var err error
-	msg.Attributes, err = nats_plumber.ParseAttributes(*attr)
+	msg := nats.NewMsg(subject)
+	msg.Header.Add("Source", *src)
+	msg.Header.Add("Content-Type", *mediaType)
+	wdir, err := workingDirectory()
+	if err != nil {
+		log.Fatal(err)
+	}
+	msg.Header.Add("Working-Directory", wdir)
+
+	attributes, err := nats_plumber.ParseAttributes(*attr)
 	if err != nil {
 		log.Fatalf("parsing attributes: %v", err)
 	}
+	for k, v := range attributes {
+		msg.Header.Add(k, v)
+	}
 
 	if *showdata {
-		if _, ok := msg.Attributes["action"]; !ok {
-			msg.Attributes["action"] = "showdata"
-		}
 		bytes, err := ioutil.ReadAll(os.Stdin)
 		if err != nil {
 			log.Fatalf("reading stdin: %v", err)
 		}
-		msg.Data = string(bytes)
+		msg.Data = bytes
 	} else {
-		msg.Data = strings.Join(flag.Args(), " ")
-	}
-
-	bytes, err := json.MarshalIndent(msg, "", "  ")
-	if err != nil {
-		log.Fatalf("encoding JSON: %v", err)
+		msg.Data = []byte(strings.Join(flag.Args(), " "))
 	}
 
 	nc, err := nats.Connect(nats.DefaultURL)
@@ -62,7 +75,7 @@ func main() {
 	}
 	defer nc.Close()
 
-	if err := nc.Publish("plumb", bytes); err != nil {
+	if err := nc.PublishMsg(msg); err != nil {
 		log.Fatalf("sending NATS message: %v", err)
 	}
 }
