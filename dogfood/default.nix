@@ -20,6 +20,9 @@ in
             src = super.pkgs.fetchFromGitHub (import ./fzf.kak.nix);
           });
           kak-jira = dogfood super ./kak-jira.nix {};
+          kak-plumb = dogfood super ./kak-plumb.nix {
+            plan9port = self.nats-plumber;
+          };
         };
 
         # lxml / beautifulsoup4 fails to build on Darwin

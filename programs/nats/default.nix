@@ -14,6 +14,7 @@ in {
   config = {
     environment.systemPackages = with pkgs; [
       natscli
+      nats-plumber
     ];
 
     services.k3s.manifests = [ manifest ];
