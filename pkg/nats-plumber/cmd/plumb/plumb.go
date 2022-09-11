@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/nats-io/nats.go"
@@ -23,14 +24,26 @@ var (
 )
 
 func workingDirectory() (string, error) {
-	if *wdir != "" {
+	if strings.HasPrefix(*wdir, "file://") {
 		return *wdir, nil
 	}
-	hostname, _ := os.Hostname()
-	dir, err := os.Getwd()
-	if err != nil {
-		return "", err
+	var dir string
+	if *wdir == "" {
+		var err error
+		dir, err = os.Getwd()
+		if err != nil {
+			return "", err
+		}
+	} else if strings.HasPrefix(*wdir, "/") {
+		dir = *wdir
+	} else {
+		base, err := os.Getwd()
+		if err != nil {
+			return "", err
+		}
+		dir = filepath.ToSlash(filepath.Join(base, *wdir))
 	}
+	hostname, _ := os.Hostname()
 	return fmt.Sprintf("file://%s%s", hostname, dir), nil
 }
 
