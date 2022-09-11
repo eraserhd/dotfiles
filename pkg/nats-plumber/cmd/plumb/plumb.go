@@ -17,7 +17,7 @@ import (
 var (
 	attr      = flag.String("a", "", "set message attributes")
 	src       = flag.String("s", "plumb", "set message source (default is plumb)")
-	dst       = flag.String("d", "", "set message destination (default is empty)")
+	dst       = flag.String("d", "plumber", "set message destination (default is plumber)")
 	mediaType = flag.String("t", "text/plain", "set the media type (default is text/plain)")
 	wdir      = flag.String("w", "", "set message working directory (default is current directory)")
 	showdata  = flag.Bool("i", false, "read data from stdin and add action=showdata attribute if not already set")
@@ -50,10 +50,11 @@ func workingDirectory() (string, error) {
 func main() {
 	flag.Parse()
 
-	subject := "plumb.click"
+	action := "click"
 	if *showdata {
-		subject = "plumb.showdata"
+		action = "showdata"
 	}
+	subject := fmt.Sprintf("plumb.%s.%s", action, *dst)
 
 	msg := nats.NewMsg(subject)
 	msg.Header.Add("Source", *src)
