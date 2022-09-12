@@ -22,9 +22,7 @@ with lib;
          ];
          script = ''
            export PATH="$PATH":/usr/bin
-           nats sub -r browser.open |while read -r url; do
-             open-in-chrome-tab "$url"
-           done
+           nats reply --command '/bin/sh -c "open-in-chrome-tab $NATS_REQUEST_BODY"'
          '';
          serviceConfig = {
            KeepAlive = true;
