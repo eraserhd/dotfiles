@@ -14,6 +14,7 @@ let
 in {
   options = {
     local.plumber.enable = mkEnableOption "plumber";
+    local.clipboard.enable = mkEnableOption "clipboard";
   };
 
   config = mkMerge [
@@ -42,6 +43,25 @@ in {
         assertions = [{
           assertion = false;
           message = "local.plumber is not available on NixOS yet";
+        }];
+      }))
+
+    (mkIf config.local.clipboard.enable
+     (if (builtins.hasAttr "launchd" options)
+      then {
+        launchd.user.agents.clipboard = {
+          script = ''
+            ${pkgs.nats-plumber}/bin/clipboard
+          '';
+          serviceConfig = {
+            KeepAlive = true;
+          };
+        };
+      }
+      else {
+        assertions = [{
+          assertion = false;
+          message = "local.clipboard is not available on NixOS yet";
         }];
       }))
   ];

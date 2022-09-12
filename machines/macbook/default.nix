@@ -34,6 +34,7 @@
 
   local.buildkite.enable = true;
   local.openURLsInChrome = true;
+  local.clipboard.enable = true;
   local.plumber.enable = true;
   services.k3s.enable = true;
 
