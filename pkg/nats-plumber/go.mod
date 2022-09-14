@@ -3,6 +3,7 @@ module github.com/eraserhd/dotfiles/pkg/nats-plumber
 go 1.18
 
 require (
+	github.com/ichiban/prolog v0.11.0
 	github.com/nats-io/nats.go v1.16.1-0.20220906180156-a1017eec10b0
 	golang.design/x/clipboard v0.6.2
 )
