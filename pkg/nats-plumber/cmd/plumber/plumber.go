@@ -9,7 +9,7 @@ import (
 )
 
 const logic = `
-plumb(msg('browser.open',Data,Headers)) :- plumb(msg('plumb.click',Data,Headers)).
+send(msg('browser.open',Data,Headers)) :- plumb(msg('plumb.click',Data,Headers)).
 `
 
 func addFactsFromMsg(p *prolog.Interpreter, msg *nats.Msg) error {
@@ -63,33 +63,48 @@ func main() {
 			continue
 		}
 
-		sols, err := p.Query(`plumb(msg(Subject,Data,_)), Subject \= 'plumb.click'.`)
+		sols, err := p.Query(`
+			send(msg(Subject,Data,Headers)),
+				maplist(arg(1),Headers,HeaderKeys),
+				maplist(arg(2),Headers,HeaderValues).
+		`)
 		if err != nil {
 			log.Printf("error querying solutions: %v", err)
 		}
+		sentAny := false
 		for sols.Next() {
 			var sol struct {
-				Subject string
-				Data    string
+				Subject      string
+				Data         string
+				HeaderKeys   []string
+				HeaderValues []string
 			}
 			if err := sols.Scan(&sol); err != nil {
 				log.Printf("error during scan: %v", err)
+				continue
+			}
+			next := nats.NewMsg(sol.Subject)
+			next.Reply = msg.Reply
+			next.Data = []byte(sol.Data)
+			for i := range sol.HeaderKeys {
+				next.Header.Add(sol.HeaderKeys[i], sol.HeaderValues[i])
 			}
 			log.Printf("send %q %q", sol.Subject, sol.Data)
+			if err := nc.PublishMsg(next); err != nil {
+				log.Printf("error publishing: %v", err)
+			} else {
+				sentAny = true
+			}
 		}
 		if err := sols.Close(); err != nil {
 			log.Printf("error closing solutions: %v", err)
 		}
 
-		next := nats.NewMsg("browser.open")
-		next.Reply = msg.Reply
-		next.Header = msg.Header
-		next.Data = msg.Data
-		if err := nc.PublishMsg(next); err != nil {
-			log.Printf("error publishing: %v", err)
+		if !sentAny {
 			reply := nats.NewMsg(msg.Reply)
 			reply.Header.Add("Status", err.Error())
 			nc.PublishMsg(reply)
+			//indicate error
 		}
 	}
 }
