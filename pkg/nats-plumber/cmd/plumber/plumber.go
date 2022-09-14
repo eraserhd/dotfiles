@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "embed"
 	"log"
 	"os"
 
@@ -8,9 +9,8 @@ import (
 	"github.com/nats-io/nats.go"
 )
 
-const logic = `
-send(msg('browser.open',Data,Headers)) :- plumb(msg('plumb.click',Data,Headers)).
-`
+//go:embed routes.pl
+var routes string
 
 func addFactsFromMsg(p *prolog.Interpreter, msg *nats.Msg) error {
 	stmt := "plumb(msg(?,?,["
@@ -53,7 +53,7 @@ func main() {
 
 		p := prolog.New(os.Stdin, os.Stdout)
 
-		if err := p.Exec(logic); err != nil {
+		if err := p.Exec(routes); err != nil {
 			log.Printf("error loading logic: %v", err)
 			continue
 		}
@@ -102,7 +102,7 @@ func main() {
 
 		if !sentAny {
 			reply := nats.NewMsg(msg.Reply)
-			reply.Header.Add("Status", err.Error())
+			reply.Header.Add("Status", "Failed")
 			nc.PublishMsg(reply)
 			//indicate error
 		}
