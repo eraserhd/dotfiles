@@ -1,7 +1,12 @@
 
-url(U) :- sub_atom(U,0,_,_,'http://').
-url(U) :- sub_atom(U,0,_,_,'https://').
+
+browser_schema --> "http".
+browser_schema --> "https".
+anything --> [_], anything.
+anything --> "".
+browser_url --> browser_schema, "://", anything.
 
 send(msg('browser.open',Url,Headers)) :-
   plumb(msg('plumb.click',Url,Headers)),
-  url(Url).
+  atom_chars(Url,Chars),
+  phrase(browser_url,Chars).
