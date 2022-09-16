@@ -22,7 +22,7 @@ func addFactsFromMsg(p *prolog.Interpreter, msg *nats.Msg) error {
 				stmt += ","
 			}
 			first = false
-			stmt += "header(?,?)"
+			stmt += "? - ?"
 			args = append(args, k, v)
 		}
 	}
