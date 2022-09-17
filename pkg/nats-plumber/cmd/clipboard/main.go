@@ -19,14 +19,14 @@ func main() {
 	}
 	defer nc.Close()
 
-	getCh := make(chan *nats.Msg)
+	getCh := make(chan *nats.Msg, 32)
 	getSub, err := nc.ChanSubscribe("clipboard.get", getCh)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer getSub.Drain()
 
-	setCh := make(chan *nats.Msg)
+	setCh := make(chan *nats.Msg, 32)
 	setSub, err := nc.ChanSubscribe("clipboard.set", setCh)
 	if err != nil {
 		log.Fatal(err)

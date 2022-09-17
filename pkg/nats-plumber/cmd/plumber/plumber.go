@@ -40,7 +40,7 @@ func main() {
 	}
 	defer nc.Close()
 
-	ch := make(chan *nats.Msg)
+	ch := make(chan *nats.Msg, 32)
 	sub, err := nc.ChanSubscribe("plumb.click", ch)
 	if err != nil {
 		log.Fatalf("error binding receive channel: %v", err)
