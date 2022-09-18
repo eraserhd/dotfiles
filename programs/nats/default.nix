@@ -51,7 +51,7 @@ in {
       then {
         launchd.user.agents.clipboard = {
           script = ''
-            ${pkgs.nats-plumber}/bin/clipboard
+            ${pkgs.nats-clipboard}/bin/clipboard
           '';
           serviceConfig = {
             KeepAlive = true;
