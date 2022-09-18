@@ -32,7 +32,7 @@ func TestParseAttributes(t *testing.T) {
 		},
 		{
 			input: "foobar",
-			err:   NoEqualsError,
+			err:   NoEquals,
 		},
 		{
 			input: "foo='",

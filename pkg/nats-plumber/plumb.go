@@ -13,7 +13,7 @@ const (
 )
 
 var (
-	NoEqualsError          = errors.New("no '=' in attribute string")
+	NoEquals          = errors.New("no '=' in attribute string")
 	UnterminatedQuoteError = errors.New("unterminated quote")
 )
 
@@ -69,7 +69,7 @@ func ParseAttributes(s string) (map[string]string, error) {
 	for _, token := range tokens {
 		parts := strings.SplitN(token, "=", 2)
 		if len(parts) != 2 {
-			return result, NoEqualsError
+			return result, NoEquals
 		}
 		result[parts[0]] = parts[1]
 	}
