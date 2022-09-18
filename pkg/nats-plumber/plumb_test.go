@@ -36,7 +36,7 @@ func TestParseAttributes(t *testing.T) {
 		},
 		{
 			input: "foo='",
-			err:   UnterminatedQuoteError,
+			err:   UnterminatedQuote,
 		},
 		{
 			input: "foo=''",

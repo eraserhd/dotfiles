@@ -14,7 +14,7 @@ const (
 
 var (
 	NoEquals          = errors.New("no '=' in attribute string")
-	UnterminatedQuoteError = errors.New("unterminated quote")
+	UnterminatedQuote = errors.New("unterminated quote")
 )
 
 func tokenize(s string) ([]string, error) {
@@ -52,7 +52,7 @@ func tokenize(s string) ([]string, error) {
 		}
 	}
 	if state == tokenizeStateInQuote {
-		return result, UnterminatedQuoteError
+		return result, UnterminatedQuote
 	}
 	return result, nil
 }
