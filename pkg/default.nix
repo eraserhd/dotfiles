@@ -7,7 +7,7 @@
         local = (super.local or {}) // {
           git-scripts = super.callPackage ./git-scripts {};
         };
-        nats-plumber = super.callPackage ./nats-plumber {
+        nats-clipboard = super.callPackage ./nats-clipboard {
           inherit (self.darwin.apple_sdk.frameworks) Cocoa;
           inherit (self.xorg) libX11;
         };
