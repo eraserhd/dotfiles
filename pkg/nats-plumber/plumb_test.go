@@ -8,62 +8,62 @@ import (
 
 func TestParseAttributes(t *testing.T) {
 	for _, testCase := range []struct {
-        	claim string
+		claim  string
 		input  string
 		output map[string]string
 		err    error
 	}{
 		{
-        		claim: "an empty string contains no attributes",
+			claim:  "an empty string contains no attributes",
 			input:  "",
 			output: map[string]string{},
 		},
 		{
-        		claim: "attributes are separated by whitespace",
+			claim: "attributes are separated by whitespace",
 			input: "foo=bar baz=quux",
 			output: map[string]string{
-				"foo": "bar",
-				"baz": "quux",
+				"Foo": "bar",
+				"Baz": "quux",
 			},
 		},
 		{
-        		claim: "parts of attributes can be single-quoted",
+			claim: "parts of attributes can be single-quoted",
 			input: "foo='bar' ba'z=qu'ux",
 			output: map[string]string{
-				"foo": "bar",
-				"baz": "quux",
+				"Foo": "bar",
+				"Baz": "quux",
 			},
 		},
 		{
-        		claim: "every attribute must have an '='",
+			claim: "every attribute must have an '='",
 			input: "foobar",
 			err:   NoEquals,
 		},
 		{
-        		claim: "unbalanced quotes are an error",
+			claim: "unbalanced quotes are an error",
 			input: "foo='",
 			err:   UnterminatedQuote,
 		},
 		{
-        		claim: "an empty string can be single-quoted",
+			claim: "an empty string can be single-quoted",
 			input: "foo=''",
 			output: map[string]string{
-				"foo": "",
+				"Foo": "",
 			},
 		},
 		{
-        		claim: "doubled single quotes represent a literal single quote",
+			claim: "doubled single quotes represent a literal single quote",
 			input: "foo=''''",
 			output: map[string]string{
-				"foo": "'",
+				"Foo": "'",
 			},
 		},
 		{
-        		claim: "???",
+			claim: "???",
 			input: "\tfo''o='hello'' world'!\t  bar'='''quux   ",
 			output: map[string]string{
-				"foo": "hello' world!",
-				"bar": "'quux",
+				"Foo": "hello' world!",
+				"Bar": "'quux",
 			},
 		},
 	} {

@@ -2,6 +2,7 @@ package nats_plumber
 
 import (
 	"errors"
+	"net/http"
 	"strings"
 	"unicode"
 )
@@ -71,7 +72,7 @@ func ParseAttributes(s string) (map[string]string, error) {
 		if len(parts) != 2 {
 			return result, NoEquals
 		}
-		result[parts[0]] = parts[1]
+		result[http.CanonicalHeaderKey(parts[0])] = parts[1]
 	}
 	return result, nil
 }
