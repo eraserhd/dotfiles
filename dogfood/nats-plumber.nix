@@ -1,6 +1,6 @@
 {
   owner = "eraserhd";
   repo = "nats-plumber";
-  rev = "d44e3972ac1a3b28925ce876c8530e52764a0fec";
-  sha256 = "lSkaF7EAEmGDlEFSCdXU0ZVhQuxKiEEYj6MTSXb9eVg=";
+  rev = "d6e1df50f225024fbd5e587e68c8937917376de4";
+  sha256 = "LbdkyR/86wuL9+w4vgciP6Mstu3uKOhuhtcAOwDvsoo=";
 }
