@@ -70,6 +70,7 @@ in {
       bat
       broot
       direnv
+      entr
       fzf
       jq
       killall
