@@ -64,5 +64,23 @@ in {
           message = "local.clipboard is not available on NixOS yet";
         }];
       }))
+
+   (if (builtins.hasAttr "launchd" options)
+    then {
+      launchd.user.agents.editor-kak = {
+        script = ''
+          ${pkgs.nats-editor-kak}/bin/kakoune-editor-services
+        '';
+        serviceConfig = {
+          KeepAlive = true;
+        };
+      };
+    }
+    else {
+      #assertions = [{
+      #  assertion = false;
+      #  message = "local.clipboard is not available on NixOS yet";
+      #}];
+    })
   ];
 }
