@@ -68,8 +68,9 @@ in {
    (if (builtins.hasAttr "launchd" options)
     then {
       launchd.user.agents.editor-kak = {
+        path = with pkgs; [ kakoune ];
         script = ''
-          ${pkgs.nats-editor-kak}/bin/kakoune-editor-services
+          ${pkgs.nats-editor-kak}/bin/kakoune-editor-service
         '';
         serviceConfig = {
           KeepAlive = true;
