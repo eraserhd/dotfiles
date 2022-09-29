@@ -50,8 +50,8 @@ local function split_horizontally()
   window:setFrame(frame, 0)
 end
 
---not_sigils = hs.loadSpoon("WindowSigils")
-not_sigils = dofile('/Users/jfelice/src/Spoons/Source/WindowSigils.spoon/init.lua')
+not_sigils = hs.loadSpoon("WindowSigils")
+--not_sigils = dofile('/Users/jfelice/src/Spoons/Source/WindowSigils.spoon/init.lua')
 not_sigils:configure({
   hotkeys = {
     enter = {{"control"}, "W"}
