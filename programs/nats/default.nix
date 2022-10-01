@@ -1,6 +1,5 @@
-{ pkgs, lib, options, config, ... }:
+{ pkgs, ... }:
 
-with lib;
 let
   manifest = pkgs.stdenv.mkDerivation {
     name = "nats-k8s-manifest";
@@ -12,37 +11,11 @@ let
     '';
   };
 in {
-  options = {
-    plugbench.clipboard.enable = mkEnableOption "clipboard";
+  config = {
+    environment.systemPackages = with pkgs; [
+      natscli
+    ];
+
+    services.k3s.manifests = [ manifest ];
   };
-
-  config = mkMerge [
-    {
-      environment.systemPackages = with pkgs; [
-        natscli
-      ];
-
-      services.k3s.manifests = [ manifest ];
-    }
-
-    (mkIf config.plugbench.clipboard.enable
-     (if (builtins.hasAttr "launchd" options)
-      then {
-        launchd.user.agents.clipboard = {
-          script = ''
-            ${pkgs.nats-clipboard}/bin/clipboard
-          '';
-          serviceConfig = {
-            KeepAlive = true;
-          };
-        };
-      }
-      else {
-        assertions = [{
-          assertion = false;
-          message = "plugbench.clipboard is not available on NixOS yet";
-        }];
-      }))
-
-  ];
 }
