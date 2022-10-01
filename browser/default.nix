@@ -15,14 +15,27 @@ with lib;
   config = mkIf config.local.openURLsInChrome
     (if (builtins.hasAttr "launchd" options)
      then {
-       launchd.user.agents.open-in-chrome-tab = {
+       launchd.user.agents.open-https-in-chrome-tab = {
          path = with pkgs; [
            natscli
            open-in-chrome-tab
          ];
          script = ''
            export PATH="$PATH":/usr/bin
-           nats reply browser.open --command "/bin/sh -c 'open-in-chrome-tab \"\$NATS_REQUEST_BODY\"'"
+           nats reply cmd.show.url.https --command "/bin/sh -c 'open-in-chrome-tab \"\$NATS_REQUEST_BODY\"'"
+         '';
+         serviceConfig = {
+           KeepAlive = true;
+         };
+       };
+       launchd.user.agents.open-http-in-chrome-tab = {
+         path = with pkgs; [
+           natscli
+           open-in-chrome-tab
+         ];
+         script = ''
+           export PATH="$PATH":/usr/bin
+           nats reply cmd.show.url.http --command "/bin/sh -c 'open-in-chrome-tab \"\$NATS_REQUEST_BODY\"'"
          '';
          serviceConfig = {
            KeepAlive = true;
