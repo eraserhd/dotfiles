@@ -28,8 +28,6 @@ in
         # Fixes bug with nats request --raw
         natscli = super.callPackage ./natscli.nix {};
 
-        kakoune-pluggo = dogfood super ./kakoune-pluggo.nix {};
-
         # lxml / beautifulsoup4 fails to build on Darwin
         # https://github.com/NixOS/nixpkgs/issues/137678
         python39 = super.python39.override {

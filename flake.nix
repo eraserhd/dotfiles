@@ -43,10 +43,10 @@
             nixpkgs.overlays = [
               add-missing.overlays.default
               kak-ansi.overlays.default
-              plugbench.overlays.default
             ];
           }
           twou.darwinModules.default
+          plugbench.darwinModules.default
         ];
       };
 
@@ -67,10 +67,10 @@
             nixpkgs.overlays = [
               add-missing.overlays.default
               kak-ansi.overlays.default
-              plugbench.overlays.default
             ];
           }
           twou.nixosModules.default
+          plugbench.nixosModules.default
         ];
       };
     };
