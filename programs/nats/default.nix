@@ -70,7 +70,7 @@ in {
       launchd.user.agents.editor-kak = {
         path = with pkgs; [ kakoune ];
         script = ''
-          ${pkgs.nats-editor-kak}/bin/kakoune-editor-service
+          ${pkgs.kakoune-pluggo}/bin/kakoune-editor-service
         '';
         serviceConfig = {
           KeepAlive = true;

@@ -28,7 +28,7 @@ in
         # Fixes bug with nats request --raw
         natscli = super.callPackage ./natscli.nix {};
 
-        nats-editor-kak = dogfood super ./nats-editor-kak.nix {};
+        kakoune-pluggo = dogfood super ./kakoune-pluggo.nix {};
         plumber-pluggo = dogfood super ./plumber-pluggo.nix {};
 
         # lxml / beautifulsoup4 fails to build on Darwin
