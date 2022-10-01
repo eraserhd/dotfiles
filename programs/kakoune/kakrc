@@ -168,11 +168,11 @@ define-command -override wrap %{
 #FIXME: Need to retrieve clipboard on FocusIn?
 
 hook -group clipboard global RegisterModified '"' %{
-    nop %sh{ nats request clipboard.set "$kak_main_reg_dquote" }
+    nop %sh{ nats request cmd.put.clipboard "$kak_main_reg_dquote" }
 }
 hook -group clipboard global FocusIn .* %{
     evaluate-commands %sh{
-        clipboard=$(nats request --raw clipboard.get '')
+        clipboard=$(nats request --raw cmd.get.clipboard '')
         clipboard="${clipboard%
 }"
         if [ "$kak_main_reg_dquote" = "$clipboard" ]; then
