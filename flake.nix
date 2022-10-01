@@ -14,9 +14,12 @@
     add-missing.inputs.nixpkgs.follows = "nixpkgs";
     kak-ansi.url = "github:eraserhd/kak-ansi";
     kak-ansi.inputs.nixpkgs.follows = "nixpkgs";
+
+    plugbench.url = "github:plugbench/nix-plugbench";
+    plugbench.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs  = { self, nixpkgs, darwin, home-manager, twou, add-missing, kak-ansi }:
+  outputs  = { self, nixpkgs, darwin, home-manager, twou, add-missing, kak-ansi, plugbench }:
     let
       homeManagerConfig = {
         home-manager.useGlobalPkgs = true;
@@ -40,6 +43,7 @@
             nixpkgs.overlays = [
               add-missing.overlays.default
               kak-ansi.overlays.default
+              plugbench.overlays.default
             ];
           }
           twou.darwinModules.default
@@ -63,6 +67,7 @@
             nixpkgs.overlays = [
               add-missing.overlays.default
               kak-ansi.overlays.default
+              plugbench.overlays.default
             ];
           }
           twou.nixosModules.default
