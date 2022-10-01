@@ -21,7 +21,7 @@ in {
     {
       environment.systemPackages = with pkgs; [
         natscli
-        nats-plumber
+        plumber-pluggo
       ];
 
       services.k3s.manifests = [ manifest ];
@@ -32,7 +32,7 @@ in {
       then {
         launchd.user.agents.plumber = {
           script = ''
-            ${pkgs.nats-plumber}/bin/plumber
+            ${pkgs.plumber-pluggo}/bin/plumber
           '';
           serviceConfig = {
             KeepAlive = true;

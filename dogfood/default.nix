@@ -21,7 +21,7 @@ in
           });
           kak-jira = dogfood super ./kak-jira.nix {};
           kak-plumb = dogfood super ./kak-plumb.nix {
-            plan9port = self.nats-plumber;
+            plan9port = self.plumber-pluggo;
           };
         };
 
@@ -29,7 +29,7 @@ in
         natscli = super.callPackage ./natscli.nix {};
 
         nats-editor-kak = dogfood super ./nats-editor-kak.nix {};
-        nats-plumber = dogfood super ./nats-plumber.nix {};
+        plumber-pluggo = dogfood super ./plumber-pluggo.nix {};
 
         # lxml / beautifulsoup4 fails to build on Darwin
         # https://github.com/NixOS/nixpkgs/issues/137678
