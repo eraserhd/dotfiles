@@ -34,8 +34,8 @@
 
   local.buildkite.enable = true;
   local.openURLsInChrome = true;
-  local.clipboard.enable = true;
-  local.plumber.enable = true;
+  plugbench.clipboard.enable = true;
+  plugbench.plumber.enable = true;
   services.k3s.enable = true;
 
   # Used for backwards compatibility, please read the changelog before changing.

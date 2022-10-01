@@ -13,8 +13,8 @@ let
   };
 in {
   options = {
-    local.plumber.enable = mkEnableOption "plumber";
-    local.clipboard.enable = mkEnableOption "clipboard";
+    plugbench.plumber.enable = mkEnableOption "plumber";
+    plugbench.clipboard.enable = mkEnableOption "clipboard";
   };
 
   config = mkMerge [
@@ -27,7 +27,7 @@ in {
       services.k3s.manifests = [ manifest ];
     }
 
-    (mkIf config.local.plumber.enable
+    (mkIf config.plugbench.plumber.enable
      (if (builtins.hasAttr "launchd" options)
       then {
         launchd.user.agents.plumber = {
@@ -42,11 +42,11 @@ in {
       else {
         assertions = [{
           assertion = false;
-          message = "local.plumber is not available on NixOS yet";
+          message = "plugbench.plumber is not available on NixOS yet";
         }];
       }))
 
-    (mkIf config.local.clipboard.enable
+    (mkIf config.plugbench.clipboard.enable
      (if (builtins.hasAttr "launchd" options)
       then {
         launchd.user.agents.clipboard = {
@@ -61,7 +61,7 @@ in {
       else {
         assertions = [{
           assertion = false;
-          message = "local.clipboard is not available on NixOS yet";
+          message = "plugbench.clipboard is not available on NixOS yet";
         }];
       }))
 
@@ -80,7 +80,7 @@ in {
     else {
       #assertions = [{
       #  assertion = false;
-      #  message = "local.clipboard is not available on NixOS yet";
+      #  message = "plugbench.clipboard is not available on NixOS yet";
       #}];
     })
   ];
