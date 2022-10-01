@@ -13,7 +13,6 @@ let
   };
 in {
   options = {
-    plugbench.plumber.enable = mkEnableOption "plumber";
     plugbench.clipboard.enable = mkEnableOption "clipboard";
   };
 
@@ -26,25 +25,6 @@ in {
 
       services.k3s.manifests = [ manifest ];
     }
-
-    (mkIf config.plugbench.plumber.enable
-     (if (builtins.hasAttr "launchd" options)
-      then {
-        launchd.user.agents.plumber = {
-          script = ''
-            ${pkgs.plumber-pluggo}/bin/plumber
-          '';
-          serviceConfig = {
-            KeepAlive = true;
-          };
-        };
-      }
-      else {
-        assertions = [{
-          assertion = false;
-          message = "plugbench.plumber is not available on NixOS yet";
-        }];
-      }))
 
     (mkIf config.plugbench.clipboard.enable
      (if (builtins.hasAttr "launchd" options)

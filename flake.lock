@@ -169,11 +169,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1664650982,
-        "narHash": "sha256-mshI/dh38bJIDjAgybFalMLXEqO5imF9V733pbHmnDE=",
+        "lastModified": 1664651871,
+        "narHash": "sha256-4JYllTIYich27g4fFJz3HOa97bi6stmH4v0PRpmtrh0=",
         "owner": "plugbench",
         "repo": "nix-plugbench",
-        "rev": "8de682cd16adc69d42fa9632b197f427e3a0ddaf",
+        "rev": "76967a914406a06c9a07d92ac55f98dd7b5ac9fa",
         "type": "github"
       },
       "original": {
