@@ -45,23 +45,5 @@ in {
         }];
       }))
 
-   (if (builtins.hasAttr "launchd" options)
-    then {
-      launchd.user.agents.editor-kak = {
-        path = with pkgs; [ kakoune ];
-        script = ''
-          ${pkgs.kakoune-pluggo}/bin/kakoune-editor-service
-        '';
-        serviceConfig = {
-          KeepAlive = true;
-        };
-      };
-    }
-    else {
-      #assertions = [{
-      #  assertion = false;
-      #  message = "plugbench.clipboard is not available on NixOS yet";
-      #}];
-    })
   ];
 }

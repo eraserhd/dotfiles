@@ -34,9 +34,11 @@
 
   local.buildkite.enable = true;
   local.openURLsInChrome = true;
-  plugbench.clipboard.enable = true;
-  plugbench.plumber.enable = true;
   services.k3s.enable = true;
+
+  plugbench.clipboard.enable = true;
+  plugbench.kakoune.enable = true;
+  plugbench.plumber.enable = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
