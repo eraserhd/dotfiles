@@ -20,7 +20,6 @@ in {
     {
       environment.systemPackages = with pkgs; [
         natscli
-        plumber-pluggo
       ];
 
       services.k3s.manifests = [ manifest ];
