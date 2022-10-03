@@ -75,8 +75,8 @@ in {
       jq
       killall
       man-pages
+      man-pages-posix
       nix-prefetch-github
-      posix_man_pages
       shellcheck
       silver-searcher
       sqltools
