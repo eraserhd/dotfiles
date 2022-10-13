@@ -28,6 +28,7 @@ with lib;
     ./programs/gtypist
     ./programs/hammerspoon
     ./programs/i3
+    ./programs/k9s
     ./programs/kakoune
     ./programs/kitty
     ./programs/nats
