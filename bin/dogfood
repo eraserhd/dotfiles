@@ -15,12 +15,12 @@ while [[ $# -gt 0 ]]; do
 done
 
 destination="$HOME/src/dotfiles/dogfood"
-if git -C ~/src/nix-plugbench grep -w "$repo" >/dev/null; then
-    destination="$HOME/src/nix-plugbench/pkg"
-    owner=plugbench
-elif ! git -C ~/src/dotfiles grep -w "$repo" >/dev/null; then
-    printf '\e[31;1mdogfood: %s: not mentioned anywhere in dotfiles.\e[0m\n' >&2
-fi
+case "$repo" in
+    *-pluggo)
+        destination="$HOME/src/nix-plugbench/pkg"
+        owner=plugbench
+        ;;
+esac
 
 nix-prefetch-github --nix --rev "$rev" "$owner" "$repo" |
     sed -n -e '/fetchFromGitHub {/,/}/{
