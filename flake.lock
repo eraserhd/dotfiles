@@ -221,11 +221,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1666707742,
-        "narHash": "sha256-yRFGDX+tmJw81E3x/2985uRzfqgJR9dsJPm+EQfruHQ=",
+        "lastModified": 1666730882,
+        "narHash": "sha256-tGBxntnJuYGl7TkjmlFBK+u+ejG70yqHcX4J0ERR7KU=",
         "owner": "plugbench",
         "repo": "kakoune-pluggo",
-        "rev": "e836c91e7416c44c4c22aea07bb4d4bfee68030b",
+        "rev": "2ca947e3daf837aa5008ba662296a8bf67d8ee1d",
         "type": "github"
       },
       "original": {
@@ -261,11 +261,11 @@
         "plumber-pluggo": "plumber-pluggo"
       },
       "locked": {
-        "lastModified": 1666709250,
-        "narHash": "sha256-DoifBciztrThQ9/BCrXQcTKm7yremxLvBUqJjkatl50=",
+        "lastModified": 1666730908,
+        "narHash": "sha256-cjvhLwoSrliwzYz7dK3/lLOOGC6zwoiJLrPGGUCafyM=",
         "owner": "plugbench",
         "repo": "nix-plugbench",
-        "rev": "5585f7a6e6d632a98a63307844071f6b25cf58f1",
+        "rev": "688e6ff3fc715920b0bbd9b67096ca195bcb07bb",
         "type": "github"
       },
       "original": {
