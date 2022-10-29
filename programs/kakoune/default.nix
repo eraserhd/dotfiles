@@ -12,7 +12,6 @@ with lib;
             kak-fzf
             kak-jira
             kak-lsp
-            kak-plumb
             openscad-kak
             parinfer-rust
             quickscope-kak

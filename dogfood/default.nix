@@ -20,9 +20,6 @@ in
             src = super.pkgs.fetchFromGitHub (import ./fzf.kak.nix);
           });
           kak-jira = dogfood super ./kak-jira.nix {};
-          kak-plumb = dogfood super ./kak-plumb.nix {
-            plan9port = self.plumber-pluggo;
-          };
         };
 
         # Fixes bug with nats request --raw
