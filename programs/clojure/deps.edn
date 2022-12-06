@@ -12,7 +12,7 @@
  {:dev
   {:extra-paths ["test"]
    :extra-deps  {cider/cider-nrepl           {:mvn/version "RELEASE"}
-                 nrepl                       {:mvn/version "RELEASE"}
+                 nrepl/nrepl                 {:mvn/version "RELEASE"}
                  net.eraserhead/select-nrepl {:mvn/version "RELEASE"}
                  org.clojure/tools.namespace {:mvn/version "RELEASE"}}
    :main-opts   ["-m" "nrepl.cmdline"
@@ -20,5 +20,5 @@
                  "--middleware" "select-nrepl.core/wrap-select"
                  "-i"]}
   :zprint
-  {:extra-deps {zprint {:mvn/version "0.4.13"}}
+  {:extra-deps {zprint/zprint {:mvn/version "RELEASE"}}
    :main-opts  ["-m" "zprint.main"]}}}
