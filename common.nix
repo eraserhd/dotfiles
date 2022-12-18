@@ -21,6 +21,7 @@ with lib;
     ./programs/buildkite
     ./programs/clojure
     ./programs/cue
+    ./programs/freecad
     ./programs/git
     ./programs/gnupg
     ./programs/gnuplot
