@@ -1,4 +1,4 @@
-{ pkgs, lib, options, inputs, ... }:
+{ lib, options, ... }:
 
 with lib;
 {
@@ -18,6 +18,7 @@ with lib;
     ./pkg
     ./programs/1password
     ./programs/aws
+    ./programs/barrier
     ./programs/buildkite
     ./programs/chromium
     ./programs/clojure

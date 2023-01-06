@@ -114,6 +114,9 @@ in {
   local.bluetooth.enable = true;
   local.services.X11.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.displayManager.sessionCommands = ''
+    barrierc --log /tmp/barrier.log --no-tray --debug INFO --name crunch --disable-crypto 10.156.1.215:24800
+  '';
 
   nix.nixPath = [
     "nixos-config=/home/jfelice/src/dotfiles/machines/crunch/default.nix"
