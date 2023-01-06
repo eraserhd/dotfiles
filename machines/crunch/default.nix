@@ -104,14 +104,14 @@ in {
 
   virtualisation.docker.enable = true;
 
-  services.k3s.enable = true;
+  #services.k3s.enable = true;
 
   # Allow OpenOCD to access Fiddy Plus
   services.udev.extraRules = ''
     ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6010", MODE="0666", ENV{ID_MM_DEVICE_IGNORE}="1", ENV{ID_MM_PORT_IGNORE}="1"
   '';
 
-  #local.bluetooth.enable = true;
+  local.bluetooth.enable = true;
   local.services.X11.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
 
