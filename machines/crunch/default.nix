@@ -112,8 +112,8 @@ in {
   '';
 
   #local.bluetooth.enable = true;
-  #local.services.X11.enable = true;
-  #services.xserver.videoDrivers = [ "nvidia" ];
+  local.services.X11.enable = true;
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   nix.nixPath = [
     "nixos-config=/home/jfelice/src/dotfiles/machines/crunch/default.nix"
