@@ -19,6 +19,7 @@ with lib;
     ./programs/1password
     ./programs/aws
     ./programs/buildkite
+    ./programs/chromium
     ./programs/clojure
     ./programs/cue
     ./programs/freecad
