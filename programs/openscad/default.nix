@@ -6,7 +6,7 @@ let
 
 in {
   config = mkIf cfg.enable
-    (if (builtins.hasAttr "homebrew" options)
+    (if (builtins.hasAttr "launchd" options)
      then {
        homebrew.casks = [ "openscad" ];
        environment.systemPackages = let
