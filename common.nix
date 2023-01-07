@@ -17,36 +17,36 @@ with lib;
     ./networking/wifi
     ./os/common
     ./pkg
-    ./programs/1password
-    ./programs/aws
-    ./programs/barrier
-    ./programs/buildkite
-    ./programs/chromium
-    ./programs/clojure
-    ./programs/cue
-    ./programs/freecad
-    ./programs/git
-    ./programs/gnupg
-    ./programs/gnuplot
-    ./programs/go
-    ./programs/gtypist
-    ./programs/hammerspoon
-    ./programs/i3
-    ./programs/k9s
-    ./programs/kakoune
-    ./programs/kitty
-    ./programs/nats
-    ./programs/nix
-    ./programs/npm
-    ./programs/openscad
-    ./programs/pop
-    ./programs/postgres
-    ./programs/rlwrap
-    ./programs/taskwarrior
-    ./programs/tex
-    ./programs/tmux
-    ./programs/x
-    ./programs/zsh
+    ./tools/1password
+    ./tools/aws
+    ./tools/barrier
+    ./tools/buildkite
+    ./tools/chromium
+    ./tools/clojure
+    ./tools/cue
+    ./tools/freecad
+    ./tools/git
+    ./tools/gnupg
+    ./tools/gnuplot
+    ./tools/go
+    ./tools/gtypist
+    ./tools/hammerspoon
+    ./tools/i3
+    ./tools/k9s
+    ./tools/kakoune
+    ./tools/kitty
+    ./tools/nats
+    ./tools/nix
+    ./tools/npm
+    ./tools/openscad
+    ./tools/pop
+    ./tools/postgres
+    ./tools/rlwrap
+    ./tools/taskwarrior
+    ./tools/tex
+    ./tools/tmux
+    ./tools/x
+    ./tools/zsh
     ./shell
   ];
 
