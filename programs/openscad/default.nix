@@ -1,6 +1,6 @@
-{ ... }:
+{ pkgs, ... }:
 {
   config = {
-    homebrew.casks = [ "openscad" ];
+    environment.systemPackages = with pkgs; [ openscad ];
   };
 }
