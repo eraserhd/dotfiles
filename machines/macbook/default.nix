@@ -32,6 +32,7 @@
     shell = pkgs.zsh;
   };
 
+  local.kits.workstation.enable = true;
   local.buildkite.enable = true;
   local.openURLsInChrome = true;
   services.k3s.enable = true;
