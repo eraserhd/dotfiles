@@ -6,6 +6,7 @@ with lib;
     ./browser
     ./dogfood
     ./fonts
+    ./kits/3d-printing
     ./modules/bubbles
     ./modules/environment/xdg
     ./networking

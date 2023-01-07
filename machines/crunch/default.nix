@@ -157,4 +157,6 @@ in {
   local.sendOutgoingMailWithSES.enable = true;
   local.updateDNS.enable = true;
   local.tmux.paneZeroCommand = "weechat";
+
+  local.kits._3d-printing.enable = true;
 }
