@@ -104,8 +104,6 @@ in {
 
   virtualisation.docker.enable = true;
 
-  #services.k3s.enable = true;
-
   # Allow OpenOCD to access Fiddy Plus
   services.udev.extraRules = ''
     ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6010", MODE="0666", ENV{ID_MM_DEVICE_IGNORE}="1", ENV{ID_MM_PORT_IGNORE}="1"
@@ -158,5 +156,6 @@ in {
   local.updateDNS.enable = true;
   local.tmux.paneZeroCommand = "weechat";
 
+  local.kits.workstation.enable = true;
   local.kits._3d-printing.enable = true;
 }

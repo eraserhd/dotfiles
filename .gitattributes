@@ -15,7 +15,6 @@ tools/aws/boto filter=git-crypt diff=git-crypt
 tools/aws/credentials filter=git-crypt diff=git-crypt
 tools/clojure/profiles.clj filter=git-crypt diff=git-crypt
 tools/nats/ngs.creds filter=git-crypt diff=git-crypt
-tools/nats/manifest/nats.yaml filter=git-crypt diff=git-crypt
 tools/npm/npmrc filter=git-crypt diff=git-crypt
 tools/postgres/pgpass.conf filter=git-crypt diff=git-crypt
 terraform/terraform.tfstate filter=git-crypt diff=git-crypt

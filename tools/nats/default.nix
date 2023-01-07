@@ -1,21 +1,29 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
+with lib;
 let
-  manifest = pkgs.stdenv.mkDerivation {
-    name = "nats-k8s-manifest";
-    src = ./manifest;
-    buildPhase = ":";
-    installPhase = ''
-      mkdir $out
-      cp *.yaml $out/
-    '';
-  };
+  enable = config.local.kits.workstation.enable;
 in {
-  config = {
+  config = mkIf enable {
     environment.systemPackages = with pkgs; [
       natscli
     ];
-
-    services.k3s.manifests = [ manifest ];
+    services.nats = {
+      enable = true;
+      jetstream = true;
+      settings = {
+        jetstream = {
+          max_memory_store = 128 * 1024 * 1024;
+          max_file_store = 128 * 1024 * 1024;
+        };
+        leafnodes = {
+          remotes = [{
+            url = "tls://connect.ngs.global";
+            credentials = ./ngs.creds;
+          }];
+        };
+      };
+    };
   };
 }
+

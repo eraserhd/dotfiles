@@ -7,6 +7,7 @@ with lib;
     ./dogfood
     ./fonts
     ./kits/3d-printing
+    ./kits/workstation
     ./modules/bubbles
     ./modules/environment/xdg
     ./networking
