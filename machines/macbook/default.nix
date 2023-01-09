@@ -37,7 +37,6 @@
   local.openURLsInChrome = true;
   services.k3s.enable = true;
 
-  plugbench.clipboard.enable = true;
   plugbench.plumber.enable = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
