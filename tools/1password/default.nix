@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 
 with lib;
 {
@@ -7,8 +7,9 @@ with lib;
       nixpkgs.config.allowUnfree = true;
       environment.systemPackages = with pkgs; [ _1password ];
     }
-    (mkIf pkgs.stdenv.isDarwin {
-      homebrew.casks = [ "1password" ];
+    (mkIf config.local.kits.workstation.enable {
+      homebrew.casks = mkIf pkgs.stdenv.isDarwin [ "1password" ];
+      environment.systemPackages = mkIf (!pkgs.stdenv.isDarwin) [ pkgs._1password-gui ];
     })
   ];
 }
