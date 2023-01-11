@@ -25,6 +25,7 @@ with lib;
     ./tools/chromium
     ./tools/clojure
     ./tools/cue
+    ./tools/cura
     ./tools/freecad
     ./tools/git
     ./tools/gnupg
