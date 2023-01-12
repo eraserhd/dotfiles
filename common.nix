@@ -20,6 +20,7 @@ with lib;
     ./pkg
     ./tools/1password
     ./tools/aws
+    ./tools/babashka
     ./tools/barrier
     ./tools/buildkite
     ./tools/chromium
