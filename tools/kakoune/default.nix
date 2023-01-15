@@ -23,7 +23,7 @@ with lib;
     ];
 
     environment.systemPackages = with pkgs; [
-      pythonPackages.editorconfig
+      python310Packages.editorconfig
       kakouneWrapper
       kak-lsp
     ];
