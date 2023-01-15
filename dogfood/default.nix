@@ -25,17 +25,6 @@ in
         # Fixes bug with nats request --raw
         natscli = super.callPackage ./natscli.nix {};
 
-        # lxml / beautifulsoup4 fails to build on Darwin
-        # https://github.com/NixOS/nixpkgs/issues/137678
-        python39 = super.python39.override {
-          packageOverrides = self: super: {
-            beautifulsoup4 = super.beautifulsoup4.overrideAttrs (old: {
-              propagatedBuildInputs = lib.remove super.lxml old.propagatedBuildInputs;
-            });
-          };
-        };
-        python39Packages = python39.pkgs;
-
         parinfer-rust = dogfood super ./parinfer-rust.nix {};
         rep = dogfood super ./rep.nix {};
 
