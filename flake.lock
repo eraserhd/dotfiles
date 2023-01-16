@@ -250,6 +250,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-cura5": {
+      "locked": {
+        "lastModified": 1672242389,
+        "narHash": "sha256-0YlTuZThQUss7nHAq7aP1dq7cahE1g6PyJM7jgBXV9o=",
+        "owner": "nh2",
+        "repo": "nixpkgs",
+        "rev": "acfdd7d4e4ee1cad93f314b92b3eca9f0c575efb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nh2",
+        "ref": "cura-5.2.1",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "plugbench": {
       "inputs": {
         "clipboard-pluggo": "clipboard-pluggo",
@@ -303,6 +319,7 @@
         "home-manager": "home-manager",
         "kak-ansi": "kak-ansi",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-cura5": "nixpkgs-cura5",
         "plugbench": "plugbench",
         "twou": "twou"
       }

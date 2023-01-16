@@ -9,22 +9,33 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     twou.url = "git+ssh://git@github.com/2uinc/nix-2u?ref=main";
     twou.inputs.nixpkgs.follows = "nixpkgs";
-
     add-missing.url = "github:eraserhd/add-missing";
     add-missing.inputs.nixpkgs.follows = "nixpkgs";
     kak-ansi.url = "github:eraserhd/kak-ansi";
     kak-ansi.inputs.nixpkgs.follows = "nixpkgs";
-
     plugbench.url = "github:plugbench/nix-plugbench";
     plugbench.inputs.nixpkgs.follows = "nixpkgs";
+
+    nixpkgs-cura5.url = "github:nh2/nixpkgs/cura-5.2.1";
   };
 
-  outputs  = { self, nixpkgs, darwin, home-manager, twou, add-missing, kak-ansi, plugbench }:
+  outputs =
+  { self
+  , nixpkgs
+  , darwin
+  , home-manager
+  , twou
+  , add-missing
+  , kak-ansi
+  , plugbench
+  , nixpkgs-cura5
+  }:
     let
       homeManagerConfig = {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
       };
+
     in {
       darwinConfigurations."C02FV0KUQ05Q" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
@@ -67,6 +78,9 @@
             nixpkgs.overlays = [
               add-missing.overlays.default
               kak-ansi.overlays.default
+              (final: prev: {
+                curaengine = nixpkgs-cura5.legacyPackages.x86_64-linux.curaengine;
+              })
             ];
           }
           twou.nixosModules.default
