@@ -7,6 +7,7 @@ with lib;
     ./dogfood
     ./fonts
     ./kits/3d-printing
+    ./kits/pcbs
     ./kits/workstation
     ./modules/bubbles
     ./modules/environment/xdg
@@ -37,6 +38,7 @@ with lib;
     ./tools/i3
     ./tools/k9s
     ./tools/kakoune
+    ./tools/kicad
     ./tools/kitty
     ./tools/nats
     ./tools/nix
