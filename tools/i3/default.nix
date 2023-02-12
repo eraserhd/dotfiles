@@ -1,10 +1,27 @@
-{ config, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
+with lib;
 {
   config = {
     home-manager.users.jfelice = { pkgs, ... }: {
       home.file.".config/i3/config".text = let
         homeDirectory = config.users.users.jfelice.home;
+
+        directions = {
+          h = "left";
+          j = "down";
+          k = "up";
+          l = "right";
+        };
+
+        eachDir = f: (concatStringsSep "\n" (attrValues (mapAttrs f directions))) + "\n";
+
+        dirSwaps = eachDir (key: dir:
+                            "bindsym $swap_key+${key} mark swapee ; " +
+                            "focus ${dir} ; " +
+                            "swap with mark swapee ; " +
+                            "focus ${dir} ; " +
+                            "mode \"default\"");
       in ''
         focus_follows_mouse no
 
@@ -12,7 +29,7 @@
         mouse_warping output
 
         set $ctrlw ctrlw
-        set $ctrlws ctrlws
+        set $swap_key Mod1
 
         bindsym Control+w mode "$ctrlw"
 
@@ -21,6 +38,8 @@
           bindsym j focus down ; mode "default"
           bindsym k focus up ; mode "default"
           bindsym l focus right ; mode "default"
+
+          ${dirSwaps}
 
           bindsym m exec i3-input -F 'mark %s' -l 1 -P 'Mark: ' ; mode "default"
 
@@ -34,17 +53,6 @@
           bindsym Shift+backslash split horizontal ; mode "default"
 
           bindsym slash layout toggle split ; mode "default"
-
-          bindsym s mode "$ctrlws"
-
-          bindsym Escape mode "default"
-        }
-
-        mode "$ctrlws" {
-          bindsym h mark swapee ; focus left ; swap with mark swapee ; focus left ; mode "default"
-          bindsym j mark swapee ; focus down ; swap with mark swapee ; focus down ; mode "default"
-          bindsym k mark swapee ; focus up ; swap with mark swapee ; focus up ; mode "default"
-          bindsym l mark swapee ; focus right ; swap with mark swapee ; focus right ; mode "default"
 
           bindsym Escape mode "default"
         }
