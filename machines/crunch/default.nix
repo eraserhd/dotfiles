@@ -45,25 +45,24 @@ in {
       enable = true;
       interfaces = [ "wlp65s0" ];
     };
-    defaultGateway = {
-      address = "10.156.1.1";
-      interface = "wlp65s0";
-    };
+    #defaultGateway = {
+    #  address = "10.156.1.1";
+    #  interface = "wlp65s0";
+    #};
     interfaces.wlp65s0 = {
-      useDHCP = false;
-      proxyARP = true;
-      ipv6.addresses = [
-        {
-          address = networkParams.ip;
-          prefixLength = 64;
-        }
-      ];
-      ipv4.addresses = [
-        {
-          address = "10.156.1.42";
-          prefixLength = 24;
-        }
-      ];
+      useDHCP = true;
+      #ipv6.addresses = [
+      #  {
+      #    address = networkParams.ip;
+      #    prefixLength = 64;
+      #  }
+      #];
+      #ipv4.addresses = [
+      #  {
+      #    address = "10.156.1.42";
+      #    prefixLength = 24;
+      #  }
+      #];
     };
   };
 
@@ -113,8 +112,11 @@ in {
   local.services.X11.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
   services.xserver.displayManager.sessionCommands = ''
-    barrierc --log /tmp/barrier.log --no-tray --debug INFO --name crunch --disable-crypto 10.156.1.215:24800
+    barriers --log /tmp/barrier.log --no-tray --debug INFO --name crunch --disable-crypto --disable-client-cert-checking -c ${./barrier.conf} --address :24800
   '';
+
+  services.xserver.libinput.mouse.naturalScrolling = true;
+  services.xserver.libinput.mouse.accelProfile = "flat";
 
   nix.nixPath = [
     "nixos-config=/home/jfelice/src/dotfiles/machines/crunch/default.nix"
