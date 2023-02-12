@@ -117,6 +117,7 @@ in {
 
   services.xserver.libinput.mouse.naturalScrolling = true;
   services.xserver.libinput.mouse.accelProfile = "flat";
+  programs.ssh.startAgent = true;
 
   nix.nixPath = [
     "nixos-config=/home/jfelice/src/dotfiles/machines/crunch/default.nix"
