@@ -16,6 +16,8 @@ with lib;
 
         eachDir = f: (concatStringsSep "\n" (attrValues (mapAttrs f directions))) + "\n";
 
+        dirFocus = eachDir (key: dir: "bindsym ${key} focus ${dir} ; mode \"default\"");
+
         dirSwaps = eachDir (key: dir:
                             "bindsym $swap_key+${key} mark swapee ; " +
                             "focus ${dir} ; " +
@@ -34,11 +36,7 @@ with lib;
         bindsym Control+w mode "$ctrlw"
 
         mode "$ctrlw" {
-          bindsym h focus left ; mode "default"
-          bindsym j focus down ; mode "default"
-          bindsym k focus up ; mode "default"
-          bindsym l focus right ; mode "default"
-
+          ${dirFocus}
           ${dirSwaps}
 
           bindsym m exec i3-input -F 'mark %s' -l 1 -P 'Mark: ' ; mode "default"
