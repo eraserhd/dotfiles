@@ -6,9 +6,10 @@
       home.file.".config/i3/config".text = let
         homeDirectory = config.users.users.jfelice.home;
       in ''
-        #
-        # Should you change your keyboard layout some time, delete
-        # this file and re-run i3-config-wizard(1).
+        focus_follows_mouse no
+
+        # *sigh* we actually always want to warp, but no option :(
+        mouse_warping output
 
         set $ctrlw ctrlw
         set $ctrlws ctrlws
