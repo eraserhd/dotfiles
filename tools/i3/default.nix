@@ -21,7 +21,7 @@ with lib;
         eachDir = f: (concatStringsSep "\n" (attrValues (mapAttrs f directions))) + "\n";
 
         dirFocus = eachDir (key: dir: "bindsym ${key} focus ${dir} ; mode \"default\"");
-        sigilFocus = concatMapStringsSep "\n" (sigil: "bindsym ${sigil} exec ${pkgs.babashka}/bin/bb ${./sigils.clj} i3-exec '[id=$(${sigil})] focus' ; mode \"default\"") sigils;
+        sigilFocus = concatMapStringsSep "\n" (sigil: "bindsym ${sigil} exec ${./sigils.clj} i3-exec '[id=$(${sigil})] focus' ; mode \"default\"") sigils;
 
         dirSwaps = eachDir (key: dir:
                             "bindsym $swap_key+${key} mark swapee ; " +
