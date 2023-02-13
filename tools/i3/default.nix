@@ -29,6 +29,13 @@ with lib;
                             "swap with mark swapee ; " +
                             "focus ${dir} ; " +
                             "mode \"default\"");
+        sigilSwaps = concatMapStringsSep "\n" (sigil:
+                                               "bindsym $swap_key+${sigil} exec \"${./sigils.clj} i3-exec '" +
+                                                 "mark swapee; " +
+                                                 "[id=$(${sigil})] swap with mark swapee; " +
+                                                 "[id=$(${sigil})] focus; " +
+                                                 "mode \\\\\"default\\\\\"'\"")
+                                               sigils;
       in ''
         focus_follows_mouse no
 
@@ -45,6 +52,7 @@ with lib;
           ${dirFocus}
 
           ${dirSwaps}
+          ${sigilSwaps}
 
           # bindsym Shift+n exec i3-input -F '%s' -P 'Command: ' ; mode "default"
 
@@ -107,24 +115,6 @@ with lib;
         # shipping a .desktop file. It is a wrapper around dmenu, so you need that
         # installed.
         # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
-
-        # move focused window
-        bindsym $mod+Shift+h move left
-        bindsym $mod+Shift+j move down
-        bindsym $mod+Shift+k move up
-        bindsym $mod+Shift+l move right
-
-        # alternatively, you can use the cursor keys:
-        bindsym $mod+Shift+Left move left
-        bindsym $mod+Shift+Down move down
-        bindsym $mod+Shift+Up move up
-        bindsym $mod+Shift+Right move right
-
-        # split in horizontal orientation
-        bindsym $mod+minus split h
-
-        # split in vertical orientation
-        bindsym $mod+Shift+backslash split v
 
         # enter fullscreen mode for the focused container
         bindsym $mod+f fullscreen toggle

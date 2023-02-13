@@ -47,6 +47,7 @@
 
 (defmethod command :i3-exec
   [_ msg-text]
+  (spit "/tmp/foo.txt" msg-text)
   (i3-msg (interpret-dollar-bracket msg-text)))
 
 (defmethod command :relabel
