@@ -13,6 +13,10 @@ with lib;
           k = "up";
           l = "right";
         };
+        sigils = [
+          "a" "b" "c" "d" "e" "f" "g" "i" "m" "n" "o" "p" "q" "r" "s" "t" "u"
+          "v" "w" "x" "y" "z"
+        ];
 
         eachDir = f: (concatStringsSep "\n" (attrValues (mapAttrs f directions))) + "\n";
 
@@ -38,8 +42,6 @@ with lib;
         mode "$ctrlw" {
           ${dirFocus}
           ${dirSwaps}
-
-          bindsym m exec i3-input -F 'mark %s' -l 1 -P 'Mark: ' ; mode "default"
 
           bindsym Shift+n exec i3-input -F '%s' -P 'Command: ' ; mode "default"
 
