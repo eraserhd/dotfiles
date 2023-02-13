@@ -14,11 +14,12 @@ in {
     ];
   } // (if (builtins.hasAttr "xserver" options.services)
   then {
-    services.xserver.enable = true;
-    services.xserver.windowManager.i3.enable = true;
-    services.xserver.displayManager.sessionCommands = ''
-      ${pkgs.xorg.xset}/bin/xset r rate 200 60
-    '';
+    services.xserver = {
+      enable = true;
+      windowManager.i3.enable = true;
+      autoRepeatDelay = 200;
+      autoRepeatInterval = 40;
+    };
   }
   else {
   }));
