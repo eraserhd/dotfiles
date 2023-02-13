@@ -10,48 +10,54 @@
    "l" "right"})
 
 (defn i3-msg [& args]
-  (let [{:keys [out err exit]} (apply shell/sh "i3-msg" args)]
+  (let [{:keys [out exit], :as result} (apply shell/sh "i3-msg" args)]
     (when-not (zero? exit)
-      (throw (ex-info (str "non-zero exit: " exit "\n" err))))
+      (throw (ex-info (str "non-zero exit: " exit "\n") result)))
     out))
 
-(defn tree []
-  (json/parse-string (i3-msg "-t" "get_tree")) keyword)
-(alter-var-root #'tree memoize)
+(defn container-tree []
+  (json/parse-string (i3-msg "-t" "get_tree") keyword))
+(alter-var-root #'container-tree memoize)
 
-(defn label? [node]
-  (and (empty? (:nodes node))
-       (= "normal" (:window_type node))))
+(defn sigil->window-id
+  "Returns a map of sigil symbol names to window ids"
+  []
+  (let [label?   (fn label?* [node]
+                   (and (empty? (:nodes node))
+                        (= "normal" (:window_type node))))
+        to-label (fn to-label* [node]
+                   (concat
+                     (when (label? node)
+                       [node])
+                     (mapcat to-label* (:nodes node))))]
+    (into {} (map (fn [window sigil]
+                    [sigil (:window window)])
+                  (to-label (container-tree))
+                  sigils))))
 
-(defn to-label [node]
-  (concat
-    (when (label? node)
-      [node])
-    (mapcat to-label (:nodes node))))
+(defn interpret-dollar-bracket [text]
+  (let [sigil->window-id (sigil->window-id)]
+    (str/replace text #"\$\((.)\)" (comp str sigil->window-id second))))
 
-(defn labels []
-  (into {} (map (fn [window sigil]
-                  [sigil (:window window)])
-                (to-label (tree))
-                sigils)))
+;; ======================================================================
 
-(defn i3-exec [command]
-  (let [labels       (labels)
-        interpolated (str/replace command
-                                  #"\$\((.)\)"
-                                  (comp str labels second))]
-    (i3-msg interpolated)))
+(defmulti command
+  (fn [cmd & args]
+    (keyword cmd)))
 
-(defn relabel []
+(defmethod command :i3-exec
+  [_ msg-text]
+  (i3-msg (interpret-dollar-bracket msg-text)))
+
+(defmethod command :relabel
+  [_]
   (let [commands (map (fn [[sigil window-id]]
                         (format "[id=%d] title_format \"[%s] %%title\""
                                 window-id
                                 sigil))
-                      (labels))]
+                      (sigil->window-id))]
     (i3-msg (str/join " ; " commands))))
 
-(case (first *command-line-args*)
-  "i3-exec" (i3-exec (second *command-line-args*))
-  "relabel" (relabel))
+(apply command *command-line-args*)
 
 nil
