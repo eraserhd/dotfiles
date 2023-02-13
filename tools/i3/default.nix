@@ -19,6 +19,8 @@ with lib;
         ];
 
         eachDir = f: (concatStringsSep "\n" (attrValues (mapAttrs f directions))) + "\n";
+        i3-quote = text: "\"" + (replaceStrings ["\""] ["\\\\\""] text)  + "\"";
+        i3-exec = commands: "exec " + (i3-quote "${./sigils.clj} i3-exec ${escapeShellArg commands}");
 
         dirFocus = eachDir (key: dir: "bindsym ${key} focus ${dir} ; mode \"default\"");
         sigilFocus = concatMapStringsSep "\n" (sigil: "bindsym ${sigil} exec ${./sigils.clj} i3-exec '[id=$(${sigil})] focus' ; mode \"default\"") sigils;
@@ -29,12 +31,13 @@ with lib;
                             "swap with mark swapee ; " +
                             "focus ${dir} ; " +
                             "mode \"default\"");
+
         sigilSwaps = concatMapStringsSep "\n" (sigil:
-                                               "bindsym $swap_key+${sigil} exec \"${./sigils.clj} i3-exec '" +
-                                                 "mark swapee; " +
-                                                 "[id=$(${sigil})] swap with mark swapee; " +
-                                                 "[id=$(${sigil})] focus; " +
-                                                 "mode \\\\\"default\\\\\"'\"")
+                                               "bindsym $swap_key+${sigil} " +
+                                               (i3-exec ("mark swapee; " +
+                                                         "[id=$(${sigil})] swap with mark swapee; " +
+                                                         "[con_mark=swapee] focus; " +
+                                                         "mode \"default\"")))
                                                sigils;
       in ''
         focus_follows_mouse no
