@@ -6,6 +6,7 @@
 
 (defn tree []
   (json/parse-string (:out (shell/sh "i3-msg" "-t" "get_tree")) keyword))
+(alter-var-root #'tree memoize)
 
 (defn label? [node]
   (and (empty? (:nodes node))
@@ -23,7 +24,15 @@
                 (to-label (tree))
                 sigils)))
 
-(defn- relabel []
+(defn i3-exec [command]
+  (let [labels       (labels)
+        interpolated (str/replace command
+                                  #"\$\((.)\)"
+                                  (fn [[_ sigil]]
+                                    (str (get labels sigil))))]
+    (shell/sh "i3-msg" interpolated)))
+
+(defn relabel []
   (let [commands (map (fn [[sigil window-id]]
                         (format "[id=%d] title_format \"[%s] %%title\""
                                 window-id
@@ -32,4 +41,7 @@
     (shell/sh "i3-msg" (str/join " ; " commands))))
 
 (case (first *command-line-args*)
+  "i3-exec" (i3-exec (second *command-line-args*))
   "relabel" (relabel))
+
+nil
