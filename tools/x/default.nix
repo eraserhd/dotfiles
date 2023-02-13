@@ -21,7 +21,7 @@ in {
       autoRepeatInterval = 40;
       libinput.mouse = {
         naturalScrolling = true;
-        accelProfile = "flat";
+        accelSpeed = "-0.5";
       };
     };
   }
