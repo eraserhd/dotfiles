@@ -19,6 +19,10 @@ in {
       windowManager.i3.enable = true;
       autoRepeatDelay = 200;
       autoRepeatInterval = 40;
+      libinput.mouse = {
+        naturalScrolling = true;
+        accelProfile = "flat";
+      };
     };
   }
   else {
