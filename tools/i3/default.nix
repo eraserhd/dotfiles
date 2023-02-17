@@ -31,7 +31,6 @@ with lib;
                             "swap with mark swapee ; " +
                             "focus ${dir} ; " +
                             "mode \"default\"");
-
         sigilSwaps = concatMapStringsSep "\n" (sigil:
                                                "bindsym $swap_key+${sigil} " +
                                                (i3-exec ("mark swapee; " +
@@ -124,7 +123,7 @@ with lib;
 
         # change container layout (stacked, tabbed, toggle split)
         bindsym $mod+s layout stacking
-        bindsym $mod+w layout tabbed
+        # bindsym $mod+w layout tabbed
         bindsym $mod+e layout toggle split
 
         # toggle tiling / floating
