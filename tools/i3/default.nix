@@ -56,7 +56,7 @@ with lib;
           ${dirSwaps}
           ${sigilSwaps}
 
-          # bindsym Shift+n exec i3-input -F '%s' -P 'Command: ' ; mode "default"
+          bindsym Shift+semicolon exec i3-input -F '%s' -P 'Command: ' ; mode "default"
 
           # bindsym Shift+r [con_mark="R"] focus ; mode "default"
           # bindsym r [con_mark="r"] focus ; mode "default"
