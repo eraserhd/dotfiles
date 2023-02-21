@@ -28,8 +28,6 @@ in
         parinfer-rust = dogfood super ./parinfer-rust.nix {};
         rep = dogfood super ./rep.nix {};
 
-        sqltools = dogfood super ./sqltools.nix {};
-
         tableize = dogfood super ./tableize.nix {};
       })
     ];

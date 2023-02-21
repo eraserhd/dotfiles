@@ -79,7 +79,6 @@ in {
       nix-prefetch-github
       shellcheck
       silver-searcher
-      sqltools
       tableize
       tree
       unzip
