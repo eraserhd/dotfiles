@@ -3,11 +3,11 @@
 {
   config = {
     nixpkgs.overlays = [
-      (self: super: {
-        local = (super.local or {}) // {
-          git-scripts = super.callPackage ./git-scripts {};
+      (final: prev: {
+        local = (prev.local or {}) // {
+          git-scripts = prev.callPackage ./git-scripts {};
         };
-        open-in-chrome-tab = super.callPackage ./open-in-chrome-tab {};
+        open-in-chrome-tab = prev.callPackage ./open-in-chrome-tab {};
       })
     ];
   };
