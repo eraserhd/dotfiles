@@ -23,6 +23,7 @@ with lib;
     ./tools/aws
     ./tools/babashka
     ./tools/barrier
+    ./tools/bCNC
     ./tools/buildkite
     ./tools/chromium
     ./tools/clojure

@@ -1,0 +1,29 @@
+From a60f8355316c295eef221d05f953a42d41fcd622 Mon Sep 17 00:00:00 2001
+From: Jason Felice <jason.m.felice@gmail.com>
+Date: Fri, 24 Feb 2023 11:04:47 -0500
+Subject: [PATCH] Disable opencv
+
+---
+ setup.py | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/setup.py b/setup.py
+index b19ac5e..1f3a540 100755
+--- a/setup.py
++++ b/setup.py
+@@ -37,9 +37,9 @@ setup(
+         "Pillow>=4.0",
+         # Note there are no PyPI OpenCV packages for ARM
+         # (Raspberry PI, Orange PI, etc...)
+-        "opencv-python==4.5.5.62 ; "
+-        + "(\"arm\" not in platform_machine) and "
+-        + "(\"aarch64\" not in platform_machine)"
++        #"opencv-python==4.5.5.62 ; "
++        #+ "(\"arm\" not in platform_machine) and "
++        #+ "(\"aarch64\" not in platform_machine)"
+     ],
+     entry_points={
+         "console_scripts": [
+-- 
+2.38.1
+
