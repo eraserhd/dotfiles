@@ -45,6 +45,7 @@ with lib;
     ./tools/nix
     ./tools/npm
     ./tools/openscad
+    ./tools/pcb2gcode
     ./tools/pop
     ./tools/postgres
     ./tools/rlwrap
