@@ -1,7 +1,8 @@
-{ config, pkgs, ... }:
+{ lib, config, pkgs, ... }:
 
+with lib;
 {
-  config = {
+  config = mkIf config.local.kits.pcbs.enable {
     environment.systemPackages = [ pkgs.bCNC ];
   };
 }

@@ -71,6 +71,7 @@ in {
       broot
       direnv
       entr
+      fblog
       fzf
       jq
       killall
