@@ -19,7 +19,14 @@ with lib;
     (mkIf config.local.bluetooth.enable
      (if (builtins.hasAttr "hardware" options)
       then {
-        hardware.bluetooth.enable = true;
+        hardware.bluetooth = {
+          enable = true;
+          settings = {
+            General = {
+              Experimental = true;
+            };
+          };
+        };
         hardware.pulseaudio.enable = true;
         hardware.pulseaudio.package = pkgs.pulseaudioFull;
         # for bluetoothctl
