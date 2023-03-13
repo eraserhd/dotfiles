@@ -22,7 +22,6 @@ with lib;
     ./tools/1password
     ./tools/aws
     ./tools/babashka
-    ./tools/barrier
     ./tools/bCNC
     ./tools/buildkite
     ./tools/chromium
@@ -49,6 +48,7 @@ with lib;
     ./tools/pop
     ./tools/postgres
     ./tools/rlwrap
+    ./tools/synergy
     ./tools/taskwarrior
     ./tools/tex
     ./tools/tmux
