@@ -36,6 +36,7 @@ with lib;
     ./tools/gtypist
     ./tools/hammerspoon
     ./tools/i3
+    ./tools/inkscape
     ./tools/k9s
     ./tools/kakoune
     ./tools/kicad
