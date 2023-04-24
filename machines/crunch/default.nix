@@ -21,7 +21,6 @@ in {
     device = "/dev/disk/by-uuid/05c1d59b-9cfc-4767-b8e3-4d4f99859411";
   }];
 
-  hardware.video.hidpi.enable = lib.mkDefault true;
   hardware.enableRedistributableFirmware = true;
   hardware.enableAllFirmware = true;
   hardware.firmware = [ pkgs.wireless-regdb ];
@@ -33,7 +32,7 @@ in {
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 15;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.cleanTmpDir = true;
+  boot.tmp.cleanOnBoot = true;
 
   local.systemDisplayName = "crunch";
 
