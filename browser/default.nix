@@ -1,52 +1,37 @@
 { config, options, lib, pkgs, ... }:
 
 with lib;
-{
-  options = {
-    local.browserCommand = mkOption {
+let
+  firefox = if (builtins.hasAttr "launchd" options)
+            then "/Applications/Firefox.app/Contents/MacOS/firefox"
+            else "${pkgs.firefox}/bin/firefox";
+in {
+  options.local.browser = {
+    command = mkOption {
       description = "Command to open a URL in a browser";
       type = types.str;
-      default = "open";
+      default = "${firefox} --new-tab --url";
     };
-
-    local.openURLsInChrome = mkEnableOption "Open URLs in Chrome";
   };
 
-  config = mkIf config.local.openURLsInChrome
-    (if (builtins.hasAttr "launchd" options)
-     then {
-       launchd.user.agents.open-https-in-chrome-tab = {
-         path = with pkgs; [
-           natscli
-           open-in-chrome-tab
-         ];
-         script = ''
-           export PATH="$PATH":/usr/bin
-           nats reply cmd.show.url.https --command "/bin/sh -c 'open-in-chrome-tab \"\$NATS_REQUEST_BODY\"'"
-         '';
-         serviceConfig = {
-           KeepAlive = true;
-         };
-       };
-       launchd.user.agents.open-http-in-chrome-tab = {
-         path = with pkgs; [
-           natscli
-           open-in-chrome-tab
-         ];
-         script = ''
-           export PATH="$PATH":/usr/bin
-           nats reply cmd.show.url.http --command "/bin/sh -c 'open-in-chrome-tab \"\$NATS_REQUEST_BODY\"'"
-         '';
-         serviceConfig = {
-           KeepAlive = true;
-         };
-       };
-       environment.systemPackages = [ pkgs.open-in-chrome-tab ];
-     }
-     else {
-       assertions = [{
-         assertion = false;
-         message = "local.openURLsInChrome is not available on NixOS yet";
-       }];
-     });
+  config = {
+    launchd.user.agents.open-https-in-firefox = {
+      path = with pkgs; [ natscli ];
+      script = ''
+        nats reply cmd.show.url.https --command "/bin/sh -c '${config.local.browser.command} \"\$NATS_REQUEST_BODY\"'"
+      '';
+      serviceConfig = {
+        KeepAlive = true;
+      };
+    };
+    launchd.user.agents.open-http-in-firefox = {
+      path = with pkgs; [ natscli ];
+      script = ''
+        nats reply cmd.show.url.https --command "/bin/sh -c '${config.local.browser.command} \"\$NATS_REQUEST_BODY\"'"
+      '';
+      serviceConfig = {
+        KeepAlive = true;
+      };
+    };
+  };
 }

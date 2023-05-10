@@ -12,7 +12,7 @@
     ];
 
     # Needed for `hub browse`
-    environment.variables.BROWSER = config.local.browserCommand;
+    environment.variables.BROWSER = config.local.browser.command;
 
     home-manager.users.jfelice = { pkgs, ... }: {
       home.file.".gitconfig".source = ./gitconfig;
