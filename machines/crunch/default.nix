@@ -24,6 +24,7 @@ in {
   hardware.enableRedistributableFirmware = true;
   hardware.enableAllFirmware = true;
   hardware.firmware = [ pkgs.wireless-regdb ];
+  hardware.opengl.enable = true;
 
   nix.settings.max-jobs = 2;
   nix.settings.cores = 10;
