@@ -24,10 +24,10 @@ with lib;
     ./tools/babashka
     ./tools/bCNC
     ./tools/buildkite
-    ./tools/chromium
     ./tools/clojure
     ./tools/cue
     ./tools/cura
+    ./tools/firefox
     ./tools/freecad
     ./tools/git
     ./tools/gnupg
