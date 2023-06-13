@@ -27,9 +27,13 @@
           uda.github.type = "string";
           uda.github.label = "GitHub ID";
 
+          # JIRA
+          uda.jira.type = "string";
+          uda.jira.label = "JIRA ID";
+
           # Next
-          report.next.columns = "id,start.age,entry.age,depends,priority,project,recur,scheduled.countdown,due.relative,until.remaining,description.truncated,urgency";
-          report.next.labels = "ID,Active,Age,Deps,P,Project,Recur,S,Due,Until,Description,Urg";
+          report.next.columns = "id,entry.age,depends,priority,project,due.relative,until.remaining,jira,description.truncated,urgency";
+          report.next.labels = "ID,Age,Deps,P,Project,Due,Until,JIRA,Description,Urg";
 
           # Urgency
           urgency.annotations.coefficient = "0";
