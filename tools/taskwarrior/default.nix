@@ -32,8 +32,8 @@
           uda.jira.label = "JIRA ID";
 
           # Next
-          report.next.columns = "id,entry.age,depends,priority,due.relative,until.remaining,jira,project,github,description.truncated,urgency";
-          report.next.labels = "ID,Age,Deps,P,Due,Until,JIRA,Project,GitHub,Description,Urg";
+          report.next.columns = "entry.age,depends,priority,due.relative,until.remaining,jira,project,github,id,description.truncated,urgency";
+          report.next.labels = "Age,Deps,P,Due,Until,JIRA,Project,GitHub,ID,Description,Urg";
 
           # Urgency
           urgency.annotations.coefficient = "0";
