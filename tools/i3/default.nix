@@ -133,10 +133,10 @@ with lib;
         bindsym $mod+space focus mode_toggle
 
         # focus the parent container
-        bindsym $mod+a focus parent
+        bindsym $mod+p focus parent
 
         # focus the child container
-        #bindsym $mod+d focus child
+        bindsym $mod+slash focus child
 
         # Define names for default workspaces for which we configure key bindings later on.
         # We use variables to avoid repeating the names in multiple places.
