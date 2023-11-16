@@ -30,14 +30,14 @@ in {
         if command -v darwin-rebuild >/dev/null; then
           pushd ~/src/dotfiles >/dev/null
           TERM=xterm darwin-rebuild build --flake $HOME/src/dotfiles || return $?
-          if [ "$($readlink_bin -f /run/current-system)" != "$($readlink_bin -f ./result)" ]; then
+          if [ "$($readlink_bin -f /run/current-system)" != "$($readlink_bin -f ./result)" ] || [ "$1" = "--force" ]; then
             TERM=xterm VERBOSE=1 darwin-rebuild switch --flake $HOME/src/dotfiles || return $?
           fi
           popd >/dev/null
         elif command -v nixos-rebuild >/dev/null; then
           pushd ~/src/dotfiles >/dev/null
           nixos-rebuild build --flake $HOME/src/dotfiles || return $?
-          if [ "$($readlink_bin -f /run/current-system)" != "$($readlink_bin -f ./result)" ]; then
+          if [ "$($readlink_bin -f /run/current-system)" != "$($readlink_bin -f ./result)" ] || [ "$1" = "--force" ]; then
             nixos-rebuild switch --use-remote-sudo --flake $HOME/src/dotfiles || return $?
           fi
           popd >/dev/null
