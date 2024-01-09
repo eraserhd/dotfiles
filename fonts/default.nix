@@ -48,7 +48,7 @@ let
 in {
   config = {
     fonts = {
-      fonts = with pkgs; [
+      packages = with pkgs; [
         custom-input-fonts
         mononoki
       ];
