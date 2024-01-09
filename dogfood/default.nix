@@ -12,7 +12,8 @@ in
       (self: super: rec {
         kakoune-unwrapped = super.kakoune-unwrapped.overrideAttrs (oldAttrs: {
           src = super.pkgs.fetchFromGitHub (import ./kakoune.nix);
-          enableParallelBuilding = true;
+          # Patch for clang-16 regression made it into master
+          patches = [];
         });
 
         kakounePlugins = super.kakounePlugins // {
