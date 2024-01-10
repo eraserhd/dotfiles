@@ -1,4 +1,4 @@
-#!/bin/sh
+#!@bash@/bin/bash
 #
 # This works with kak-ansi. It might work without if `--stdin-add-formatting`
 # is removed below.
@@ -16,7 +16,7 @@ lines="$4"
 # select must happen in the window context, but we are notified of new
 # content in the buffer context.  For scrollback buffers, we assume there's
 # only one client, and the user does not change the buffer in it.
-exec kak -e '
+exec @kakoune@/bin/kak -e '
     try %{ declare-option str kak_scrollback_pager_client }
     set-option buffer kak_scrollback_pager_client %val{client}
     hook -group kak-scrollback-pager buffer BufReadFifo .* %{
