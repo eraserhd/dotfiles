@@ -81,7 +81,7 @@ with lib;
 
   services.avahi = {
     enable = true;
-    nssmdns = true;
+    nssmdns4 = true;
     reflector = true;
     publish.enable = true;
     publish.addresses = true;
