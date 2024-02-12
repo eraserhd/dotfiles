@@ -3,6 +3,7 @@
 with lib;
 let
   enable = config.local.kits.workstation.enable;
+  isBrain = config.local.kits.brain.enable;
 in {
   config = mkIf enable {
     environment.systemPackages = with pkgs; [
@@ -17,9 +18,9 @@ in {
           max_file_store = 128 * 1024 * 1024;
         };
         leafnodes = {
-          remotes = [{
-            url = "tls://connect.ngs.global";
-            credentials = ./ngs.creds;
+          port = mkIf isBrain 7422;
+          remotes = mkIf (!isBrain) [{
+            url = "tls://crunch.eraserhead.net";
           }];
         };
       };

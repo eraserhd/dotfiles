@@ -158,6 +158,7 @@ with lib;
   local.updateDNS.enable = true;
   local.tmux.paneZeroCommand = "weechat";
 
+  local.kits.brain.enable = true;
   local.kits.workstation.enable = true;
   local.kits._3d-printing.enable = true;
   local.kits.pcbs.enable = true;
