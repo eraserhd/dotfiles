@@ -3,11 +3,11 @@
 with lib;
 let
   listenCommand = schema: let
-    authArg = if config.plugbench.token == null
+    userArg = if config.plugbench.token == null
               then ""
               else "--user ${escapeShellArg config.plugbench.token}";
   in ''
-    nats reply cmd.show.url.${schema} ${authArg} --command "/bin/sh -c '${config.local.browser.command} \"\$NATS_REQUEST_BODY\"'"
+    nats reply cmd.show.url.${schema} ${userArg} --command "/bin/sh -c '${config.local.browser.command} \"\$NATS_REQUEST_BODY\"'"
   '';
 
   launchdConfig = schema: {
