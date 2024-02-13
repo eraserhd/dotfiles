@@ -2,6 +2,36 @@
 
 with lib;
 let
+  listenCommand = schema: let
+    authArg = if config.plugbench.token == null
+              then ""
+              else "--user ${escapeShellArg config.plugbench.token}";
+  in ''
+    nats reply cmd.show.url.${schema} ${authArg} --command "/bin/sh -c '${config.local.browser.command} \"\$NATS_REQUEST_BODY\"'"
+  '';
+
+  launchdConfig = schema: {
+    launchd.user.agents."open-${schema}-in-browser" = {
+      path = with pkgs; [ natscli ];
+      script = listenCommand schema;
+      serviceConfig = {
+        KeepAlive = true;
+      };
+    };
+  };
+
+  systemdConfig = schema: {
+    systemd.user.services."open-${schema}-in-browser" = {
+      wantedBy = ["default.target"];
+      path = with pkgs; [ natscli ];
+      script = listenCommand schema;
+    };
+  };
+
+  schemaLaunchConfig = schema: if (builtins.hasAttr "launchd" options)
+                               then launchdConfig schema
+                               else systemdConfig schema;
+
   firefox = if (builtins.hasAttr "launchd" options)
             then "/Applications/Firefox.app/Contents/MacOS/firefox"
             else "${pkgs.firefox}/bin/firefox";
@@ -14,41 +44,8 @@ in {
     };
   };
 
-  config = if (builtins.hasAttr "launchd" options)
-           then {
-             launchd.user.agents.open-https-in-firefox = {
-               path = with pkgs; [ natscli ];
-               script = ''
-                 nats reply cmd.show.url.https --command "/bin/sh -c '${config.local.browser.command} \"\$NATS_REQUEST_BODY\"'"
-               '';
-               serviceConfig = {
-                 KeepAlive = true;
-               };
-             };
-             launchd.user.agents.open-http-in-firefox = {
-               path = with pkgs; [ natscli ];
-               script = ''
-                 nats reply cmd.show.url.http --command "/bin/sh -c '${config.local.browser.command} \"\$NATS_REQUEST_BODY\"'"
-               '';
-               serviceConfig = {
-                 KeepAlive = true;
-               };
-             };
-           }
-           else {
-             systemd.user.services.open-https-in-firefox = {
-               wantedBy = ["default.target"];
-               path = with pkgs; [ natscli ];
-               script = ''
-                 nats reply cmd.show.url.https --command "/bin/sh -c '${config.local.browser.command} \"\$NATS_REQUEST_BODY\"'"
-               '';
-             };
-             systemd.user.services.open-http-in-firefox = {
-               wantedBy = ["default.target"];
-               path = with pkgs; [ natscli ];
-               script = ''
-                 nats reply cmd.show.url.http --command "/bin/sh -c '${config.local.browser.command} \"\$NATS_REQUEST_BODY\"'"
-               '';
-             };
-           };
+  config = lib.mkMerge [
+    (schemaLaunchConfig "http")
+    (schemaLaunchConfig "https")
+  ];
 }
