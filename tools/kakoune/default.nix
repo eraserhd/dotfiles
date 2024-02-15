@@ -5,30 +5,31 @@ with lib;
   config = {
     nixpkgs.overlays = [
       (self: super: {
-        kakoune = super.kakoune.override {
-          plugins = with pkgs.kakounePlugins; [
-            case-kak
-            kak-ansi
-            kak-fzf
-            kak-jira
-            kak-lsp
-            openscad-kak
-            parinfer-rust
-            quickscope-kak
-            rep
-          ];
+        kakoune = super.callPackage ./wrapper {
+          kakoune = super.kakoune.override {
+            plugins = with pkgs.kakounePlugins; [
+              case-kak
+              kak-ansi
+              kak-fzf
+              kak-jira
+              kak-lsp
+              openscad-kak
+              parinfer-rust
+              quickscope-kak
+              rep
+            ];
+          };
         };
-        kakouneWrapper = super.callPackage ./wrapper {};
       })
     ];
 
     environment.systemPackages = with pkgs; [
       python310Packages.editorconfig
-      kakouneWrapper
+      kakoune
       kak-lsp
     ];
 
-    environment.variables.EDITOR = "${pkgs.kakouneWrapper}/bin/kak";
+    environment.variables.EDITOR = "${pkgs.kakoune}/bin/kak";
     environment.interactiveShellInit = ''
       man() {
           if (( $# == 2 )); then
