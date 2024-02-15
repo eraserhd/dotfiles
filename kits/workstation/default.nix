@@ -13,6 +13,7 @@ in {
 
     plugbench.clipboard.enable = true;
     plugbench.kakoune.enable = true;
+    plugbench.plumber.client = true;
   };
 }
 
