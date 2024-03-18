@@ -1,7 +1,7 @@
 {
   imports = [
     ./homebrew
-    ./kubernetes
+    ./k3s
     ./networking
     ./schedule
   ];
