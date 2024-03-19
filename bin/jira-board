@@ -1,0 +1,25 @@
+#!/usr/bin/env bb
+(require
+ '[cheshire.core :as json]
+ '[clojure.java.shell :refer [sh]]
+ '[clojure.pprint])
+
+(def group-order
+  ["New"
+   "Backlog"
+   "Blocked"
+   "In Progress"])
+
+(defn issues []
+  (let [{:keys [exit out]} (sh "jira" "list" "--project" "CORESYS" "--assignee" "jfelice@2u.com" "--template" "json")]
+    (assert (zero? exit))
+    (:issues (json/parse-string out true))))
+
+(let [groups (group-by #(get-in % [:fields :status :name]) (issues))]
+  (doseq [group group-order
+          :let [group-issues (get groups group)]
+          :when (seq group-issues)]
+    (printf "===== %s =====\n" group)
+    (doseq [{:keys [key], {:keys [summary]} :fields} group-issues]
+      (printf "  %-12s %s\n" key summary))
+    (printf "\n")))
