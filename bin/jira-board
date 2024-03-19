@@ -1,8 +1,7 @@
 #!/usr/bin/env bb
 (require
  '[cheshire.core :as json]
- '[clojure.java.shell :refer [sh]]
- '[clojure.pprint])
+ '[clojure.java.shell :refer [sh]])
 
 (def group-order
   ["New"
@@ -21,5 +20,5 @@
           :when (seq group-issues)]
     (printf "===== %s =====\n" group)
     (doseq [{:keys [key], {:keys [summary]} :fields} group-issues]
-      (printf "  %-12s %s\n" key summary))
+      (printf " %-12s %s\n" key summary))
     (printf "\n")))
