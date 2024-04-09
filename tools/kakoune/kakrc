@@ -440,11 +440,11 @@ hook -group clojure-objects global WinSetOption filetype=clojure %{
     map -docstring 'Clojure form'           window object f '<a-;> clojure-select-object form<ret>'
     map -docstring 'top-level Clojure form' window object t '<a-;> clojure-select-object toplevel<ret>'
 
-    map window normal b '[<a-;> clojure-select-object element<ret>'
-    map window normal B '{<a-;> clojure-select-object element<ret>'
-    map window normal e ']<a-;> clojure-select-object element<ret>'
-    map window normal E '}<a-;> clojure-select-object element<ret>'
-    map window normal w '<a-a><a-;> clojure-select-object element<ret>'
+    #map window normal b '[<a-;> clojure-select-object element<ret>'
+    #map window normal B '{<a-;> clojure-select-object element<ret>'
+    #map window normal e ']<a-;> clojure-select-object element<ret>'
+    #map window normal E '}<a-;> clojure-select-object element<ret>'
+    #map window normal w '<a-a><a-;> clojure-select-object element<ret>'
 
     map -docstring 'Run tests' window user t ': enter-user-mode clojure-test<ret>'
 }
