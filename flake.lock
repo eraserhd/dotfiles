@@ -213,11 +213,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1711285294,
-        "narHash": "sha256-Z8atMeu8Bth1FQqhWEpuyUDj4GETJNURKKJ+dORxjoQ=",
+        "lastModified": 1713447446,
+        "narHash": "sha256-vaQYDwqdapSnsv8HA0GPbagFxePftwndjwR6b1aQjSI=",
         "owner": "eraserhd",
         "repo": "kak-ansi",
-        "rev": "42ce8d6287846ec21b8f4a9ba531d009df187529",
+        "rev": "459d3cacb2308f13c8dea84ce9b12e364be30fc6",
         "type": "github"
       },
       "original": {
