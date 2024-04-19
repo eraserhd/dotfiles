@@ -1,0 +1,30 @@
+#!/usr/bin/env bb
+
+(require '[clojure.string :as str])
+(require '[babashka.fs :as fs])
+
+(def inbox-file (str (fs/expand-home "~/src/data/inbox.adoc")))
+
+(defn format-header [date]
+  (str "\n== " (.format date (java.time.format.DateTimeFormatter/ofPattern "MMMM d, yyyy")) "\n"))
+
+(defn format-entry [time desc]
+  (str "* " (.format time (java.time.format.DateTimeFormatter/ofPattern "HH:mm")) " " desc "\n"))
+
+(defn append-to-inbox [desc]
+  (let [now (java.time.LocalDateTime/now)
+        date (.toLocalDate now)
+        header (format-header date)
+        entry (format-entry now desc)]
+    (try
+      (let [contents (slurp inbox-file)]
+        (if (not (.contains contents (format-header date)))
+          (spit inbox-file header :append true)))
+      (catch Exception _
+        (println "Creating new inbox file"))
+      (finally
+        (spit inbox-file entry :append true)))))
+
+(let [args *command-line-args*
+      desc (str/join " " args)]
+  (append-to-inbox desc))
