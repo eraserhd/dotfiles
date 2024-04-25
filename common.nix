@@ -21,6 +21,7 @@ with lib;
     ./os/common
     ./pkg
     ./tools/1password
+    ./tools/anki
     ./tools/aws
     ./tools/babashka
     ./tools/bCNC
