@@ -1,7 +1,6 @@
 {
   owner = "onealexharms";
   repo = "tableize";
-  rev = "4d66c104ed89d4ad736937379456ef2c4d804cf5";
-  sha256 = "AG/JfdkeC9WSPOkIYlxCMWXscynPGDOLaQ4dQVpTcMI=";
-  fetchSubmodules = true;
+  rev = "9c7273d965082076dbd172daf343cc31c24283a1";
+  hash = "sha256-kZmyABrfDIDP4uhJmQA3TbNTRrbQaA0eSCFDQqGWGj8=";
 }
