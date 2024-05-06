@@ -12,7 +12,7 @@ with lib;
               kak-ansi
               kak-fzf
               kak-jira
-              kak-lsp
+              kakoune-lsp
               openscad-kak
               parinfer-rust
               quickscope-kak
@@ -26,7 +26,7 @@ with lib;
     environment.systemPackages = with pkgs; [
       python310Packages.editorconfig
       kakoune
-      kak-lsp
+      kakoune-lsp
     ];
 
     environment.variables.EDITOR = "${pkgs.kakoune}/bin/kak";

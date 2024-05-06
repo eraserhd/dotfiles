@@ -75,7 +75,6 @@ in {
       fzf
       jq
       killall
-      man-pages
       man-pages-posix
       nix-prefetch-github
       shellcheck
