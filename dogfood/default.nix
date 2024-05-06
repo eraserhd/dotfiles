@@ -23,9 +23,6 @@ in
           kak-jira = dogfood super ./kak-jira.nix {};
         };
 
-        # Fixes bug with nats request --raw
-        natscli = super.callPackage ./natscli.nix {};
-
         parinfer-rust = dogfood super ./parinfer-rust.nix {};
         rep = dogfood super ./rep.nix {};
 
