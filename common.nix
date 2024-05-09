@@ -27,6 +27,7 @@ with lib;
     ./tools/bCNC
     ./tools/buildkite
     ./tools/clojure
+    ./tools/coscreen
     ./tools/cue
     ./tools/cura
     ./tools/firefox
