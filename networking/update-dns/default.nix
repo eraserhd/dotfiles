@@ -11,7 +11,7 @@ in {
   config = mkIf cfg.enable {
     local.scheduledJobs.updateDNS = {
       period = "5min";
-      path = with pkgs; [ awscli curl gawk host msmtp ];
+      path = with pkgs; [ awscli2 curl gawk host msmtp ];
       script = ''
         current_ip="$(curl -s http://ipinfo.io/ip)"
         dns_ip="$(host -t A ${config.networking.hostName}.${config.networking.domain} ns-112.awsdns-14.com |awk '$3 == "address"{print $4}')"

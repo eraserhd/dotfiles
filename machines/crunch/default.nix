@@ -75,7 +75,6 @@ with lib;
   programs.gnupg.agent = {
     enable = true;
     enableExtraSocket = false;
-    pinentryFlavor = "tty";
   #  enableSSHSupport = true;
   };
 
