@@ -50,6 +50,7 @@ with lib;
     ./tools/pcb2gcode
     ./tools/pop
     ./tools/postgres
+    ./tools/qcad
     ./tools/rlwrap
     ./tools/synergy
     ./tools/taskwarrior
