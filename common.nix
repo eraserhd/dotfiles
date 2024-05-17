@@ -26,6 +26,7 @@ with lib;
     ./tools/babashka
     ./tools/bCNC
     ./tools/buildkite
+    ./tools/clang
     ./tools/clojure
     ./tools/coscreen
     ./tools/cue
