@@ -1,13 +1,10 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 
-with lib;
 {
   config = {
-    environment.systemPackages = with pkgs.llvmPackages_18; [
-      clang
-      #libclang
-      #libcxxClang
-      #libstdcxxClang
+    environment.systemPackages = [
+      pkgs.llvmPackages_18.clang
+      pkgs.clang-tools_18
     ];
   };
 }
