@@ -32,7 +32,6 @@ with lib;
     ./tools/cue
     ./tools/cura
     ./tools/firefox
-    ./tools/freecad
     ./tools/git
     ./tools/gnupg
     ./tools/gnuplot
@@ -52,6 +51,7 @@ with lib;
     ./tools/pop
     ./tools/postgres
     ./tools/rlwrap
+    ./tools/solvespace
     ./tools/synergy
     ./tools/taskwarrior
     ./tools/tex
