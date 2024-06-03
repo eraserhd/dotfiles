@@ -26,6 +26,7 @@ with lib;
     home-manager.users.jfelice = { pkgs, ... }: {
       home.file.".weechat/alias.conf".source = ./config/alias.conf;
       home.file.".weechat/aspell.conf".source = ./config/aspell.conf;
+      home.file.".weechat/autosort.conf".source = ./config/autosort.conf;
       home.file.".weechat/buflist.conf".source = ./config/buflist.conf;
       home.file.".weechat/charset.conf".source = ./config/charset.conf;
       home.file.".weechat/exec.conf".source = ./config/exec.conf;
@@ -41,6 +42,7 @@ with lib;
       home.file.".weechat/spell.conf".source = ./config/spell.conf;
       home.file.".weechat/tcl.conf".source = ./config/tcl.conf;
       home.file.".weechat/trigger.conf".source = ./config/trigger.conf;
+      home.file.".weechat/typing.conf".source = ./config/typing.conf;
       home.file.".weechat/weechat.conf".source = ./config/weechat.conf;
       home.file.".weechat/weemoji.json".source = ./config/weemoji.json;
       home.file.".weechat/xfer.conf".source = ./config/xfer.conf;
