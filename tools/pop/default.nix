@@ -1,7 +1,0 @@
-{ ... }:
-
-{
-  config = {
-    homebrew.casks = [ "pop" ];
-  };
-}

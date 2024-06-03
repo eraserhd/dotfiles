@@ -48,7 +48,6 @@ with lib;
     ./tools/npm
     ./tools/openscad
     ./tools/pcb2gcode
-    ./tools/pop
     ./tools/postgres
     ./tools/rlwrap
     ./tools/solvespace
