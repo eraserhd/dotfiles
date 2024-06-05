@@ -108,12 +108,9 @@ with lib;
   local.bluetooth.enable = true;
   local.services.X11.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
-
-  services.synergy.server = {
-    enable = true;
-    screenName = "crunch";
-    configFile = ../../tools/synergy/synergy.conf;
-  };
+  services.xserver.displayManager.sessionCommands = ''
+    barriers --log /tmp/barrier.log --no-tray --debug INFO --name crunch --disable-crypto --disable-client-cert-checking -c ${../../tools/barrier/barrier.conf} --address :24800
+  '';
 
   programs.ssh.startAgent = true;
 

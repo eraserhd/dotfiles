@@ -24,6 +24,7 @@ with lib;
     ./tools/anki
     ./tools/aws
     ./tools/babashka
+    ./tools/barrier
     ./tools/bCNC
     ./tools/buildkite
     ./tools/clang
@@ -51,7 +52,6 @@ with lib;
     ./tools/postgres
     ./tools/rlwrap
     ./tools/solvespace
-    ./tools/synergy
     ./tools/taskwarrior
     ./tools/tex
     ./tools/tmux
