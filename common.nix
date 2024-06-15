@@ -31,7 +31,6 @@ with lib;
     ./tools/clojure
     ./tools/coscreen
     ./tools/cue
-    ./tools/cura
     ./tools/firefox
     ./tools/git
     ./tools/gnupg
@@ -50,6 +49,7 @@ with lib;
     ./tools/openscad
     ./tools/pcb2gcode
     ./tools/postgres
+    ./tools/prusa-slicer
     ./tools/rlwrap
     ./tools/solvespace
     ./tools/taskwarrior
