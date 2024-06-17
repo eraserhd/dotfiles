@@ -51,7 +51,6 @@ with lib;
     ./tools/postgres
     ./tools/prusa-slicer
     ./tools/rlwrap
-    ./tools/solvespace
     ./tools/taskwarrior
     ./tools/tex
     ./tools/tmux
