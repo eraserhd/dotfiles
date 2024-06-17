@@ -55,7 +55,6 @@ with lib;
     ./tools/taskwarrior
     ./tools/tex
     ./tools/tmux
-    ./tools/weechat
     ./tools/x
     ./tools/zsh
     ./shell

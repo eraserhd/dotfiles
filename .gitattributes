@@ -17,5 +17,4 @@ tools/clojure/profiles.clj filter=git-crypt diff=git-crypt
 tools/nats/token.txt filter=git-crypt diff=git-crypt
 tools/npm/npmrc filter=git-crypt diff=git-crypt
 tools/postgres/pgpass.conf filter=git-crypt diff=git-crypt
-tools/weechat/config/sec.conf filter=git-crypt diff=git-crypt
 terraform/terraform.tfstate filter=git-crypt diff=git-crypt
