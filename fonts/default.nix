@@ -48,16 +48,10 @@ let
 in {
   config = {
     fonts = {
-      fonts = with pkgs; [
+      packages = with pkgs; [
         custom-input-fonts
         mononoki
       ];
-    } // (if (builtins.hasAttr "fontDir" options.fonts)
-    then {
-      fontDir.enable = true; # NixOS
-    }
-    else {
-      enableFontDir = true;  # Manage fonts on Darwin
-    });
+    };
   };
 }
