@@ -31,6 +31,7 @@ with lib;
     ./tools/clojure
     ./tools/coscreen
     ./tools/cue
+    ./tools/discord
     ./tools/firefox
     ./tools/git
     ./tools/gnupg

@@ -1,0 +1,6 @@
+{ ... }:
+{
+  config = {
+    homebrew.casks = [ "discord" ];
+  };
+}
