@@ -41,13 +41,13 @@ with lib;
     firewall.enable = false;
     wireless = {
       enable = true;
-      interfaces = [ "wlp65s0" ];
+      interfaces = [ "wlp5s0" ];
     };
     #defaultGateway = {
     #  address = "10.156.1.1";
-    #  interface = "wlp65s0";
+    #  interface = "wlp5s0";
     #};
-    interfaces.wlp65s0 = {
+    interfaces.wlp5s0 = {
       useDHCP = true;
       #ipv6.addresses = [
       #  {
