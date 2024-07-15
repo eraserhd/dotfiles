@@ -19,7 +19,10 @@ in {
       windowManager.i3.enable = true;
       autoRepeatDelay = 200;
       autoRepeatInterval = 40;
-      libinput.mouse = {
+    };
+    services.libinput = {
+      enable = true;
+      mouse = {
         naturalScrolling = true;
         accelSpeed = "-0.5";
       };
