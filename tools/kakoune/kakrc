@@ -35,19 +35,6 @@ map global normal <a-E> ': execute-keys %val{count}E<ret>'
 map global normal <c-p> 'gh<a-/>^ᐅ [^\n]<ret>;'
 map global normal <c-n> '/^ᐅ \K[^\n]<ret>'
 
-# quickscope.kak
-# ‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-
-require-module quickscope
-map global normal f     ': quickscope-f<ret>'
-map global normal <a-f> ': quickscope-a-f<ret>'
-map global normal t     ': quickscope-t<ret>'
-map global normal <a-t> ': quickscope-a-t<ret>'
-map global normal F     ': quickscope-F<ret>'
-map global normal <a-F> ': quickscope-a-F<ret>'
-map global normal T     ': quickscope-T<ret>'
-map global normal <a-T> ': quickscope-a-T<ret>'
-
 # Appearance
 # ‾‾‾‾‾‾‾‾‾‾
 
@@ -248,23 +235,6 @@ map global normal * '<a-i>w"/yn'
 map global normal <a-*> '<a-i>w"/y<a-n>'
 
 map global user c ': enter-user-mode case<ret>'
-
-# fzf
-# ‾‾‾
-
-define-command -override f %sh{
-    printf 'require-module fzf\n'
-    if [ "$uname" = "Darwin" ]; then
-        dir="$(pwd)"
-        file_command="mdfind -onlyin "${dir}/" / |sed -e 's,^'"${dir}"'/,,'"
-    else
-        file_command="ag -l"
-    fi
-    printf 'set-option global fzf_file_command "%s"\n' "$file_command"
-    printf 'set-option global fzf_highlight_command bat\n'
-    printf 'fzf-file\n'
-}
-map global user f ': f<ret>'
 
 # Filetypes
 # ‾‾‾‾‾‾‾‾‾

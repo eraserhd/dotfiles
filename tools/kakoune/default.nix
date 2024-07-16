@@ -10,12 +10,10 @@ with lib;
             plugins = with pkgs.kakounePlugins; [
               case-kak
               kak-ansi
-              kak-fzf
               kak-jira
               kakoune-lsp
               openscad-kak
               parinfer-rust
-              quickscope-kak
               rep
             ];
           };
