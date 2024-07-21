@@ -81,11 +81,13 @@ with lib;
   services.avahi = {
     enable = true;
     nssmdns4 = true;
-    reflector = true;
-    publish.enable = true;
-    publish.addresses = true;
-    publish.hinfo = true;
-    publish.workstation = true;
+    publish = {
+      enable = true;
+      addresses = true;
+      domain = true;
+      hinfo = true;
+      workstation = true;
+    };
   };
 
   services.openssh = {
