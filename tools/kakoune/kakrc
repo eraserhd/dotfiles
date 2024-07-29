@@ -254,6 +254,29 @@ set-option global autowrap_column 78
 set-option global autowrap_fmtcmd 'fmt -w %c'
 set-option global autowrap_format_paragraph yes
 
+# GitHub
+# ‾‾‾‾‾‾
+
+declare-option -hidden str gist_selection
+
+define-command -override \
+    -docstring %{} \
+    gist %{
+    evaluate-commands -draft %sh{
+        if [ $kak_selection_length -eq 1 ]; then
+          printf "execute-keys '%%'\\n"
+        fi
+        printf 'set-option buffer gist_selection "%%val{selection}"\n'
+    }
+    evaluate-commands %sh{
+        filename=$(basename "$kak_bufname")
+        url=$(printf %s "$kak_opt_gist_selection" |gh gist create --filename "$filename" -)
+        printf "set-register dquote '"
+        printf %s "$url" |sed -e "s/'/''/g"
+        printf "'\n"
+    }
+}
+
 # Clojure
 # ‾‾‾‾‾‾‾
 
