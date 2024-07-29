@@ -44,6 +44,7 @@ with lib;
     ./tools/kakoune
     ./tools/kicad
     ./tools/kitty
+    ./tools/meshlab
     ./tools/nats
     ./tools/nix
     ./tools/npm
