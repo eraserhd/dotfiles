@@ -37,7 +37,7 @@
       };
 
     in {
-      darwinConfigurations."C02FV0KUQ05Q" = darwin.lib.darwinSystem {
+      darwinConfigurations."V3Q9GYKM9C" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
           ./os/nix-darwin
