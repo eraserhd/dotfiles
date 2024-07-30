@@ -8,14 +8,14 @@ Manual Installation Steps (Still)
 - `git clone https://github.com/eraserhd/dotfiles`
 - manually install homebrew by running the line in script/boostrap
 - Install Nix multi-user: `sh <(curl -L https://nixos.org/nix/install)`
-- nix-env -i gnupg git-crypt
+- nix-shell -p gnupg git-crypt
 
 - Manually brew install 1Password
 - Scan code from phone code - entered code in app, actually
 - gpg --import --allow-secret-key-import private-key.txt # downloaded from 1Password
 - gpg --import public-key.txt # downloaded from 1Password
 
-- git crypt unlock (working directory needed to be clean, needed to git reset --hard from failed git submodule update)
+- git crypt unlock
 
 - `ssh-add ./networking/ssh/files/id_rsa`
 
@@ -28,8 +28,6 @@ Manual Installation Steps (Still)
 - chsh -s /run/current-system/sw/bin/zsh
 
 - Switch remote to git@github.com:eraserhd/dotfiles.git ('cause we now have SSH).
-- nix-env -e gnupg
-- nix-env -e git-crypt
 
 - Found no ~/src/data, reran git/install.sh by itself. "authenticity of host 'eraserhead.net (nn.nn." from SSH!) Why?
 - 1p, needed to "Enable integration with 3rd Party Apps"
