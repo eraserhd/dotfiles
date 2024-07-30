@@ -4,39 +4,27 @@ eraserhd's dotfiles
 Manual Installation Steps (Still)
 ---------------------------------
 
-- Install developer tools (clone https:// URL prompted me)
+- Add Apple ID in System Settings (I think this made 1Password easier).
+- `mkdir src && cd src`
 - `git clone https://github.com/eraserhd/dotfiles`
-- manually install homebrew by running the line in script/boostrap
+- Install Homebrew: `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
+- `/opt/homebrew/bin/brew install 1password`
 - Install Nix multi-user: `sh <(curl -L https://nixos.org/nix/install)`
-- nix-shell -p gnupg git-crypt
-
-- Manually brew install 1Password
-- Scan code from phone code - entered code in app, actually
-- gpg --import --allow-secret-key-import private-key.txt # downloaded from 1Password
-- gpg --import public-key.txt # downloaded from 1Password
-
-- git crypt unlock
-
-- `ssh-add ./networking/ssh/files/id_rsa`
-
-- was building for the wrongs system, changed hostname for macbook and changed system to aarch64-darwin, but
+- `nix-shell -p gnupg git-crypt`
+- `gpg --import --allow-secret-key-import secret.key # secret.key downloaded from 1Password`
+- `git crypt unlock`
+- `cp ./networking/ssh/files/id_rsa /tmp/id_rsa && chmod 06040 /tmp/id_rsa && ssh-add /tmp/id_rsa`
+- was building for the wrong system, changed hostname for macbook and changed system to aarch64-darwin, but
   the twou package no longer worked because the flake doesn't have support for it, so commented it out.
-
-- `nix build --extra-experimental-features "nix-command flakes" ./#darwinConfigurations#C02CW0J5ML87.system`
-- ./result/sw/bin/darwin-rebuild switch
-
-- chsh -s /run/current-system/sw/bin/zsh
-
-- Switch remote to git@github.com:eraserhd/dotfiles.git ('cause we now have SSH).
-
-- Found no ~/src/data, reran git/install.sh by itself. "authenticity of host 'eraserhead.net (nn.nn." from SSH!) Why?
-- 1p, needed to "Enable integration with 3rd Party Apps"
+- `nix --extra-experimental-features "nix-command flakes" run nix-darwin -- switch --flake .`
+- `git remote set-url origin git@github.com:eraserhd/dotfiles.git`
+- `op`, needed to "Enable integration with 3rd Party Apps"
 
 2021 Crunch
 -----------
 
 * Install NixOS with WPA config
-* nix-env -i kakoune git gnupg
+* nix-shell -p kakoune git gnupg
 * git clone dotfiles 
 * Set programs.gnupg.agent.enable = true; nixos-rebuild switch (pinentry problem)
 * reboot, because the above doesn't appear to fix it
