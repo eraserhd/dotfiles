@@ -18,7 +18,7 @@ Manual Installation Steps (Still)
   the twou package no longer worked because the flake doesn't have support for it, so commented it out.
 - `nix --extra-experimental-features "nix-command flakes" run nix-darwin -- switch --flake .`
 - `git remote set-url origin git@github.com:eraserhd/dotfiles.git`
-- `op`, needed to "Enable integration with 3rd Party Apps"
+- `eval $(op signin)`, needed to "Enable integration with 3rd Party Apps"
 
 2021 Crunch
 -----------
