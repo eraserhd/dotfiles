@@ -37,6 +37,7 @@ with lib;
     ./tools/gnupg
     ./tools/gnuplot
     ./tools/go
+    ./tools/gtypist
     ./tools/hammerspoon
     ./tools/i3
     ./tools/inkscape
