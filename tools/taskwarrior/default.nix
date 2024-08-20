@@ -8,6 +8,7 @@
     home-manager.users.jfelice = { pkgs, ... }: {
       programs.taskwarrior = {
         enable = true;
+        package = pkgs.taskwarrior3;
         dataLocation = "~/src/data/tasks";
         config = {
           news.version = "2.6.0";
