@@ -15,8 +15,6 @@
     kak-ansi.inputs.nixpkgs.follows = "nixpkgs";
     plugbench.url = "github:plugbench/nix-plugbench";
     plugbench.inputs.nixpkgs.follows = "nixpkgs";
-
-    nixpkgs-cura5.url = "github:nh2/nixpkgs/cura-5.2.1";
   };
 
   outputs =
@@ -28,7 +26,6 @@
   , add-missing
   , kak-ansi
   , plugbench
-  , nixpkgs-cura5
   }:
     let
       homeManagerConfig = {
@@ -72,15 +69,6 @@
           {
             nix.nixPath = [
               "nixpkgs=${nixpkgs}"
-            ];
-          }
-          {
-            nixpkgs.overlays = [
-              add-missing.overlays.default
-              kak-ansi.overlays.default
-              (final: prev: {
-                curaengine = nixpkgs-cura5.legacyPackages.x86_64-linux.curaengine;
-              })
             ];
           }
           twou.nixosModules.default

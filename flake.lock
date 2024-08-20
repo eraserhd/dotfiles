@@ -50,11 +50,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1721270582,
-        "narHash": "sha256-MdZmYPPExntE5rJu88IhJSy8Um4UyZCTXhOwvzbjDVI=",
+        "lastModified": 1723859949,
+        "narHash": "sha256-kiaGz4deGYKMjJPOji/JVvSP/eTefrIA3rAjOnOpXl4=",
         "owner": "LnL7",
         "repo": "nix-darwin",
-        "rev": "a3e4a7b8ffc08c7dc1973822a77ad432e1ec3dec",
+        "rev": "076b9a905af8a52b866c8db068d6da475839d97b",
         "type": "github"
       },
       "original": {
@@ -194,11 +194,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1721135958,
-        "narHash": "sha256-H548rpPMsn25LDKn1PCFmPxmWlClJJGnvdzImHkqjuY=",
+        "lastModified": 1723986931,
+        "narHash": "sha256-Fy+KEvDQ+Hc8lJAV3t6leXhZJ2ncU5/esxkgt3b8DEY=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "afd2021bedff2de92dfce0e257a3d03ae65c603d",
+        "rev": "2598861031b78aadb4da7269df7ca9ddfc3e1671",
         "type": "github"
       },
       "original": {
@@ -253,32 +253,16 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1721477534,
-        "narHash": "sha256-wcgVZQEvJBXMqi9wQNFNo9v2iaSv5/9hCXVF+FYITRU=",
+        "lastModified": 1724160137,
+        "narHash": "sha256-ITsp/n429F5RQN0M/cc3bgys7PVv5gOCwJHOoLkhkbY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e4ab7d7d0cfc4500da821ebd769c625bf6bab591",
+        "rev": "b2b8d7ce72d51b55ee5903d50d6382705449f9c3",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
         "ref": "master",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-cura5": {
-      "locked": {
-        "lastModified": 1672242389,
-        "narHash": "sha256-0YlTuZThQUss7nHAq7aP1dq7cahE1g6PyJM7jgBXV9o=",
-        "owner": "nh2",
-        "repo": "nixpkgs",
-        "rev": "acfdd7d4e4ee1cad93f314b92b3eca9f0c575efb",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nh2",
-        "ref": "cura-5.2.1",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -336,7 +320,6 @@
         "home-manager": "home-manager",
         "kak-ansi": "kak-ansi",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-cura5": "nixpkgs-cura5",
         "plugbench": "plugbench",
         "twou": "twou"
       }
@@ -439,11 +422,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1722444255,
-        "narHash": "sha256-ciqImpJFwwCb3n6QNoXnjQnpfn5z73+iH0k7tCe3Qdo=",
+        "lastModified": 1723040547,
+        "narHash": "sha256-IxN8+YLlD21sBUh2DTobAZk0xotfJLl/q2djGcBl/rE=",
         "ref": "main",
-        "rev": "8251e3e23543f26f2f544add2cc74682f94c6df1",
-        "revCount": 95,
+        "rev": "eec36f8d658f7acc78321514accd14c586f0d63c",
+        "revCount": 96,
         "type": "git",
         "url": "ssh://git@github.com/2uinc/nix-2u"
       },
