@@ -71,6 +71,12 @@
               "nixpkgs=${nixpkgs}"
             ];
           }
+          {
+            nixpkgs.overlays = [
+              add-missing.overlays.default
+              kak-ansi.overlays.default
+            ];
+          }
           twou.nixosModules.default
           plugbench.nixosModules.default
         ];
