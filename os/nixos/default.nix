@@ -28,12 +28,12 @@ with lib;
             };
           };
         };
-        hardware.pulseaudio.enable = true;
-        hardware.pulseaudio.package = pkgs.pulseaudioFull;
+        #hardware.pulseaudio.enable = true;
+        #hardware.pulseaudio.package = pkgs.pulseaudioFull;
         # for bluetoothctl
         environment.systemPackages = with pkgs; [
           bluez
-          pulseaudioFull
+          #pulseaudioFull
         ];
       }
       else {
