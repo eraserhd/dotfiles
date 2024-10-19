@@ -551,3 +551,10 @@ define-command \
 hook global BufCreate .*/\.kube/config %{
     set-option buffer filetype yaml
 }
+
+# OpenSCAD
+# ‾‾‾‾‾‾‾‾
+
+hook global BufCreate .*\.scad\.m4 %{
+    set-option buffer filetype openscad
+}
