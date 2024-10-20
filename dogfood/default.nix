@@ -21,6 +21,9 @@ in
             src = super.pkgs.fetchFromGitHub (import ./fzf.kak.nix);
           });
           kak-jira = dogfood super ./kak-jira.nix {};
+          openscad-kak = super.kakounePlugins.openscad-kak.overrideAttrs (oldAttrs: {
+            src = super.pkgs.fetchFromGitHub (import ./openscad.kak.nix);
+          });
         };
 
         parinfer-rust = dogfood super ./parinfer-rust.nix {};
