@@ -17,6 +17,6 @@ in {
        in [ openscad-wrapper ];
      }
      else {
-       environment.systemPackages = with pkgs; [ openscad ];
+       environment.systemPackages = [ pkgs.openscad-unstable ];
      });
 }
