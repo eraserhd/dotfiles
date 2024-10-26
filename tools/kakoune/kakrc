@@ -442,6 +442,14 @@ hook -group clojure-objects global WinSetOption filetype=clojure %{
     map -docstring 'Run tests' window user t ': enter-user-mode clojure-test<ret>'
 }
 
+declare-user-mode babashka
+map -docstring 'Replace with result' global user b ': babashka-replace<ret>'
+
+define-command -override -params 0 -docstring %{Replace selection with babashka result} \
+    babashka-replace %{
+    execute-keys '| bb --prn /dev/stdin<ret>'
+}
+
 # LSP
 # ‾‾‾
 
