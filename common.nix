@@ -50,6 +50,7 @@ with lib;
     ./tools/nix
     ./tools/npm
     ./tools/openscad
+    ./tools/postman
     ./tools/pcb2gcode
     ./tools/postgres
     ./tools/prusa-slicer
