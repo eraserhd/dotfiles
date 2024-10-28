@@ -3,7 +3,7 @@
 {
   config = {
     environment.systemPackages = with pkgs; [
-      go_1_21
+      go
       gopls
       gotestsum
       gotools
