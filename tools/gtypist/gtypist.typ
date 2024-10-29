@@ -3,7 +3,7 @@ D:5cb10876-71c3-414d-bd52-44aa972a1219 e9accd5f-3f9e-482d-a7d0-49842e92acb0
 *:P
 D:ekphore sompne pronpl pipkin ashpan Rajput upjet poppy helpmate
 *:SYMBOLS
-D:#$=)`~!=$)(@)`)&#@($%($~=!(==^!%(=!%(`%~^(@$%=
+D:%&$^`~#)&(#&)@@(~!@%=$!$=`^!`#~^=)(%
 *:P2
 D:bumpkin sheepkeeper limpkin capkin hopkins pumpkin
 *:NUMPAD
