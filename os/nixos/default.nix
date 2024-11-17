@@ -15,6 +15,10 @@ with lib;
       environment.systemPackages = with pkgs; [
         pciutils
       ];
+
+      nix.nixPath = [
+        "nixpkgs=${inputs.nixpkgs}"
+      ];
     }
     (mkIf config.local.bluetooth.enable {
       hardware.bluetooth = {

@@ -29,7 +29,7 @@
   , kak-ansi
   , plugbench
   , raspberry-pi-nix
-  }:
+  }@inputs:
     let
       homeManagerConfig = {
         home-manager.useGlobalPkgs = true;
@@ -59,6 +59,7 @@
           twou.darwinModules.default
           plugbench.darwinModules.default
         ];
+        specialArgs = { inherit inputs; };
       };
 
       nixosConfigurations.crunch = nixpkgs.lib.nixosSystem {
@@ -70,11 +71,6 @@
           home-manager.nixosModules.home-manager
           homeManagerConfig
           {
-            nix.nixPath = [
-              "nixpkgs=${nixpkgs}"
-            ];
-          }
-          {
             nixpkgs.overlays = [
               add-missing.overlays.default
               kak-ansi.overlays.default
@@ -83,6 +79,7 @@
           twou.nixosModules.default
           plugbench.nixosModules.default
         ];
+        specialArgs = { inherit inputs; };
       };
 
       nixosConfigurations.cnc = nixpkgs.lib.nixosSystem {
@@ -96,11 +93,6 @@
           home-manager.nixosModules.home-manager
           homeManagerConfig
           {
-            nix.nixPath = [
-              "nixpkgs=${nixpkgs}"
-            ];
-          }
-          {
             nixpkgs.overlays = [
               add-missing.overlays.default
               kak-ansi.overlays.default
@@ -108,6 +100,7 @@
           }
           plugbench.nixosModules.default
         ];
+        specialArgs = { inherit inputs; };
       };
 
     };
