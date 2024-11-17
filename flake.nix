@@ -46,11 +46,6 @@
           home-manager.darwinModules.home-manager
           homeManagerConfig
           {
-            nix.nixPath = {
-              inherit nixpkgs darwin;
-            };
-          }
-          {
             nixpkgs.overlays = [
               add-missing.overlays.default
               kak-ansi.overlays.default

@@ -1,9 +1,13 @@
-{ options, ... }:
+{ options, inputs, ... }:
 
 {
   imports = [
     ./modules
   ];
+
+  nix.nixPath = [{
+    inherit (inputs) nixpkgs darwin;
+  }];
 
   system.defaults.finder.AppleShowAllExtensions = true;
   system.defaults.finder._FXShowPosixPathInTitle = true;
