@@ -7,6 +7,9 @@ with lib;
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
+  # For building Raspberry Pi images
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/95594027-89fd-4f8c-966e-da035aa59b87";
     fsType = "ext4";
