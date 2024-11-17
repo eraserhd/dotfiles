@@ -22,7 +22,7 @@ with lib;
   hardware.enableRedistributableFirmware = true;
   hardware.enableAllFirmware = true;
   hardware.firmware = [
-    pkgs.wireless-regdb
+    #pkgs.wireless-regdb
     pkgs.linux-firmware
   ];
   hardware.graphics.enable = true;
@@ -43,6 +43,8 @@ with lib;
 
   environment.systemPackages = with pkgs; [
     pinentry
+    libraspberrypi
+    raspberrypi-eeprom
   ];
 
   programs.gnupg.agent = {
@@ -68,8 +70,8 @@ with lib;
   };
 
   local.services.X11.enable = true;
-  #services.xserver.videoDrivers = [ "nvidia" ];
-  #hardware.nvidia.open = false;
+  # There's an accelerated driver called fkms-3d with the vendor kernel; haven't tried it.
+  services.xserver.videoDrivers = [ "fbdev" ];
 
   programs.ssh.startAgent = true;
 
@@ -107,7 +109,6 @@ with lib;
   home-manager.users.jfelice.home.stateVersion = "22.05";
 
   local.sendOutgoingMailWithSES.enable = true;
-  local.updateDNS.enable = true;
 
   local.kits.brain.enable = false;
   local.kits.workstation.enable = true;
