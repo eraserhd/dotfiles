@@ -40,11 +40,9 @@ with lib;
   boot.tmp.cleanOnBoot = true;
 
   networking = {
-    domain = "eraserhead.net";
     hostName = "crunch";
     firewall.enable = false;
     wireless = {
-      enable = true;
       interfaces = [ "wlp5s0" ];
     };
     #defaultGateway = {

@@ -23,11 +23,9 @@ with lib;
   hardware.graphics.enable = true;
 
   networking = {
-    domain = "eraserhead.net";
     hostName = "cnc";
     firewall.enable = false;
     wireless = {
-      enable = true;
       interfaces = [ "wlan0" ];
     };
   };
