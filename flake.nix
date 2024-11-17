@@ -35,7 +35,7 @@
         system = "aarch64-darwin";
         modules = [
           ./os/nix-darwin
-          ./machines/macbook
+          ./hosts/macbook
           ./common.nix
           home-manager.darwinModules.home-manager
           {
@@ -54,7 +54,7 @@
         system = "x86_64-linux";
         modules = [
           ./os/nixos
-          ./machines/crunch
+          ./hosts/crunch
           ./common.nix
           home-manager.nixosModules.home-manager
           {
@@ -75,7 +75,7 @@
           raspberry-pi-nix.nixosModules.raspberry-pi
           raspberry-pi-nix.nixosModules.sd-image
           ./os/nixos
-          ./machines/cnc
+          ./hosts/cnc
           ./common.nix
           home-manager.nixosModules.home-manager
           {
