@@ -81,5 +81,28 @@
           plugbench.nixosModules.default
         ];
       };
+
+      nixosConfigurations.cnc = nixpkgs.lib.nixosSystem {
+        system = "aarch64-linux";
+        modules = [
+          ./os/nixos
+          ./machines/cnc
+          ./common.nix
+          home-manager.nixosModules.home-manager
+          homeManagerConfig
+          {
+            nix.nixPath = [
+              "nixpkgs=${nixpkgs}"
+            ];
+          }
+          {
+            nixpkgs.overlays = [
+              add-missing.overlays.default
+              kak-ansi.overlays.default
+            ];
+          }
+          plugbench.nixosModules.default
+        ];
+      };
     };
 }
