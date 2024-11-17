@@ -45,19 +45,6 @@ with lib;
     enableExtraSocket = false;
   };
 
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    nssmdns6 = true;
-    publish = {
-      enable = true;
-      addresses = true;
-      domain = true;
-      hinfo = true;
-      workstation = true;
-    };
-  };
-
   services.openssh = {
     enable = true;
   };
@@ -101,6 +88,7 @@ with lib;
   system.stateVersion = "25.05";
   home-manager.users.jfelice.home.stateVersion = "22.05";
 
+  local.networking.respite-wifi.enable = true;
   local.sendOutgoingMailWithSES.enable = true;
 
   local.kits.workstation.enable = true;

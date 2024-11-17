@@ -82,19 +82,6 @@ with lib;
   #  enableSSHSupport = true;
   };
 
-  services.avahi = {
-    enable = true;
-    nssmdns4 = true;
-    nssmdns6 = true;
-    publish = {
-      enable = true;
-      addresses = true;
-      domain = true;
-      hinfo = true;
-      workstation = true;
-    };
-  };
-
   services.openssh = {
     enable = true;
     ports = [ 22 443 ];
@@ -157,6 +144,7 @@ with lib;
   system.stateVersion = "21.05";
   home-manager.users.jfelice.home.stateVersion = "22.05";
 
+  local.networking.respite-wifi.enable = true;
   local.sendOutgoingMailWithSES.enable = true;
   local.updateDNS.enable = true;
   local.tmux.paneZeroCommand = "weechat";

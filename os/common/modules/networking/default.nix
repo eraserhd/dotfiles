@@ -1,10 +1,7 @@
 { lib, ... }:
 
-let
-  inherit (lib)
-      mkOption
-      types;
-in {
+with lib;
+{
   options = {
     local.networking.nameservers = mkOption {
       type = types.listOf types.str;
@@ -14,5 +11,7 @@ in {
         The list of preferred nameservers.
       '';
     };
+
+    local.networking.respite-wifi.enable = mkEnableOption "Respite Wi-Fi";
   };
 }
