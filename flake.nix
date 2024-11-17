@@ -30,13 +30,7 @@
   , plugbench
   , raspberry-pi-nix
   }@inputs:
-    let
-      homeManagerConfig = {
-        home-manager.useGlobalPkgs = true;
-        home-manager.useUserPackages = true;
-      };
-
-    in {
+    {
       darwinConfigurations."V3Q9GYKM9C" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";
         modules = [
@@ -44,7 +38,6 @@
           ./machines/macbook
           ./common.nix
           home-manager.darwinModules.home-manager
-          homeManagerConfig
           {
             nixpkgs.overlays = [
               add-missing.overlays.default
@@ -64,7 +57,6 @@
           ./machines/crunch
           ./common.nix
           home-manager.nixosModules.home-manager
-          homeManagerConfig
           {
             nixpkgs.overlays = [
               add-missing.overlays.default
@@ -86,7 +78,6 @@
           ./machines/cnc
           ./common.nix
           home-manager.nixosModules.home-manager
-          homeManagerConfig
           {
             nixpkgs.overlays = [
               add-missing.overlays.default
@@ -97,6 +88,5 @@
         ];
         specialArgs = { inherit inputs; };
       };
-
     };
 }

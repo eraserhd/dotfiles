@@ -69,5 +69,10 @@ with lib;
     } else {
       environment.variables.PATH = [ (toString ./bin) ];
     })
+
+    {
+      home-manager.useGlobalPkgs = true;
+      home-manager.useUserPackages = true;
+    }
   ];
 }
