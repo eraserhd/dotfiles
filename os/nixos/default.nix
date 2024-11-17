@@ -1,4 +1,4 @@
-{ options, config, lib, pkgs, ... }:
+{ options, config, inputs, lib, pkgs, ... }:
 
 with lib;
 {
@@ -11,36 +11,28 @@ with lib;
   };
 
   config = mkMerge [
-    (mkIf (!pkgs.stdenv.isDarwin) {
+    {
       environment.systemPackages = with pkgs; [
         pciutils
       ];
-    })
-    (mkIf config.local.bluetooth.enable
-     (if (builtins.hasAttr "hardware" options)
-      then {
-        hardware.bluetooth = {
-          enable = true;
-          powerOnBoot = true;
-          settings = {
-            General = {
-              Experimental = true;
-            };
+    }
+    (mkIf config.local.bluetooth.enable {
+      hardware.bluetooth = {
+        enable = true;
+        powerOnBoot = true;
+        settings = {
+          General = {
+            Experimental = true;
           };
         };
-        #hardware.pulseaudio.enable = true;
-        #hardware.pulseaudio.package = pkgs.pulseaudioFull;
-        # for bluetoothctl
-        environment.systemPackages = with pkgs; [
-          bluez
-          #pulseaudioFull
-        ];
-      }
-      else {
-        assertions = [{
-          assertion = !config.local.bluetooth.enable;
-          message = "local.bluetooth only supported on Linux";
-        }];
-      }))
+      };
+      #hardware.pulseaudio.enable = true;
+      #hardware.pulseaudio.package = pkgs.pulseaudioFull;
+      # for bluetoothctl
+      environment.systemPackages = with pkgs; [
+        bluez
+        #pulseaudioFull
+      ];
+    })
   ];
 }
