@@ -11,7 +11,7 @@ Manual Installation Steps (Still)
 - `/opt/homebrew/bin/brew install 1password`
 - Install Nix multi-user: `sh <(curl -L https://nixos.org/nix/install)`
 - `nix-shell -p gnupg git-crypt`
-- `gpg --import --allow-secret-key-import secret.key # secret.key downloaded from 1Password`
+- `gpg --import --pinentry-mode ask --allow-secret-key-import secret.key # secret.key downloaded from 1Password`
 - `git crypt unlock`
 - `cp ./networking/ssh/files/id_rsa /tmp/id_rsa && chmod 06040 /tmp/id_rsa && ssh-add /tmp/id_rsa`
 - was building for the wrong system, changed hostname for macbook and changed system to aarch64-darwin, but

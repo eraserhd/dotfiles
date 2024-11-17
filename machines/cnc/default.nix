@@ -1,14 +1,16 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, modulePath, ... }:
 
 with lib;
 {
+  raspberry-pi-nix.board = "bcm2711";
+
   boot = {
-    kernelPackages = pkgs.linuxKernel.packages.linux_rpi4;
+    #kernelPackages = pkgs.linuxKernel.packages.linux_rpi4;
     initrd.availableKernelModules = [ "xhci_pci" "usb_storage" "usbhid" ];
-    loader = {
-      grub.enable = false;
-      generic-extlinux-compatible.enable = true;
-    };
+    #loader = {
+    #  grub.enable = false;
+    #  generic-extlinux-compatible.enable = true;
+    #};
     tmp.cleanOnBoot = true;
   };
 
@@ -24,9 +26,6 @@ with lib;
     pkgs.linux-firmware
   ];
   hardware.graphics.enable = true;
-
-  nix.settings.max-jobs = 2;
-  nix.settings.cores = 10;
 
   local.systemDisplayName = "cnc";
 
@@ -69,8 +68,8 @@ with lib;
   };
 
   local.services.X11.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia.open = false;
+  #services.xserver.videoDrivers = [ "nvidia" ];
+  #hardware.nvidia.open = false;
 
   programs.ssh.startAgent = true;
 

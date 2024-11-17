@@ -15,6 +15,8 @@
     kak-ansi.inputs.nixpkgs.follows = "nixpkgs";
     plugbench.url = "github:plugbench/nix-plugbench";
     plugbench.inputs.nixpkgs.follows = "nixpkgs";
+    raspberry-pi-nix.url = "github:nix-community/raspberry-pi-nix";
+    raspberry-pi-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -26,12 +28,16 @@
   , add-missing
   , kak-ansi
   , plugbench
+  , raspberry-pi-nix
   }:
     let
       homeManagerConfig = {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
       };
+
+      mkSystem system: {
+      }
 
     in {
       darwinConfigurations."V3Q9GYKM9C" = darwin.lib.darwinSystem {
@@ -85,6 +91,8 @@
       nixosConfigurations.cnc = nixpkgs.lib.nixosSystem {
         system = "aarch64-linux";
         modules = [
+          raspberry-pi-nix.nixosModules.raspberry-pi
+          raspberry-pi-nix.nixosModules.sd-image
           ./os/nixos
           ./machines/cnc
           ./common.nix
@@ -104,5 +112,6 @@
           plugbench.nixosModules.default
         ];
       };
+
     };
 }
