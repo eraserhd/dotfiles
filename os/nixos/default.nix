@@ -19,6 +19,8 @@ with lib;
       nix.nixPath = [
         "nixpkgs=${inputs.nixpkgs}"
       ];
+
+      time.timeZone = "America/New_York";
     }
     (mkIf config.local.bluetooth.enable {
       hardware.bluetooth = {

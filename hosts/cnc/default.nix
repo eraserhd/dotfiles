@@ -5,12 +5,7 @@ with lib;
   raspberry-pi-nix.board = "bcm2711";
 
   boot = {
-    #kernelPackages = pkgs.linuxKernel.packages.linux_rpi4;
     initrd.availableKernelModules = [ "xhci_pci" "usb_storage" "usbhid" ];
-    #loader = {
-    #  grub.enable = false;
-    #  generic-extlinux-compatible.enable = true;
-    #};
     tmp.cleanOnBoot = true;
   };
 
@@ -38,8 +33,6 @@ with lib;
       interfaces = [ "wlan0" ];
     };
   };
-
-  time.timeZone = "America/New_York";
 
   environment.systemPackages = with pkgs; [
     pinentry
@@ -110,8 +103,6 @@ with lib;
 
   local.sendOutgoingMailWithSES.enable = true;
 
-  local.kits.brain.enable = false;
   local.kits.workstation.enable = true;
-  local.kits._3d-printing.enable = false;
   local.kits.pcbs.enable = false;
 }
