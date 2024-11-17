@@ -35,7 +35,7 @@
         system = "aarch64-darwin";
         modules = [
           ./os/nix-darwin
-          ./hosts/macbook
+          ./hosts/V3Q9GYKM9C
           ./common.nix
           home-manager.darwinModules.home-manager
           {
