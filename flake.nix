@@ -36,9 +36,6 @@
         home-manager.useUserPackages = true;
       };
 
-      mkSystem system: {
-      }
-
     in {
       darwinConfigurations."V3Q9GYKM9C" = darwin.lib.darwinSystem {
         system = "aarch64-darwin";

@@ -124,10 +124,6 @@ with lib;
 
   programs.ssh.startAgent = true;
 
-  nix.nixPath = [
-    "nixos-config=/home/jfelice/src/dotfiles/machines/crunch/default.nix"
-  ];
-
   nixpkgs.config.allowUnfree = true;
 
   users.mutableUsers = false;

@@ -1,13 +1,8 @@
 { config, inputs, pkgs, ... }:
 
 {
-  # Use a custom configuration.nix location.
-  # $ darwin-rebuild switch -I darwin-config=$HOME/src/dotfiles/machines/macbook/default.nix
-  environment.darwinConfig = "$HOME/src/dotfiles/machines/macbook/default.nix";
-
   nix.nixPath = [ {
     inherit (inputs) nixpkgs darwin;
-    darwin-config = "$HOME/src/dotfiles/machines/macbook/default.nix";
   } ];
 
   local.systemDisplayName = "macbook";
