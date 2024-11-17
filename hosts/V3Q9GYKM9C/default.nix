@@ -5,8 +5,6 @@
     inherit (inputs) nixpkgs darwin;
   } ];
 
-  local.systemDisplayName = "macbook";
-
   programs.bash.enable = true;
 
   homebrew = {

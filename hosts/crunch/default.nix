@@ -39,8 +39,6 @@ with lib;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.tmp.cleanOnBoot = true;
 
-  local.systemDisplayName = "crunch";
-
   networking = {
     domain = "eraserhead.net";
     hostName = "crunch";

@@ -22,8 +22,6 @@ with lib;
   ];
   hardware.graphics.enable = true;
 
-  local.systemDisplayName = "cnc";
-
   networking = {
     domain = "eraserhead.net";
     hostName = "cnc";

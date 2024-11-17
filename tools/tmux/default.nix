@@ -2,7 +2,7 @@
 
 with lib;
 let
-  sessionName = config.local.systemDisplayName;
+  sessionName = config.networking.hostName;
   shellPackage = config.local.loginShell.package;
 
   defaultCommand = if pkgs.stdenv.isDarwin
