@@ -8,7 +8,7 @@ with lib;
     }
     (mkIf config.local.networking.respite-wifi.enable {
       networking.domain = "eraserhead.net";
-      wireless.enable = true;
+      networking.wireless.enable = true;
       services.avahi = {
         enable = true;
         nssmdns4 = true;
