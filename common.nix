@@ -8,6 +8,7 @@ with lib;
     ./fonts
     ./kits/3d-printing
     ./kits/brain
+    ./kits/cnc
     ./kits/pcbs
     ./kits/workstation
     ./modules/bubbles

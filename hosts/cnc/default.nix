@@ -89,4 +89,5 @@ with lib;
 
   local.kits.workstation.enable = true;
   local.kits.pcbs.enable = false;
+  local.kits.cnc.enable = true;
 }

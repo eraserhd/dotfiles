@@ -17,6 +17,8 @@
     plugbench.inputs.nixpkgs.follows = "nixpkgs";
     raspberry-pi-nix.url = "github:nix-community/raspberry-pi-nix";
     raspberry-pi-nix.inputs.nixpkgs.follows = "nixpkgs";
+    bCNC-nix.url = "github:eraserhd/bCNC-nix";
+    bCNC-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -29,6 +31,7 @@
   , kak-ansi
   , plugbench
   , raspberry-pi-nix
+  , bCNC-nix
   }@inputs:
     {
       darwinConfigurations."V3Q9GYKM9C" = darwin.lib.darwinSystem {
@@ -42,6 +45,7 @@
             nixpkgs.overlays = [
               add-missing.overlays.default
               kak-ansi.overlays.default
+              bCNC-nix.overlays.default
             ];
           }
           twou.darwinModules.default
@@ -61,6 +65,7 @@
             nixpkgs.overlays = [
               add-missing.overlays.default
               kak-ansi.overlays.default
+              bCNC-nix.overlays.default
             ];
           }
           twou.nixosModules.default
@@ -82,6 +87,7 @@
             nixpkgs.overlays = [
               add-missing.overlays.default
               kak-ansi.overlays.default
+              bCNC-nix.overlays.default
             ];
           }
           plugbench.nixosModules.default
