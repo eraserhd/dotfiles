@@ -47,6 +47,7 @@ with lib;
     ./tools/kicad
     ./tools/kitty
     ./tools/meshlab
+    ./tools/minicom
     ./tools/nats
     ./tools/nix
     ./tools/npm
