@@ -118,7 +118,7 @@ with lib;
       hashedPassword = "$6$ivLP1KZ08UiUOZT9$xVmR1e.Gw5NEmFWdgIcTLFmybGrh71Vt01I/bIpFajZuX7j7M5C0EURIiEQQJyt4ORM9DPrUsIXfbOU/SEFF4/";
       isNormalUser = true;
       home = "/home/jfelice";
-      extraGroups = [ "docker" "wheel" ];
+      extraGroups = [ "docker" "wheel" "dialout" ];
       openssh.authorizedKeys.keys = config.local.authorizedKeys.jfelice;
     };
     alex = {
