@@ -20,12 +20,14 @@ with lib;
     pkgs.linux-firmware
   ];
   hardware.graphics.enable = true;
-  hardware.raspberry-pi.config = {
-    all.base-dt-params = {
-      force_turbo = {
-        value = 1;
-    };
-  };
+  #hardware.raspberry-pi.config = {
+  #  all.base-dt-params = {
+  #    force_turbo = {
+  #      value = 1;
+  #      enable = true;
+  #    };
+  #  };
+  #};
 
   networking = {
     hostName = "cnc";
