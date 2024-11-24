@@ -17,10 +17,15 @@ with lib;
   hardware.enableRedistributableFirmware = true;
   hardware.enableAllFirmware = true;
   hardware.firmware = [
-    #pkgs.wireless-regdb
     pkgs.linux-firmware
   ];
   hardware.graphics.enable = true;
+  hardware.raspberry-pi.config = {
+    all.base-dt-params = {
+      force_turbo = {
+        value = 1;
+    };
+  };
 
   networking = {
     hostName = "cnc";
@@ -41,13 +46,15 @@ with lib;
     enableExtraSocket = false;
   };
 
-  services.openssh = {
-    enable = true;
-  };
+  services.openssh.enable = true;
 
   local.services.X11.enable = true;
-  # There's an accelerated driver called fkms-3d with the vendor kernel; haven't tried it.
-  services.xserver.videoDrivers = [ "fbdev" ];
+  services.xserver = {
+    displayManager.autoLogin = {
+      enable = true;
+      user = "cnc";
+    };
+  };
 
   programs.ssh.startAgent = true;
 
@@ -71,6 +78,12 @@ with lib;
       openssh.authorizedKeys.keys = config.local.authorizedKeys.alex;
     };
     root.openssh.authorizedKeys.keys = config.local.authorizedKeys.jfelice;
+
+    cnc = {
+      isNormalUser = true;
+      home = "/home/cnc";
+      extraGroups = [ "dialout" ];
+    };
   };
   users.groups.twou.gid = 151928526;
 
@@ -80,9 +93,9 @@ with lib;
   '';
 
   home-manager.verbose = true;
+  home-manager.users.jfelice.home.stateVersion = "22.05";
 
   system.stateVersion = "25.05";
-  home-manager.users.jfelice.home.stateVersion = "22.05";
 
   local.networking.respite-wifi.enable = true;
   local.sendOutgoingMailWithSES.enable = true;
