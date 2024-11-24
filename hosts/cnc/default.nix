@@ -2,6 +2,7 @@
 
 with lib;
 {
+  # Raspberry Pi 3B, 1Gig RAM
   raspberry-pi-nix.board = "bcm2711";
 
   boot = {
@@ -20,8 +21,10 @@ with lib;
     pkgs.linux-firmware
   ];
   hardware.graphics.enable = true;
+
   #hardware.raspberry-pi.config = {
   #  all.base-dt-params = {
+  #    # Not even sure this is in the right place
   #    force_turbo = {
   #      value = 1;
   #      enable = true;
@@ -54,7 +57,7 @@ with lib;
   services.xserver = {
     displayManager.autoLogin = {
       enable = true;
-      user = "cnc";
+      user = "jfelice";
     };
   };
 
@@ -80,12 +83,6 @@ with lib;
       openssh.authorizedKeys.keys = config.local.authorizedKeys.alex;
     };
     root.openssh.authorizedKeys.keys = config.local.authorizedKeys.jfelice;
-
-    cnc = {
-      isNormalUser = true;
-      home = "/home/cnc";
-      extraGroups = [ "dialout" ];
-    };
   };
   users.groups.twou.gid = 151928526;
 
