@@ -41,7 +41,7 @@ in {
       };
 
       dataDir = mkOption {
-        default = "/var/lib/nats";
+        default = "/private/var/lib/nats";
         type = types.path;
         description = mdDoc ''
           The NATS data directory. Only used if JetStream is enabled, for
