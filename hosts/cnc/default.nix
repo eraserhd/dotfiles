@@ -8,6 +8,7 @@ with lib;
   boot = {
     initrd.availableKernelModules = [ "xhci_pci" "usb_storage" "usbhid" ];
     tmp.cleanOnBoot = true;
+    kernelParams = [ "usbcore.autosuspend=-1" ];
   };
 
   fileSystems."/" = {
@@ -22,15 +23,19 @@ with lib;
   ];
   hardware.graphics.enable = true;
 
-  #hardware.raspberry-pi.config = {
-  #  all.base-dt-params = {
-  #    # Not even sure this is in the right place
-  #    force_turbo = {
-  #      value = 1;
-  #      enable = true;
-  #    };
-  #  };
-  #};
+  hardware.raspberry-pi.config."" = {
+    dt-overlays = {
+      dwc2 = {
+        enable = true;
+        params = {
+          dr_mode = {
+            enable = true;
+            value = "host";
+          };
+        };
+      };
+    };
+  };
 
   networking = {
     hostName = "cnc";
