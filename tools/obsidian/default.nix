@@ -5,6 +5,6 @@ let
   isWorkstation = config.local.kits.workstation.enable;
 in {
   config = mkIf isWorkstation {
-    environment.systemPacakges = [ pkgs.obsidian ];
+    environment.systemPackages = [ pkgs.obsidian ];
   };
 }
