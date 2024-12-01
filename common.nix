@@ -51,6 +51,7 @@ with lib;
     ./tools/nats
     ./tools/nix
     ./tools/npm
+    ./tools/obsidian
     ./tools/openscad
     ./tools/postman
     ./tools/pcb2gcode
