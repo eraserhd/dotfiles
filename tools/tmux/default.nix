@@ -2,7 +2,9 @@
 
 with lib;
 let
-  sessionName = config.networking.hostName;
+  sessionName = if (config.networking.hostName == null)
+                then "UNKNOWN"
+                else config.networking.hostName;
   shellPackage = config.local.loginShell.package;
 
   defaultCommand = if pkgs.stdenv.isDarwin
