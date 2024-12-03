@@ -71,6 +71,8 @@ in {
           foreground = "#bfc7d5";
           background = "#14161f";
 
+          paste_actions = "quote-urls-at-prompt";
+
           cursor_text_color = "#c782ea";
 
           #: black
