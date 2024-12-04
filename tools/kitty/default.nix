@@ -73,6 +73,8 @@ in {
 
           paste_actions = "quote-urls-at-prompt";
 
+          confirm_os_window_close = 0;
+
           cursor_text_color = "#c782ea";
 
           #: black
