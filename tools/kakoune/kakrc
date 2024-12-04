@@ -254,8 +254,30 @@ set-option global autowrap_column 78
 set-option global autowrap_fmtcmd 'fmt -w %c'
 set-option global autowrap_format_paragraph yes
 
-# GitHub
-# ‾‾‾‾‾‾
+# Git
+# ‾‾‾
+
+define-command \
+    -override \
+    -params 0 \
+    git-browse-link %{
+    evaluate-commands %sh{
+        link=$(git browse-link "$kak_buffile" "$kak_selection_desc" 2>&1)
+        if [ $? -ne 0 ]; then
+            printf "fail '"
+            printf "%s" "$link" |sed -e "s/'/''/g"
+            printf "'\\n"
+            exit
+        fi
+        printf "set-register '\"' '"
+        printf "%s" "$link" |sed -e "s/'/''/g"
+        printf "'\\n"
+    }
+}
+
+declare-user-mode git
+map -docstring 'Git'  global user g ': enter-user-mode git<ret>'
+map -docstring 'Copy a git browse link' global git b ': git-browse-link<ret>'
 
 declare-option -hidden str gist_selection
 
@@ -276,6 +298,8 @@ define-command -override \
         printf "'\n"
     }
 }
+
+map -docstring 'Copy selection (or file) to a gist' global git g ': gist<ret>'
 
 # Clojure
 # ‾‾‾‾‾‾‾
@@ -442,8 +466,7 @@ hook -group clojure-objects global WinSetOption filetype=clojure %{
     map -docstring 'Run tests' window user t ': enter-user-mode clojure-test<ret>'
 }
 
-declare-user-mode babashka
-map -docstring 'Replace with result' global user b ': babashka-replace<ret>'
+map -docstring 'Babashka result' global user b ': babashka-replace<ret>'
 
 define-command -override -params 0 -docstring %{Replace selection with babashka result} \
     babashka-replace %{
