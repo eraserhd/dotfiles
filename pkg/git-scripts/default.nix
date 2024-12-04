@@ -5,7 +5,7 @@ stdenv.mkDerivation {
   src = ./.;
   installPhase = ''
     mkdir -p $out/bin
-    cp git-cleanup git-l $out/bin/
+    cp git-cleanup git-l git-browse-link $out/bin/
     substituteInPlace $out/bin/git-cleanup \
       --subst-var-by bash '${bash}' \
       --subst-var-by git '${git}'

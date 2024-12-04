@@ -1,0 +1,96 @@
+#!/usr/bin/env bb
+(require
+ '[babashka.fs :as fs]
+ '[clojure.java.shell :as shell]
+ '[clojure.string :as str])
+
+(def ^:dynamic *dir* (fs/path "."))
+
+(defn sh [& args]
+  (let [{:keys [:out :err :exit]} (apply shell/sh (concat args [:dir (str *dir*)]))]
+    (when-not (zero? exit)
+      (printf "Error running %s:\n" (str/join " " args))
+      (println err)
+      (System/exit 3))
+    out))
+
+(defn reachable? [from to]
+  (= (sh "git" "merge-base" from to)
+     (sh "git" "rev-parse" "--verify" from)))
+
+(defn remote-branches [remote]
+  (-> (sh "git" "for-each-ref" "--format=%(refname)" (str "refs/remotes/" remote))
+      str/split-lines))
+
+(defn reachable-from-remote? [head remote]
+  (not (empty? (->> (remote-branches remote)
+                    (filter #(reachable? head %))))))
+
+(defn remotes []
+  (-> (sh "git" "remote")
+      str/split-lines))
+
+(defn best-remote [head]
+  (let [remotes (into #{} (remotes))
+        ordered (concat
+                  (when (remotes "upstream") ["upstream"])
+                  (when (remotes "origin") ["origin"])
+                  (set/difference remotes #{"upstream" "origin"}))]
+    (->> ordered
+         (filter #(reachable-from-remote? head %))
+         first)))
+
+(defn head []
+  (-> (sh "git" "rev-parse" "HEAD")
+      str/trim-newline))
+
+(defn origin-url []
+  (let [head (head)
+        remote (best-remote head)]
+    (when-not remote
+      (println "git-browse-link: Cannot find HEAD in any remote (push!)")
+      (System/exit 4))
+    (str/trim-newline (sh "git" "remote" "get-url" remote))))
+
+(defn make-browse-url-prefix [origin-url]
+  (let [github (fn [[_ owner repo]]
+                 (format "https://github.com/%s/%s/blob" owner repo))]
+    (condp re-matches origin-url
+      #"^git@github\.com:([^/]*)/([^/]*?)(?:\.git)?$" :>> github
+      #"^https://github\.com/([^/]*)/([^/]*?)(?:\.git)?$" :>> github
+      origin-url)))
+
+(defn make-position-anchor [position]
+  (if-let [[_ line1 line2] (re-matches #"^(\d+)\.\d+,(\d+)\.\d+" (or position ""))]
+    (let [[line1 line2] (sort [(read-string line1) (read-string line2)])]
+      (format "#L%s-%s" line1 line2))
+    ""))
+
+(defn full-path-within-repo [filename]
+  (-> (sh "git" "ls-files" "--full-name" filename)
+      str/trim-newline))
+
+(defn make-git-browse-link [filename position]
+  (if-let [origin (origin-url)]
+    (format "%s/%s/%s%s"
+            (make-browse-url-prefix origin)
+            (head)
+            (full-path-within-repo filename)
+            (make-position-anchor position))
+    (do
+      (printf "git-browse-link: cannot find a remote with commit %s\n" (head))
+      (System/exit 3))))
+
+(defn -main [filename & [position]]
+  (let [working-dir (fs/parent (fs/absolutize filename))
+        basename    (str (last (fs/components filename)))]
+    (when-not (fs/exists? filename)
+      (printf "git-browse-link: %s: No such file or directory\n" filename)
+      (System/exit 1))
+    (when (fs/directory? filename)
+      (printf "git-browse-link: %s is a directory\n" filename)
+      (System/exit 1))
+    (binding [*dir* working-dir]
+      (println (make-git-browse-link basename position)))))
+
+(apply -main *command-line-args*)
