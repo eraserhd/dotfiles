@@ -582,3 +582,11 @@ hook global BufCreate .*\.scad\.m4 %{
     set-option buffer filetype openscad
     expand-tabs
 }
+
+# Elixir
+# ‾‾‾‾‾‾
+
+hook global BufCreate .*\.exs? %{
+    set-option buffer indentwidth 2
+    expand-tabs
+}
