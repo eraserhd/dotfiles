@@ -590,3 +590,11 @@ hook global BufCreate .*\.exs? %{
     set-option buffer indentwidth 2
     expand-tabs
 }
+
+# Obsidian
+# ‾‾‾‾‾‾‾‾
+
+hook global ModuleLoaded markdown %{
+    require-module javascript
+    add-highlighter shared/markdown/obsidian-templater region '<%[*-]?' '-?%>' ref javascript
+}
