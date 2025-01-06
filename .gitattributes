@@ -10,6 +10,7 @@ networking/ssh/files/id_rsa-centralpark-server-dev-1 filter=git-crypt diff=git-c
 networking/ssh/files/id_rsa-centralpark-server-prod-1 filter=git-crypt diff=git-crypt
 networking/ssh/files/id_rsa filter=git-crypt diff=git-crypt
 networking/ssh/files/id_rsa-macbook filter=git-crypt diff=git-crypt
+networking/ssh/files/teenyweeny.pem filter=git-crypt diff=git-crypt
 networking/wifi/networks.nix filter=git-crypt diff=git-crypt
 tools/aws/boto filter=git-crypt diff=git-crypt
 tools/aws/credentials filter=git-crypt diff=git-crypt
