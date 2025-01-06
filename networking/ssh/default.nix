@@ -56,7 +56,7 @@ with lib;
          chmod 700 ~/.ssh
 
          cp -ap ${toString ./files}/* ~/.ssh/
-         chmod 600 ~/.ssh/id_*
+         chmod 600 ~/.ssh/id_* ~/.ssh/*.pem
        '';
      }
      else {
