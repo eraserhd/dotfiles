@@ -1,6 +1,6 @@
 {
   owner = "eraserhd";
   repo = "parinfer-rust";
-  rev = "e02b0280111f82facbe19c854a374d713d37ac17";
-  hash = "sha256-2oLhsJHT4Q8KIa1sRLUaVOrDisnG0IZPHvLTqHe7Gcg=";
+  rev = "07ff91ba4dad8347ef7cb39fbdda6b62aaddfabc";
+  hash = "sha256-CAZ1t8ot209d1RE21pSVlWnhsr2YROTQazTGAhKuqwk=";
 }
