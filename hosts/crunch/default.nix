@@ -88,6 +88,10 @@ with lib;
     '';
   };
 
+  services.ollama = {
+    enable = true;
+  };
+
   virtualisation.docker.enable = true;
 
   # Allow OpenOCD to access Fiddy Plus
