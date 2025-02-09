@@ -480,11 +480,27 @@ define-command -override \
     -params 0 \
     -docstring %{Evaluate selection with babashka} \
     babashka-evaluate %{
-    echo -- %sh{
-        eval set -- "$kak_quoted_selections"
-        for sel in "$@"; do
-            bb --prn -e "$sel"
-        done
+    evaluate-commands -no-hooks -draft -save-regs 'r^' %{
+        evaluate-commands -no-hooks %sh{
+            eval set -- "$kak_quoted_selections"
+            printf 'set-register a'
+            for sel in "$@"; do
+                printf " '"
+                bb -e '
+                    (print (str/replace (try
+                                          (str "=> " (pr-str '"$sel"'))
+                                          (catch Throwable t
+                                            (str (.getSimpleName (class t)) ": " (.getMessage t))))
+                                        "'"'"'"
+                                        "'"''"'"))
+                '
+                printf "'"
+            done
+            printf '\n'
+        }
+        execute-keys '<a-:>a<space><esc>;'
+        try %{ execute-keys -itersel '<a-l><a-k>\A\h*;[^\n]*\z<ret>' }
+        execute-keys 'c<space>;<c-r>a<esc>'
     }
 }
 
