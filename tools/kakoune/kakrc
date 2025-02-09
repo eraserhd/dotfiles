@@ -481,6 +481,7 @@ define-command -override \
     -docstring %{Evaluate selection with babashka} \
     babashka-evaluate %{
     evaluate-commands -no-hooks -draft -save-regs 'r^' %{
+        try %{ execute-keys -itersel '<a-k>\A.\z<ret>m' }
         evaluate-commands -no-hooks %sh{
             eval set -- "$kak_quoted_selections"
             printf 'set-register a'
