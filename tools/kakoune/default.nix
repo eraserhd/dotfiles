@@ -10,6 +10,7 @@ with lib;
             plugins = with pkgs.kakounePlugins; [
               case-kak
               kak-ansi
+              kak-babashka
               kak-jira
               kakoune-lsp
               openscad-kak

@@ -13,6 +13,8 @@
     add-missing.inputs.nixpkgs.follows = "nixpkgs";
     kak-ansi.url = "github:eraserhd/kak-ansi";
     kak-ansi.inputs.nixpkgs.follows = "nixpkgs";
+    kak-babashka.url = "github:eraserhd/kak-babashka";
+    kak-babashka.inputs.nixpkgs.follows = "nixpkgs";
     plugbench.url = "github:plugbench/nix-plugbench";
     plugbench.inputs.nixpkgs.follows = "nixpkgs";
     raspberry-pi-nix.url = "github:nix-community/raspberry-pi-nix";
@@ -29,6 +31,7 @@
   , twou
   , add-missing
   , kak-ansi
+  , kak-babashka
   , plugbench
   , raspberry-pi-nix
   , bCNC-nix
@@ -45,6 +48,7 @@
             nixpkgs.overlays = [
               add-missing.overlays.default
               kak-ansi.overlays.default
+              kak-babashka.overlays.default
               bCNC-nix.overlays.default
             ];
           }
@@ -65,6 +69,7 @@
             nixpkgs.overlays = [
               add-missing.overlays.default
               kak-ansi.overlays.default
+              kak-babashka.overlays.default
               bCNC-nix.overlays.default
             ];
           }
@@ -87,6 +92,7 @@
             nixpkgs.overlays = [
               add-missing.overlays.default
               kak-ansi.overlays.default
+              kak-babashka.overlays.default
               bCNC-nix.overlays.default
             ];
           }
