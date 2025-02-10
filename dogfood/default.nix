@@ -26,7 +26,6 @@ in
           });
         };
 
-        parinfer-rust = dogfood super ./parinfer-rust.nix {};
         rep = dogfood super ./rep.nix {};
 
         tableize = dogfood super ./tableize.nix {};

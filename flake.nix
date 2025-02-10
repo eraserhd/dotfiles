@@ -15,6 +15,8 @@
     kak-babashka.url = "github:eraserhd/kak-babashka";
     kak-babashka.inputs.nixpkgs.follows = "nixpkgs";
     nixpkgs.url = "github:NixOS/nixpkgs/master";
+    parinfer-rust.url = "github:eraserhd/parinfer-rust";
+    parinfer-rust.inputs.nixpkgs.follows = "nixpkgs";
     plugbench.url = "github:plugbench/nix-plugbench";
     plugbench.inputs.nixpkgs.follows = "nixpkgs";
     raspberry-pi-nix.url = "github:nix-community/raspberry-pi-nix";
@@ -32,73 +34,63 @@
   , kak-ansi
   , kak-babashka
   , nixpkgs
+  , parinfer-rust
   , plugbench
   , raspberry-pi-nix
   , twou
   }@inputs:
-    {
-      darwinConfigurations."V3Q9GYKM9C" = darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        modules = [
-          ./os/nix-darwin
-          ./hosts/V3Q9GYKM9C
-          ./common.nix
-          home-manager.darwinModules.home-manager
-          {
-            nixpkgs.overlays = [
-              add-missing.overlays.default
-              kak-ansi.overlays.default
-              kak-babashka.overlays.default
-              bCNC-nix.overlays.default
-            ];
-          }
-          twou.darwinModules.default
-          plugbench.darwinModules.default
-        ];
-        specialArgs = { inherit inputs; };
-      };
-
-      nixosConfigurations.crunch = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./os/nixos
-          ./hosts/crunch
-          ./common.nix
-          home-manager.nixosModules.home-manager
-          {
-            nixpkgs.overlays = [
-              add-missing.overlays.default
-              kak-ansi.overlays.default
-              kak-babashka.overlays.default
-              bCNC-nix.overlays.default
-            ];
-          }
-          twou.nixosModules.default
-          plugbench.nixosModules.default
-        ];
-        specialArgs = { inherit inputs; };
-      };
-
-      nixosConfigurations.cnc = nixpkgs.lib.nixosSystem {
-        system = "aarch64-linux";
-        modules = [
-          raspberry-pi-nix.nixosModules.raspberry-pi
-          raspberry-pi-nix.nixosModules.sd-image
-          ./os/nixos
-          ./hosts/cnc
-          ./common.nix
-          home-manager.nixosModules.home-manager
-          {
-            nixpkgs.overlays = [
-              add-missing.overlays.default
-              kak-ansi.overlays.default
-              kak-babashka.overlays.default
-              bCNC-nix.overlays.default
-            ];
-          }
-          plugbench.nixosModules.default
-        ];
-        specialArgs = { inherit inputs; };
-      };
+  let
+    overlays = {
+      nixpkgs.overlays = [
+        add-missing.overlays.default
+        bCNC-nix.overlays.default
+        kak-ansi.overlays.default
+        kak-babashka.overlays.default
+        parinfer-rust.overlays.default
+      ];
     };
+  in {
+    darwinConfigurations."V3Q9GYKM9C" = darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
+      modules = [
+        ./os/nix-darwin
+        ./hosts/V3Q9GYKM9C
+        ./common.nix
+        home-manager.darwinModules.home-manager
+        overlays
+        twou.darwinModules.default
+        plugbench.darwinModules.default
+      ];
+      specialArgs = { inherit inputs; };
+    };
+
+    nixosConfigurations.crunch = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        ./os/nixos
+        ./hosts/crunch
+        ./common.nix
+        home-manager.nixosModules.home-manager
+        overlays
+        twou.nixosModules.default
+        plugbench.nixosModules.default
+      ];
+      specialArgs = { inherit inputs; };
+    };
+
+    nixosConfigurations.cnc = nixpkgs.lib.nixosSystem {
+      system = "aarch64-linux";
+      modules = [
+        raspberry-pi-nix.nixosModules.raspberry-pi
+        raspberry-pi-nix.nixosModules.sd-image
+        ./os/nixos
+        ./hosts/cnc
+        ./common.nix
+        home-manager.nixosModules.home-manager
+        overlays
+        plugbench.nixosModules.default
+      ];
+      specialArgs = { inherit inputs; };
+    };
+  };
 }
