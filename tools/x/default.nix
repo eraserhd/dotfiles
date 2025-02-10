@@ -24,7 +24,7 @@ in {
       enable = true;
       mouse = {
         naturalScrolling = true;
-        accelSpeed = "-0.5";
+        accelSpeed = "-0.9";
       };
     };
   }
