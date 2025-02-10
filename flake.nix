@@ -2,39 +2,39 @@
   description = "eraserhd's machine configs";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/master";
+    add-missing.url = "github:eraserhd/add-missing";
+    add-missing.inputs.nixpkgs.follows = "nixpkgs";
+    bCNC-nix.url = "github:eraserhd/bCNC-nix";
+    bCNC-nix.inputs.nixpkgs.follows = "nixpkgs";
     darwin.url = "github:LnL7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    twou.url = "git+ssh://git@github.com/2uinc/nix-2u?ref=main";
-    twou.inputs.nixpkgs.follows = "nixpkgs";
-    add-missing.url = "github:eraserhd/add-missing";
-    add-missing.inputs.nixpkgs.follows = "nixpkgs";
     kak-ansi.url = "github:eraserhd/kak-ansi";
     kak-ansi.inputs.nixpkgs.follows = "nixpkgs";
     kak-babashka.url = "github:eraserhd/kak-babashka";
     kak-babashka.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/master";
     plugbench.url = "github:plugbench/nix-plugbench";
     plugbench.inputs.nixpkgs.follows = "nixpkgs";
     raspberry-pi-nix.url = "github:nix-community/raspberry-pi-nix";
     raspberry-pi-nix.inputs.nixpkgs.follows = "nixpkgs";
-    bCNC-nix.url = "github:eraserhd/bCNC-nix";
-    bCNC-nix.inputs.nixpkgs.follows = "nixpkgs";
+    twou.url = "git+ssh://git@github.com/2uinc/nix-2u?ref=main";
+    twou.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
   { self
-  , nixpkgs
+  , add-missing
+  , bCNC-nix
   , darwin
   , home-manager
-  , twou
-  , add-missing
   , kak-ansi
   , kak-babashka
+  , nixpkgs
   , plugbench
   , raspberry-pi-nix
-  , bCNC-nix
+  , twou
   }@inputs:
     {
       darwinConfigurations."V3Q9GYKM9C" = darwin.lib.darwinSystem {
