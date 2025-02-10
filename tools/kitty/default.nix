@@ -46,13 +46,13 @@ in {
       programs.kitty = {
         enable = true;
         font = {
-          name = "Input Mono Narrow Light";
-          size = 11;
+          name = "mononoki-Regular";
+          size = 10;
         };
         settings = {
-          bold_font = "Input Mono Narrow Medium";
-          italic_font = "Input Mono Narrow Light Italic";
-          bold_italic_font = "Input Mono Narrow Medium Italic";
+          bold_font = "mononoki-Bold";
+          italic_font = "mononoki-Italic";
+          bold_italic_font = "mononoki-BoldItalic";
 
           allow_remote_control = true;
 
