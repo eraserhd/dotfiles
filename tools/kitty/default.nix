@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, options, ... }:
 
 with lib;
 let
@@ -22,6 +22,9 @@ let
     mapAttrs (name: value: fixVariableReferences value) vars;
 
   homeDirectory = config.users.users.jfelice.home;
+
+  # hacky
+  isMacOS =  builtins.hasAttr "launchd" options;
 in {
   config = {
     environment.systemPackages = with pkgs; [
@@ -47,7 +50,9 @@ in {
         enable = true;
         font = {
           name = "mononoki-Regular";
-          size = 10;
+          size = (if isMacOS
+                  then 13
+                  else 10);
         };
         settings = {
           bold_font = "mononoki-Bold";
@@ -63,7 +68,6 @@ in {
           window_margin_width = "5.0";
 
           macos_option_as_alt = true;
-          macos_thicken_font = "0.5";
 
           shell_integration = "enabled";
           clipboard_control = "write-clipboard read-clipboard";
@@ -109,6 +113,12 @@ in {
           color7 = "#bfc7d5";
           color15 = "#bfc7d5";
         };
+        # Not sure why these work different on MacOS than Linux
+        extraConfig = mkIf isMacOS ''
+          modify_font cell_height -2px
+          modify_font baseline +2px
+          modify_font cell_width 85%
+        '';
         keybindings = {
           "shift+ctrl+g" = "launch --stdin-add-formatting --stdin-source=@screen_scrollback --cwd=current --type=overlay ${pkgs.local.kak-scrollback-pager}/bin/kak-scrollback-pager @scrolled-by @cursor-x @cursor-y @line-count";
           "shift+ctrl+h" = "launch --stdin-add-formatting --stdin-source=@last_cmd_output --cwd=current --type=overlay ${pkgs.local.kak-scrollback-pager}/bin/kak-scrollback-pager @scrolled-by @cursor-x @cursor-y @line-count";
