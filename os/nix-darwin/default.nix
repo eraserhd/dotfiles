@@ -19,5 +19,4 @@
     KeyRepeat = 1;
     "com.apple.keyboard.fnState" = true;
   };
-  nix.configureBuildUsers = true;
 }

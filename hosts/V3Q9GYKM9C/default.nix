@@ -14,8 +14,6 @@
 
   bubbles.enable = true;
 
-  services.nix-daemon.enable = true;
-
   environment.xdgRuntimeDir.enable = true;
 
   users.users.jfelice = {
