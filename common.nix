@@ -57,6 +57,7 @@ with lib;
     ./tools/pcb2gcode
     ./tools/postgres
     ./tools/prusa-slicer
+    ./tools/R
     ./tools/rlwrap
     ./tools/signal
     ./tools/tex
