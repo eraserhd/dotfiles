@@ -124,6 +124,16 @@ with lib;
     xset s noblank
   '';
 
+  security.rtkit.enable = true; # Recommended for pipewire??
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    wireplumber.extraConfig.bluetoothEnhancements = {
+    };
+  };
+
   programs.ssh.startAgent = true;
 
   nixpkgs.config.allowUnfree = true;
