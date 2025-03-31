@@ -25,7 +25,6 @@ with lib;
     ./tools/anki
     ./tools/aws
     ./tools/babashka
-    ./tools/barrier
     ./tools/bCNC
     ./tools/buildkite
     ./tools/clang
