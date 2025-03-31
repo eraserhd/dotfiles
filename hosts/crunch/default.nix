@@ -101,7 +101,22 @@ with lib;
 
   local.bluetooth.enable = true;
   local.services.X11.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver = {
+    videoDrivers = [ "nvidia" ];
+    xrandrHeads = [
+      {
+        output = "HDMI-0";
+        primary = true;
+      }
+      {
+        output = "DP-0";
+      }
+    ];
+    screenSection = ''
+      Option         "nvidiaXineramaInfoOrder" "HDMI-0"
+      Option         "metamodes" "HDMI-0: nvidia-auto-select +3840+0, DP-0: nvidia-auto-select +0+0"
+    '';
+  };
   hardware.nvidia.open = false;
   services.xserver.displayManager.sessionCommands = ''
     barriers --log /tmp/barrier.log --no-tray --debug INFO --name crunch --disable-crypto --disable-client-cert-checking -c ${../../tools/barrier/barrier.conf} --address :24800

@@ -2,13 +2,12 @@
 
 with lib;
 let
-  enable = config.local.kits.workstation.enable;
-  isBrain = config.local.kits.brain.enable;
+   enable = config.local.kits.workstation.enable;
 
   token = builtins.readFile ./token.txt;
 
 in {
-  config = mkIf enable {
+  config = {
     environment.systemPackages = with pkgs; [
       natscli
     ];
@@ -24,10 +23,7 @@ in {
           max_file_store = 128 * 1024 * 1024;
         };
         leafnodes = {
-          port = mkIf isBrain 7422;
-          remotes = mkIf (!isBrain) [{
-            url = "tls://${token}@crunch.eraserhead.net";
-          }];
+          port = 7422;
         };
       };
     };

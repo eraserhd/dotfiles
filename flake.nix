@@ -21,8 +21,6 @@
     plugbench.inputs.nixpkgs.follows = "nixpkgs";
     raspberry-pi-nix.url = "github:nix-community/raspberry-pi-nix";
     raspberry-pi-nix.inputs.nixpkgs.follows = "nixpkgs";
-    twou.url = "git+ssh://git@github.com/2uinc/nix-2u?ref=main";
-    twou.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -37,7 +35,6 @@
   , parinfer-rust
   , plugbench
   , raspberry-pi-nix
-  , twou
   }@inputs:
   let
     overlays = {
@@ -58,7 +55,6 @@
         ./common.nix
         home-manager.darwinModules.home-manager
         overlays
-        twou.darwinModules.default
         plugbench.darwinModules.default
       ];
       specialArgs = { inherit inputs; };
@@ -72,7 +68,6 @@
         ./common.nix
         home-manager.nixosModules.home-manager
         overlays
-        twou.nixosModules.default
         plugbench.nixosModules.default
       ];
       specialArgs = { inherit inputs; };
