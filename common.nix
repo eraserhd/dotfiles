@@ -61,6 +61,7 @@ with lib;
     ./tools/tex
     ./tools/tmux
     ./tools/x
+    ./tools/zoom
     ./tools/zsh
     ./shell
   ];
