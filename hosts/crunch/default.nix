@@ -105,11 +105,11 @@ with lib;
     videoDrivers = [ "nvidia" ];
     xrandrHeads = [
       {
-        output = "HDMI-0";
+        output = "DP-0";
         primary = true;
       }
       {
-        output = "DP-0";
+        output = "HDMI-0";
       }
     ];
     screenSection = ''
