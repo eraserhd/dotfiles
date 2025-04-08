@@ -1,6 +1,8 @@
-{ ... }:
+{ pkgs, ... }:
 {
   config = {
-    homebrew.casks = [ "discord" ];
+    environment.systemPackages = [
+      pkgs.discord
+    ];
   };
 }
