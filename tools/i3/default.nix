@@ -209,6 +209,31 @@ with lib;
                 status_command i3status
         }
       '';
+
+      home.file.".config/i3status/config".text = ''
+        order += "wireless wlp5s0"
+        order += "cpu_temperature 0"
+        order += "load"
+        order += "tztime local"
+
+        wireless wlp5s0 {
+          format_up = "W: (%quality at %essid, %bitrate) %ip"
+          format_down = "W: down"
+        }
+
+        cpu_temperature 0 {
+          format = "T: %degrees °C"
+          path = "/sys/class/thermal/thermal_zone0/temp"
+        }
+
+        load {
+          format = "%5min"
+        }
+
+        tztime local {
+          format = "%Y-%m-%d %H:%M:%S"
+        }
+      '';
     };
 
   };
