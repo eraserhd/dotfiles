@@ -11,15 +11,15 @@ with lib;
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/95594027-89fd-4f8c-966e-da035aa59b87";
+    device = "/dev/disk/by-label/root";
     fsType = "ext4";
   };
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/3624-3954";
+    device = "/dev/disk/by-label/boot";
     fsType = "vfat";
   };
   swapDevices = [{
-    device = "/dev/disk/by-uuid/05c1d59b-9cfc-4767-b8e3-4d4f99859411";
+    device = "/dev/disk/by-label/swap";
   }];
 
   hardware.enableRedistributableFirmware = true;
