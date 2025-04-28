@@ -33,6 +33,7 @@ with lib;
     ./tools/cue
     ./tools/discord
     ./tools/firefox
+    ./tools/freecad
     ./tools/git
     ./tools/gnupg
     ./tools/gnuplot
