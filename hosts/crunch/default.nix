@@ -18,7 +18,10 @@ with lib;
     device = "/dev/disk/by-label/SYSTEM";
     fsType = "vfat";
   };
-  swapDevices = [];
+  swapDevices = [{
+    device = "/.swapfile";
+    size = 128 * 1024;
+  }];
 
   hardware.enableRedistributableFirmware = true;
   # hardware.cpu.amd.updateMicrocode = true;
