@@ -2,7 +2,7 @@
 
 with lib;
 {
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usb_storage" "usbhid" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "thunderbolt" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
@@ -15,20 +15,18 @@ with lib;
     fsType = "ext4";
   };
   fileSystems."/boot" = {
-    device = "/dev/disk/by-label/boot";
+    device = "/dev/disk/by-label/SYSTEM";
     fsType = "vfat";
   };
-  swapDevices = [{
-    device = "/dev/disk/by-label/swap";
-  }];
+  swapDevices = [];
 
   hardware.enableRedistributableFirmware = true;
+  # hardware.cpu.amd.updateMicrocode = true;
   hardware.enableAllFirmware = true;
   hardware.firmware = [
     pkgs.wireless-regdb
     pkgs.linux-firmware
   ];
-  hardware.graphics.enable = true;
 
   nix.settings.max-jobs = 2;
   nix.settings.cores = 10;
@@ -43,13 +41,13 @@ with lib;
     hostName = "crunch";
     firewall.enable = false;
     wireless = {
-      interfaces = [ "wlp5s0" ];
+      interfaces = [ "wlp8s0" ];
     };
     #defaultGateway = {
     #  address = "10.156.1.1";
     #  interface = "wlp5s0";
     #};
-    interfaces.wlp5s0 = {
+    interfaces.wlp8s0 = {
       useDHCP = true;
       #ipv6.addresses = [
       #  {
@@ -117,7 +115,14 @@ with lib;
       Option         "metamodes" "HDMI-0: nvidia-auto-select +3840+0, DP-0: nvidia-auto-select +0+0"
     '';
   };
-  hardware.nvidia.open = false;
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [ nvidia-vaapi-driver ];
+  };
+  hardware.nvidia = {
+    open = true;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
+  };
   services.xserver.displayManager.sessionCommands = ''
     xset s off
     xset -dpms
@@ -141,8 +146,6 @@ with lib;
   users.mutableUsers = false;
   users.users = {
     jfelice = {
-      uid = 904137886;
-      group = "twou";
       hashedPassword = "$6$ivLP1KZ08UiUOZT9$xVmR1e.Gw5NEmFWdgIcTLFmybGrh71Vt01I/bIpFajZuX7j7M5C0EURIiEQQJyt4ORM9DPrUsIXfbOU/SEFF4/";
       isNormalUser = true;
       home = "/home/jfelice";
@@ -157,7 +160,6 @@ with lib;
     };
     root.openssh.authorizedKeys.keys = config.local.authorizedKeys.jfelice;
   };
-  users.groups.twou.gid = 151928526;
 
   security.sudo.extraConfig = ''
     jfelice  ALL=(ALL:ALL) NOPASSWD: ALL
@@ -165,7 +167,7 @@ with lib;
 
   home-manager.verbose = true;
 
-  system.stateVersion = "21.05";
+  system.stateVersion = "24.05";
   home-manager.users.jfelice.home.stateVersion = "22.05";
 
   local.networking.respite-wifi.enable = true;
