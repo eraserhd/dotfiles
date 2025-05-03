@@ -95,12 +95,12 @@ with lib;
         # and nm-applet is a desktop environment-independent system tray GUI for it.
         exec --no-startup-id nm-applet
 
-        # Use pactl to adjust volume in PulseAudio.
+        # Adjust PipeWire volume with WirePlumber .
         set $refresh_i3status killall -SIGUSR1 i3status
-        bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
-        bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-        bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-        bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+        bindsym XF86AudioRaiseVolume exec --no-startup-id wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 10%+ && $refresh_i3status
+        bindsym XF86AudioLowerVolume exec --no-startup-id wpctl set-volume -l 0.0 @DEFAULT_AUDIO_SINK@ 10%- && $refresh_i3status
+        bindsym XF86AudioMute exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && $refresh_i3status
+        bindsym XF86AudioMicMute exec --no-startup-id wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle && $refresh_i3status
 
         # Use Mouse+$mod to drag floating windows to their wanted position
         floating_modifier $mod
