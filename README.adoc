@@ -31,3 +31,17 @@ Manual Installation Steps (Still)
 * Set programs.gnupg.agent.pinentryFlavor and enableExtraSocket (not sure which)
 * Lots of systemctl --user restart gpg-agent
 * git crypt unlock -- works!!
+
+2025 Crunch
+-----------
+
+Firefox:
+
+* In about:config, set `layout.css.devPixelsPerPx` to 0.75
+* In Tree Style Tab preferences Advanced user stylesheet:
+
+----
+tab-item {
+  --tab-size: 24px;
+}
+----
