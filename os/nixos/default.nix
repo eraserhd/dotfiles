@@ -28,16 +28,22 @@ with lib;
         powerOnBoot = true;
         settings = {
           General = {
+            Enable = "Source,Sink,Media,Socket";
             Experimental = true;
+            KernelExperimental = true;
+            FastConnectable = true;
+            MultiProfile = "multiple";
+            JustWorksRepairing = "always";
+          };
+          Policy = {
+            AutoEnable = true;
           };
         };
+        package = pkgs.bluez5-experimental;
       };
-      #hardware.pulseaudio.enable = true;
-      #hardware.pulseaudio.package = pkgs.pulseaudioFull;
       # for bluetoothctl
       environment.systemPackages = with pkgs; [
         bluez
-        #pulseaudioFull
       ];
     })
   ];
