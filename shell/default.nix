@@ -65,7 +65,7 @@ in {
       broot
       direnv
       entr
-      fblog
+      file
       fzf
       jq
       killall

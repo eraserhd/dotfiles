@@ -51,6 +51,7 @@ in {
       packages = with pkgs; [
         custom-input-fonts
         mononoki
+        fira-sans
       ];
     };
   };
