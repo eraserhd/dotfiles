@@ -74,6 +74,37 @@ with lib;
 
   documentation.dev.enable = true;
 
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [
+      hplip
+      epson-escpr
+      epson-escpr2
+    ];
+  };
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+  hardware.printers = {
+    ensurePrinters = [
+      {
+        name = "Laserjet";
+        model = "HP/hp-laserjet_200_color_m251-ps.ppd.gz";
+        description = "HP Laserjet 200 M251nw (324AEC)";
+        deviceUri = "dnssd://HP%20LaserJet%20200%20color%20M251nw%20(324AEC)._ipp._tcp.local/?uuid=434e4431-4837-3733-3536-fc15b4324aec";
+      }
+      {
+        name = "Epson";
+        model = "epson-inkjet-printer-escpr2/Epson-XP-15000_Series-epson-escpr2-en.ppd";
+        description = "Epson XP-15000 Series";
+        deviceUri = "dnssd://EPSON%20XP-15000%20Series._ipp._tcp.local/?uuid=cfe92100-67c4-11d4-a45f-dccd2fd241db";
+      }
+    ];
+    ensureDefaultPrinter = "Laserjet";
+  };
+
   programs.gnupg.agent = {
     enable = true;
     enableExtraSocket = false;
