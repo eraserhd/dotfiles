@@ -11,6 +11,7 @@ in {
   config = mkIf cfg.enable ({
     environment.systemPackages = [
       pkgs.xorg.xev
+      pkgs.flameshot
     ];
   } // (if (builtins.hasAttr "xserver" options.services)
   then {
