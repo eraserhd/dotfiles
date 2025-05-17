@@ -53,7 +53,6 @@ with lib;
     ./tools/npm
     ./tools/obsidian
     ./tools/openscad
-    ./tools/orca-slicer
     ./tools/postman
     ./tools/pcb2gcode
     ./tools/postgres
