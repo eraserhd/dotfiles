@@ -44,14 +44,11 @@ with lib;
   networking = {
     hostName = "crunch";
     firewall.enable = false;
-    wireless = {
-      interfaces = [ "wlp8s0" ];
-    };
     #defaultGateway = {
     #  address = "10.156.1.1";
     #  interface = "wlp5s0";
     #};
-    interfaces.wlp8s0 = {
+    interfaces.enp7s0 = {
       useDHCP = true;
       #ipv6.addresses = [
       #  {
