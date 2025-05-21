@@ -8,13 +8,13 @@
     bCNC-nix.inputs.nixpkgs.follows = "nixpkgs";
     darwin.url = "github:LnL7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     kak-ansi.url = "github:eraserhd/kak-ansi";
     kak-ansi.inputs.nixpkgs.follows = "nixpkgs";
     kak-babashka.url = "github:eraserhd/kak-babashka";
     kak-babashka.inputs.nixpkgs.follows = "nixpkgs";
-    nixpkgs.url = "github:NixOS/nixpkgs/master";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-25.05";
     parinfer-rust.url = "github:eraserhd/parinfer-rust";
     parinfer-rust.inputs.nixpkgs.follows = "nixpkgs";
     plugbench.url = "github:plugbench/nix-plugbench";
