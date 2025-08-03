@@ -28,6 +28,7 @@ with lib;
     ./tools/bCNC
     ./tools/buildkite
     ./tools/clang
+    ./tools/claude
     ./tools/clojure
     ./tools/coscreen
     ./tools/cue
