@@ -6,7 +6,7 @@ with lib;
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = pkgs.linuxPackages_6_14;
 
   # For building Raspberry Pi images
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
