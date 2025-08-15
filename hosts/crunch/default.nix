@@ -6,7 +6,7 @@ with lib;
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-  boot.kernelPackages = pkgs.linuxPackages_6_14;
+  boot.kernelPackages = pkgs.linuxPackages_6_16; # for NVIDIA
 
   # For building Raspberry Pi images
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
@@ -153,7 +153,7 @@ with lib;
   };
   hardware.nvidia = {
     open = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
   services.xserver.displayManager.sessionCommands = ''
     xset s off
