@@ -61,6 +61,7 @@ with lib;
     ./tools/R
     ./tools/rlwrap
     ./tools/signal
+    ./tools/slack
     ./tools/tex
     ./tools/tmux
     ./tools/x
