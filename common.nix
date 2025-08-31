@@ -41,7 +41,6 @@ with lib;
     ./tools/go
     ./tools/gtypist
     ./tools/hammerspoon
-    ./tools/i3
     ./tools/inkscape
     ./tools/k9s
     ./tools/kakoune
@@ -65,6 +64,7 @@ with lib;
     ./tools/tex
     ./tools/tmux
     ./tools/x
+    ./tools/xmonad
     ./tools/zoom
     ./tools/zsh
     ./shell

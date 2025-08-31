@@ -17,7 +17,7 @@ in {
   then {
     services.xserver = {
       enable = true;
-      windowManager.i3.enable = true;
+      #windowManager.i3.enable = true;
       autoRepeatDelay = 200;
       autoRepeatInterval = 40;
     };
