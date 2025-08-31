@@ -3,9 +3,22 @@ import XMonad.Actions.Navigation2D
 import XMonad.Util.EZConfig
 import qualified XMonad.StackSet as W
 
-devLayout = Mirror $ Tall 3 (3/100) (3/4)
+data DevLayout a = DevLayout deriving (Read, Show)
 
-myLayout = devLayout ||| Full
+instance LayoutClass DevLayout a where
+    pureLayout DevLayout rect stack =
+        zip windows rectangles
+      where
+        windows = W.integrate stack
+        n = length windows
+        rectangles = if n < 4
+                     then splitHorizontally n rect
+                     else let cols = splitHorizontally 4 rect
+                          in (take 3 cols) ++ (splitVertically (n-3) (last cols))
+
+    pureMessage _ _ = Nothing
+
+myLayout = DevLayout ||| Full
 
 main :: IO ()
 main = xmonad $ withNavigation2DConfig def $ def
@@ -18,4 +31,8 @@ main = xmonad $ withNavigation2DConfig def $ def
   , ("C-w j", windowGo D False)
   , ("C-w k", windowGo U False)
   , ("C-w l", windowGo R False)
+  , ("C-w M1-h", windowSwap L False)
+  , ("C-w M1-j", windowSwap D False)
+  , ("C-w M1-k", windowSwap U False)
+  , ("C-w M1-l", windowSwap R False)
   ]
