@@ -1,5 +1,6 @@
 import XMonad
 import XMonad.Actions.Navigation2D
+import XMonad.Actions.Warp
 import XMonad.Util.EZConfig
 import qualified XMonad.StackSet as W
 
@@ -20,6 +21,12 @@ instance LayoutClass DevLayout a where
 
 myLayout = DevLayout ||| Full
 
+withWarp x = do
+  x
+  warpToWindow 0.5 0.5
+
+sigils = ["a", "b", "c", "d", "e", "g", "i", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+
 main :: IO ()
 main = xmonad $ withNavigation2DConfig def $ def
   { modMask = mod4Mask  -- se Command/Super for mod
@@ -27,12 +34,12 @@ main = xmonad $ withNavigation2DConfig def $ def
   , layoutHook = myLayout
   }
  `additionalKeysP`
-  [ ("C-w h", windowGo L False)
-  , ("C-w j", windowGo D False)
-  , ("C-w k", windowGo U False)
-  , ("C-w l", windowGo R False)
-  , ("C-w M1-h", windowSwap L False)
-  , ("C-w M1-j", windowSwap D False)
-  , ("C-w M1-k", windowSwap U False)
-  , ("C-w M1-l", windowSwap R False)
+  [ ("C-w h", withWarp $ windowGo L False)
+  , ("C-w j", withWarp $ windowGo D False)
+  , ("C-w k", withWarp $ windowGo U False)
+  , ("C-w l", withWarp $ windowGo R False)
+  , ("C-w M1-h", withWarp $ windowSwap L False)
+  , ("C-w M1-j", withWarp $ windowSwap D False)
+  , ("C-w M1-k", withWarp $ windowSwap U False)
+  , ("C-w M1-l", withWarp $ windowSwap R False)
   ]
