@@ -95,12 +95,11 @@ paintTextWidget engine (dpy, pixmap, gc) place shrinker dd widget _ = do
     printStringXMF dpy pixmap (ddEngineState dd) gc (sTextColor style) (sTextBgColor style) x y str'
 
 -- | Implementation of @calcWidgetPlace@ for decoration engines based on @SigilEngine@.
-calcTextWidgetPlace :: (TextWidget widget,
-                        DecorationEngineState engine ~ XMonadFont,
-                        DecorationEngine engine widget Window)
-                    => engine widget Window
-                    -> DrawData engine widget
-                    -> widget
+calcTextWidgetPlace :: (DecorationEngineState engine ~ XMonadFont,
+                        DecorationEngine engine SigilWidget Window)
+                    => engine SigilWidget Window
+                    -> DrawData engine SigilWidget
+                    -> SigilWidget
                     -> X WidgetPlace
 calcTextWidgetPlace _ dd widget = do
     str <- widgetString dd widget
