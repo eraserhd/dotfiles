@@ -1,4 +1,5 @@
 import XMonad
+import XMonad.Actions.FocusNth
 import XMonad.Actions.Navigation2D
 import XMonad.Actions.UpdatePointer
 import XMonad.Util.EZConfig
@@ -31,12 +32,14 @@ main = xmonad $ withNavigation2DConfig def $ def
   , logHook = updatePointer (0.5, 0.5) (0, 0)
   }
  `additionalKeysP`
-  [ ("C-w h", windowGo L False)
-  , ("C-w j", windowGo D False)
-  , ("C-w k", windowGo U False)
-  , ("C-w l", windowGo R False)
-  , ("C-w M1-h", windowSwap L False)
-  , ("C-w M1-j", windowSwap D False)
-  , ("C-w M1-k", windowSwap U False)
-  , ("C-w M1-l", windowSwap R False)
-  ]
+  ([ ("C-w h", windowGo L False)
+   , ("C-w j", windowGo D False)
+   , ("C-w k", windowGo U False)
+   , ("C-w l", windowGo R False)
+   , ("C-w M1-h", windowSwap L False)
+   , ("C-w M1-j", windowSwap D False)
+   , ("C-w M1-k", windowSwap U False)
+   , ("C-w M1-l", windowSwap R False)
+   ] ++
+   [ ("C-w "++sigil, focusNth i) | (i, sigil) <- zip [0..] sigils ] ++
+   [ ("C-w M1-"++sigil, swapNth i) | (i, sigil) <- zip [0..] sigils ])
