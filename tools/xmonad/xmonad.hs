@@ -4,6 +4,7 @@ import XMonad.Actions.Navigation2D
 import XMonad.Actions.UpdatePointer
 import XMonad.Layout.SimpleDecoration
 import XMonad.Util.EZConfig
+import XMonad.Util.Paste
 import XMonad.Util.Themes
 import qualified XMonad.StackSet as W
 
@@ -42,6 +43,8 @@ main = xmonad $ withNavigation2DConfig def $ def
    , ("C-w M1-j", windowSwap D False)
    , ("C-w M1-k", windowSwap U False)
    , ("C-w M1-l", windowSwap R False)
+
+   --, ("C-w .", pasteChar controlMask 'W') -- doesn't work
    ] ++
    [ ("C-w "++sigil, focusNth i) | (i, sigil) <- zip [0..] sigils ] ++
    [ ("C-w M1-"++sigil, swapNth i) | (i, sigil) <- zip [0..] sigils ])
