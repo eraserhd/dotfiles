@@ -26,19 +26,21 @@ instance LayoutClass DevLayout a where
 
 myRed        = "#ff5370"
 myBlack      = "#292d3e"
+myYellow     = "#ffcb6b"
 myDarkYellow = "#f78c6c"
 myPurple     = "#c792ea"
+myVisualGrey = "#3e4452"
 
 myTheme :: Theme
-myTheme = def { fontName          = "xft:mononoki-10"
-              , activeColor       = myBlack
-              , inactiveColor     = myBlack
-              , urgentColor       = myBlack
-              , activeTextColor   = "#ffcb6b"
-              , inactiveTextColor = myPurple
-              , urgentTextColor   = myRed
-              , decoWidth         = 35
-              , decoHeight        = 16
+myTheme = def { fontName            = "xft:mononoki-10"
+              , activeColor         = myBlack
+              , inactiveColor       = myBlack
+              , urgentColor         = myBlack
+              , activeTextColor     = myDarkYellow
+              , inactiveTextColor   = myPurple
+              , urgentTextColor     = myRed
+              , decoWidth           = 25
+              , decoHeight          = 16
               }
 
 myLayout = simpleDeco shrinkText myTheme (DevLayout ||| Full)
@@ -49,7 +51,7 @@ main :: IO ()
 main = xmonad $ withNavigation2DConfig def $ def
   { modMask            = mod4Mask  -- se Command/Super for mod
   , borderWidth        = 2
-  , normalBorderColor  = "#3e4452"
+  , normalBorderColor  = myVisualGrey
   , focusedBorderColor = myDarkYellow
   , terminal           = "kitty"
   , layoutHook         = myLayout
@@ -68,7 +70,8 @@ main = xmonad $ withNavigation2DConfig def $ def
    , ("C-w M1-k", windowSwap U False)
    , ("C-w M1-l", windowSwap R False)
 
-   --, ("C-w .", pasteChar controlMask 'W') -- doesn't work
+   -- ("C-w ,", ...) --FIXME:
+   -- ("C-w .", pasteChar controlMask 'W') -- doesn't work
    ] ++
    [ ("C-w "++sigil, focusNth i) | (i, sigil) <- zip [0..] sigils ] ++
    [ ("C-w M1-"++sigil, swapNth i) | (i, sigil) <- zip [0..] sigils ])
