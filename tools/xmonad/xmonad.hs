@@ -1,8 +1,13 @@
+{-# LANGUAGE TypeFamilies #-}
+
 import XMonad
 import XMonad.Actions.FocusNth
 import XMonad.Actions.Navigation2D
 import XMonad.Actions.UpdatePointer
-import XMonad.Layout.SimpleDecoration
+import XMonad.Layout.Decoration
+import XMonad.Layout.DecorationEx
+import XMonad.Layout.DecorationEx.Common
+import XMonad.Layout.DecorationEx.Widgets
 import XMonad.Util.EZConfig
 import XMonad.Util.Paste
 import XMonad.Util.SpawnOnce
@@ -43,7 +48,24 @@ myTheme = def { fontName            = "xft:mononoki-10"
               , decoHeight          = 16
               }
 
-myLayout = simpleDeco shrinkText myTheme (DevLayout ||| Full)
+data SigilCommand = SigilCommand deriving (Show, Read)
+
+instance WindowCommand SigilCommand where
+    executeWindowCommand _ _ = return False
+    isCommandChecked _ _ = return False
+
+data SigilWidget = SigilWidget deriving (Show, Read)
+
+instance DecorationWidget SigilWidget where
+    type WidgetCommand SigilWidget = SigilCommand
+
+instance TextWidget SigilWidget where
+    widgetString dd _ = return "?h"
+
+myThemeEx = (themeEx myTheme) { exWidgetsLeft = [] -- [SigilWidget]
+                              }
+
+myLayout = textDecoration shrinkText myThemeEx (DevLayout ||| Full)
 
 sigils = ["a", "b", "c", "d", "e", "g", "i", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 
