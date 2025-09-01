@@ -2,7 +2,9 @@ import XMonad
 import XMonad.Actions.FocusNth
 import XMonad.Actions.Navigation2D
 import XMonad.Actions.UpdatePointer
+import XMonad.Layout.SimpleDecoration
 import XMonad.Util.EZConfig
+import XMonad.Util.Themes
 import qualified XMonad.StackSet as W
 
 data DevLayout a = DevLayout deriving (Read, Show)
@@ -20,7 +22,7 @@ instance LayoutClass DevLayout a where
 
     pureMessage _ _ = Nothing
 
-myLayout = DevLayout ||| Full
+myLayout = simpleDeco shrinkText (theme deiflTheme) (DevLayout ||| Full)
 
 sigils = ["a", "b", "c", "d", "e", "g", "i", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 
