@@ -52,8 +52,8 @@ myTheme = def { fontName            = "xft:mononoki-10"
 
 data SigilEngine widget a = SigilEngine deriving (Show, Read)
 
-instance (TextWidget widget, ClickHandler (GenericTheme SimpleStyle) widget)
-  => DecorationEngine SigilEngine widget Window where
+instance (ClickHandler (GenericTheme SimpleStyle) SigilWidget)
+  => DecorationEngine SigilEngine SigilWidget Window where
   type Theme SigilEngine = GenericTheme SimpleStyle
   type DecorationPaintingContext SigilEngine = XPaintingContext
   type DecorationEngineState SigilEngine = XMonadFont
