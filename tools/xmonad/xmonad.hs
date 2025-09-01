@@ -5,6 +5,7 @@ import XMonad.Actions.UpdatePointer
 import XMonad.Layout.SimpleDecoration
 import XMonad.Util.EZConfig
 import XMonad.Util.Paste
+import XMonad.Util.SpawnOnce
 import XMonad.Util.Themes
 import qualified XMonad.StackSet as W
 
@@ -23,16 +24,39 @@ instance LayoutClass DevLayout a where
 
     pureMessage _ _ = Nothing
 
-myLayout = simpleDeco shrinkText (theme deiflTheme) (DevLayout ||| Full)
+myRed        = "#ff5370"
+myBlack      = "#292d3e"
+myDarkYellow = "#f78c6c"
+myPurple     = "#c792ea"
+
+myTheme :: Theme
+myTheme = def { fontName          = "xft:mononoki-10"
+              , activeColor       = myBlack
+              , inactiveColor     = myBlack
+              , urgentColor       = myBlack
+              , activeTextColor   = "#ffcb6b"
+              , inactiveTextColor = myPurple
+              , urgentTextColor   = myRed
+              , decoWidth         = 35
+              , decoHeight        = 16
+              }
+
+myLayout = simpleDeco shrinkText myTheme (DevLayout ||| Full)
 
 sigils = ["a", "b", "c", "d", "e", "g", "i", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 
 main :: IO ()
 main = xmonad $ withNavigation2DConfig def $ def
-  { modMask = mod4Mask  -- se Command/Super for mod
-  , terminal = "kitty"
-  , layoutHook = myLayout
-  , logHook = updatePointer (0.5, 0.5) (0, 0)
+  { modMask            = mod4Mask  -- se Command/Super for mod
+  , borderWidth        = 2
+  , normalBorderColor  = "#3e4452"
+  , focusedBorderColor = myDarkYellow
+  , terminal           = "kitty"
+  , layoutHook         = myLayout
+  , logHook            = updatePointer (0.5, 0.5) (0, 0)
+  , startupHook        = do
+      spawnNOnOnce 5 "workspace1" "kitty"
+      spawnOnce "firefox"
   }
  `additionalKeysP`
   ([ ("C-w h", windowGo L False)
