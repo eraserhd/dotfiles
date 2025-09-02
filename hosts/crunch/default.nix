@@ -135,16 +135,16 @@ with lib;
     videoDrivers = [ "nvidia" ];
     xrandrHeads = [
       {
-        output = "DP-0";
+        output = "HDMI-0";
         primary = true;
       }
       {
-        output = "HDMI-0";
+        output = "DP-0";
       }
     ];
     screenSection = ''
       Option         "nvidiaXineramaInfoOrder" "HDMI-0"
-      Option         "metamodes" "HDMI-0: nvidia-auto-select +3840+0, DP-0: nvidia-auto-select +0+0"
+      Option         "metamodes" "HDMI-0: nvidia-auto-select +0+0, DP-0: nvidia-auto-select +3840+0"
     '';
   };
   hardware.graphics = {
