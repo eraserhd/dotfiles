@@ -122,8 +122,6 @@ myTheme = def { fontName            = "xft:mononoki-10"
               , decoHeight          = 16
               }
 
-
-
 myThemeEx :: GenericTheme SimpleStyle SigilWidget
 myThemeEx = (themeEx myTheme) { exWidgetsLeft = [SigilWidget]
                               }
