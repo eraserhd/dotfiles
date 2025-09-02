@@ -62,33 +62,22 @@ instance (ClickHandler (GenericTheme SimpleStyle) SigilWidget)
 
   calcWidgetPlace = calcTextWidgetPlace
 
-  paintWidget = paintTextWidget
+  paintWidget engine (dpy, pixmap, gc) place shrinker dd widget _ = do
+      let style = ddStyle dd
+          rect = wpRectangle place
+          x = rect_x rect
+          y = wpTextYPosition place
+      str <- widgetString dd widget
+      str' <- if isShrinkable widget
+                then getShrinkedWindowName engine shrinker (ddEngineState dd) str (rect_width rect) (rect_height rect)
+                else return str
+      printStringXMF dpy pixmap (ddEngineState dd) gc (sTextColor style) (sTextBgColor style) x y str'
 
   paintDecoration = paintDecorationSimple
 
   initializeState _ _ theme = initXMF (themeFontName theme)
   releaseStateResources _ = releaseXMF
 
--- | Implementation of @paintWidget@ for decoration engines based on @SigilEngine@.
-paintTextWidget :: Shrinker shrinker
-                => SigilEngine SigilWidget Window
-                -> DecorationPaintingContext SigilEngine
-                -> WidgetPlace
-                -> shrinker
-                -> DrawData SigilEngine SigilWidget
-                -> SigilWidget
-                -> Bool
-                -> X ()
-paintTextWidget engine (dpy, pixmap, gc) place shrinker dd widget _ = do
-    let style = ddStyle dd
-        rect = wpRectangle place
-        x = rect_x rect
-        y = wpTextYPosition place
-    str <- widgetString dd widget
-    str' <- if isShrinkable widget
-              then getShrinkedWindowName engine shrinker (ddEngineState dd) str (rect_width rect) (rect_height rect)
-              else return str
-    printStringXMF dpy pixmap (ddEngineState dd) gc (sTextColor style) (sTextBgColor style) x y str'
 
 -- | Implementation of @calcWidgetPlace@ for decoration engines based on @SigilEngine@.
 calcTextWidgetPlace :: SigilEngine SigilWidget Window

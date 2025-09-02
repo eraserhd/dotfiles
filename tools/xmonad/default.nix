@@ -12,7 +12,7 @@
     ];
 
     home-manager.users.jfelice = { pkgs, ... }: {
-      home.file.".config/xmonad/xmonad.hs".text = builtins.readFile ./xmonad.hs;
+      home.file.".config/xmonad/xmonad.hs".text = builtins.readFile ./config/xmonad.hs;
     };
 
   };
