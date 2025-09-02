@@ -70,16 +70,16 @@ instance (ClickHandler (GenericTheme SimpleStyle) SigilWidget)
   releaseStateResources _ = releaseXMF
 
 -- | Implementation of @paintWidget@ for decoration engines based on @SigilEngine@.
-paintTextWidget :: (Style (Theme engine SigilWidget) ~ SimpleStyle,
-                    DecorationPaintingContext engine ~ XPaintingContext,
-                    DecorationEngineState engine ~ XMonadFont,
+paintTextWidget :: (Style (Theme SigilEngine SigilWidget) ~ SimpleStyle,
+                    DecorationPaintingContext SigilEngine ~ XPaintingContext,
+                    DecorationEngineState SigilEngine ~ XMonadFont,
                     Shrinker shrinker,
-                    DecorationEngine engine SigilWidget Window)
-                => engine SigilWidget Window
-                -> DecorationPaintingContext engine
+                    DecorationEngine SigilEngine SigilWidget Window)
+                => SigilEngine SigilWidget Window
+                -> DecorationPaintingContext SigilEngine
                 -> WidgetPlace
                 -> shrinker
-                -> DrawData engine SigilWidget
+                -> DrawData SigilEngine SigilWidget
                 -> SigilWidget
                 -> Bool
                 -> X ()
