@@ -1,7 +1,7 @@
 {-# LANGUAGE TypeFamilies #-}
 
 import Data.List (find)
-import Data.Maybe (fromMaybe)
+import Data.Maybe (fromMaybe, listToMaybe)
 import XMonad
 import XMonad.Actions.FocusNth
 import XMonad.Actions.Navigation2D
@@ -100,6 +100,17 @@ instance LayoutClass DevLayout a where
     pureMessage _ _ = Nothing
 
 ------------------------------------------------------------------------------
+-- Custom actions
+------------------------------------------------------------------------------
+
+repeatLastREPLCommand :: X ()
+repeatLastREPLCommand = do
+  ws <- W.integrate' `fmap` W.stack `fmap` W.workspace `fmap`  W.current `fmap` windowset `fmap` get
+  whenJust (listToMaybe (reverse ws)) $ \replWindow -> do
+    sendKeyWindow 0 xK_Up replWindow
+    sendKeyWindow 0 xK_Return replWindow
+
+------------------------------------------------------------------------------
 -- Theme
 ------------------------------------------------------------------------------
 
@@ -149,6 +160,7 @@ main = xmonad $ withNavigation2DConfig def $ def
    , ("C-w M1-j", windowSwap D False)
    , ("C-w M1-k", windowSwap U False)
    , ("C-w M1-l", windowSwap R False)
+   , ("C-w ,", repeatLastREPLCommand)
 
    -- ("C-w ,", ...) --FIXME:
    -- ("C-w .", pasteChar controlMask 'W') -- doesn't work
