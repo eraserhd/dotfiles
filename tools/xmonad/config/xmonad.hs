@@ -16,6 +16,70 @@ import XMonad.Util.SpawnOnce
 import XMonad.Util.Themes
 import qualified XMonad.StackSet as W
 
+------------------------------------------------------------------------------
+-- Implementation of window sigil decorations
+------------------------------------------------------------------------------
+
+data SigilEngine widget a = SigilEngine deriving (Show, Read)
+data SigilWidget = SigilWidget deriving (Show, Read)
+
+instance DecorationWidget SigilWidget where
+    type WidgetCommand SigilWidget = StandardCommand
+
+    widgetCommand _ _ = def
+    isShrinkable _ = False
+
+instance TextWidget SigilWidget where
+    widgetString dd _ = return "?h"
+
+instance (ClickHandler (GenericTheme SimpleStyle) SigilWidget)
+  => DecorationEngine SigilEngine SigilWidget Window where
+  type Theme SigilEngine = GenericTheme SimpleStyle
+  type DecorationPaintingContext SigilEngine = XPaintingContext
+  type DecorationEngineState SigilEngine = XMonadFont
+
+  describeEngine _ = "SigilEngine"
+
+  calcWidgetPlace _ dd widget = do
+      str <- widgetString dd widget
+      let h = rect_height (ddDecoRect dd)
+          font = ddEngineState dd
+      withDisplay $ \dpy -> do
+        width <- fi <$> textWidthXMF dpy (ddEngineState dd) str
+        (a, d) <- textExtentsXMF font str
+        let height = a + d
+            y = fi $ (h - fi height) `div` 2
+            y0 = y + fi a
+            rect = Rectangle 0 y width (fi height)
+        return $ WidgetPlace y0 rect
+
+  paintWidget engine (dpy, pixmap, gc) place shrinker dd widget _ = do
+      let style = ddStyle dd
+          rect = wpRectangle place
+          x = rect_x rect
+          y = wpTextYPosition place
+      str <- widgetString dd widget
+      str' <- if isShrinkable widget
+                then getShrinkedWindowName engine shrinker (ddEngineState dd) str (rect_width rect) (rect_height rect)
+                else return str
+      printStringXMF dpy pixmap (ddEngineState dd) gc (sTextColor style) (sTextBgColor style) x y str'
+
+  paintDecoration = paintDecorationSimple
+
+  initializeState _ _ theme = initXMF (themeFontName theme)
+  releaseStateResources _ = releaseXMF
+
+sigilDecoration :: (Shrinker shrinker)
+                   => shrinker                -- ^ String shrinker, for example @shrinkText@
+                   -> Theme SigilEngine SigilWidget  -- ^ Decoration theme (font, colors, widgets, etc)
+                   -> l Window                -- ^ Layout to be decorated
+                 -> ModifiedLayout (DecorationEx SigilEngine SigilWidget DefaultGeometry shrinker) l Window
+sigilDecoration shrinker theme = decorationEx shrinker theme SigilEngine def
+
+------------------------------------------------------------------------------
+-- Implementation of DevLayout
+------------------------------------------------------------------------------
+
 data DevLayout a = DevLayout deriving (Read, Show)
 
 instance LayoutClass DevLayout a where
@@ -30,6 +94,10 @@ instance LayoutClass DevLayout a where
                           in (take 3 cols) ++ (splitVertically (n-3) (last cols))
 
     pureMessage _ _ = Nothing
+
+------------------------------------------------------------------------------
+-- Theme
+------------------------------------------------------------------------------
 
 myRed        = "#ff5370"
 myBlack      = "#292d3e"
@@ -50,76 +118,11 @@ myTheme = def { fontName            = "xft:mononoki-10"
               , decoHeight          = 16
               }
 
-data SigilEngine widget a = SigilEngine deriving (Show, Read)
 
-instance (ClickHandler (GenericTheme SimpleStyle) SigilWidget)
-  => DecorationEngine SigilEngine SigilWidget Window where
-  type Theme SigilEngine = GenericTheme SimpleStyle
-  type DecorationPaintingContext SigilEngine = XPaintingContext
-  type DecorationEngineState SigilEngine = XMonadFont
-
-  describeEngine _ = "SigilEngine"
-
-  calcWidgetPlace = calcTextWidgetPlace
-
-  paintWidget engine (dpy, pixmap, gc) place shrinker dd widget _ = do
-      let style = ddStyle dd
-          rect = wpRectangle place
-          x = rect_x rect
-          y = wpTextYPosition place
-      str <- widgetString dd widget
-      str' <- if isShrinkable widget
-                then getShrinkedWindowName engine shrinker (ddEngineState dd) str (rect_width rect) (rect_height rect)
-                else return str
-      printStringXMF dpy pixmap (ddEngineState dd) gc (sTextColor style) (sTextBgColor style) x y str'
-
-  paintDecoration = paintDecorationSimple
-
-  initializeState _ _ theme = initXMF (themeFontName theme)
-  releaseStateResources _ = releaseXMF
-
-
--- | Implementation of @calcWidgetPlace@ for decoration engines based on @SigilEngine@.
-calcTextWidgetPlace :: SigilEngine SigilWidget Window
-                    -> DrawData SigilEngine SigilWidget
-                    -> SigilWidget
-                    -> X WidgetPlace
-calcTextWidgetPlace _ dd widget = do
-    str <- widgetString dd widget
-    let h = rect_height (ddDecoRect dd)
-        font = ddEngineState dd
-    withDisplay $ \dpy -> do
-      width <- fi <$> textWidthXMF dpy (ddEngineState dd) str
-      (a, d) <- textExtentsXMF font str
-      let height = a + d
-          y = fi $ (h - fi height) `div` 2
-          y0 = y + fi a
-          rect = Rectangle 0 y width (fi height)
-      return $ WidgetPlace y0 rect
-
---- END
-
-data SigilWidget = SigilWidget deriving (Show, Read)
-
-instance DecorationWidget SigilWidget where
-    type WidgetCommand SigilWidget = StandardCommand
-
-    widgetCommand _ _ = def
-    isShrinkable _ = False
-
-instance TextWidget SigilWidget where
-    widgetString dd _ = return "?h"
 
 myThemeEx :: GenericTheme SimpleStyle SigilWidget
 myThemeEx = (themeEx myTheme) { exWidgetsLeft = [SigilWidget]
                               }
-sigilDecoration :: (Shrinker shrinker)
-                   => shrinker                -- ^ String shrinker, for example @shrinkText@
-                   -> Theme SigilEngine SigilWidget  -- ^ Decoration theme (font, colors, widgets, etc)
-                   -> l Window                -- ^ Layout to be decorated
-                 -> ModifiedLayout (DecorationEx SigilEngine SigilWidget DefaultGeometry shrinker) l Window
-sigilDecoration shrinker theme = decorationEx shrinker theme SigilEngine def
-
 myLayout = sigilDecoration shrinkText myThemeEx (DevLayout ||| Full)
 
 sigils = ["a", "b", "c", "d", "e", "g", "i", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
