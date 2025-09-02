@@ -16,6 +16,8 @@ import XMonad.Util.SpawnOnce
 import XMonad.Util.Themes
 import qualified XMonad.StackSet as W
 
+sigils = ["a", "b", "c", "d", "e", "g", "i", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+
 ------------------------------------------------------------------------------
 -- Implementation of window sigil decorations
 ------------------------------------------------------------------------------
@@ -29,9 +31,6 @@ instance DecorationWidget SigilWidget where
     widgetCommand _ _ = def
     isShrinkable _ = False
 
-instance TextWidget SigilWidget where
-    widgetString dd _ = return "?h"
-
 instance (ClickHandler (GenericTheme SimpleStyle) SigilWidget)
   => DecorationEngine SigilEngine SigilWidget Window where
   type Theme SigilEngine = GenericTheme SimpleStyle
@@ -41,7 +40,7 @@ instance (ClickHandler (GenericTheme SimpleStyle) SigilWidget)
   describeEngine _ = "SigilEngine"
 
   calcWidgetPlace _ dd widget = do
-      str <- widgetString dd widget
+      str <- windowSigil (ddOrigWindow dd)
       let h = rect_height (ddDecoRect dd)
           font = ddEngineState dd
       withDisplay $ \dpy -> do
@@ -54,17 +53,22 @@ instance (ClickHandler (GenericTheme SimpleStyle) SigilWidget)
         return $ WidgetPlace y0 rect
 
   paintWidget engine (dpy, pixmap, gc) place _ dd widget _ = do
+      str <- windowSigil (ddOrigWindow dd)
       let style = ddStyle dd
           rect = wpRectangle place
           x = rect_x rect
           y = wpTextYPosition place
-      str <- widgetString dd widget
       printStringXMF dpy pixmap (ddEngineState dd) gc (sTextColor style) (sTextBgColor style) x y str
 
   paintDecoration = paintDecorationSimple
 
   initializeState _ _ theme = initXMF (themeFontName theme)
   releaseStateResources _ = releaseXMF
+
+windowSigil :: Window -> X String
+windowSigil w = do
+  ws <- W.integrate' `fmap` W.stack `fmap` W.workspace `fmap`  W.current `fmap` windowset `fmap` get
+  return "!x"
 
 sigilDecoration :: (Shrinker shrinker)
                    => shrinker                -- ^ String shrinker, for example @shrinkText@
@@ -121,8 +125,6 @@ myThemeEx :: GenericTheme SimpleStyle SigilWidget
 myThemeEx = (themeEx myTheme) { exWidgetsLeft = [SigilWidget]
                               }
 myLayout = sigilDecoration shrinkText myThemeEx (DevLayout ||| Full)
-
-sigils = ["a", "b", "c", "d", "e", "g", "i", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 
 main :: IO ()
 main = xmonad $ withNavigation2DConfig def $ def
