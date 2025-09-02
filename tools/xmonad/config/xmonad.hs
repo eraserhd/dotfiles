@@ -53,16 +53,13 @@ instance (ClickHandler (GenericTheme SimpleStyle) SigilWidget)
             rect = Rectangle 0 y width (fi height)
         return $ WidgetPlace y0 rect
 
-  paintWidget engine (dpy, pixmap, gc) place shrinker dd widget _ = do
+  paintWidget engine (dpy, pixmap, gc) place _ dd widget _ = do
       let style = ddStyle dd
           rect = wpRectangle place
           x = rect_x rect
           y = wpTextYPosition place
       str <- widgetString dd widget
-      str' <- if isShrinkable widget
-                then getShrinkedWindowName engine shrinker (ddEngineState dd) str (rect_width rect) (rect_height rect)
-                else return str
-      printStringXMF dpy pixmap (ddEngineState dd) gc (sTextColor style) (sTextBgColor style) x y str'
+      printStringXMF dpy pixmap (ddEngineState dd) gc (sTextColor style) (sTextBgColor style) x y str
 
   paintDecoration = paintDecorationSimple
 
