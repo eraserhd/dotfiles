@@ -70,11 +70,7 @@ instance (ClickHandler (GenericTheme SimpleStyle) SigilWidget)
   releaseStateResources _ = releaseXMF
 
 -- | Implementation of @paintWidget@ for decoration engines based on @SigilEngine@.
-paintTextWidget :: (Style (Theme SigilEngine SigilWidget) ~ SimpleStyle,
-                    DecorationPaintingContext SigilEngine ~ XPaintingContext,
-                    DecorationEngineState SigilEngine ~ XMonadFont,
-                    Shrinker shrinker,
-                    DecorationEngine SigilEngine SigilWidget Window)
+paintTextWidget :: Shrinker shrinker
                 => SigilEngine SigilWidget Window
                 -> DecorationPaintingContext SigilEngine
                 -> WidgetPlace
@@ -95,9 +91,7 @@ paintTextWidget engine (dpy, pixmap, gc) place shrinker dd widget _ = do
     printStringXMF dpy pixmap (ddEngineState dd) gc (sTextColor style) (sTextBgColor style) x y str'
 
 -- | Implementation of @calcWidgetPlace@ for decoration engines based on @SigilEngine@.
-calcTextWidgetPlace :: (DecorationEngineState SigilEngine ~ XMonadFont,
-                        DecorationEngine SigilEngine SigilWidget Window)
-                    => SigilEngine SigilWidget Window
+calcTextWidgetPlace :: SigilEngine SigilWidget Window
                     -> DrawData SigilEngine SigilWidget
                     -> SigilWidget
                     -> X WidgetPlace
