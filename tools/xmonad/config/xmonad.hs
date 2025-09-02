@@ -1,5 +1,7 @@
 {-# LANGUAGE TypeFamilies #-}
 
+import Data.List (find)
+import Data.Maybe (fromMaybe)
 import XMonad
 import XMonad.Actions.FocusNth
 import XMonad.Actions.Navigation2D
@@ -68,7 +70,8 @@ instance (ClickHandler (GenericTheme SimpleStyle) SigilWidget)
 windowSigil :: Window -> X String
 windowSigil w = do
   ws <- W.integrate' `fmap` W.stack `fmap` W.workspace `fmap`  W.current `fmap` windowset `fmap` get
-  return "!x"
+  let sigil = fromMaybe "?" $ fmap snd $ find ((==w) . fst) $ zip ws sigils
+  return sigil
 
 sigilDecoration :: (Shrinker shrinker)
                    => shrinker                -- ^ String shrinker, for example @shrinkText@
