@@ -152,7 +152,10 @@ main = xmonad $ withNavigation2DConfig def $ def
       spawnOnce "firefox"
   }
  `additionalKeysP`
-  ([ ("C-w h", windowGo L False)
+  ([ ("<XF86AudioRaiseVolume>", spawn "wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+")
+   , ("<XF86AudioLowerVolume>", spawn "wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-")
+
+   , ("C-w h", windowGo L False)
    , ("C-w j", windowGo D False)
    , ("C-w k", windowGo U False)
    , ("C-w l", windowGo R False)
@@ -162,7 +165,6 @@ main = xmonad $ withNavigation2DConfig def $ def
    , ("C-w M1-l", windowSwap R False)
    , ("C-w ,", repeatLastREPLCommand)
 
-   -- ("C-w ,", ...) --FIXME:
    -- ("C-w .", pasteChar controlMask 'W') -- doesn't work
    ] ++
    [ ("C-w "++sigil, focusNth i) | (i, sigil) <- zip [0..] sigils ] ++
