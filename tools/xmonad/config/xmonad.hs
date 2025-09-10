@@ -147,9 +147,13 @@ main = xmonad $ withNavigation2DConfig def $ def
   , terminal           = "kitty"
   , layoutHook         = myLayout
   , logHook            = updatePointer (0.5, 0.5) (0, 0)
+  , manageHook         = manageSpawn <> manageHook def
   , startupHook        = do
-      spawnNOnOnce 5 "workspace1" "kitty"
-      spawnOnce "firefox"
+      spawnNOnOnce 5 "1" "kitty"
+      spawnOnOnce "1" "firefox"
+      spawnOnOnce "3" "slack"
+      spawnOnOnce "3" "signal-desktop"
+      spawnOnOnce "3" "discord"
   }
  `additionalKeysP`
   ([ ("<XF86AudioRaiseVolume>", spawn "wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+")
