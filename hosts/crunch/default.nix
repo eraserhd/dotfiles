@@ -221,4 +221,6 @@ with lib;
   local.kits._3d-printing.enable = true;
   local.kits.pcbs.enable = true;
   local.kits.cnc.enable = true;
+
+  plugbench.plumber.enable = true;
 }
