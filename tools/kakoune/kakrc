@@ -470,7 +470,7 @@ hook -group clojure-objects global WinSetOption filetype=clojure %{
 # ‾‾‾
 
 evaluate-commands %sh{kak-lsp --kakoune -s $kak_session}
-hook global WinSetOption filetype=go lsp-enable-window
+hook global WinSetOption filetype=(go|typescript) lsp-enable-window
 map global user l ': enter-user-mode lsp<ret>'
 
 # Allow goto to be plumbed with the right dir

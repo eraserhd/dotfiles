@@ -63,6 +63,7 @@ with lib;
     ./tools/slack
     ./tools/tex
     ./tools/tmux
+    ./tools/typescript
     ./tools/x
     ./tools/xmonad
     ./tools/zoom
