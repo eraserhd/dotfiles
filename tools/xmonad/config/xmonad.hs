@@ -44,7 +44,6 @@ focusSigil sigil = do
 
 swapSigil :: String -> X ()
 swapSigil sigil = windows $ swapSigil' sigil
---  ws <- windowset `fmap` get
 
 swapSigil' :: String -> WindowSet -> WindowSet
 swapSigil' sigil winSet =
@@ -60,7 +59,6 @@ swapSigil' sigil winSet =
       | win == win1 = win2
       | win == win2 = win1
       | otherwise = win
-
 
 ------------------------------------------------------------------------------
 -- Implementation of window sigil decorations
