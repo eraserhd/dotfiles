@@ -27,10 +27,13 @@ sigilMapping winds =
   in zip ws sigils
 
 windowSigil :: Window -> X String
-windowSigil w = do
-  mapping <- sigilMapping `fmap` windowset `fmap` get
-  let sigil = fromMaybe "?" $ fmap snd $ find ((==w) . fst) mapping
-  return sigil
+windowSigil w = windowSigil' w `fmap` windowset `fmap` get
+
+windowSigil' :: Window -> WindowSet -> String
+windowSigil' w = fromMaybe "?" . fmap snd . find ((==w) . fst) . sigilMapping
+
+sigilWindow' :: String -> WindowSet -> Maybe Window
+sigilWindow' sigil = fmap fst . find ((==sigil) . snd) . sigilMapping
 
 focusSigil :: String -> X ()
 focusSigil sigil = do
@@ -38,6 +41,26 @@ focusSigil sigil = do
   case fmap fst $ find ((== sigil) . snd) (sigilMapping ws) of
     Just w  -> windows $ W.focusWindow w
     Nothing -> return ()
+
+swapSigil :: String -> X ()
+swapSigil sigil = windows $ swapSigil' sigil
+--  ws <- windowset `fmap` get
+
+swapSigil' :: String -> WindowSet -> WindowSet
+swapSigil' sigil winSet =
+  case (W.peek winSet, sigilWindow' sigil winSet) of
+    (Just currentWin, Just sigilWin) -> W.focusWindow currentWin $
+                                        mapWindows (swapWin currentWin sigilWin) winSet
+    _ -> winSet
+  where
+    mapWindows f = W.mapWorkspace (mapWindows' f)
+    mapWindows' f ws@W.Workspace{ W.stack = s } = ws { W.stack = mapWindows'' f <$> s }
+    mapWindows'' f (W.Stack focused up down) = W.Stack (f focused) (map f up) (map f down)
+    swapWin win1 win2 win
+      | win == win1 = win2
+      | win == win2 = win1
+      | otherwise = win
+
 
 ------------------------------------------------------------------------------
 -- Implementation of window sigil decorations
@@ -185,4 +208,4 @@ main = xmonad $ withNavigation2DConfig def $ def
    -- ("C-w .", pasteChar controlMask 'W') -- doesn't work
    ] ++
    [ ("C-w "++sigil, focusSigil sigil) | sigil <- sigils ] ++
-   [ ("C-w M1-"++sigil, swapNth i) | (i, sigil) <- zip [0..] sigils ])
+   [ ("C-w M1-"++sigil, swapSigil sigil) | sigil <- sigils ])
