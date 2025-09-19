@@ -20,6 +20,25 @@ import qualified XMonad.StackSet as W
 
 sigils = ["a", "b", "c", "d", "e", "g", "i", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 
+sigilMapping :: WindowSet -> [(Window, String)]
+sigilMapping winds =
+  let screens = sortBy (\x y -> compare (W.screen x) (W.screen y)) (W.current winds : W.visible winds)
+      ws = concatMap (W.integrate' . W.stack . W.workspace) screens
+  in zip ws sigils
+
+windowSigil :: Window -> X String
+windowSigil w = do
+  mapping <- sigilMapping `fmap` windowset `fmap` get
+  let sigil = fromMaybe "?" $ fmap snd $ find ((==w) . fst) mapping
+  return sigil
+
+focusSigil :: String -> X ()
+focusSigil sigil = do
+  ws <- windowset `fmap` get
+  case fmap fst $ find ((== sigil) . snd) (sigilMapping ws) of
+    Just w  -> windows $ W.focusWindow w
+    Nothing -> return ()
+
 ------------------------------------------------------------------------------
 -- Implementation of window sigil decorations
 ------------------------------------------------------------------------------
@@ -66,14 +85,6 @@ instance (ClickHandler (GenericTheme SimpleStyle) SigilWidget)
 
   initializeState _ _ theme = initXMF (themeFontName theme)
   releaseStateResources _ = releaseXMF
-
-windowSigil :: Window -> X String
-windowSigil w = do
-  winds <- windowset `fmap` get
-  let screens = sortBy (\x y -> compare (W.screen x) (W.screen y)) (W.current winds : W.visible winds)
-  let ws = concatMap (W.integrate' . W.stack . W.workspace) screens
-  let sigil = fromMaybe "?" $ fmap snd $ find ((==w) . fst) $ zip ws sigils
-  return sigil
 
 sigilDecoration :: (Shrinker shrinker)
                    => shrinker                -- ^ String shrinker, for example @shrinkText@
@@ -173,5 +184,5 @@ main = xmonad $ withNavigation2DConfig def $ def
 
    -- ("C-w .", pasteChar controlMask 'W') -- doesn't work
    ] ++
-   [ ("C-w "++sigil, focusNth i) | (i, sigil) <- zip [0..] sigils ] ++
+   [ ("C-w "++sigil, focusSigil sigil) | sigil <- sigils ] ++
    [ ("C-w M1-"++sigil, swapNth i) | (i, sigil) <- zip [0..] sigils ])
