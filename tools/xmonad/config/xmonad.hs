@@ -1,6 +1,6 @@
 {-# LANGUAGE TypeFamilies #-}
 
-import Data.List (find)
+import Data.List (find, sortBy)
 import Data.Maybe (fromMaybe, listToMaybe)
 import XMonad
 import XMonad.Actions.FocusNth
@@ -69,7 +69,9 @@ instance (ClickHandler (GenericTheme SimpleStyle) SigilWidget)
 
 windowSigil :: Window -> X String
 windowSigil w = do
-  ws <- W.integrate' `fmap` W.stack `fmap` W.workspace `fmap`  W.current `fmap` windowset `fmap` get
+  winds <- windowset `fmap` get
+  let screens = sortBy (\x y -> compare (W.screen x) (W.screen y)) (W.current winds : W.visible winds)
+  let ws = concatMap (W.integrate' . W.stack . W.workspace) screens
   let sigil = fromMaybe "?" $ fmap snd $ find ((==w) . fst) $ zip ws sigils
   return sigil
 
