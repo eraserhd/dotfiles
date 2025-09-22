@@ -9,9 +9,10 @@ in {
   };
 
   config = mkIf cfg.enable ({
-    environment.systemPackages = [
-      pkgs.xorg.xev
-      pkgs.flameshot
+    environment.systemPackages = with pkgs; [
+      xorg.xev
+      flameshot
+      playerctl
     ];
   } // (if (builtins.hasAttr "xserver" options.services)
   then {

@@ -192,6 +192,7 @@ main = xmonad $ withNavigation2DConfig def $ def
  `additionalKeysP`
   ([ ("<XF86AudioRaiseVolume>", spawn "wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+")
    , ("<XF86AudioLowerVolume>", spawn "wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-")
+   , ("<XF86AudioPlay>", spawn "playerctl play-pause")
 
    , ("C-w h", windowGo L False)
    , ("C-w j", windowGo D False)
