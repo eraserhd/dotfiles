@@ -551,16 +551,6 @@ hook -group manage-jumpclient global ClientClose .* %{
 
 map global user j ': set-option global jumpclient %val{client}<ret>'
 
-# Nexus
-# ‾‾‾‾‾
-define-command \
-	-override \
-	-params 1 \
-	-shell-script-candidates '( cd nexus/services/core/sql && ls -1 *.sql )' \
-	N-sql %{
-	edit "nexus/services/core/sql/%arg{1}"
-}
-
 # Kubernetes
 # ‾‾‾‾‾‾‾‾‾‾
 
