@@ -6,7 +6,7 @@ with lib;
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
-  boot.kernelPackages = pkgs.linuxPackages_6_16; # for NVIDIA
+  #boot.kernelPackages = pkgs.linuxPackages_6_16; # for NVIDIA
 
   # For building Raspberry Pi images
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
@@ -64,10 +64,6 @@ with lib;
       #];
     };
   };
-
-  environment.systemPackages = with pkgs; [
-    pinentry
-  ];
 
   documentation.dev.enable = true;
 

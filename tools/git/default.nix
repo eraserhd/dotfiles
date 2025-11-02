@@ -4,7 +4,7 @@
   config = {
     environment.systemPackages = with pkgs; [
       gitFull
-      gitAndTools.gh
+      gh
       #gitAndTools.gitout -- no scheme atm
       local.git-scripts
       git-crypt

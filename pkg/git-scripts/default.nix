@@ -1,4 +1,4 @@
-{ stdenv, bash, git, gitAndTools }:
+{ stdenv, bash, git }:
 
 stdenv.mkDerivation {
   name = "local-git-scripts-2019.09.05";

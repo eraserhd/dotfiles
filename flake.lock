@@ -71,11 +71,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1747820204,
-        "narHash": "sha256-oY/mH8K1LOd+YbO58sw9ORtOdTxy3rR9lvTzOJKVUtA=",
+        "lastModified": 1762039661,
+        "narHash": "sha256-oM5BwAGE78IBLZn+AqxwH/saqwq3e926rNq5HmOulkc=",
         "owner": "LnL7",
         "repo": "nix-darwin",
-        "rev": "e2676937faf868111dcea6a4a9cf4b6549907c9d",
+        "rev": "c3c8c9f2a5ed43175ac4dc030308756620e6e4e4",
         "type": "github"
       },
       "original": {
@@ -251,11 +251,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1754225444,
-        "narHash": "sha256-mv01SQtqlhBMavc1dgNjgqJw4WfZxy+w3xBgwJU3YmU=",
+        "lastModified": 1762087455,
+        "narHash": "sha256-hpbPma1eUKwLAmiVRoMgIHbHiIKFkcACobJLbDt6ABw=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "0de18bd5c6681280d7ae017fa34ffd91bdcf0557",
+        "rev": "43e205606aeb253bfcee15fd8a4a01d8ce8384ca",
         "type": "github"
       },
       "original": {
@@ -273,11 +273,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1746485009,
-        "narHash": "sha256-vT/S+ZPbPxHFC/AMGona/4t20iUZ8vJpZ9qaFOnSZd8=",
+        "lastModified": 1760469758,
+        "narHash": "sha256-rrzd2h1HXDouaxlNgP78bEGaf05PJtUDJcUrpzdNdJU=",
         "owner": "eraserhd",
         "repo": "kak-ansi",
-        "rev": "ef6e1536fc522290c286faedfb21d7d3a58d342a",
+        "rev": "2d8046f0f64a7ab4d0668633f26598ab5c57f239",
         "type": "github"
       },
       "original": {
@@ -365,11 +365,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1754260839,
-        "narHash": "sha256-yc+klZUKgbyeGPZIOrzp1se0Y1GxVR7WaaKprdb5P58=",
+        "lastModified": 1762104581,
+        "narHash": "sha256-0c7b/V5q2Pui1F6y5fz74APiT6GWDK63odvTrPEF3s0=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "4e17f4d7faf5c3b0c2ea4dab1a7fdd052ab2e056",
+        "rev": "0433e228a3eefac28df0c61cf4c20c92fcd5be41",
         "type": "github"
       },
       "original": {
@@ -387,11 +387,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1739197890,
-        "narHash": "sha256-8b5xx4hEFXqTiCONdLkvwo1rvnk0u1XOY7TPToU9BFc=",
+        "lastModified": 1759593209,
+        "narHash": "sha256-oaWhWrLTeieT7V88vFGlGTKZpNMNuc7vFs3ZBdubT08=",
         "owner": "eraserhd",
         "repo": "parinfer-rust",
-        "rev": "55bec1e3d4f127527c5c2e507fac96cc934aed6e",
+        "rev": "f519995ce802941007684e2d79e4fcba97853446",
         "type": "github"
       },
       "original": {
