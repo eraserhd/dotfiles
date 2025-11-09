@@ -33,6 +33,7 @@ with lib;
     ./tools/coscreen
     ./tools/cue
     ./tools/discord
+    ./tools/distrobox
     ./tools/firefox
     ./tools/freecad
     ./tools/git
@@ -72,11 +73,13 @@ with lib;
   ];
 
   config = mkMerge [
-    (if (builtins.hasAttr "systemPath" options.environment) then {
+    (if (builtins.hasAttr "systemPath" options.environment)
+     then {
       environment.systemPath = [ (toString ./bin) ];
-    } else {
-      environment.variables.PATH = [ (toString ./bin) ];
-    })
+     }
+     else {
+       environment.variables.PATH = [ (toString ./bin) ];
+     })
 
     {
       home-manager.useGlobalPkgs = true;
