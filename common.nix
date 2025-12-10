@@ -58,13 +58,13 @@ with lib;
     ./tools/pcb2gcode
     ./tools/postgres
     ./tools/prusa-slicer
+    ./tools/qemu
     ./tools/R
     ./tools/rlwrap
     ./tools/signal
     ./tools/slack
     ./tools/tex
     ./tools/tmux
-    ./tools/typescript
     ./tools/x
     ./tools/xmonad
     ./tools/zoom
