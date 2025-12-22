@@ -46,7 +46,7 @@ with lib;
   };
 
   environment.systemPackages = with pkgs; [
-    pinentry
+    pinentry-curses
     libraspberrypi
     raspberrypi-eeprom
   ];
