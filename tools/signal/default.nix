@@ -1,7 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, lib, config, ... }:
 
+with lib;
 {
-  config = {
+  config = mkIf config.local.kits.collaboration.enable {
     environment.systemPackages = [ pkgs.signal-desktop ];
   };
 }
