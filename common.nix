@@ -10,6 +10,7 @@ with lib;
     ./kits/brain
     ./kits/collaboration
     ./kits/cnc
+    ./kits/develop
     ./kits/pcbs
     ./kits/workstation
     ./modules/bubbles

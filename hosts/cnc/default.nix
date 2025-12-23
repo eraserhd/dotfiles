@@ -2,8 +2,24 @@
 
 with lib;
 {
-  # Raspberry Pi 3B, 1Gig RAM
+  # Raspberry Pi 4B, 1Gig RAM
   raspberry-pi-nix.board = "bcm2711";
+
+  nixpkgs.overlays = [(final: prev: {
+    # Pipewire support for libcamera broken today.  -- 2025-12-22
+    pipewire = prev.pipewire.overrideAttrs (oldAttrs: {
+      mesonFlags = builtins.map (flag:
+        if hasPrefix "-Dlibcamera=" flag
+        then "-Dlibcamera=disabled"
+        else flag
+      ) oldAttrs.mesonFlags;
+    });
+
+    # sdl3 test issue -- 2025-12-22
+    sdl3 = prev.sdl3.overrideAttrs (oldAttrs: {
+      doCheck = false;
+    });
+  })];
 
   boot = {
     initrd.availableKernelModules = [ "xhci_pci" "usb_storage" "usbhid" ];
@@ -59,11 +75,9 @@ with lib;
   services.openssh.enable = true;
 
   local.services.X11.enable = true;
-  services.xserver = {
-    displayManager.autoLogin = {
-      enable = true;
-      user = "jfelice";
-    };
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = "jfelice";
   };
 
   programs.ssh.startAgent = true;

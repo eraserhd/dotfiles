@@ -1,7 +1,8 @@
-{ pkgs, ... }:
+{ pkgs, lib, config, ... }:
 
+with lib;
 {
-  config = {
+  config = mkIf config.local.kits.develop.enable {
     virtualisation.libvirtd.enable = true;
     programs.virt-manager.enable = true;
     users.extraGroups.libvirt.members = [ "jfelice" ];
