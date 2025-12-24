@@ -56,7 +56,6 @@ with lib;
     ./tools/npm
     ./tools/obsidian
     ./tools/openscad
-    ./tools/postman
     ./tools/pcb2gcode
     ./tools/postgres
     ./tools/prusa-slicer

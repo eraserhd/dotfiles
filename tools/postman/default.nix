@@ -1,6 +1,0 @@
-{ ... }:
-{
-  config = {
-    homebrew.casks = [ "postman" ];
-  };
-}
