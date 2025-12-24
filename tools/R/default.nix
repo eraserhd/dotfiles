@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, config, ... }:
 
 let
   myRPackages = with pkgs.rPackages; [
@@ -15,7 +15,7 @@ in {
   config = {
     environment.systemPackages = [
       myR
-      myRStudio
-    ];
+    ] ++ lib.optional config.local.kits.develop.enable myRStudio
+    ;
   };
 }
