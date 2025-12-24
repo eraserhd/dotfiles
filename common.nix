@@ -12,6 +12,7 @@ with lib;
     ./kits/cnc
     ./kits/develop
     ./kits/pcbs
+    ./kits/thinking
     ./kits/workstation
     ./modules/bubbles
     ./modules/environment/xdg
