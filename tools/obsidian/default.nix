@@ -1,10 +1,8 @@
 { pkgs, config, lib, ... }:
 
 with lib;
-let
-  isWorkstation = config.local.kits.workstation.enable;
-in {
-  config = mkIf isWorkstation {
+{
+  config = mkIf config.local.kits.thinking.enable {
     environment.systemPackages = [ pkgs.obsidian ];
   };
 }
