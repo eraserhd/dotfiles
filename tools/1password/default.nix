@@ -5,6 +5,7 @@ with lib;
   config = {
     nixpkgs.config.allowUnfree = true;
     programs._1password.enable = true;
-    programs._1password-gui.enable = true;
+    # Don't cross-compile electron apps.
+    programs._1password-gui.enable = !pkgs.stdenv.isCross;
   };
 }
