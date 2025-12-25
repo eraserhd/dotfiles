@@ -1,7 +1,9 @@
 {-# LANGUAGE TypeFamilies #-}
 
+import Data.Char (isSpace)
 import Data.List (find, sortBy)
 import Data.Maybe (fromMaybe, listToMaybe)
+import System.Process (readProcessWithExitCode)
 import XMonad
 import XMonad.Actions.FocusNth
 import XMonad.Actions.Navigation2D
@@ -172,39 +174,50 @@ myThemeEx = (themeEx myTheme) { exWidgetsLeft = [SigilWidget]
                               }
 myLayout = sigilDecoration shrinkText myThemeEx (DevLayout ||| Full)
 
+stripTrailingSpace :: [Char] -> [Char]
+stripTrailingSpace = reverse . dropWhile isSpace . reverse
+
 main :: IO ()
-main = xmonad $ withNavigation2DConfig def $ def
-  { modMask            = mod4Mask  -- se Command/Super for mod
-  , borderWidth        = 2
-  , normalBorderColor  = myVisualGrey
-  , focusedBorderColor = myDarkYellow
-  , terminal           = "kitty"
-  , layoutHook         = myLayout
-  , logHook            = updatePointer (0.5, 0.5) (0, 0)
-  , manageHook         = manageSpawn <> manageHook def
-  , startupHook        = do
-      spawnNOnOnce 5 "1" "kitty"
-      spawnOnOnce "1" "firefox"
-      spawnOnOnce "3" "slack"
-      spawnOnOnce "3" "signal-desktop"
-      spawnOnOnce "3" "discord"
-  }
- `additionalKeysP`
-  ([ ("<XF86AudioRaiseVolume>", spawn "wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+")
-   , ("<XF86AudioLowerVolume>", spawn "wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-")
-   , ("<XF86AudioPlay>", spawn "playerctl play-pause")
+main = do
+  (_, hostname, _) <- readProcessWithExitCode "hostname" [] ""
+  xmonad $ withNavigation2DConfig def $ def
+    { modMask            = mod4Mask  -- se Command/Super for mod
+    , borderWidth        = 2
+    , normalBorderColor  = myVisualGrey
+    , focusedBorderColor = myDarkYellow
+    , terminal           = "kitty"
+    , layoutHook         = myLayout
+    , logHook            = updatePointer (0.5, 0.5) (0, 0)
+    , manageHook         = manageSpawn <> manageHook def
+    , startupHook        =
+        if (stripTrailingSpace hostname) == "cnc"
+        then do
+          spawnOnOnce "1" "bCNC"
+          spawnOnOnce "2" "firefox"
+          spawnOnOnce "2" "kitty"
+        else do
+          spawnNOnOnce 5 "1" "kitty"
+          spawnOnOnce "1" "firefox"
+          spawnOnOnce "3" "slack"
+          spawnOnOnce "3" "signal-desktop"
+          spawnOnOnce "3" "discord"
+    }
+   `additionalKeysP`
+    ([ ("<XF86AudioRaiseVolume>", spawn "wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%+")
+     , ("<XF86AudioLowerVolume>", spawn "wpctl set-volume @DEFAULT_AUDIO_SINK@ 10%-")
+     , ("<XF86AudioPlay>", spawn "playerctl play-pause")
 
-   , ("C-w h", windowGo L False)
-   , ("C-w j", windowGo D False)
-   , ("C-w k", windowGo U False)
-   , ("C-w l", windowGo R False)
-   , ("C-w M1-h", windowSwap L False)
-   , ("C-w M1-j", windowSwap D False)
-   , ("C-w M1-k", windowSwap U False)
-   , ("C-w M1-l", windowSwap R False)
-   , ("C-w ,", repeatLastREPLCommand)
+     , ("C-w h", windowGo L False)
+     , ("C-w j", windowGo D False)
+     , ("C-w k", windowGo U False)
+     , ("C-w l", windowGo R False)
+     , ("C-w M1-h", windowSwap L False)
+     , ("C-w M1-j", windowSwap D False)
+     , ("C-w M1-k", windowSwap U False)
+     , ("C-w M1-l", windowSwap R False)
+     , ("C-w ,", repeatLastREPLCommand)
 
-   -- ("C-w .", pasteChar controlMask 'W') -- doesn't work
-   ] ++
-   [ ("C-w "++sigil, focusSigil sigil) | sigil <- sigils ] ++
-   [ ("C-w M1-"++sigil, swapSigil sigil) | sigil <- sigils ])
+     -- ("C-w .", pasteChar controlMask 'W') -- doesn't work
+     ] ++
+     [ ("C-w "++sigil, focusSigil sigil) | sigil <- sigils ] ++
+     [ ("C-w M1-"++sigil, swapSigil sigil) | sigil <- sigils ])

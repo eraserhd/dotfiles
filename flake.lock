@@ -29,11 +29,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1731945362,
-        "narHash": "sha256-PylPl4yIj75RK781KQP34HS6Vf1lNdc8h6J4wb+HRCs=",
+        "lastModified": 1766690239,
+        "narHash": "sha256-aPVZk1wa2wODNHi5nz8dGY0Q30cI4o1I/Qhp5FDNpA8=",
         "owner": "eraserhd",
         "repo": "bCNC-nix",
-        "rev": "de9bdbbee00b5e9c2b282aa5d25d27ba9062b620",
+        "rev": "79c4f94f6de187dcecb8063fa5ec05df049f1a3d",
         "type": "github"
       },
       "original": {

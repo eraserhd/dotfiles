@@ -3,7 +3,6 @@
 with lib;
 {
   config = mkIf config.local.kits.cnc.enable {
-    #FIXME:
-    #environment.systemPackages = [ pkgs.bCNC ];
+    environment.systemPackages = [ pkgs.bCNC ];
   };
 }
