@@ -75,7 +75,7 @@ with lib;
   services.openssh.enable = true;
 
   local.services.X11.enable = true;
-  services.displayManager.autoLogin = {
+  services.xserver.displayManager.autoLogin = {
     enable = true;
     user = "jfelice";
   };
