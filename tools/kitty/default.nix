@@ -31,11 +31,13 @@ in {
       kitty
       local.kak-scrollback-pager
     ];
-    environment.interactiveShellInit = ''
-      ssh() {
-        kitty +kitten ssh "$@"
-      }
-    '';
+
+    # This seems to block on a lot of systems, including OpenWRT and CNC.
+    #environment.interactiveShellInit = ''
+    #  ssh() {
+    #    kitty +kitten ssh "$@"
+    #  }
+    #'';
 
     programs.zsh.interactiveShellInit = ''
       if [ -n "$KITTY_INSTALLATION_DIR" ]; then
