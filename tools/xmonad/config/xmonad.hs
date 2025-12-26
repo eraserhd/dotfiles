@@ -3,7 +3,7 @@
 import Data.Char (isSpace)
 import Data.List (find, sortBy)
 import Data.Maybe (fromMaybe, listToMaybe)
-import System.Process (readProcessWithExitCode)
+import System.Environment (lookupEnv)
 import XMonad
 import XMonad.Actions.FocusNth
 import XMonad.Actions.Navigation2D
@@ -174,12 +174,9 @@ myThemeEx = (themeEx myTheme) { exWidgetsLeft = [SigilWidget]
                               }
 myLayout = sigilDecoration shrinkText myThemeEx (DevLayout ||| Full)
 
-stripTrailingSpace :: [Char] -> [Char]
-stripTrailingSpace = reverse . dropWhile isSpace . reverse
-
 main :: IO ()
 main = do
-  (_, hostname, _) <- readProcessWithExitCode "hostname" [] ""
+  host <- fromMaybe "" <$> lookupEnv "HOST"
   xmonad $ withNavigation2DConfig def $ def
     { modMask            = mod4Mask  -- se Command/Super for mod
     , borderWidth        = 2
@@ -190,7 +187,7 @@ main = do
     , logHook            = updatePointer (0.5, 0.5) (0, 0)
     , manageHook         = manageSpawn <> manageHook def
     , startupHook        =
-        if (stripTrailingSpace hostname) == "cnc"
+        if host == "cnc.eraserhead.net"
         then do
           spawnOnOnce "1" "bCNC"
           spawnOnOnce "2" "firefox"
