@@ -199,6 +199,7 @@ main = do
           spawnOnOnce "3" "slack"
           spawnOnOnce "3" "signal-desktop"
           spawnOnOnce "3" "discord"
+          spawnOnOnce "1" "tomat daemon start"
           spawnOnOnce "1" "polybar -r left &"
     }
    `additionalKeysP`
