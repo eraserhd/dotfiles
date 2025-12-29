@@ -58,7 +58,7 @@ with lib;
     ./tools/obsidian
     ./tools/openscad
     ./tools/pcb2gcode
-    ./tools/pom
+    ./tools/polybar
     ./tools/postgres
     ./tools/prusa-slicer
     ./tools/qemu
@@ -68,6 +68,7 @@ with lib;
     ./tools/slack
     ./tools/tex
     ./tools/tmux
+    ./tools/tomat
     ./tools/x
     ./tools/xmonad
     ./tools/zoom
