@@ -58,6 +58,7 @@ with lib;
     ./tools/obsidian
     ./tools/openscad
     ./tools/pcb2gcode
+    ./tools/pom
     ./tools/postgres
     ./tools/prusa-slicer
     ./tools/qemu
