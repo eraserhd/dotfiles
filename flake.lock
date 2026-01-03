@@ -387,11 +387,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1759593209,
-        "narHash": "sha256-oaWhWrLTeieT7V88vFGlGTKZpNMNuc7vFs3ZBdubT08=",
+        "lastModified": 1767478091,
+        "narHash": "sha256-WhxebTxGffFyNC6EFNO2dSNkBNiKM47VDjbvit2B9h4=",
         "owner": "eraserhd",
         "repo": "parinfer-rust",
-        "rev": "f519995ce802941007684e2d79e4fcba97853446",
+        "rev": "845bfbb9916687cba5b6bae088c9eab70dbb83a3",
         "type": "github"
       },
       "original": {
