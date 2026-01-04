@@ -26,7 +26,10 @@ in
           });
         };
 
-        rep = dogfood super ./rep.nix {};
+        rep = let
+            source = super.fetchFromGitHub (import ./rep.nix);
+          in
+            super.callPackage "${source}/derivation.nix" {};
 
         tableize = dogfood super ./tableize.nix {};
       })
