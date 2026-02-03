@@ -131,10 +131,25 @@ instance LayoutClass DevLayout a where
         n = length windows
         rectangles = if n < 4
                      then splitHorizontally n rect
-                     else let cols = splitHorizontally 4 rect
+                     else let cols = splitHorizontallyWithClamp rect
                           in (take 3 cols) ++ (splitVertically (n-3) (last cols))
 
     pureMessage _ _ = Nothing
+
+-- Split rectangle into 4 columns with columns 2-4 clamped to 780px max
+splitHorizontallyWithClamp :: Rectangle -> [Rectangle]
+splitHorizontallyWithClamp (Rectangle x y w h) =
+    let maxColWidth = 780
+        equalSplit = w `div` 4
+        col2Width = min equalSplit maxColWidth
+        col3Width = min equalSplit maxColWidth
+        col4Width = min equalSplit maxColWidth
+        col1Width = w - col2Width - col3Width - col4Width
+        col1 = Rectangle x y col1Width h
+        col2 = Rectangle (x + fi col1Width) y col2Width h
+        col3 = Rectangle (x + fi col1Width + fi col2Width) y col3Width h
+        col4 = Rectangle (x + fi col1Width + fi col2Width + fi col3Width) y col4Width h
+    in [col1, col2, col3, col4]
 
 ------------------------------------------------------------------------------
 -- Custom actions
