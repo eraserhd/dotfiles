@@ -65,6 +65,9 @@ with lib;
     };
   };
 
+  # Crunch uses Ethernet to talk to a mesh node
+  local.networking.respite-wifi.enable = false;
+
   documentation.dev.enable = true;
 
   services.printing = {
@@ -207,7 +210,6 @@ with lib;
   system.stateVersion = "24.05";
   home-manager.users.jfelice.home.stateVersion = "22.05";
 
-  local.networking.respite-wifi.enable = true;
   local.sendOutgoingMailWithSES.enable = true;
   local.updateDNS.enable = true;
   local.tmux.paneZeroCommand = "weechat";
