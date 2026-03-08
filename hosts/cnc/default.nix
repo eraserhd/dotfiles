@@ -57,6 +57,7 @@ with lib;
     hostName = "cnc";
     firewall.enable = false;
     wireless = {
+      enable = true;
       interfaces = [ "wlan0" ];
     };
   };
@@ -115,7 +116,7 @@ with lib;
 
   system.stateVersion = "25.05";
 
-  local.networking.respite-wifi.enable = true;
+  local.networking.respite.enable = true;
   local.sendOutgoingMailWithSES.enable = true;
 
   local.kits.workstation.enable = true;

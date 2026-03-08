@@ -12,6 +12,6 @@ with lib;
       '';
     };
 
-    local.networking.respite-wifi.enable = mkEnableOption "Respite Wi-Fi";
+    local.networking.respite.enable = mkEnableOption "Respite Network";
   };
 }

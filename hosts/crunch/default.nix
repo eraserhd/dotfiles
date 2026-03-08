@@ -65,8 +65,10 @@ with lib;
     };
   };
 
+  local.networking.respite.enable = true;
+
   # Crunch uses Ethernet to talk to a mesh node
-  local.networking.respite-wifi.enable = false;
+  networking.wireless.enable = false;
 
   documentation.dev.enable = true;
 
