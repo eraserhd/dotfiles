@@ -10,7 +10,7 @@ set -euo pipefail
 
 # ── Configuration ────────────────────────────────────────────────────────────
 
-readonly AIRPODS_SINK="bluez_output.90_9C_4A_E6_44_B2"  # PulseAudio compat name
+readonly AIRPODS_SINK="bluez_output.90:9C:4A:E6:44:B2"  # PulseAudio compat name
 readonly C920_MIC_PATTERN="HD_Pro_Webcam_C920"           # partial match, resolved at runtime
 
 readonly CALLS_DIR="$HOME/src/ALL/calls"
