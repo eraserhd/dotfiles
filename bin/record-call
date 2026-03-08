@@ -1,0 +1,116 @@
+#!/usr/bin/env bash
+# record-call — Record a Zoom/browser call via PipeWire on NixOS
+# Captures AirPods Max output (remote audio) + C920 mic, mixed to one file.
+# Usage: record-call [output.wav]
+
+set -euo pipefail
+
+# ── Configuration ────────────────────────────────────────────────────────────
+
+readonly AIRPODS_MAC="90_9C_4A_E6_44_B2"         # underscores, not colons
+readonly C920_MIC_PATTERN="HD_Pro_Webcam_C920"    # partial match, resolved at runtime
+
+readonly AIRPODS_SINK="bluez_output.${AIRPODS_MAC}.1"
+readonly AIRPODS_MONITOR="${AIRPODS_SINK}.monitor"
+
+readonly OUTPUT="${1:-$HOME/src/ALL/calls/$(date +%Y%m%d-%H%M%S).wav}"
+
+# ── Helpers ──────────────────────────────────────────────────────────────────
+
+die() { echo "ERROR: $*" >&2; exit 1; }
+
+node_exists() {
+    pw-cli list-objects Node 2>/dev/null \
+        | grep -q "node.name = \"$1\""
+}
+
+# Resolve a node name by partial match against input/source nodes
+resolve_input_node() {
+    pw-cli list-objects Node 2>/dev/null \
+        | grep 'node\.name' \
+        | sed 's/.*node\.name = "\([^"]*\)".*/\1/' \
+        | grep "$1" \
+        | grep -E 'input|source|capture' \
+        | head -1
+}
+
+# ── Preflight checks ─────────────────────────────────────────────────────────
+
+command -v pw-record   >/dev/null || die "pw-record not found (install pipewire)"
+command -v pw-loopback >/dev/null || die "pw-loopback not found (install pipewire)"
+
+node_exists "$AIRPODS_SINK" \
+    || die "AirPods sink '${AIRPODS_SINK}' not found — are they connected?"
+
+C920_NODE=$(resolve_input_node "$C920_MIC_PATTERN")
+[[ -n "$C920_NODE" ]] \
+    || die "C920 mic node not found (is the webcam plugged in?)"
+echo "C920 mic node: ${C920_NODE}"
+
+# ── Virtual mix sink ─────────────────────────────────────────────────────────
+# We create a null sink, route both the AirPods monitor (remote audio) and the
+# mic into it, then record its monitor.  Everything is torn down on exit.
+
+LOOPBACK_REMOTE_PID=""
+LOOPBACK_MIC_PID=""
+RECORD_PID=""
+
+cleanup() {
+    echo ""
+    echo "Stopping recording..."
+    [[ -n "$RECORD_PID"          ]] && kill "$RECORD_PID"          2>/dev/null || true
+    [[ -n "$LOOPBACK_REMOTE_PID" ]] && kill "$LOOPBACK_REMOTE_PID" 2>/dev/null || true
+    [[ -n "$LOOPBACK_MIC_PID"   ]] && kill "$LOOPBACK_MIC_PID"    2>/dev/null || true
+    # Remove the virtual sink by name
+    local sink_id
+    sink_id=$(pw-cli list-objects Node 2>/dev/null \
+        | awk '/node\.name = "call_record_mix"/{found=1} found && /^id /{print $2; exit}' \
+        | tr -d ',')
+    [[ -n "$sink_id" ]] && pw-cli destroy "$sink_id" 2>/dev/null || true
+    echo "Done. Output: ${OUTPUT}"
+}
+trap cleanup EXIT INT TERM
+
+mkdir -p "$(dirname "$OUTPUT")"
+
+echo "Creating virtual mix sink..."
+pw-cli create-node adapter \
+    '{ factory.name=support.null-audio-sink
+       node.name=call_record_mix
+       media.class=Audio/Sink
+       object.linger=false
+       audio.position=[FL FR] }' >/dev/null
+
+sleep 0.5
+
+# ── Loopbacks ────────────────────────────────────────────────────────────────
+
+echo "Routing AirPods output → mix sink..."
+pw-loopback \
+    --capture-props='media.class=Audio/Source node.target='"${AIRPODS_MONITOR}" \
+    --playback-props='node.target=call_record_mix' &
+LOOPBACK_REMOTE_PID=$!
+
+echo "Routing C920 mic → mix sink..."
+pw-loopback \
+    --capture-props='media.class=Audio/Source node.target='"${C920_NODE}" \
+    --playback-props='node.target=call_record_mix' &
+LOOPBACK_MIC_PID=$!
+
+sleep 0.5
+
+# ── Record ───────────────────────────────────────────────────────────────────
+
+echo "Recording to: ${OUTPUT}"
+echo "Press Ctrl-C to stop."
+echo ""
+
+pw-record \
+    --target call_record_mix.monitor \
+    --format s16 \
+    --rate 48000 \
+    --channels 2 \
+    "$OUTPUT" &
+RECORD_PID=$!
+
+wait $RECORD_PID
