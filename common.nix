@@ -26,6 +26,7 @@ with lib;
     ./pkg
     ./tools/1password
     ./tools/anki
+    ./tools/audacity
     ./tools/aws
     ./tools/babashka
     ./tools/bCNC
