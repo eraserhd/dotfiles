@@ -125,9 +125,14 @@ with lib;
 
   virtualisation.docker.enable = true;
 
-  # Allow OpenOCD to access Fiddy Plus
   services.udev.extraRules = ''
+    # Allow OpenOCD to access Fiddy Plus
     ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6010", MODE="0666", ENV{ID_MM_DEVICE_IGNORE}="1", ENV{ID_MM_PORT_IGNORE}="1"
+    # Don't sleep
+    ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6010", ACTION=="add", TEST=="power/control", ATTR{power/control}="on"
+
+    # For `qmk console`
+    SUBSYSTEM=="hidraw", MODE="0666"
   '';
 
   local.bluetooth.enable = true;
