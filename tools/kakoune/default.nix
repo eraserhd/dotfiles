@@ -23,7 +23,7 @@ with lib;
     ];
 
     environment.systemPackages = with pkgs; [
-      python310Packages.editorconfig
+      python3Packages.editorconfig
       kakoune
       kakoune-lsp
     ];
