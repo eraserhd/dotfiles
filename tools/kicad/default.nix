@@ -5,6 +5,6 @@ let
   cfg = config.local.kits.pcbs;
 in {
   config = mkIf cfg.enable {
-    environment.systemPackages = [ pkgs.kicad-unstable ];
+    environment.systemPackages = [ pkgs.kicad ];
   };
 }
