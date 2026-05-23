@@ -5,7 +5,6 @@ let
   cfg = config.local.kits.pcbs;
 in {
   config = mkIf cfg.enable {
-    #FIXME: The build seems to be non-deterministically broken
-    # environment.systemPackages = [ pkgs.kicad ];
+    environment.systemPackages = [ pkgs.kicad-unstable ];
   };
 }
