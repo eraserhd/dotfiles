@@ -11,21 +11,33 @@ with lib;
   # For building Raspberry Pi images
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-label/root";
-    fsType = "ext4";
-  };
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-label/SYSTEM";
-    fsType = "vfat";
-  };
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/c50324d6-55e8-4ef4-a4b9-c25d84ec64af";
+      fsType = "btrfs";
+      options = [ "subvol=@" ];
+    };
+  fileSystems."/home" =
+    { device = "/dev/disk/by-uuid/c50324d6-55e8-4ef4-a4b9-c25d84ec64af";
+      fsType = "btrfs";
+      options = [ "subvol=@home" ];
+    };
+  fileSystems."/nix" =
+    { device = "/dev/disk/by-uuid/c50324d6-55e8-4ef4-a4b9-c25d84ec64af";
+      fsType = "btrfs";
+      options = [ "subvol=@nix" ];
+    };
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/895B-D7C9";
+      fsType = "vfat";
+      options = [ "fmask=0022" "dmask=0022" ];
+    };
   swapDevices = [{
     device = "/.swapfile";
     size = 128 * 1024;
   }];
 
   hardware.enableRedistributableFirmware = true;
-  # hardware.cpu.amd.updateMicrocode = true;
+  hardware.cpu.amd.updateMicrocode = true;
   hardware.enableAllFirmware = true;
   hardware.firmware = [
     pkgs.wireless-regdb
@@ -214,7 +226,7 @@ with lib;
 
   home-manager.verbose = true;
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "25.11";
   home-manager.users.jfelice.home.stateVersion = "22.05";
 
   local.sendOutgoingMailWithSES.enable = true;
