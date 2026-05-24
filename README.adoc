@@ -45,3 +45,8 @@ tab-item {
   --tab-size: 24px;
 }
 ----
+
+2026 Crunch
+-----------
+
+* So much pain to get secret.key onto the system.

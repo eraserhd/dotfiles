@@ -1,24 +1,18 @@
-#!/usr/bin/env bash
+#!/usr/bin/env nix-shell
+#! nix-shell -p gnupg pinentry-curses git-crypt
 
 set -ex
 
-#Install nix
-#Install homebrew
+TEMPORARY_CONF=false
+if [[ ! -e ~/.gnupg/gpg-agent.conf ]]; then
+    TEMPORARY_CONF=true
+    printf 'pinentry-program %s\n' "$(which pinentry-curses)" >~/.gnupg/gpg-agent.conf
+    gpgconf --kill gpg-agent || true
+fi
 
-brew cask install 1password
-
-nix-env -i gnupg
-nix-env -i git-crypt
-
+gpg --import secret.key
 git crypt unlock
 
-
-sed -i '' -e 's,git@github\.com:,https://github.com/,' .gitmodules
-git submodule init
-git submodule update
-
-# 2u-nix asks for password, fails
-
-
-
-
+if $TEMPORARY_CONF; then
+    rm -f ~/.gnupg/gpg-agent.conf
+fi
