@@ -231,6 +231,7 @@ main = do
      , ("C-w M1-k", windowSwap U False)
      , ("C-w M1-l", windowSwap R False)
      , ("C-w ,", repeatLastREPLCommand)
+     , ("C-w <Backspace>", kill)
 
      -- ("C-w .", pasteChar controlMask 'W') -- doesn't work
      ] ++
