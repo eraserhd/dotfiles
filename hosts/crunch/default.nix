@@ -242,5 +242,7 @@ with lib;
   local.kits.pcbs.enable = true;
   local.kits.cnc.enable = true;
 
+  local.claudeDesktop.enable = true;
+
   plugbench.plumber.enable = true;
 }

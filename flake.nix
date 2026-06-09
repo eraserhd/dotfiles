@@ -6,6 +6,8 @@
     add-missing.inputs.nixpkgs.follows = "nixpkgs";
     bCNC-nix.url = "github:eraserhd/bCNC-nix";
     bCNC-nix.inputs.nixpkgs.follows = "nixpkgs";
+    claude-desktop.url = "github:aaddrick/claude-desktop-debian";
+    claude-desktop.inputs.nixpkgs.follows = "nixpkgs";
     darwin.url = "github:LnL7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/master";
@@ -27,6 +29,7 @@
   { self
   , add-missing
   , bCNC-nix
+  , claude-desktop
   , darwin
   , home-manager
   , kak-ansi
@@ -41,6 +44,7 @@
       nixpkgs.overlays = [
         add-missing.overlays.default
         bCNC-nix.overlays.default
+        claude-desktop.overlays.default
         kak-ansi.overlays.default
         kak-babashka.overlays.default
         parinfer-rust.overlays.default
