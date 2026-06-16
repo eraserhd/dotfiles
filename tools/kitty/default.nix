@@ -62,6 +62,7 @@ in {
           bold_italic_font = "mononoki-BoldItalic";
 
           allow_remote_control = true;
+          listen_on = "unix:\${XDG_RUNTIME_DIR}/kitty";
 
           scrollback_lines = "5000";
 
@@ -129,7 +130,6 @@ in {
       } // (if pkgs.stdenv.isDarwin
             then {
               darwinLaunchOptions = [
-                "--listen-on=unix:${homeDirectory}/.run/kitty"
                 "--single-instance"
                 "--directory=${homeDirectory}/src"
               ];
