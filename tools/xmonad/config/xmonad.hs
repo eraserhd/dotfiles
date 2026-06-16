@@ -4,6 +4,7 @@ import Data.Char (isSpace)
 import Data.List (find, sortBy)
 import Data.Maybe (fromMaybe, listToMaybe)
 import System.Environment (lookupEnv)
+import System.Exit (exitSuccess)
 import XMonad
 import XMonad.Actions.FocusNth
 import XMonad.Actions.Navigation2D
@@ -232,6 +233,7 @@ main = do
      , ("C-w M1-l", windowSwap R False)
      , ("C-w ,", repeatLastREPLCommand)
      , ("C-w <Backspace>", kill)
+     , ("C-w \\", io exitSuccess)
 
      -- ("C-w .", pasteChar controlMask 'W') -- doesn't work
      ] ++
