@@ -10,6 +10,7 @@ import XMonad.Actions.FocusNth
 import XMonad.Actions.Navigation2D
 import XMonad.Actions.UpdatePointer
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Layout.Decoration hiding (Theme)
 import XMonad.Layout.DecorationEx
 import XMonad.Layout.DecorationEx.Common
@@ -194,7 +195,7 @@ myLayout = sigilDecoration shrinkText myThemeEx (DevLayout ||| Full)
 main :: IO ()
 main = do
   host <- fromMaybe "" <$> lookupEnv "HOST"
-  xmonad $ withNavigation2DConfig def $ docks def
+  xmonad $ ewmh $ withNavigation2DConfig def $ docks def
     { modMask            = mod4Mask  -- se Command/Super for mod
     , borderWidth        = 2
     , normalBorderColor  = myVisualGrey
