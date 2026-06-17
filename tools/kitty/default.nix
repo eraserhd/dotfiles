@@ -17,6 +17,11 @@ let
       PATH = config.environment.systemPath;
     }
     else {
+      # Causes us to correctly load the environment for the new login shell
+      __ETC_PROFILE_DONE="";
+      __ETC_ZSHENV_SOURCED="";
+      __ETC_ZSHRC_SOURCED="";
+      __NIXOS_SET_ENVIRONMENT_DONE="";
     });
   in
     mapAttrs (name: value: fixVariableReferences value) vars;
