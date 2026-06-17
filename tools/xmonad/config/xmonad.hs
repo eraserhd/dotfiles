@@ -200,7 +200,7 @@ main = do
     , borderWidth        = 2
     , normalBorderColor  = myVisualGrey
     , focusedBorderColor = myDarkYellow
-    , terminal           = "kitty"
+    , terminal           = "kitty --single-instance"
     , layoutHook         = avoidStruts myLayout
     , logHook            = updatePointer (0.5, 0.5) (0, 0)
     , manageHook         = manageDocks <+> manageSpawn <> manageHook def
@@ -211,7 +211,7 @@ main = do
           spawnOnOnce "2" "firefox"
           spawnOnOnce "2" "kitty"
         else do
-          spawnNOnOnce 5 "1" "kitty"
+          spawnNOnOnce 5 "1" "kitty --single-instance --directory=$HOME/src"
           spawnOnOnce "1" "firefox"
           spawnOnOnce "3" "slack"
           spawnOnOnce "3" "signal-desktop"
