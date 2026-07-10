@@ -5,6 +5,7 @@ with lib;
   config = {
     environment.systemPackages = with pkgs; [
       clojure
+      jank
       leiningen
       parinfer-rust
       rep

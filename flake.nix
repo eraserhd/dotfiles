@@ -12,6 +12,9 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    jank.url = "git+https://github.com/jank-lang/jank?submodules=1";
+    # This might be sketch, since llvm is pinned for jank
+    jank.inputs.nixpkgs.follows = "nixpkgs";
     kak-ansi.url = "github:eraserhd/kak-ansi";
     kak-ansi.inputs.nixpkgs.follows = "nixpkgs";
     kak-babashka.url = "github:eraserhd/kak-babashka";
@@ -32,6 +35,7 @@
   , claude-desktop
   , darwin
   , home-manager
+  , jank
   , kak-ansi
   , kak-babashka
   , nixpkgs
@@ -48,6 +52,9 @@
         kak-ansi.overlays.default
         kak-babashka.overlays.default
         parinfer-rust.overlays.default
+        (self: super: {
+          jank = jank.packages.${super.system}.default;
+        })
       ];
     };
   in {
