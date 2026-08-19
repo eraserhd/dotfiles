@@ -12,9 +12,8 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    # Has its own nixpkgs pinned for llvm
     jank.url = "git+https://github.com/jank-lang/jank?submodules=1";
-    # This might be sketch, since llvm is pinned for jank
-    jank.inputs.nixpkgs.follows = "nixpkgs";
     kak-ansi.url = "github:eraserhd/kak-ansi";
     kak-ansi.inputs.nixpkgs.follows = "nixpkgs";
     kak-babashka.url = "github:eraserhd/kak-babashka";

@@ -72,7 +72,6 @@ in {
       man-pages-posix
       nix-prefetch-github
       shellcheck
-      silver-searcher
       tableize
       tree
       unzip
