@@ -30,7 +30,6 @@ with lib;
     ./tools/aws
     ./tools/babashka
     ./tools/bCNC
-    ./tools/buildkite
     ./tools/claude
     ./tools/clojure
     ./tools/cue
