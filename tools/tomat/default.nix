@@ -1,20 +1,24 @@
-{ pkgs, ... }:
+{ pkgs, lib, options, ... }:
 
+with lib;
 {
-  config = {
-    environment.systemPackages = [ pkgs.tomat ];
+  config =
+    (if (builtins.hasAttr "launchd" options)
+     then {}
+     else {
+       environment.systemPackages = [ pkgs.tomat ];
 
-    home-manager.users.jfelice = { pkgs, ... }: {
-      services.tomat = {
-        enable = true;
+       home-manager.users.jfelice = { pkgs, ... }: {
+         services.tomat = {
+           enable = true;
 
-        settings = {
-          timer = {
-            work = 45;
-            break = 15;
-          };
-        };
-      };
-    };
-  };
+           settings = {
+             timer = {
+               work = 45;
+               break = 15;
+             };
+           };
+         };
+       };
+     });
 }
