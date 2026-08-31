@@ -7,6 +7,8 @@
 
   programs.bash.enable = true;
 
+  local.no1password = true;
+
   homebrew = {
     enable = true;
     onActivation.cleanup = "zap";

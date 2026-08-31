@@ -10,6 +10,7 @@ in {
 
   config = mkMerge [
     {
+      nixpkgs.config.allowUnfree = true;
       environment.systemPackages = [ pkgs.claude-code ];
     }
     (mkIf cfg.enable {

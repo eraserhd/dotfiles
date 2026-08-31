@@ -1,8 +1,14 @@
 { config, pkgs, lib, ... }:
 
 with lib;
-{
-  config = {
+let
+  enable = !config.local.no1password;
+in {
+  options = {
+    local.no1password = mkEnableOption "No 1Password";
+  };
+
+  config = mkIf enable {
     nixpkgs.config.allowUnfree = true;
     programs._1password.enable = true;
     # Don't cross-compile electron apps.
