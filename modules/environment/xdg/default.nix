@@ -14,8 +14,9 @@ in {
     }];
     environment.variables.XDG_RUNTIME_DIR = "\$HOME/.run";
     system.activationScripts.userLaunchd.text = ''
-      mkdir -p ~/.run
-      launchctl setenv XDG_RUNTIME_DIR ~/.run
+      mkdir -p /Users/${config.system.primaryUser}/.run
+      chown ${config.system.primaryUser} /Users/${config.system.primaryUser}/.run
+      sudo -u ${config.system.primaryUser} launchctl setenv XDG_RUNTIME_DIR /Users/${config.system.primaryUser}/.run
     '';
   };
 }
