@@ -7,7 +7,7 @@ let
                 else config.networking.hostName;
   shellPackage = config.local.loginShell.package;
 
-  defaultCommand = if pkgs.stdenv.isDarwin
+  defaultCommand = if pkgs.stdenv.hostPlatform.isDarwin
     then "exec ${pkgs.reattach-to-user-namespace}/bin/reattach-to-user-namespace -l ${shellPackage}${shellPackage.shellPath}"
     else "exec ${shellPackage}${shellPackage.shellPath}";
 

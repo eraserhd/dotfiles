@@ -13,7 +13,7 @@ with lib;
       ];
     }
     # pinentry-curses somehow requires gcr which isn't available on Mac
-    (mkIf (!pkgs.stdenv.isDarwin) {
+    (mkIf (!pkgs.stdenv.hostPlatform.isDarwin) {
       home-manager.users.jfelice = { pkgs, ... }: {
         home.file.".gnupg/gpg-agent.conf".text = ''
           pinentry-program ${pkgs.pinentry-curses}/bin/pinentry-curses

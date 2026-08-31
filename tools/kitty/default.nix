@@ -132,7 +132,7 @@ in {
           "shift+ctrl+h" = "launch --stdin-add-formatting --stdin-source=@last_cmd_output --cwd=current --type=overlay ${pkgs.local.kak-scrollback-pager}/bin/kak-scrollback-pager @scrolled-by @cursor-x @cursor-y @line-count";
         };
         environment = environment "jfelice";
-      } // (if pkgs.stdenv.isDarwin
+      } // (if pkgs.stdenv.hostPlatform.isDarwin
             then {
               darwinLaunchOptions = [
                 "--single-instance"

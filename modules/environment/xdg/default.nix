@@ -11,7 +11,7 @@ in {
   };
   config = mkIf cfg.enable {
     assertions = [{
-      assertion = pkgs.stdenv.isDarwin;
+      assertion = pkgs.stdenv.hostPlatform.isDarwin;
       message = "environment.xdgRuntimeDir.enable is only useful on Darwin";
     }];
     environment.variables.XDG_RUNTIME_DIR = "\$HOME/.run";
