@@ -25,7 +25,7 @@ in {
           pushd ~/src/dotfiles >/dev/null
           TERM=xterm darwin-rebuild build --flake $HOME/src/dotfiles --show-trace || return $?
           if [ "$($readlink_bin -f /run/current-system)" != "$($readlink_bin -f ./result)" ] || [ "$1" = "--force" ]; then
-            TERM=xterm VERBOSE=1 darwin-rebuild switch --flake $HOME/src/dotfiles || return $?
+            TERM=xterm VERBOSE=1 sudo darwin-rebuild switch --flake $HOME/src/dotfiles || return $?
           fi
           popd >/dev/null
         elif command -v nixos-rebuild >/dev/null; then

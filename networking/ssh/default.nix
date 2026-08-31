@@ -1,4 +1,4 @@
-{ options, lib, ... }:
+{ config, options, lib, ... }:
 
 with lib;
 {
@@ -50,13 +50,17 @@ with lib;
       };
     }
     (if (builtins.hasAttr "launchd" options)
-     then {
-       system.activationScripts.extraUserActivation.text = ''
-         mkdir -p ~/.ssh
-         chmod 700 ~/.ssh
-
-         cp -ap ${toString ./files}/* ~/.ssh/
-         chmod 600 ~/.ssh/id_* ~/.ssh/*.pem
+     then let
+        primaryUser = config.system.primaryUser;
+        home = config.users.users.${primaryUser}.home;
+     in {
+       system.activationScripts.userLaunchd.text = ''
+         mkdir -p "${home}/.ssh"
+         chmod 700 "${home}/.ssh"
+       
+         cp -ap ${home}/src/dotfiles/networking/ssh/files/* ${home}/.ssh/
+         chmod 600 ${home}/.ssh/id_* ${home}/.ssh/*.pem
+         chown -R "${primaryUser}" "${home}/.ssh"
        '';
      }
      else {
