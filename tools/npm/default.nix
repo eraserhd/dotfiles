@@ -3,7 +3,7 @@
 {
   config = {
     home-manager.users.jfelice = { pkgs, ... }: {
-      home.file.".npmrc".source = ./npmrc;
+      #home.file.".npmrc".source = ./npmrc;
     };
   };
 }
