@@ -34,10 +34,8 @@ with lib;
     ./tools/clang
     ./tools/claude
     ./tools/clojure
-    ./tools/coscreen
     ./tools/cue
     ./tools/discord
-    ./tools/distrobox
     ./tools/firefox
     ./tools/freecad
     ./tools/git
