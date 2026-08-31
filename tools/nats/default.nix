@@ -2,8 +2,6 @@
 
 with lib;
 let
-   enable = config.local.kits.workstation.enable;
-
   token = builtins.readFile ./token.txt;
 
 in {
