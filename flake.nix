@@ -57,11 +57,11 @@
       ];
     };
   in {
-    darwinConfigurations."V3Q9GYKM9C" = darwin.lib.darwinSystem {
+    darwinConfigurations."chlmp-jfelice1" = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       modules = [
         ./os/nix-darwin
-        ./hosts/V3Q9GYKM9C
+        ./hosts/chlmp-jfelice1
         ./common.nix
         home-manager.darwinModules.home-manager
         overlays

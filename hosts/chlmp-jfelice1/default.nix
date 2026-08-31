@@ -16,6 +16,10 @@
 
   environment.xdgRuntimeDir.enable = true;
 
+  homebrew.prefix = "/opt/workbrew";
+
+  ids.gids.nixbld = 350;
+  system.primaryUser = "jfelice";
   users.users.jfelice = {
     name = "jfelice";        # Needed by home-manager
     home = "/Users/jfelice";
@@ -23,8 +27,7 @@
   };
 
   local.kits.workstation.enable = true;
-  local.buildkite.enable = true;
-  services.k3s.enable = true;
+  #services.k3s.enable = true;
 
   plugbench.plumber.enable = true;
 
@@ -37,6 +40,6 @@
   # $ sysctl -n hw.ncpu
   nix.settings = {
     max-jobs = 2;
-    cores = 4;
+    cores = 6;
   };
 }
