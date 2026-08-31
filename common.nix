@@ -31,7 +31,6 @@ with lib;
     ./tools/babashka
     ./tools/bCNC
     ./tools/buildkite
-    ./tools/clang
     ./tools/claude
     ./tools/clojure
     ./tools/cue
