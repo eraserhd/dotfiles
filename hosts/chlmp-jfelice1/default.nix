@@ -48,4 +48,8 @@
        local all all trust
     '';
   };
+
+  homebrew.casks = [
+    "kreya"
+  ];
 }
