@@ -6,19 +6,20 @@
   } ];
 
   programs.bash.enable = true;
+  plugbench.plumber.enable = true;
 
   local.no1password = true;
+  local.kits.workstation.enable = true;
+  #services.k3s.enable = true;
 
   homebrew = {
     enable = true;
     onActivation.cleanup = "zap";
+    prefix = "/opt/workbrew";
   };
 
   bubbles.enable = true;
-
   environment.xdgRuntimeDir.enable = true;
-
-  homebrew.prefix = "/opt/workbrew";
 
   ids.gids.nixbld = 350;
   system.primaryUser = "jfelice";
@@ -27,11 +28,6 @@
     home = "/Users/jfelice";
     shell = pkgs.zsh;
   };
-
-  local.kits.workstation.enable = true;
-  #services.k3s.enable = true;
-
-  plugbench.plumber.enable = true;
 
   # Used for backwards compatibility, please read the changelog before changing.
   # $ darwin-rebuild changelog
@@ -43,5 +39,13 @@
   nix.settings = {
     max-jobs = 2;
     cores = 6;
+  };
+
+  # Market Risk team requirements
+  services.postgresql = {
+    enable = true;
+    authentication = ''
+       local all all trust
+    '';
   };
 }
