@@ -50,7 +50,12 @@
     '';
   };
 
-  homebrew.casks = [
-    "kreya"
-  ];
+  homebrew = {
+    brews = [
+      "prometheus"
+    ];
+    casks = [
+      "kreya"
+    ];
+  };
 }
