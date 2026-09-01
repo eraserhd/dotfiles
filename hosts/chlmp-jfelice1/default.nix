@@ -45,7 +45,8 @@
   services.postgresql = {
     enable = true;
     authentication = ''
-       local all all trust
+       local   all all trust
+       hostssl all all 127.0.0.1/32 md5
     '';
   };
 
