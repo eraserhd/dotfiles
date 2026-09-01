@@ -76,7 +76,7 @@ with lib;
   config = mkMerge [
     (if (builtins.hasAttr "systemPath" options.environment)
      then {
-      environment.systemPath = [ (toString ./bin) ];
+       environment.systemPath = [ (toString ./bin) ];
      }
      else {
        environment.variables.PATH = [ (toString ./bin) ];

@@ -17,6 +17,7 @@
     onActivation.cleanup = "zap";
     prefix = "/opt/workbrew";
   };
+  environment.systemPath = [ "/opt/workbrew/bin" ];
 
   bubbles.enable = true;
   environment.xdgRuntimeDir.enable = true;
