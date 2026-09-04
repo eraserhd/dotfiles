@@ -49,7 +49,14 @@
        local   all all trust
        hostssl all all 127.0.0.1/32 md5
     '';
+    settings = {
+      ssl = true;
+    };
   };
+
+  environment.systemPackages = [
+    pkgs.grpcurl
+  ];
 
   homebrew = {
     brews = [
