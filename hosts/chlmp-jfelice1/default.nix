@@ -56,6 +56,7 @@
 
   environment.systemPackages = [
     pkgs.grpcurl
+    pkgs.kubectl
   ];
 
   homebrew = {
