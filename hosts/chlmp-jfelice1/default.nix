@@ -57,6 +57,7 @@
   environment.systemPackages = [
     pkgs.grpcurl
     pkgs.kubectl
+    pkgs.kubelogin-oidc
   ];
 
   homebrew = {
