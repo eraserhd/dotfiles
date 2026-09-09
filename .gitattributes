@@ -1,4 +1,3 @@
-bin/checkpw filter=git-crypt diff=git-crypt
 bin/private.sh filter=git-crypt diff=git-crypt
 fonts/Input-Font.zip filter=git-crypt diff=git-crypt
 networking/tls/*.key filter=git-crypt diff=git-crypt
@@ -6,8 +5,6 @@ networking/ses-email/password filter=git-crypt diff=git-crypt
 networking/ssh/files/id_dsa filter=git-crypt diff=git-crypt
 networking/ssh/files/id_rsa-aws-idris filter=git-crypt diff=git-crypt
 networking/ssh/files/id_rsa-backup filter=git-crypt diff=git-crypt
-networking/ssh/files/id_rsa-centralpark-server-dev-1 filter=git-crypt diff=git-crypt
-networking/ssh/files/id_rsa-centralpark-server-prod-1 filter=git-crypt diff=git-crypt
 networking/ssh/files/id_rsa filter=git-crypt diff=git-crypt
 networking/ssh/files/id_rsa-macbook filter=git-crypt diff=git-crypt
 networking/ssh/files/teenyweeny.pem filter=git-crypt diff=git-crypt
@@ -17,5 +14,4 @@ tools/aws/credentials filter=git-crypt diff=git-crypt
 tools/clojure/profiles.clj filter=git-crypt diff=git-crypt
 tools/nats/token.txt filter=git-crypt diff=git-crypt
 tools/npm/npmrc filter=git-crypt diff=git-crypt
-tools/postgres/pgpass.conf filter=git-crypt diff=git-crypt
 terraform/terraform.tfstate filter=git-crypt diff=git-crypt
