@@ -63,11 +63,24 @@
       };
       default = dotfiles;
     };
+
+    nixosModules = rec {
+      dotfiles = {
+        imports = [
+          ./os/nixos
+          ./common.nix
+          home-manager.darwinModules.home-manager
+          overlays
+          plugbench.darwinModules.default
+        ];
+      };
+      default = dotfiles;
+    };
   in {
     darwinConfigurations."chlmp-jfelice1" = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       modules = [
-        darwinModules.default
+        darwinModules.dotfiles
         ./hosts/chlmp-jfelice1
       ];
       specialArgs = { inherit inputs; };
@@ -76,12 +89,8 @@
     nixosConfigurations.crunch = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
-        ./os/nixos
+        nixosModules.dotfiles
         ./hosts/crunch
-        ./common.nix
-        home-manager.nixosModules.home-manager
-        overlays
-        plugbench.nixosModules.default
       ];
       specialArgs = { inherit inputs; };
     };
@@ -91,16 +100,12 @@
       modules = [
         raspberry-pi-nix.nixosModules.raspberry-pi
         raspberry-pi-nix.nixosModules.sd-image
-        ./os/nixos
+        nixosModules.dotfiles
         ./hosts/cnc
-        ./common.nix
-        home-manager.nixosModules.home-manager
-        overlays
-        plugbench.nixosModules.default
       ];
       specialArgs = { inherit inputs; };
     };
 
-    inherit darwinModules;
+    inherit darwinModules nixosModules;
   };
 }
