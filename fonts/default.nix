@@ -47,6 +47,7 @@ let
   };
 in {
   config = {
+    nixpkgs.config.allowUnfree = true;
     fonts = {
       packages = with pkgs; [
         custom-input-fonts
