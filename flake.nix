@@ -50,16 +50,25 @@
         parinfer-rust.overlays.default
       ];
     };
+
+    darwinModules = rec {
+      dotfiles = {
+        imports = [
+          ./os/nix-darwin
+          ./common.nix
+          home-manager.darwinModules.home-manager
+          overlays
+          plugbench.darwinModules.default
+        ];
+      };
+      default = dotfiles;
+    };
   in {
     darwinConfigurations."chlmp-jfelice1" = darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       modules = [
-        ./os/nix-darwin
+        darwinModules.default
         ./hosts/chlmp-jfelice1
-        ./common.nix
-        home-manager.darwinModules.home-manager
-        overlays
-        plugbench.darwinModules.default
       ];
       specialArgs = { inherit inputs; };
     };
@@ -91,5 +100,7 @@
       ];
       specialArgs = { inherit inputs; };
     };
+
+    inherit darwinModules;
   };
 }
