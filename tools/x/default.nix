@@ -10,7 +10,7 @@ in {
 
   config = mkIf cfg.enable ({
     environment.systemPackages = with pkgs; [
-      xorg.xev
+      xev
       flameshot
       playerctl
     ];
