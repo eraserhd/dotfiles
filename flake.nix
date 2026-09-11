@@ -4,6 +4,10 @@
   inputs = {
     add-missing.url = "github:eraserhd/add-missing";
     add-missing.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.inputs.darwin.follows = "darwin";
+    agenix.inputs.home-manager.follows = "home-manager";
     bCNC-nix.url = "github:eraserhd/bCNC-nix";
     bCNC-nix.inputs.nixpkgs.follows = "nixpkgs";
     claude-desktop.url = "github:aaddrick/claude-desktop-debian";
@@ -28,6 +32,7 @@
   outputs =
   { self
   , add-missing
+  , agenix
   , bCNC-nix
   , claude-desktop
   , darwin
