@@ -64,6 +64,7 @@
           home-manager.darwinModules.home-manager
           overlays
           plugbench.darwinModules.default
+          agenix.darwinModules.default
         ];
       };
       default = dotfiles;
@@ -77,36 +78,40 @@
           home-manager.nixosModules.home-manager
           overlays
           plugbench.nixosModules.default
+          agenix.nixosModules.default
         ];
       };
       default = dotfiles;
     };
   in {
-    darwinConfigurations."chlmp-jfelice1" = darwin.lib.darwinSystem {
+    darwinConfigurations."chlmp-jfelice1" = darwin.lib.darwinSystem rec {
       system = "aarch64-darwin";
       modules = [
         darwinModules.dotfiles
         ./hosts/chlmp-jfelice1
+        { environment.systemPackages = [ agenix.packages.${system}.default ]; }
       ];
       specialArgs = { inherit inputs; };
     };
 
-    nixosConfigurations.crunch = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.crunch = nixpkgs.lib.nixosSystem rec {
       system = "x86_64-linux";
       modules = [
         nixosModules.dotfiles
         ./hosts/crunch
+        { environment.systemPackages = [ agenix.packages.${system}.default ]; }
       ];
       specialArgs = { inherit inputs; };
     };
 
-    nixosConfigurations.cnc = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.cnc = nixpkgs.lib.nixosSystem rec {
       system = "aarch64-linux";
       modules = [
         raspberry-pi-nix.nixosModules.raspberry-pi
         raspberry-pi-nix.nixosModules.sd-image
         nixosModules.dotfiles
         ./hosts/cnc
+        { environment.systemPackages = [ agenix.packages.${system}.default ]; }
       ];
       specialArgs = { inherit inputs; };
     };
