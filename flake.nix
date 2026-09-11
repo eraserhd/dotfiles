@@ -69,9 +69,9 @@
         imports = [
           ./os/nixos
           ./common.nix
-          home-manager.darwinModules.home-manager
+          home-manager.nixosModules.home-manager
           overlays
-          plugbench.darwinModules.default
+          plugbench.nixosModules.default
         ];
       };
       default = dotfiles;
