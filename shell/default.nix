@@ -18,6 +18,12 @@ in {
   };
 
   config = {
+    home-manager.users.jfelice = { pkgs, config, ... }: {
+      age.identityPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
+      age.secrets."private.sh" = {
+        file = ./private.sh.age;
+      };
+    };
     environment.interactiveShellInit = ''
       :r() {
         local readlink_bin="${pkgs.coreutils}/bin/readlink"
@@ -50,7 +56,7 @@ in {
       }
 
       source_if_exists ~/.nix-profile/etc/profile.d/nix.sh
-      source ${homeDirectory}/src/dotfiles/bin/private.sh
+      source_if_exists $XDG_RUNTIME_DIR/agenix.d/private.sh
 
       alias k=kubectl
     '';
