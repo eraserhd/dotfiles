@@ -57,7 +57,7 @@
     };
 
     darwinModules = rec {
-      dotfiles = {
+      dotfiles = ({ pkgs, ... }: {
         imports = [
           ./os/nix-darwin
           ./common.nix
@@ -66,12 +66,16 @@
           plugbench.darwinModules.default
           agenix.darwinModules.default
         ];
-      };
+        config = {
+          home-manager.sharedModules = [ agenix.homeManagerModules.age ];
+          environment.systemPackages = [ agenix.packages.${pkgs.system}.default ];
+        };
+      });
       default = dotfiles;
     };
 
     nixosModules = rec {
-      dotfiles = {
+      dotfiles = ({ pkgs, ... }: {
         imports = [
           ./os/nixos
           ./common.nix
@@ -80,7 +84,11 @@
           plugbench.nixosModules.default
           agenix.nixosModules.default
         ];
-      };
+        config = {
+          home-manager.sharedModules = [ agenix.homeManagerModules.age ];
+          environment.systemPackages = [ agenix.packages.${pkgs.system}.default ];
+        };
+      });
       default = dotfiles;
     };
   in {
@@ -89,7 +97,6 @@
       modules = [
         darwinModules.dotfiles
         ./hosts/chlmp-jfelice1
-        { environment.systemPackages = [ agenix.packages.${system}.default ]; }
       ];
       specialArgs = { inherit inputs; };
     };
@@ -99,7 +106,6 @@
       modules = [
         nixosModules.dotfiles
         ./hosts/crunch
-        { environment.systemPackages = [ agenix.packages.${system}.default ]; }
       ];
       specialArgs = { inherit inputs; };
     };
