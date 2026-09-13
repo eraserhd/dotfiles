@@ -1,4 +1,4 @@
-{ lib, options, ... }:
+{ config, lib, options, ... }:
 
 with lib;
 {
@@ -84,6 +84,36 @@ with lib;
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
+
+      # System secrets are decrypted during activation, which on NixOS happens
+      # before /home is mounted, so the host key has to be able to read them.
+      # jfelice's key is listed too: it works on darwin, where /Users is always
+      # available, and at switch time on NixOS.  Unreadable identities are
+      # skipped.
+      age.identityPaths = [
+        "/etc/ssh/ssh_host_ed25519_key"
+        "${config.users.users.jfelice.home}/.ssh/id_ed25519"
+      ];
     }
+
+    # A NixOS host whose key isn't a recipient decrypts its secrets fine on
+    # `nixos-rebuild switch` (with jfelice's key) and then fails to decrypt
+    # them on the next boot, which is a miserable way to find out.
+    (optionalAttrs (!(builtins.hasAttr "launchd" options)) {
+      assertions = [
+        {
+          assertion = config.age.secrets == { }
+            || (import ./hosts/keys.nix) ? ${config.networking.hostName};
+          message = ''
+            No host key for '${config.networking.hostName}' in hosts/keys.nix,
+            but it has system-level agenix secrets, which are decrypted before
+            /home is mounted.  Add it:
+
+                ssh ${config.networking.hostName} cat /etc/ssh/ssh_host_ed25519_key.pub
+                agenix -r
+          '';
+        }
+      ];
+    })
   ];
 }
