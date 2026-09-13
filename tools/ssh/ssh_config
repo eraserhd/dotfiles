@@ -1,0 +1,8 @@
+IPQoS=none
+
+Host *
+    ForwardAgent yes
+
+Host crunch
+    HostName crunch.local
+    ForwardAgent yes

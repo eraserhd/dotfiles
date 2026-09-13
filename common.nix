@@ -18,7 +18,6 @@ with lib;
     ./modules/environment/xdg
     ./networking
     ./networking/ses-email
-    ./networking/ssh
     ./networking/tls
     ./networking/update-dns
     ./networking/wifi
@@ -61,6 +60,7 @@ with lib;
     ./tools/qemu
     ./tools/R
     ./tools/rlwrap
+    ./tools/ssh
     ./tools/signal
     ./tools/slack
     ./tools/tex
