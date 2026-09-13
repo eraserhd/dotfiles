@@ -1,4 +1,4 @@
-{ lib, config, options, ... }:
+{ lib, config, options, pkgs, ... }:
 
 with lib;
 let
@@ -9,15 +9,19 @@ in {
   };
 
   config = mkIf cfg.enable
-  (if (builtins.hasAttr "msmtp" options.services)
+  (if (builtins.hasAttr "msmtp" options.programs)
   then {
-    services.msmtp = {
+    age.secrets."ses-smtp-password".file = ./password.age;
+
+    programs.msmtp = {
       enable = true;
       accounts.default = {
         auth = true;
         user = "AKIATJ6VYKJDVEPD7C75";
-        password = builtins.readFile ./password;
-        host = "email-smtp.us-west-2.amazonaws.com:587";
+        # msmtp runs this each time it sends, so the password stays out of
+        # both the store and /etc/msmtprc.
+        passwordeval = "${pkgs.coreutils}/bin/cat ${config.age.secrets."ses-smtp-password".path}";
+        host = "email-smtp.us-west-2.amazonaws.com";
         domain = "${config.networking.hostName}.${config.networking.domain}";
         port = 587;
         tls = true;

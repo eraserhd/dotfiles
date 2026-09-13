@@ -14,6 +14,7 @@ in {
   "tools/clojure/profiles.clj.age".publicKeys = user;
   "tools/npm/npmrc.age".publicKeys = user;
 
+  "networking/ses-email/password.age".publicKeys = system;
   "networking/wifi/secrets.age".publicKeys = system;
   "tools/nats/token.env.age".publicKeys = system;
 
