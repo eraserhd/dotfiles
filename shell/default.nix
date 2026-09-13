@@ -5,6 +5,8 @@ let
   cfg = config.local.loginShell;
 
   homeDirectory = config.users.users.jfelice.home;
+
+  privateShPath = config.home-manager.users.jfelice.age.secrets."private.sh".path;
 in {
   options = {
     local.loginShell.package = mkOption {
@@ -56,7 +58,7 @@ in {
       }
 
       source_if_exists ~/.nix-profile/etc/profile.d/nix.sh
-      source_if_exists $XDG_RUNTIME_DIR/agenix.d/private.sh
+      source_if_exists ${privateShPath}
 
       alias k=kubectl
     '';
