@@ -10,9 +10,12 @@ with lib;
       rep
     ];
 
-    home-manager.users.jfelice = { pkgs, ... }: {
+    home-manager.users.jfelice = { pkgs, config, ... }: {
       home.file.".clojure/deps.edn".source = ./deps.edn;
-      home.file.".lein/profiles.clj".source = ./profiles.clj;
+      age.secrets."lein-profiles.clj" = {
+        file = ./profiles.clj.age;
+        path = "${config.home.homeDirectory}/.lein/profiles.clj";
+      };
     };
   };
 }
