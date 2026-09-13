@@ -18,7 +18,6 @@ with lib;
     ./modules/environment/xdg
     ./networking
     ./networking/ses-email
-    ./networking/tls
     ./networking/update-dns
     ./networking/wifi
     ./os/common
