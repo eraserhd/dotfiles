@@ -55,7 +55,7 @@ with lib;
          mkdir -p "${home}/.ssh"
          chmod 700 "${home}/.ssh"
        
-         cp -ap ${home}/src/dotfiles/networking/ssh/files/* ${home}/.ssh/
+         cp -ap ${home}/src/dotfiles/tools/ssh/files/* ${home}/.ssh/
          chmod 600 ${home}/.ssh/id_* ${home}/.ssh/*.pem
          chown -R "${primaryUser}" "${home}/.ssh"
        '';

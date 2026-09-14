@@ -32,6 +32,7 @@ with lib;
     ./tools/clojure
     ./tools/cue
     ./tools/discord
+    ./tools/elixir
     ./tools/firefox
     ./tools/freecad
     ./tools/git
