@@ -1,5 +1,5 @@
 { pkgs, ... }:
 
 {
-  environment.systemPackages = [ pkgs.elixir-ls ];
+  environment.systemPackages = [ pkgs.beam27Packages.elixir-ls ];
 }
