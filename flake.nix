@@ -92,15 +92,6 @@
       default = dotfiles;
     };
   in {
-    darwinConfigurations."chlmp-jfelice1" = darwin.lib.darwinSystem rec {
-      system = "aarch64-darwin";
-      modules = [
-        darwinModules.dotfiles
-        ./hosts/chlmp-jfelice1
-      ];
-      specialArgs = { inherit inputs; };
-    };
-
     nixosConfigurations.crunch = nixpkgs.lib.nixosSystem rec {
       system = "x86_64-linux";
       modules = [

@@ -14,7 +14,7 @@
       bindkey '\eb' emacs-backward-word
 
       setopt auto_cd
-      cdpath=(~/src ~/src/dotfiles/pkg)
+      cdpath=(~/src)
 
       setopt nonomatch
 
