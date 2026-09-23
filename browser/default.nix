@@ -2,23 +2,19 @@
 
 with lib;
 let
-  # natscli reads $NATS_TOKEN, which comes from the agenix file rather than
-  # from plugbench.token (which would put it in the store).
+  # natscli reads $NATS_TOKEN, which is read out of the agenix file at start-up
+  # rather than coming from plugbench.token (which would put it in the store).
   tokenFile = config.local.nats.clientTokenFile;
 
   listenCommand = schema: ''
-    nats reply cmd.show.url.${schema} --command "/bin/sh -c '${config.local.browser.command} \"\$NATS_REQUEST_BODY\"'"
+    NATS_TOKEN="$(${pkgs.coreutils}/bin/cat ${escapeShellArg tokenFile})" \
+      nats reply cmd.show.url.${schema} --command "/bin/sh -c '${config.local.browser.command} \"\$NATS_REQUEST_BODY\"'"
   '';
 
   launchdConfig = schema: {
     launchd.user.agents."open-${schema}-in-browser" = {
       path = with pkgs; [ natscli ];
-      script = ''
-        set -a
-        . ${tokenFile}
-        set +a
-        ${listenCommand schema}
-      '';
+      script = listenCommand schema;
       serviceConfig = {
         KeepAlive = true;
       };
@@ -30,8 +26,6 @@ let
       wantedBy = ["default.target"];
       path = with pkgs; [ natscli ];
       script = listenCommand schema;
-      # "-": other users can't read jfelice's token, and shouldn't.
-      serviceConfig.EnvironmentFile = "-${tokenFile}";
     };
   };
 

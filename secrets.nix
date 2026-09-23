@@ -17,6 +17,7 @@ in {
   "networking/ses-email/password.age".publicKeys = system;
   "networking/wifi/secrets.age".publicKeys = system;
   "tools/nats/token.env.age".publicKeys = system;
+  "tools/nats/token.age".publicKeys = system;
 
   # Not deployed anywhere; kept encrypted because it is a licensed copy.
   "fonts/Input-Font.zip.age".publicKeys = user;

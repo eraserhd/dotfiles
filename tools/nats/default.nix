@@ -31,10 +31,9 @@ in {
     local.nats.clientTokenFile = mkOption {
       type = types.str;
       description = ''
-        File containing NATS_TOKEN=..., readable by jfelice.  Anything that
-        connects to the local NATS server (natscli, the pluggos) should source
-        it or take it as an EnvironmentFile rather than having the token baked
-        into the store.
+        File containing the bare token, readable by jfelice.  Anything that
+        connects to the local NATS server (natscli, the pluggos) should read
+        it at start-up rather than having the token baked into the store.
       '';
     };
   };
@@ -45,18 +44,19 @@ in {
         natscli
       ];
 
-      # The token, as NATS_TOKEN=..., installed twice from the same file: once
-      # for the server and once for everything that connects to it.
+      # The same token in the two shapes its readers want: NATS_TOKEN=... for
+      # the server, which sources it, and bare for the clients, which read the
+      # value.  token.age and token.env.age have to be kept in sync by hand.
       age.secrets."nats-token.env" = {
         file = ./token.env.age;
         owner = config.services.nats.user;
       };
-      age.secrets."nats-token-client.env" = {
-        file = ./token.env.age;
+      age.secrets."nats-token-client" = {
+        file = ./token.age;
         owner = "jfelice";
       };
 
-      local.nats.clientTokenFile = config.age.secrets."nats-token-client.env".path;
+      local.nats.clientTokenFile = config.age.secrets."nats-token-client".path;
 
       services.nats = {
         enable = true;

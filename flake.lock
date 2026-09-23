@@ -492,11 +492,11 @@
         "plumber-pluggo": "plumber-pluggo"
       },
       "locked": {
-        "lastModified": 1788211746,
-        "narHash": "sha256-07iWM+lcNnA7Gx3LU1IfX+GYrwLTtWNcKSy5yEPHEGU=",
+        "lastModified": 1790182380,
+        "narHash": "sha256-cT5WtXUW3r1Lo8jR4kOBa+zMwwkds1MMED6y1HmNE1Q=",
         "owner": "plugbench",
         "repo": "nix-plugbench",
-        "rev": "244457217a048c14fb6ebb0ad23872a365c72449",
+        "rev": "0e0c7a60316147fca4d5cb93f8488b0968685812",
         "type": "github"
       },
       "original": {
