@@ -8,25 +8,11 @@ let
 
   configFile = format.generate "nats.conf" cfg.settings;
 
-  runtimeDir = "/private/var/run/nats";
+  # Deliberately under dataDir rather than /var/run: macOS wipes /var/run on
+  # every boot, so a directory created by the activation script is gone by the
+  # time launchd starts us.
+  runtimeDir = "${cfg.dataDir}/run";
   runtimeConfigFile = "${runtimeDir}/nats.conf";
-
-  # nats-server won't expand variables in quoted strings, so when secrets are
-  # supplied through environmentFile the config is rendered at start-up.
-  # KeepAlive restarts us until agenix has written the file.
-  script = if cfg.environmentFile == null
-           then ''
-             nats-server -c ${configFile}
-           ''
-           else ''
-             set -e
-             set -a
-             . ${cfg.environmentFile}
-             set +a
-             umask 0077
-             envsubst < ${configFile} > ${runtimeConfigFile}
-             nats-server -c ${runtimeConfigFile}
-           '';
 
 in {
   options = {
@@ -114,8 +100,23 @@ in {
     };
 
     launchd.daemons.nats = {
-      path = with pkgs; [ nats-server ] ++ optional (cfg.environmentFile != null) envsubst;
-      inherit script;
+      path = with pkgs; [ nats-server coreutils envsubst ];
+
+      # KeepAlive restarts us until agenix has written the environment file.
+      script = ''
+        set -e
+        mkdir -p ${runtimeDir}
+        chmod 0700 ${runtimeDir}
+        set -a
+        ${if cfg.environmentFile == null
+          then ""
+          else ". ${cfg.environmentFile}"}
+        set +a
+        umask 0077
+        envsubst < ${configFile} > ${runtimeConfigFile}
+        nats-server -c ${runtimeConfigFile}
+      '';
+
       serviceConfig = {
         KeepAlive = true;
         UserName = cfg.user;
@@ -129,10 +130,6 @@ in {
       mkdir -p '${cfg.dataDir}'
       touch /var/log/nats.out.log /var/log/nats.err.log
       chown 4222:4222 '${cfg.dataDir}' /var/log/nats.out.log /var/log/nats.err.log
-    '' + optionalString (cfg.environmentFile != null) ''
-      mkdir -p '${runtimeDir}'
-      chown 4222:4222 '${runtimeDir}'
-      chmod 0700 '${runtimeDir}'
     '';
 
     users.knownUsers = ["nats"];
