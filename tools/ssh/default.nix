@@ -56,9 +56,9 @@ with lib;
          chmod 700 "${home}/.ssh"
 
          if [[ -d ${home}/src/public-dotfiles ]]; then
-           cp -ap ${home}/src/public-dotfiles/tools/ssh/files/* ${home}/.ssh/
+           cp -apn ${home}/src/public-dotfiles/tools/ssh/files/* ${home}/.ssh/
          else
-           cp -ap ${home}/src/dotfiles/tools/ssh/files/* ${home}/.ssh/
+           cp -apn ${home}/src/dotfiles/tools/ssh/files/* ${home}/.ssh/
          fi
          chmod 600 ${home}/.ssh/id_* ${home}/.ssh/*.pem
          chown -R "${primaryUser}" "${home}/.ssh"
