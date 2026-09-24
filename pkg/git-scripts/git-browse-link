@@ -53,11 +53,15 @@
     (str/trim-newline (sh "git" "remote" "get-url" remote))))
 
 (defn make-browse-url-prefix [origin-url]
-  (let [github (fn [[_ owner repo]]
-                 (format "https://github.com/%s/%s/blob" owner repo))]
+  (let [github     (fn [[_ owner repo]]
+                     (format "https://github.com/%s/%s/blob" owner repo))
+        drw-github (fn [[_ owner repo]]
+                     (format "https://git.drwholdings.com/%s/%s/blob" owner repo))]
     (condp re-matches origin-url
       #"^git@github\.com:([^/]*)/([^/]*?)(?:\.git)?$" :>> github
       #"^https://github\.com/([^/]*)/([^/]*?)(?:\.git)?$" :>> github
+      #"^git@git\.drwholdings\.com:([^/]*)/([^/]*?)(?:\.git)?$" :>> drw-github
+      #"^https://git\.drwholdings\.com/([^/]*)/([^/]*?)(?:\.git)?$" :>> drw-github
       origin-url)))
 
 (defn make-position-anchor [position]
