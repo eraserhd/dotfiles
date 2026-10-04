@@ -5,12 +5,14 @@ local function kitty(command)
   hs.execute("kitty @ --to unix:/Users/jfelice/.run/kitty " .. command, true)
 end
 
-local function paste_as_keystrokes()
-  hs.eventtap.keyStrokes(hs.pasteboard.readString())
+-- Window geometry and workspaces belong to AeroSpace (see tools/aerospace);
+-- WindowSigils just keeps the 'C-w' prefix and drives it from here.
+local function aerospace(command)
+  hs.execute("/run/current-system/sw/bin/aerospace " .. command)
 end
 
-local function toggle_full_screen()
-  hs.window.focusedWindow():toggleFullScreen()
+local function paste_as_keystrokes()
+  hs.eventtap.keyStrokes(hs.pasteboard.readString())
 end
 
 local function rerun_last_command()
@@ -24,49 +26,65 @@ local function focus_window(window)
   end
 end
 
-local function swap_window(window)
-  local focused_frame = hs.window.focusedWindow():frame()
-  local selected_frame = window:frame()
-  hs.window.focusedWindow():setFrame(selected_frame, 0)
-  window:setFrame(focused_frame, 0)
-end
-
-local function stack_window(window)
-  local frame = window:frame()
-  hs.window.focusedWindow():setFrame(frame, 0)
-end
-
-local function split_vertically()
-  local window = hs.window.focusedWindow()
-  local frame = window:frame()
-  frame.w = frame.w/2
-  window:setFrame(frame, 0)
-end
-
-local function split_horizontally()
-  local window = hs.window.focusedWindow()
-  local frame = window:frame()
-  frame.h = frame.h/2
-  window:setFrame(frame, 0)
-end
-
 not_sigils = hs.loadSpoon("WindowSigils")
 --not_sigils = dofile('/Users/jfelice/src/Spoons/Source/WindowSigils.spoon/init.lua')
+
+-- AeroSpace emulates workspaces by parking the windows of inactive ones just
+-- off the visible area rather than using macOS Spaces.  They stay unminimized,
+-- so the spoon's window filter still returns them, and since sigils are
+-- assigned by frame position they would both consume letters and shift the
+-- assignment of the windows actually on screen.  Both orderedWindows() and
+-- _makeSigilBoxes() funnel through here, so one wrapper keeps the keys and the
+-- overlay agreeing.  Belongs upstream in eraserhd/Spoons eventually.
+local base_removeUnuseableWindows = not_sigils._removeUnuseableWindows
+function not_sigils:_removeUnuseableWindows(windows)
+  return hs.fnutils.filter(base_removeUnuseableWindows(self, windows), function(window)
+    local frame = window:frame()
+    for _, screen in ipairs(hs.screen.allScreens()) do
+      local overlap = frame:intersect(screen:frame())
+      -- Not .area: disjoint rects can intersect to two negative dimensions.
+      if overlap.w > 0 and overlap.h > 0 then
+        return true
+      end
+    end
+    return false
+  end)
+end
+
+local mode_keys = {
+  [{{'shift'}, 'f'}]    = function() aerospace("fullscreen") end,
+  -- AeroSpace names split orientations the other way round: '-' stacks
+  -- windows, which it calls a vertical split.
+  [{{}, '-'}]           = function() aerospace("split vertical") end,
+  [{{'shift'}, '\\'}]   = function() aerospace("split horizontal") end,
+  [{{}, 'delete'}]      = function() aerospace("close") end,
+  [{{}, 'v'}]           = paste_as_keystrokes,
+  [{{}, ','}]           = rerun_last_command,
+}
+
+-- 'swap' and 'join-with' take a direction rather than a target window, so these
+-- are mode keys instead of sigil actions.  h/j/k/l are never sigils.
+for key, direction in pairs({ h = 'left', j = 'down', k = 'up', l = 'right' }) do
+  mode_keys[{{'alt'}, key}] = function() aerospace("swap " .. direction) end
+  mode_keys[{{'ctrl'}, key}] = function() aerospace("join-with " .. direction) end
+end
+
+-- Binding the digits as mode keys also drops them from the sigil pool, leaving
+-- the letters that tools/xmonad/config/xmonad.hs uses.
+for digit = 0, 9 do
+  local key = tostring(digit)
+  local workspace = (digit == 0) and "10" or key
+  mode_keys[{{}, key}] = function() aerospace("workspace " .. workspace) end
+  mode_keys[{{'ctrl'}, key}] = function() aerospace("move-node-to-workspace " .. workspace) end
+end
+
 not_sigils:configure({
   hotkeys = {
     enter = {{"control"}, "W"}
   },
-  mode_keys = {
-    [{{'shift'}, 'f'}]  = toggle_full_screen,
-    [{{}, '-'}]         = split_horizontally,
-    [{{'shift'}, '\\'}] = split_vertically,
-    [{{}, 'v'}]         = paste_as_keystrokes,
-    [{{}, ','}]         = rerun_last_command,
-  },
+  mode_keys = mode_keys,
   sigil_actions = {
-    [{}]       = focus_window,
-    [{'ctrl'}] = stack_window,
-    [{'alt'}]  = swap_window,
+    [{}] = focus_window,
   }
 })
 

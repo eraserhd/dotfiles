@@ -23,6 +23,7 @@ with lib;
     ./os/common
     ./pkg
     ./tools/1password
+    ./tools/aerospace
     ./tools/anki
     ./tools/audacity
     ./tools/aws
