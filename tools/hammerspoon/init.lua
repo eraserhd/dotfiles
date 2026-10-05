@@ -74,7 +74,7 @@ end
 for digit = 0, 9 do
   local key = tostring(digit)
   local workspace = (digit == 0) and "10" or key
-  mode_keys[{{}, key}] = function() aerospace("workspace " .. workspace) end
+  mode_keys[{{}, key}] = function() aerospace("summon-workspace " .. workspace) end
   mode_keys[{{'ctrl'}, key}] = function() aerospace("move-node-to-workspace " .. workspace) end
 end
 
