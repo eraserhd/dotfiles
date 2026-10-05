@@ -52,14 +52,12 @@ function not_sigils:_removeUnuseableWindows(windows)
 end
 
 local mode_keys = {
-  [{{'shift'}, 'f'}]    = function() aerospace("fullscreen") end,
-  -- AeroSpace names split orientations the other way round: '-' stacks
-  -- windows, which it calls a vertical split.
-  [{{}, '-'}]           = function() aerospace("split vertical") end,
-  [{{'shift'}, '\\'}]   = function() aerospace("split horizontal") end,
-  [{{}, 'delete'}]      = function() aerospace("close") end,
-  [{{}, 'v'}]           = paste_as_keystrokes,
-  [{{}, ','}]           = rerun_last_command,
+  [{{}, 'f'}]         = function() aerospace("fullscreen") end,
+  [{{}, '-'}]         = function() aerospace("split vertical") end,
+  [{{'shift'}, '\\'}] = function() aerospace("split horizontal") end,
+  [{{}, 'delete'}]    = function() aerospace("close") end,
+  [{{}, 'v'}]         = paste_as_keystrokes,
+  [{{}, ','}]         = rerun_last_command,
 }
 
 -- 'swap' and 'join-with' take a direction rather than a target window, so these
