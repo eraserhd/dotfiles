@@ -29,6 +29,7 @@ with lib;
     ./tools/aws
     ./tools/babashka
     ./tools/bCNC
+    ./tools/broot
     ./tools/claude
     ./tools/clojure
     ./tools/cue

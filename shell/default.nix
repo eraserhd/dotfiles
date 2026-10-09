@@ -70,7 +70,6 @@ in {
     environment.systemPackages = with pkgs; [
       add-missing
       bat
-      broot
       direnv
       entr
       file
