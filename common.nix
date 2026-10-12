@@ -64,6 +64,7 @@ with lib;
     ./tools/rlwrap
     ./tools/ssh
     ./tools/signal
+    ./tools/sketchybar
     ./tools/slack
     ./tools/tex
     ./tools/tmux
