@@ -29,6 +29,10 @@ end
 not_sigils = hs.loadSpoon("WindowSigils")
 --not_sigils = dofile('/Users/jfelice/src/Spoons/Source/WindowSigils.spoon/init.lua')
 
+-- SketchyBar isn't a window; keep its strip (see tools/sketchybar) from
+-- becoming an empty space with a sigil.
+not_sigils.reservedInsets = { top = 36 }
+
 -- AeroSpace emulates workspaces by parking the windows of inactive ones just
 -- off the visible area rather than using macOS Spaces.  They stay unminimized,
 -- so the spoon's window filter still returns them, and since sigils are
