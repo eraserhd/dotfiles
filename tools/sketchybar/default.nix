@@ -36,7 +36,7 @@ in {
 
         sketchybar --bar height=${toString barHeight} position=top color=0xff292d3e \
           margin=${toString gap} y_offset=${toString gap} corner_radius=9 \
-          border_width=2 border_color=0xffa0a4b8
+          border_width=2 border_color=0xff65697b
 
         sketchybar --default \
           label.font="mononoki:Regular:13.0" \
