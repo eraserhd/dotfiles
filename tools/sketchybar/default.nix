@@ -3,6 +3,7 @@
 with lib;
 let
   barHeight = 28;
+  gap = 4; # Same as the AeroSpace gaps.
 
   frontApp = pkgs.writeShellScript "sketchybar-front-app" ''
     if [ "$SENDER" = front_app_switched ]; then
@@ -33,7 +34,8 @@ in {
       config = ''
         #!/bin/sh
 
-        sketchybar --bar height=${toString barHeight} position=top color=0xff292d3e
+        sketchybar --bar height=${toString barHeight} position=top color=0xff292d3e \
+          margin=${toString gap} y_offset=${toString gap} corner_radius=9
 
         sketchybar --default \
           label.font="mononoki:Regular:13.0" \
@@ -64,7 +66,8 @@ in {
       };
 
     # The menu bar is hidden (see bubbles), so nothing else reserves this space.
-    services.aerospace.settings.gaps.outer.top = mkForce (barHeight + 4);
+    # Bar, then a gap above and below it.
+    services.aerospace.settings.gaps.outer.top = mkForce (barHeight + 2 * gap);
   }
   else {
   });

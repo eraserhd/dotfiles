@@ -54,7 +54,7 @@
         kak-ansi.overlays.default
         kak-babashka.overlays.default
         parinfer-rust.overlays.default
-        tomat.overlays.default
+        (final: prev: { tomat = tomat.packages.${prev.stdenv.hostPlatform.system}.tomat; })
       ];
     };
 
@@ -70,7 +70,7 @@
         ];
         config = {
           home-manager.sharedModules = [ agenix.homeManagerModules.age ];
-          environment.systemPackages = [ agenix.packages.${pkgs.system}.default ];
+          environment.systemPackages = [ agenix.packages.${pkgs.stdenv.hostPlatform.system}.default ];
         };
       });
       default = dotfiles;
@@ -88,7 +88,7 @@
         ];
         config = {
           home-manager.sharedModules = [ agenix.homeManagerModules.age ];
-          environment.systemPackages = [ agenix.packages.${pkgs.system}.default ];
+          environment.systemPackages = [ agenix.packages.${pkgs.stdenv.hostPlatform.system}.default ];
         };
       });
       default = dotfiles;

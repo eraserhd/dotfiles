@@ -5,6 +5,8 @@ let
   isDarwin = builtins.hasAttr "launchd" options;
 
   tomat = pkgs.tomat.overrideAttrs (old: {
+    # Upstream uses the deprecated stdenv.isLinux here.
+    buildInputs = optionals pkgs.stdenv.hostPlatform.isLinux [ pkgs.alsa-lib ];
     # plutil isn't available in the build sandbox.
     checkFlags = (old.checkFlags or []) ++ [ "--skip=service::tests::launchd_service_is_a_valid_plist" ];
   });
