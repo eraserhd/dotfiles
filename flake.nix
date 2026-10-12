@@ -6,15 +6,13 @@
     add-missing.inputs.nixpkgs.follows = "nixpkgs";
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
-    agenix.inputs.darwin.follows = "darwin";
-    agenix.inputs.home-manager.follows = "home-manager";
     bCNC-nix.url = "github:eraserhd/bCNC-nix";
     bCNC-nix.inputs.nixpkgs.follows = "nixpkgs";
     claude-desktop.url = "github:aaddrick/claude-desktop-debian";
     claude-desktop.inputs.nixpkgs.follows = "nixpkgs";
     darwin.url = "github:LnL7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.url = "github:eraserhd/home-manager/tomat-darwin";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     kak-ansi.url = "github:eraserhd/kak-ansi";
     kak-ansi.inputs.nixpkgs.follows = "nixpkgs";
@@ -27,6 +25,8 @@
     plugbench.inputs.nixpkgs.follows = "nixpkgs";
     raspberry-pi-nix.url = "github:nix-community/raspberry-pi-nix";
     raspberry-pi-nix.inputs.nixpkgs.follows = "nixpkgs";
+    tomat.url = "github:jolars/tomat";
+    tomat.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -43,6 +43,7 @@
   , parinfer-rust
   , plugbench
   , raspberry-pi-nix
+  , tomat
   }@inputs:
   let
     overlays = {
@@ -53,6 +54,7 @@
         kak-ansi.overlays.default
         kak-babashka.overlays.default
         parinfer-rust.overlays.default
+        tomat.overlays.default
       ];
     };
 

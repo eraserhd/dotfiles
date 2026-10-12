@@ -1,24 +1,34 @@
-{ pkgs, lib, options, ... }:
+{ pkgs, lib, config, options, ... }:
 
 with lib;
-{
-  config =
-    (if (builtins.hasAttr "launchd" options)
-     then {}
-     else {
-       environment.systemPackages = [ pkgs.tomat ];
+let
+  isDarwin = builtins.hasAttr "launchd" options;
 
-       home-manager.users.jfelice = { pkgs, ... }: {
-         services.tomat = {
-           enable = true;
+  tomat = pkgs.tomat.overrideAttrs (old: {
+    # plutil isn't available in the build sandbox.
+    checkFlags = (old.checkFlags or []) ++ [ "--skip=service::tests::launchd_service_is_a_valid_plist" ];
+  });
+in {
+  config = {
+    environment.systemPackages = [ tomat ];
 
-           settings = {
-             timer = {
-               work = 45;
-               break = 15;
-             };
-           };
-         };
-       };
-     });
+    home-manager.users.jfelice = {
+      services.tomat = {
+        enable = true;
+        package = tomat;
+
+        settings = {
+          timer = {
+            work = 45;
+            break = 15;
+          };
+        };
+      };
+
+      launchd.agents.tomat.config.EnvironmentVariables =
+        optionalAttrs (isDarwin && config.environment.xdgRuntimeDir.enable) {
+          XDG_RUNTIME_DIR = "${config.users.users.${config.system.primaryUser}.home}/.run";
+        };
+    };
+  };
 }

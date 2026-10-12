@@ -159,6 +159,24 @@
         "type": "github"
       }
     },
+    "flake-utils_10": {
+      "inputs": {
+        "systems": "systems_9"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "flake-utils_2": {
       "inputs": {
         "systems": "systems"
@@ -310,16 +328,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1791306979,
-        "narHash": "sha256-KuLePuhwJM9NLt/gTLHzXaOoSZKGoB3m7NfXjiQ98HY=",
-        "owner": "nix-community",
+        "lastModified": 1791822737,
+        "narHash": "sha256-l+aFF8tr/JIjdFk8wGyK4HSHmGsCvwtw3icP1GpOXPQ=",
+        "owner": "eraserhd",
         "repo": "home-manager",
-        "rev": "fae6e9e42c3b762ab47635cddcfaf6f52374a61b",
+        "rev": "59649cfe8186add2e5d8d246ed10b9a7a873f8eb",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
-        "ref": "master",
+        "owner": "eraserhd",
+        "ref": "tomat-darwin",
         "repo": "home-manager",
         "type": "github"
       }
@@ -562,7 +580,8 @@
         "nixpkgs": "nixpkgs",
         "parinfer-rust": "parinfer-rust",
         "plugbench": "plugbench",
-        "raspberry-pi-nix": "raspberry-pi-nix"
+        "raspberry-pi-nix": "raspberry-pi-nix",
+        "tomat": "tomat"
       }
     },
     "rpi-bluez-firmware-src": {
@@ -801,6 +820,42 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_9": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "tomat": {
+      "inputs": {
+        "flake-utils": "flake-utils_10",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791270499,
+        "narHash": "sha256-9stLRDFQt45llO8HzbogqyrTaZFaHNdnCRe5NsWjSow=",
+        "owner": "jolars",
+        "repo": "tomat",
+        "rev": "c31b34c0f20f55d4738388ab5ce8e8e5b8110b5f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "jolars",
+        "repo": "tomat",
         "type": "github"
       }
     }
