@@ -5,14 +5,10 @@
     environment.systemPackages = with pkgs; [
       gitFull
       gh
-      #gitAndTools.gitout -- no scheme atm
+      gh-dash
       local.git-scripts
-      git-crypt
       git-revise
     ];
-
-    # Needed for `hub browse`
-    environment.variables.BROWSER = config.local.browser.command;
 
     home-manager.users.jfelice = { pkgs, ... }: {
       home.file.".gitconfig".source = ./gitconfig;
