@@ -21,6 +21,15 @@ with lib;
         enable-normalization-flatten-containers = false;
         enable-normalization-opposite-orientation-for-nested-containers = false;
 
+        # Start with workspace 1 on the left monitor and 2 on the right.
+        # (Force-assigning them would pin them, defeating 'summon-workspace'.)
+        after-startup-command = [
+          "focus-monitor left"
+          "summon-workspace 1"
+          "focus-monitor right"
+          "summon-workspace 2"
+        ];
+
         # MouseFollowsFocus moves the pointer; don't fight it.  (The module
         # defaults this to [ "move-mouse monitor-lazy-center" ].)
         on-focused-monitor-changed = [ ];
