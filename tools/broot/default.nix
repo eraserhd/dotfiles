@@ -4,8 +4,32 @@ let
   shellFunction = shell: pkgs.runCommand "br.${shell}" { nativeBuildInputs = [ pkgs.broot ]; } ''
     broot --print-shell-function ${shell} > $out
   '';
+
+  # Used by the C-w <space> popup (see tools/hammerspoon).  A conf of its own
+  # since Enter plumbs and leaves here, but only plumbs in the normal broot.
+  popupConf = (pkgs.formats.toml {}).generate "broot-popup.toml" {
+    default_flags = "-g";
+    verbs = [
+      {
+        invocation = "open_leave_popup";
+        key = "enter";
+        apply_to = "file";
+        execution = "9 plumb {file}";
+        leave_broot = true;
+      }
+    ];
+  };
+
+  brootPopup = pkgs.writeShellScriptBin "broot-popup" ''
+    # Hammerspoon's PATH lacks the plan9 tools which 'plumb' needs.
+    export PATH=/run/current-system/sw/bin:$PATH
+    cd "$HOME"
+    exec ${pkgs.broot}/bin/broot --conf ${popupConf} "$@"
+  '';
 in {
   config = {
+    environment.systemPackages = [ brootPopup ];
+
     # home-manager's integration targets its own shell config, which we don't use.
     programs.zsh.interactiveShellInit = "source ${shellFunction "zsh"}";
     programs.bash.interactiveShellInit = "source ${shellFunction "bash"}";

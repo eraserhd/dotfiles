@@ -31,6 +31,37 @@ local function swap_in_workspace(workspace)
   end
 end
 
+-- A centered, floating kitty running broot (see tools/broot) which plumbs the
+-- chosen file and goes away.
+local function broot_popup()
+  local focused = hs.window.focusedWindow()
+  local screen = focused and focused:screen() or hs.screen.mainScreen()
+  hs.task.new("/run/current-system/sw/bin/kitty", nil, {
+    "--title=broot-popup",
+    "-o", "remember_window_size=no",
+    "-o", "confirm_os_window_close=0",
+    "/run/current-system/sw/bin/broot-popup",
+  }):start()
+
+  local attempts = 0
+  local timer
+  timer = hs.timer.doEvery(0.1, function()
+    attempts = attempts + 1
+    local window = hs.fnutils.find(hs.window.allWindows(), function(w)
+      return w:title() == "broot-popup"
+    end)
+    if window then
+      timer:stop()
+      aerospace("layout floating --window-id " .. window:id())
+      local f = screen:frame()
+      window:setFrame(hs.geometry.rect(f.x + f.w * 0.25, f.y + f.h * 0.2, f.w * 0.5, f.h * 0.6))
+      window:focus()
+    elseif attempts > 50 then
+      timer:stop()
+    end
+  end)
+end
+
 local function paste_as_keystrokes()
   hs.eventtap.keyStrokes(hs.pasteboard.readString())
 end
@@ -81,6 +112,7 @@ local mode_keys = {
   [{{}, '-'}]         = function() aerospace("layout v_tiles") end,
   [{{'shift'}, '\\'}] = function() aerospace("layout h_tiles") end,
   [{{}, 'delete'}]    = function() aerospace("close") end,
+  [{{}, 'space'}]     = broot_popup,
   [{{}, 'v'}]         = paste_as_keystrokes,
   [{{}, ','}]         = rerun_last_command,
 }
