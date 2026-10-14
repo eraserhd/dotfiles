@@ -44,14 +44,6 @@ in {
     #  }
     #'';
 
-    programs.zsh.interactiveShellInit = ''
-      if [ -n "$KITTY_INSTALLATION_DIR" ]; then
-        autoload -Uz -- "$KITTY_INSTALLATION_DIR"/shell-integration/zsh/kitty-integration
-        kitty-integration
-        unfunction kitty-integration
-      fi
-    '';
-
     home-manager.users.jfelice = { pkgs, ... }: {
       programs.kitty = {
         enable = true;

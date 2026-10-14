@@ -88,6 +88,8 @@ with lib;
     {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
+      # home-manager's zsh takes over ~/.zprofile and friends.
+      home-manager.backupFileExtension = "hm-backup";
 
       # System secrets are decrypted during activation, which on NixOS happens
       # before /home is mounted, so the host key has to be able to read them.

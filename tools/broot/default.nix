@@ -30,8 +30,7 @@ in {
   config = {
     environment.systemPackages = [ brootPopup ];
 
-    # home-manager's integration targets its own shell config, which we don't use.
-    programs.zsh.interactiveShellInit = "source ${shellFunction "zsh"}";
+    # home-manager's integration does zsh, but our bash is the system's.
     programs.bash.interactiveShellInit = "source ${shellFunction "bash"}";
 
     home-manager.users.jfelice = { ... }: {
