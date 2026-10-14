@@ -50,6 +50,7 @@ with lib;
     ./tools/kitty
     ./tools/meshlab
     ./tools/minicom
+    ./tools/monitors
     ./tools/nats
     ./tools/nix
     ./tools/npm

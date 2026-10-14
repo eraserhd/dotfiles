@@ -73,6 +73,17 @@ local function broot_popup()
   end)
 end
 
+-- The monitors switch to the other machine when this one sleeps; see
+-- tools/monitors.
+local function monitors_here()
+  local task = hs.task.new("/run/current-system/sw/bin/monitors-here", function(code, _, stderr)
+    if code ~= 0 then
+      hs.alert.show("monitors-here failed: " .. stderr)
+    end
+  end)
+  task:start()
+end
+
 local function paste_as_keystrokes()
   hs.eventtap.keyStrokes(hs.pasteboard.readString())
 end
@@ -124,6 +135,7 @@ local mode_keys = {
   [{{'shift'}, '\\'}] = function() aerospace("layout h_tiles") end,
   [{{}, 'delete'}]    = function() aerospace("close") end,
   [{{}, 'space'}]     = broot_popup,
+  [{{'shift'}, 'm'}]  = monitors_here,
   [{{}, 'v'}]         = paste_as_keystrokes,
   [{{}, ','}]         = rerun_last_command,
 }
