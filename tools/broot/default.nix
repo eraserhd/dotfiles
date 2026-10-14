@@ -23,7 +23,7 @@ let
   brootPopup = pkgs.writeShellScriptBin "broot-popup" ''
     # Hammerspoon's PATH lacks the plan9 tools which 'plumb' needs.
     export PATH=/run/current-system/sw/bin:$PATH
-    cd "$HOME"
+    cd "$HOME/src"
     exec ${pkgs.broot}/bin/broot --conf ${popupConf} "$@"
   '';
 in {
