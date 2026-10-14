@@ -30,6 +30,15 @@ with lib;
           "summon-workspace 2"
         ];
 
+        on-window-detected = [
+          # Tiled, then floated, the broot popup would be resized under broot.
+          {
+            "if".app-id = "net.kovidgoyal.kitty";
+            "if".window-title-regex-substring = "^broot-popup$";
+            run = "layout floating";
+          }
+        ];
+
         # MouseFollowsFocus moves the pointer; don't fight it.  (The module
         # defaults this to [ "move-mouse monitor-lazy-center" ].)
         on-focused-monitor-changed = [ ];
