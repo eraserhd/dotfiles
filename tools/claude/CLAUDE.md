@@ -1,0 +1,12 @@
+Prefer writing readable code to commenting.  Only use comments for things which
+are tricky or surprising to another developer seeing this code. When commenting,
+write short, concise comments.  Do not use comments to explain to _me_ why you
+did something, explain to me directly instead.
+
+Test names should be clear expressions of requirements, never nouns.  Try to
+avoid talking about classes and methods in the test name.  Avoid adjectives
+like "correct" or "expected" or "standard" implying the reader already
+understands the expectation.
+
+Clone new repositories into ~/src/.  Public repos can be forked into my
+personal github.com/eraserhd account to make PRs.
