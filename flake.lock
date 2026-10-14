@@ -310,16 +310,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1791822737,
-        "narHash": "sha256-l+aFF8tr/JIjdFk8wGyK4HSHmGsCvwtw3icP1GpOXPQ=",
-        "owner": "eraserhd",
+        "lastModified": 1792000010,
+        "narHash": "sha256-4jtkwQlReQdXsKJJfB9yT7nIf0TlwgZOk2XtxjUgDS8=",
+        "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "59649cfe8186add2e5d8d246ed10b9a7a873f8eb",
+        "rev": "5a9d300bd619c03857521b50c8877a19dbad7078",
         "type": "github"
       },
       "original": {
-        "owner": "eraserhd",
-        "ref": "tomat-darwin",
+        "owner": "nix-community",
+        "ref": "master",
         "repo": "home-manager",
         "type": "github"
       }

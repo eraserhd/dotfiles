@@ -12,7 +12,7 @@
     claude-desktop.inputs.nixpkgs.follows = "nixpkgs";
     darwin.url = "github:LnL7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:eraserhd/home-manager/tomat-darwin";
+    home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     kak-ansi.url = "github:eraserhd/kak-ansi";
     kak-ansi.inputs.nixpkgs.follows = "nixpkgs";
