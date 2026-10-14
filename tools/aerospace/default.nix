@@ -37,6 +37,12 @@ with lib;
             "if".window-title-regex-substring = "^broot-popup$";
             run = "layout floating";
           }
+          # AeroSpace restarting brings Docker Desktop's window back up.
+          {
+            "if".app-id = "com.electron.dockerdesktop";
+            "if".during-aerospace-startup = true;
+            run = "macos-native-minimize";
+          }
         ];
 
         # MouseFollowsFocus moves the pointer; don't fight it.  (The module
