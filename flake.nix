@@ -25,8 +25,6 @@
     plugbench.inputs.nixpkgs.follows = "nixpkgs";
     raspberry-pi-nix.url = "github:nix-community/raspberry-pi-nix";
     raspberry-pi-nix.inputs.nixpkgs.follows = "nixpkgs";
-    tomat.url = "github:jolars/tomat";
-    tomat.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -43,7 +41,6 @@
   , parinfer-rust
   , plugbench
   , raspberry-pi-nix
-  , tomat
   }@inputs:
   let
     overlays = {
@@ -54,7 +51,6 @@
         kak-ansi.overlays.default
         kak-babashka.overlays.default
         parinfer-rust.overlays.default
-        (final: prev: { tomat = tomat.packages.${prev.stdenv.hostPlatform.system}.tomat; })
       ];
     };
 
