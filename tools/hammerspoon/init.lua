@@ -8,7 +8,27 @@ end
 -- Window geometry and workspaces belong to AeroSpace (see tools/aerospace);
 -- WindowSigils just keeps the 'C-w' prefix and drives it from here.
 local function aerospace(command)
-  hs.execute("/run/current-system/sw/bin/aerospace " .. command)
+  return hs.execute("/run/current-system/sw/bin/aerospace " .. command)
+end
+
+-- Like XMonad's greedyView: a workspace showing on another monitor swaps with
+-- the focused monitor's, where 'summon-workspace' alone sends ours somewhere
+-- arbitrary.
+local function swap_in_workspace(workspace)
+  local current_workspace = aerospace("list-workspaces --focused"):match("%S+")
+  local current_monitor = aerospace("list-monitors --focused --format '%{monitor-id}'"):match("%S+")
+  local visible = aerospace("list-workspaces --monitor all --visible --format '%{workspace} %{monitor-id}'")
+  local other_monitor
+  for name, monitor in visible:gmatch("(%S+) (%S+)") do
+    if name == workspace and monitor ~= current_monitor then other_monitor = monitor end
+  end
+
+  aerospace("summon-workspace " .. workspace)
+  if other_monitor then
+    aerospace("focus-monitor " .. other_monitor)
+    aerospace("summon-workspace " .. current_workspace)
+    aerospace("focus-monitor " .. current_monitor)
+  end
 end
 
 local function paste_as_keystrokes()
@@ -77,7 +97,7 @@ end
 for digit = 0, 9 do
   local key = tostring(digit)
   local workspace = (digit == 0) and "10" or key
-  mode_keys[{{}, key}] = function() aerospace("summon-workspace " .. workspace) end
+  mode_keys[{{}, key}] = function() swap_in_workspace(workspace) end
   mode_keys[{{'ctrl'}, key}] = function() aerospace("move-node-to-workspace " .. workspace) end
 end
 
