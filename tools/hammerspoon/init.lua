@@ -31,7 +31,7 @@ not_sigils = hs.loadSpoon("WindowSigils")
 
 -- SketchyBar isn't a window; keep its strip (see tools/sketchybar) from
 -- becoming an empty space with a sigil.
-not_sigils.reservedInsets = { top = 36 }
+not_sigils.reservedInsets = { top = 40 }
 
 -- AeroSpace emulates workspaces by parking the windows of inactive ones just
 -- off the visible area rather than using macOS Spaces.  They stay unminimized,
@@ -57,8 +57,9 @@ end
 
 local mode_keys = {
   [{{}, 'f'}]         = function() aerospace("fullscreen") end,
-  [{{}, '-'}]         = function() aerospace("split vertical") end,
-  [{{'shift'}, '\\'}] = function() aerospace("split horizontal") end,
+  [{{}, '='}]         = function() aerospace("balance-sizes") end,
+  [{{}, '-'}]         = function() aerospace("layout v_tiles") end,
+  [{{'shift'}, '\\'}] = function() aerospace("layout h_tiles") end,
   [{{}, 'delete'}]    = function() aerospace("close") end,
   [{{}, 'v'}]         = paste_as_keystrokes,
   [{{}, ','}]         = rerun_last_command,
