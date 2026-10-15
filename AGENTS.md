@@ -19,4 +19,5 @@
 
   - Stop at `build`.  The switch needs `sudo` and `:r`'s last line is `exec zsh -l`;
     neither works from a tool call, so leave switching to me.
-`../nix-drw/` is a work flake where shared work config should go.
+- Prefer home-manager to nix-darwin/NixOS config where it won't break things, e.g.
+  installing packages used for development.
