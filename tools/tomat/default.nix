@@ -5,8 +5,6 @@ let
   isDarwin = builtins.hasAttr "launchd" options;
 in {
   config = {
-    environment.systemPackages = [ pkgs.tomat ];
-
     home-manager.users.jfelice = {
       services.tomat = {
         enable = true;

@@ -29,7 +29,7 @@ let
   '';
 
   tomat = pkgs.writeShellScript "sketchybar-tomat" ''
-    sketchybar --set "$NAME" label="$(tomat status -o plain)"
+    sketchybar --set "$NAME" label="$(${pkgs.tomat}/bin/tomat status -o plain)"
   '';
 
   battery = pkgs.writeShellScript "sketchybar-battery" ''
