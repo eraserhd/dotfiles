@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 let
   shellFunction = shell: pkgs.runCommand "br.${shell}" { nativeBuildInputs = [ pkgs.broot ]; } ''
@@ -21,8 +21,11 @@ let
   };
 
   brootPopup = pkgs.writeShellScriptBin "broot-popup" ''
-    # Hammerspoon's PATH lacks the plan9 tools which 'plumb' needs.
+    # Hammerspoon's PATH lacks the plan9 tools which 'plumb' needs, and its
+    # environment the token for the NATS server which the plumber is on.
     export PATH=/run/current-system/sw/bin:$PATH
+    ${config.plugbench.tokenPrefix}
+    export NATS_TOKEN
     cd "$HOME/src"
     exec ${pkgs.broot}/bin/broot --conf ${popupConf} "$@"
   '';
