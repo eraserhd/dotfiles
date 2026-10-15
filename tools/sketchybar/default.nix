@@ -100,13 +100,15 @@ in {
       };
 
     services.aerospace.settings = let
-      trigger = [
-        "/bin/sh" "-c"
-        "${config.services.sketchybar.package}/bin/sketchybar --trigger aerospace_workspace_change"
-      ];
+      sketchybar = "${config.services.sketchybar.package}/bin/sketchybar";
     in {
-      exec-on-workspace-change = trigger;
-      on-focused-monitor-changed = trigger;
+      # An argv to run, unlike the callbacks below, which take AeroSpace commands.
+      exec-on-workspace-change = [
+        "/bin/sh" "-c" "${sketchybar} --trigger aerospace_workspace_change"
+      ];
+      on-focused-monitor-changed = [
+        "exec-and-forget ${sketchybar} --trigger aerospace_workspace_change"
+      ];
       gaps.outer.top = mkForce (barHeight + 2 * gap);
     };
   }
