@@ -13,20 +13,18 @@ let
 
   aerospace = "${config.services.aerospace.package}/bin/aerospace";
 
-  workspace = pkgs.writeShellScript "sketchybar-workspace" ''
-    sid=''${NAME#workspace.}
-    focused=$(${aerospace} list-workspaces --focused)
-    visible=$(${aerospace} list-workspaces --monitor all --visible)
-    windows=$(${aerospace} list-windows --workspace "$sid" --count)
+  # Each monitor's bar shows the workspace on that monitor, highlighted when
+  # the monitor is focused.  The item is named for the monitor's position from
+  # the left, which is how AeroSpace numbers monitors.
+  monitorWorkspace = pkgs.writeShellScript "sketchybar-monitor-workspace" ''
+    monitor=''${NAME#monitor.}
+    workspace=$(${aerospace} list-workspaces --monitor "$monitor" --visible)
+    focused=$(${aerospace} list-monitors --focused --format '%{monitor-id}')
 
-    if [ "$sid" = "$focused" ]; then
-      sketchybar --set "$NAME" drawing=on label.color=0xffffffff background.drawing=on
-    elif echo "$visible" | grep -qx "$sid"; then
-      sketchybar --set "$NAME" drawing=on label.color=0xffffffff background.drawing=off
-    elif [ "$windows" -gt 0 ]; then
-      sketchybar --set "$NAME" drawing=on label.color=0xffc0c4dc background.drawing=off
+    if [ "$monitor" = "$focused" ]; then
+      sketchybar --set "$NAME" label="$workspace" label.color=0xffffffff background.drawing=on
     else
-      sketchybar --set "$NAME" drawing=off
+      sketchybar --set "$NAME" label="$workspace" label.color=0xffc0c4dc background.drawing=off
     fi
   '';
 
@@ -64,14 +62,18 @@ in {
 
         sketchybar --add event aerospace_workspace_change
 
-        for sid in 1 2 3 4 5 6 7 8 9; do
-          sketchybar --add item workspace.$sid left \
-            --set workspace.$sid label=$sid script=${workspace} \
-              click_script="${aerospace} workspace $sid" \
+        # A bar is drawn on each display, and the display ids are in the order
+        # macOS arranged them, so map them to positions.
+        sketchybar --query displays \
+          | ${pkgs.jq}/bin/jq -r 'sort_by(.frame.x) | to_entries[] | "\(.key + 1) \(.value["arrangement-id"])"' \
+          | while read -r monitor display; do
+          sketchybar --add item monitor.$monitor left \
+            --set monitor.$monitor associated_display=$display \
+              script=${monitorWorkspace} \
               background.color=0xff697098 background.corner_radius=5 \
               background.height=20 background.drawing=off \
               padding_left=2 padding_right=2 \
-            --subscribe workspace.$sid aerospace_workspace_change front_app_switched
+            --subscribe monitor.$monitor aerospace_workspace_change front_app_switched
         done
 
         sketchybar --add item front_app left \
@@ -97,12 +99,16 @@ in {
         XDG_RUNTIME_DIR = "${config.users.users.${config.system.primaryUser}.home}/.run";
       };
 
-    services.aerospace.settings.exec-on-workspace-change = [
-      "/bin/sh" "-c"
-      "${config.services.sketchybar.package}/bin/sketchybar --trigger aerospace_workspace_change"
-    ];
-
-    services.aerospace.settings.gaps.outer.top = mkForce (barHeight + 2 * gap);
+    services.aerospace.settings = let
+      trigger = [
+        "/bin/sh" "-c"
+        "${config.services.sketchybar.package}/bin/sketchybar --trigger aerospace_workspace_change"
+      ];
+    in {
+      exec-on-workspace-change = trigger;
+      on-focused-monitor-changed = trigger;
+      gaps.outer.top = mkForce (barHeight + 2 * gap);
+    };
   }
   else {
   });
