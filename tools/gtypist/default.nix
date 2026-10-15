@@ -2,6 +2,6 @@
 
 {
   config = {
-    environment.systemPackages = with pkgs; [ gtypist ];
+    home-manager.users.jfelice.home.packages = [ pkgs.gtypist ];
   };
 }

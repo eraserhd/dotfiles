@@ -2,9 +2,8 @@
 
 {
   config = {
-    environment.systemPackages = with pkgs; [ gnuplot ];
-
     home-manager.users.jfelice = { ... }: {
+      home.packages = [ pkgs.gnuplot ];
       home.file.".gnuplot".source = ./gnuplotrc;
     };
   };

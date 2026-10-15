@@ -3,6 +3,6 @@
 with lib;
 {
   config = mkIf config.local.kits.cnc.enable {
-    environment.systemPackages = [ pkgs.minicom ];
+    home-manager.users.jfelice.home.packages = [ pkgs.minicom ];
   };
 }

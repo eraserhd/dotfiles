@@ -1,5 +1,5 @@
 { pkgs, ... }:
 
 {
-  environment.systemPackages = [ pkgs.cue ];
+  home-manager.users.jfelice.home.packages = [ pkgs.cue ];
 }

@@ -2,6 +2,6 @@
 
 {
   config = {
-    environment.systemPackages = with pkgs; [ k9s ];
+    home-manager.users.jfelice.home.packages = [ pkgs.k9s ];
   };
 }
