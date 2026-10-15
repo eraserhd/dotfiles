@@ -37,9 +37,14 @@ with lib;
             "if".window-title-regex-substring = "^broot-popup$";
             run = "layout floating";
           }
-          # AeroSpace restarting brings Docker Desktop's window back up.
+          # AeroSpace restarting brings these windows back up.
           {
             "if".app-id = "com.electron.dockerdesktop";
+            "if".during-aerospace-startup = true;
+            run = "macos-native-minimize";
+          }
+          {
+            "if".app-id = "com.cisco.secureclient.gui";
             "if".during-aerospace-startup = true;
             run = "macos-native-minimize";
           }
