@@ -73,16 +73,28 @@ local function broot_popup()
   end)
 end
 
--- The monitors switch to the other machine when this one sleeps; see
--- tools/monitors.
-local function monitors_here()
-  local task = hs.task.new("/run/current-system/sw/bin/monitors-here", function(code, _, stderr)
-    if code ~= 0 then
+-- The monitors switch to the other machine when this one sleeps; take them
+-- back on wake (see tools/monitors).  This runs while the screen is locked,
+-- but the monitors may take a while to answer DDC after waking.
+local function monitors_here(attempt)
+  attempt = attempt or 1
+  hs.task.new("/run/current-system/sw/bin/monitors-here", function(code, _, stderr)
+    if code == 0 then
+      return
+    elseif attempt < 6 then
+      hs.timer.doAfter(2, function() monitors_here(attempt + 1) end)
+    else
       hs.alert.show("monitors-here failed: " .. stderr)
     end
-  end)
-  task:start()
+  end):start()
 end
+
+monitors_wake_watcher = hs.caffeinate.watcher.new(function(event)
+  if event == hs.caffeinate.watcher.systemDidWake
+      or event == hs.caffeinate.watcher.screensDidWake then
+    hs.timer.doAfter(1, monitors_here)
+  end
+end):start()
 
 local function paste_as_keystrokes()
   hs.eventtap.keyStrokes(hs.pasteboard.readString())
@@ -135,7 +147,6 @@ local mode_keys = {
   [{{'shift'}, '\\'}] = function() aerospace("layout h_tiles") end,
   [{{}, 'delete'}]    = function() aerospace("close") end,
   [{{}, 'space'}]     = broot_popup,
-  [{{'shift'}, 'm'}]  = monitors_here,
   [{{}, 'v'}]         = paste_as_keystrokes,
   [{{}, ','}]         = rerun_last_command,
 }
