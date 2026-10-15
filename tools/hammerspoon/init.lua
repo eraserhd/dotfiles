@@ -42,32 +42,28 @@ local function broot_popup()
   -- Open at the final size, since broot misses resizes which arrive while it
   -- is starting and stays small.  AeroSpace floats the window on detection
   -- (see tools/aerospace), so it isn't tiled to some other size first.
-  hs.task.new("/run/current-system/sw/bin/kitty", nil, {
+  local task = hs.task.new("/run/current-system/sw/bin/kitty", nil, {
     "--title=broot-popup",
     "-o", "remember_window_size=no",
     "-o", "initial_window_width=" .. math.floor(popup.w),
     "-o", "initial_window_height=" .. math.floor(popup.h),
     "-o", "confirm_os_window_close=0",
     "/run/current-system/sw/bin/broot-popup",
-  }):start()
+  })
+  task:start()
 
+  -- Poll fast, and only the one process, so it's moved before it's seen.
   local attempts = 0
   local timer
-  timer = hs.timer.doEvery(0.1, function()
+  timer = hs.timer.doEvery(0.01, function()
     attempts = attempts + 1
-    local window = hs.fnutils.find(hs.window.allWindows(), function(w)
-      return w:title() == "broot-popup"
-    end)
+    local app = hs.application.applicationForPID(task:pid())
+    local window = app and app:mainWindow()
     if window then
       timer:stop()
-      aerospace("layout floating --window-id " .. window:id())
       window:setFrame(popup)
       window:focus()
-      -- In case the resizes still beat broot's startup.
-      hs.timer.doAfter(0.5, function()
-        hs.execute("/usr/bin/pkill -WINCH -f broot-popup.toml")
-      end)
-    elseif attempts > 50 then
+    elseif attempts > 500 then
       timer:stop()
     end
   end)
