@@ -47,6 +47,7 @@ int list_windows(struct window **windows, size_t *count)
 			return -1;
 		}
 		*windows = grown;
+		w.z = (int)*count;
 		grown[(*count)++] = w;
 	}
 	fclose(f);

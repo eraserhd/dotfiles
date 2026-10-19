@@ -56,7 +56,8 @@ static void usage(FILE *out)
 	      "The windows come from a daemon, which is started if it isn't\n"
 	      "running, on the socket $SIGILS_SOCKET, or else sigils.sock in\n"
 	      "$XDG_RUNTIME_DIR or $TMPDIR.  With --daemon, it runs that daemon,\n"
-	      "whose -s and -i are the defaults for queries which don't give them.\n",
+	      "whose -s and -i are the defaults for queries which don't give them.\n"
+	      "On macOS, the daemon also draws the sigils over the windows.\n",
 	      out);
 }
 
@@ -151,7 +152,7 @@ int parse_options(int argc, char **argv, struct options *options, FILE *err)
 	return 0;
 }
 
-static void free_windows(struct window *windows, size_t count)
+void free_windows(struct window *windows, size_t count)
 {
 	for (size_t i = 0; i < count; i++) {
 		free(windows[i].app);
@@ -160,24 +161,41 @@ static void free_windows(struct window *windows, size_t count)
 	free(windows);
 }
 
-int answer(const struct options *options, FILE *out, FILE *err)
+int sigil_windows(const struct options *options, struct window **windows, size_t *count,
+		  FILE *err)
 {
 	const char *sigils = options->sigils ? options->sigils : DEFAULT_SIGILS;
-	struct window *windows = NULL;
-	size_t count = 0;
 	struct rect *displays = NULL;
 	size_t ndisplays = 0;
-	int status = 1;
+	int result = -1;
 
-	if (list_windows(&windows, &count) < 0 ||
+	*windows = NULL;
+	*count = 0;
+	if (list_windows(windows, count) < 0 ||
 	    list_displays(&displays, &ndisplays) < 0 ||
-	    add_empty_spaces(&windows, &count, displays, ndisplays, options->reserved) < 0)
+	    add_empty_spaces(windows, count, displays, ndisplays, options->reserved) < 0)
 		goto done;
-	qsort(windows, count, sizeof windows[0], by_position);
+	qsort(*windows, *count, sizeof (*windows)[0], by_position);
 
 	size_t nsigils = strlen(sigils);
-	for (size_t i = 0; i < count; i++)
-		windows[i].sigil = i < nsigils ? sigils[i] : '\0';
+	for (size_t i = 0; i < *count; i++)
+		(*windows)[i].sigil = i < nsigils ? sigils[i] : '\0';
+	result = 0;
+done:
+	if (result < 0)
+		fprintf(err, "sigils: can't list the windows\n");
+	free(displays);
+	return result;
+}
+
+int answer(const struct options *options, FILE *out, FILE *err)
+{
+	struct window *windows;
+	size_t count;
+	int status = 1;
+
+	if (sigil_windows(options, &windows, &count, err) < 0)
+		goto done;
 
 	if (options->sigil) {
 		for (size_t i = 0; i < count; i++) {
@@ -196,7 +214,6 @@ int answer(const struct options *options, FILE *out, FILE *err)
 	status = 0;
 done:
 	free_windows(windows, count);
-	free(displays);
 	return status;
 }
 

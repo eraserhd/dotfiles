@@ -10,6 +10,7 @@ struct window {
 	char *app;   /* bundle identifier or window class, without spaces */
 	char *title;
 	char sigil;
+	int z;               /* front to back, among the windows */
 };
 
 struct rect {
@@ -32,6 +33,15 @@ struct options {
 
 /* Fills in *options from the arguments, or returns 2 after printing the usage to err. */
 int parse_options(int argc, char **argv, struct options *options, FILE *err);
+
+/*
+ * Lists the windows and empty spaces in order of position, with their sigils,
+ * and returns 0, or returns -1 after printing why not to err.
+ */
+int sigil_windows(const struct options *options, struct window **windows, size_t *count,
+		  FILE *err);
+
+void free_windows(struct window *windows, size_t count);
 
 /* Prints what `sigils` prints for these options, and returns its exit status. */
 int answer(const struct options *options, FILE *out, FILE *err);

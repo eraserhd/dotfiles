@@ -3,8 +3,9 @@ CFLAGS ?= -O2 -Wall -Wextra
 CFLAGS += -std=c99
 
 ifeq ($(shell uname),Darwin)
-BACKEND = darwin.c
-LDLIBS += -framework ApplicationServices -framework CoreFoundation -framework CoreGraphics
+BACKEND = darwin.c overlay.c
+CFLAGS += -fblocks
+LDLIBS += -framework AppKit -framework ApplicationServices -framework CoreFoundation -framework CoreGraphics -lobjc
 else
 BACKEND = x11.c
 LDLIBS += -lX11

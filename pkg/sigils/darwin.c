@@ -257,6 +257,7 @@ int list_windows(struct window **windows, size_t *count)
 			.height = (int)bounds.size.height,
 			.app = app,
 			.title = title,
+			.z = (int)i,
 		};
 		(*count)++;
 	}
@@ -268,7 +269,9 @@ done:
 	return result;
 }
 
+int serve_and_draw(int listen_fd, const struct options *defaults);
+
 int serve(int listen_fd, const struct options *defaults)
 {
-	return serve_clients(listen_fd, defaults);
+	return serve_and_draw(listen_fd, defaults);
 }
