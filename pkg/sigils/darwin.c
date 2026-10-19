@@ -1,8 +1,10 @@
 /*
- * macOS: windows from the window server.  Their titles, which are only given
- * for other applications' windows once Screen Recording is allowed for
- * whatever is running this, come out empty until then.
+ * macOS: windows from the window server, with their titles from the
+ * accessibility API, which needs Accessibility to be allowed for whatever
+ * runs this.  The window server only gives other applications' titles with
+ * Screen Recording allowed, so they're the fallback.
  */
+#include <ApplicationServices/ApplicationServices.h>
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreGraphics/CoreGraphics.h>
 #include <libproc.h>
@@ -54,6 +56,78 @@ static char *bundle_id_of_pid(int pid)
 		id = copy_string(ident);
 	CFRelease(bundle);
 	return id;
+}
+
+/* Private, but how Hammerspoon matches accessibility windows to the window server's. */
+extern AXError _AXUIElementGetWindow(AXUIElementRef element, CGWindowID *id);
+
+struct app_titles {
+	pid_t pid;
+	CFDictionaryRef titles;   /* window number -> title */
+};
+
+static CFDictionaryRef copy_app_titles(pid_t pid)
+{
+	CFMutableDictionaryRef titles = CFDictionaryCreateMutable(
+		NULL, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+	AXUIElementRef app = AXUIElementCreateApplication(pid);
+	CFArrayRef windows = NULL;
+
+	if (app && AXUIElementCopyAttributeValues(app, kAXWindowsAttribute, 0, 100,
+						   &windows) == kAXErrorSuccess) {
+		for (CFIndex i = 0; i < CFArrayGetCount(windows); i++) {
+			AXUIElementRef window = CFArrayGetValueAtIndex(windows, i);
+			CGWindowID id;
+			CFTypeRef title = NULL;
+
+			if (_AXUIElementGetWindow(window, &id) != kAXErrorSuccess)
+				continue;
+			if (AXUIElementCopyAttributeValue(window, kAXTitleAttribute, &title) ==
+				    kAXErrorSuccess &&
+			    CFGetTypeID(title) == CFStringGetTypeID()) {
+				long n = id;
+				CFNumberRef key = CFNumberCreate(NULL, kCFNumberLongType, &n);
+				CFDictionarySetValue(titles, key, title);
+				CFRelease(key);
+			}
+			if (title)
+				CFRelease(title);
+		}
+		CFRelease(windows);
+	}
+	if (app)
+		CFRelease(app);
+	return titles;
+}
+
+/* The title of a window, from its application's accessibility windows. */
+static CFStringRef ax_title(struct app_titles **apps, size_t *napps, pid_t pid, long number)
+{
+	struct app_titles *app = NULL;
+
+	for (size_t i = 0; i < *napps; i++)
+		if ((*apps)[i].pid == pid)
+			app = &(*apps)[i];
+	if (!app) {
+		struct app_titles *grown = realloc(*apps, (*napps + 1) * sizeof **apps);
+		if (!grown)
+			return NULL;
+		*apps = grown;
+		app = &grown[(*napps)++];
+		*app = (struct app_titles){ pid, copy_app_titles(pid) };
+	}
+
+	CFNumberRef key = CFNumberCreate(NULL, kCFNumberLongType, &number);
+	CFStringRef title = CFDictionaryGetValue(app->titles, key);
+	CFRelease(key);
+	return title;
+}
+
+static void free_app_titles(struct app_titles *apps, size_t napps)
+{
+	for (size_t i = 0; i < napps; i++)
+		CFRelease(apps[i].titles);
+	free(apps);
 }
 
 static int excluded(const char *app, const char *title)
@@ -119,6 +193,9 @@ int list_windows(struct window **windows, size_t *count)
 {
 	struct rect *displays = NULL;
 	size_t ndisplays = 0;
+	struct app_titles *apps = NULL;
+	size_t napps = 0;
+	int result = -1;
 
 	if (list_displays(&displays, &ndisplays) < 0)
 		return -1;
@@ -153,7 +230,10 @@ int list_windows(struct window **windows, size_t *count)
 		char *app = bundle_id_of_pid((int)pid);
 		if (!app)
 			app = copy_string(CFDictionaryGetValue(dict, kCGWindowOwnerName));
-		char *title = copy_string(CFDictionaryGetValue(dict, kCGWindowName));
+		CFStringRef title_ref = ax_title(&apps, &napps, (pid_t)pid, number_);
+		if (!title_ref)
+			title_ref = CFDictionaryGetValue(dict, kCGWindowName);
+		char *title = copy_string(title_ref);
 		if (!app || !title || excluded(app, title)) {
 			free(app);
 			free(title);
@@ -164,9 +244,9 @@ int list_windows(struct window **windows, size_t *count)
 			realloc(*windows, (*count + 1) * sizeof **windows);
 		if (!grown) {
 			perror("sigils");
-			CFRelease(info);
-			free(displays);
-			return -1;
+			free(app);
+			free(title);
+			goto done;
 		}
 		*windows = grown;
 		grown[*count] = (struct window){
@@ -180,7 +260,10 @@ int list_windows(struct window **windows, size_t *count)
 		};
 		(*count)++;
 	}
+	result = 0;
+done:
 	CFRelease(info);
 	free(displays);
-	return 0;
+	free_app_titles(apps, napps);
+	return result;
 }

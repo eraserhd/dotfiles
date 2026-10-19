@@ -4,7 +4,7 @@ CFLAGS += -std=c99
 
 ifeq ($(shell uname),Darwin)
 BACKEND = darwin.c
-LDLIBS += -framework CoreFoundation -framework CoreGraphics
+LDLIBS += -framework ApplicationServices -framework CoreFoundation -framework CoreGraphics
 else
 BACKEND = x11.c
 LDLIBS += -lX11
