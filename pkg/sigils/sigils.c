@@ -33,7 +33,7 @@ static int by_position(const void *a, const void *b)
 
 static void usage(FILE *out)
 {
-	fputs("usage: sigils [-s sigils] [sigil]\n"
+	fputs("usage: sigils [-s sigils] [-i edge=pixels,...] [sigil]\n"
 	      "\n"
 	      "Without an argument, lists the visible windows as\n"
 	      "\n"
@@ -45,7 +45,10 @@ static void usage(FILE *out)
 	      "id of its window, and fails if there isn't one.\n"
 	      "\n"
 	      "  -s sigils   the characters to use, in order\n"
-	      "              (default: abcdefgimnopqrstuvwxyz;,/)\n",
+	      "              (default: abcdefgimnopqrstuvwxyz;,/)\n"
+	      "  -i insets   strips along the edges of every display which are\n"
+	      "              never empty space, e.g. top=40 for a status bar;\n"
+	      "              the edges are top, bottom, left and right\n",
 	      out);
 }
 
@@ -62,9 +65,41 @@ static void print_clean(const char *s, int keep_spaces)
 	}
 }
 
+/* Parses edge=pixels[,edge=pixels...], where edge is top, bottom, left or right. */
+static int parse_insets(const char *spec, struct insets *insets)
+{
+	while (*spec) {
+		int *edge;
+		size_t len = strcspn(spec, "=");
+
+		if (len == 3 && !strncmp(spec, "top", len))
+			edge = &insets->top;
+		else if (len == 6 && !strncmp(spec, "bottom", len))
+			edge = &insets->bottom;
+		else if (len == 4 && !strncmp(spec, "left", len))
+			edge = &insets->left;
+		else if (len == 5 && !strncmp(spec, "right", len))
+			edge = &insets->right;
+		else
+			return -1;
+		spec += len;
+		if (*spec++ != '=')
+			return -1;
+
+		char *end;
+		long pixels = strtol(spec, &end, 10);
+		if (end == spec || pixels < 0 || (*end && *end != ','))
+			return -1;
+		*edge = (int)pixels;
+		spec = *end ? end + 1 : end;
+	}
+	return 0;
+}
+
 int main(int argc, char **argv)
 {
 	const char *sigils = DEFAULT_SIGILS;
+	struct insets reserved = {0};
 	struct window *windows = NULL;
 	size_t count = 0;
 	int opt;
@@ -75,6 +110,11 @@ int main(int argc, char **argv)
 			break;
 		} else if (strcmp(argv[opt], "-s") == 0 && opt + 1 < argc) {
 			sigils = argv[++opt];
+		} else if (strcmp(argv[opt], "-i") == 0 && opt + 1 < argc) {
+			if (parse_insets(argv[++opt], &reserved) < 0) {
+				fprintf(stderr, "sigils: bad insets %s\n", argv[opt]);
+				return 2;
+			}
 		} else if (strcmp(argv[opt], "-h") == 0) {
 			usage(stdout);
 			return 0;
@@ -92,7 +132,7 @@ int main(int argc, char **argv)
 	size_t ndisplays = 0;
 	if (list_windows(&windows, &count) < 0 ||
 	    list_displays(&displays, &ndisplays) < 0 ||
-	    add_empty_spaces(&windows, &count, displays, ndisplays, (struct insets){0}) < 0)
+	    add_empty_spaces(&windows, &count, displays, ndisplays, reserved) < 0)
 		return 1;
 	qsort(windows, count, sizeof windows[0], by_position);
 
