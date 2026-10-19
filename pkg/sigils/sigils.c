@@ -4,8 +4,9 @@
  *   sigils                sigil id x y width height app title
  *   sigils <sigil>        the id of the window with that sigil
  *
- * Sigils are handed out in order of the windows' positions, left to right
- * and then top to bottom, so they stay put while the windows do.
+ * Empty spaces between the windows get sigils too, with id 0 and app "-".
+ * Sigils are handed out in order of position, left to right and then top to
+ * bottom, so they stay put while the windows do.
  */
 #define _POSIX_C_SOURCE 200809L
 
@@ -39,7 +40,8 @@ static void usage(FILE *out)
 	      "  sigil id x y width height app title\n"
 	      "\n"
 	      "where app is the bundle identifier (macOS) or window class (X),\n"
-	      "and title is the rest of the line.  With a sigil, prints just the\n"
+	      "and title is the rest of the line.  Empty spaces between windows\n"
+	      "are listed too, with id 0 and app -.  With a sigil, prints just the\n"
 	      "id of its window, and fails if there isn't one.\n"
 	      "\n"
 	      "  -s sigils   the characters to use, in order\n"
@@ -86,7 +88,11 @@ int main(int argc, char **argv)
 		return 2;
 	}
 
-	if (list_windows(&windows, &count) < 0)
+	struct rect *displays = NULL;
+	size_t ndisplays = 0;
+	if (list_windows(&windows, &count) < 0 ||
+	    list_displays(&displays, &ndisplays) < 0 ||
+	    add_empty_spaces(&windows, &count, displays, ndisplays, (struct insets){0}) < 0)
 		return 1;
 	qsort(windows, count, sizeof windows[0], by_position);
 

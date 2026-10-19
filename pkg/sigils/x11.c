@@ -36,6 +36,28 @@ static char *window_title(Display *dpy, Window win, Atom net_wm_name, Atom utf8)
 	return strdup("");
 }
 
+int list_displays(struct rect **displays, size_t *count)
+{
+	Display *dpy = XOpenDisplay(NULL);
+	if (!dpy) {
+		fprintf(stderr, "sigils: can't open the display\n");
+		return -1;
+	}
+	struct rect *grown = realloc(*displays, (*count + 1) * sizeof **displays);
+	if (!grown) {
+		perror("sigils");
+		XCloseDisplay(dpy);
+		return -1;
+	}
+	*displays = grown;
+	int screen = DefaultScreen(dpy);
+	grown[(*count)++] = (struct rect){
+		0, 0, DisplayWidth(dpy, screen), DisplayHeight(dpy, screen),
+	};
+	XCloseDisplay(dpy);
+	return 0;
+}
+
 int list_windows(struct window **windows, size_t *count)
 {
 	Display *dpy = XOpenDisplay(NULL);

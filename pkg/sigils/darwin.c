@@ -71,13 +71,16 @@ static int excluded(const char *app, const char *title)
 	return 0;
 }
 
-static int on_a_display(CGRect bounds, const CGRect *displays, uint32_t ndisplays)
+static int on_a_display(CGRect bounds, const struct rect *displays, size_t ndisplays)
 {
 	CGPoint center = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
 
-	for (uint32_t i = 0; i < ndisplays; i++)
-		if (CGRectContainsPoint(displays[i], center))
+	for (size_t i = 0; i < ndisplays; i++) {
+		CGRect d = CGRectMake(displays[i].x, displays[i].y,
+				      displays[i].width, displays[i].height);
+		if (CGRectContainsPoint(d, center))
 			return 1;
+	}
 	return 0;
 }
 
@@ -87,24 +90,45 @@ static int number(CFDictionaryRef dict, CFStringRef key, long *out)
 	return n && CFNumberGetValue(n, kCFNumberLongType, out);
 }
 
-int list_windows(struct window **windows, size_t *count)
+int list_displays(struct rect **displays, size_t *count)
 {
 	CGDirectDisplayID ids[MAX_DISPLAYS];
-	CGRect displays[MAX_DISPLAYS];
-	uint32_t ndisplays = 0;
+	uint32_t n = 0;
 
-	if (CGGetActiveDisplayList(MAX_DISPLAYS, ids, &ndisplays) != kCGErrorSuccess) {
+	if (CGGetActiveDisplayList(MAX_DISPLAYS, ids, &n) != kCGErrorSuccess) {
 		fprintf(stderr, "sigils: can't list displays\n");
 		return -1;
 	}
-	for (uint32_t i = 0; i < ndisplays; i++)
-		displays[i] = CGDisplayBounds(ids[i]);
+	struct rect *grown = realloc(*displays, (*count + n) * sizeof **displays);
+	if (!grown) {
+		perror("sigils");
+		return -1;
+	}
+	*displays = grown;
+	for (uint32_t i = 0; i < n; i++) {
+		CGRect b = CGDisplayBounds(ids[i]);
+		grown[(*count)++] = (struct rect){
+			(int)b.origin.x, (int)b.origin.y,
+			(int)b.size.width, (int)b.size.height,
+		};
+	}
+	return 0;
+}
+
+int list_windows(struct window **windows, size_t *count)
+{
+	struct rect *displays = NULL;
+	size_t ndisplays = 0;
+
+	if (list_displays(&displays, &ndisplays) < 0)
+		return -1;
 
 	CFArrayRef info = CGWindowListCopyWindowInfo(
 		kCGWindowListOptionOnScreenOnly | kCGWindowListExcludeDesktopElements,
 		kCGNullWindowID);
 	if (!info) {
 		fprintf(stderr, "sigils: can't list windows\n");
+		free(displays);
 		return -1;
 	}
 
@@ -141,6 +165,7 @@ int list_windows(struct window **windows, size_t *count)
 		if (!grown) {
 			perror("sigils");
 			CFRelease(info);
+			free(displays);
 			return -1;
 		}
 		*windows = grown;
@@ -156,5 +181,6 @@ int list_windows(struct window **windows, size_t *count)
 		(*count)++;
 	}
 	CFRelease(info);
+	free(displays);
 	return 0;
 }
