@@ -144,31 +144,10 @@ not_sigils = hs.loadSpoon("WindowSigils")
 -- becoming an empty space with a sigil.
 not_sigils.reservedInsets = { top = 40 }
 
--- Take window sigils from `sigils` (tools/sigils), so anything else asking it
--- agrees with the overlay.  It already skips windows parked off screen.
+-- `sigils` (tools/sigils) finds the windows and spaces, so anything else
+-- asking it agrees with the overlay.  It skips the windows AeroSpace parks off
+-- screen for inactive workspaces.
 not_sigils.sigilsCommand = "/etc/profiles/per-user/jfelice/bin/sigils"
-
--- AeroSpace emulates workspaces by parking the windows of inactive ones just
--- off the visible area rather than using macOS Spaces.  They stay unminimized,
--- so the spoon's window filter still returns them, and since sigils are
--- assigned by frame position they would both consume letters and shift the
--- assignment of the windows actually on screen.  Both orderedWindows() and
--- _makeSigilBoxes() funnel through here, so one wrapper keeps the keys and the
--- overlay agreeing.  Belongs upstream in eraserhd/Spoons eventually.
-local base_removeUnuseableWindows = not_sigils._removeUnuseableWindows
-function not_sigils:_removeUnuseableWindows(windows)
-  return hs.fnutils.filter(base_removeUnuseableWindows(self, windows), function(window)
-    local frame = window:frame()
-    for _, screen in ipairs(hs.screen.allScreens()) do
-      local overlap = frame:intersect(screen:frame())
-      -- Not .area: disjoint rects can intersect to two negative dimensions.
-      if overlap.w > 0 and overlap.h > 0 then
-        return true
-      end
-    end
-    return false
-  end)
-end
 
 local mode_keys = {
   [{{}, 'f'}]         = function() aerospace("fullscreen") end,
