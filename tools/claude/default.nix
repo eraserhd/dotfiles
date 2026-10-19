@@ -23,6 +23,8 @@ in {
         settings = {
           theme = "dark";
           autoUpdatesChannel = "stable";
+          # Commands are written for bash's word splitting, not zsh's.
+          env.CLAUDE_CODE_SHELL = "${pkgs.bashInteractive}/bin/bash";
         };
       };
     }
