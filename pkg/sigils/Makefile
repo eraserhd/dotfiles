@@ -10,8 +10,8 @@ BACKEND = x11.c
 LDLIBS += -lX11
 endif
 
-sigils: sigils.c spaces.c $(BACKEND) sigils.h
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ sigils.c spaces.c $(BACKEND) $(LDLIBS)
+sigils: sigils.c socket.c spaces.c $(BACKEND) sigils.h
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ sigils.c socket.c spaces.c $(BACKEND) $(LDLIBS)
 
 install: sigils
 	install -d $(DESTDIR)$(PREFIX)/bin

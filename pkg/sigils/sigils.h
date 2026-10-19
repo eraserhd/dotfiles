@@ -2,6 +2,7 @@
 #define SIGILS_H
 
 #include <stddef.h>
+#include <stdio.h>
 
 struct window {
 	unsigned long id;    /* 0 for an empty space */
@@ -19,6 +20,36 @@ struct rect {
 struct insets {
 	int top, bottom, left, right;
 };
+
+struct options {
+	const char *sigils;      /* NULL for the default */
+	const char *insets;      /* as given to -i, or NULL */
+	struct insets reserved;
+	const char *sigil;       /* the one to look up, or NULL to list them all */
+	int daemon;
+	int help;
+};
+
+/* Fills in *options from the arguments, or returns 2 after printing the usage to err. */
+int parse_options(int argc, char **argv, struct options *options, FILE *err);
+
+/* Prints what `sigils` prints for these options, and returns its exit status. */
+int answer(const struct options *options, FILE *out, FILE *err);
+
+/* Runs the daemon with these defaults for its queries, and returns its exit status. */
+int run_daemon(const struct options *defaults);
+
+/* Asks the daemon, starting it if it isn't running, and returns the exit status. */
+int ask_daemon(const struct options *options);
+
+/* Answers a client which connected to the daemon. */
+void handle_client(int fd, const struct options *defaults);
+
+/* Answers clients on the daemon's listening socket until something goes wrong. */
+int serve_clients(int listen_fd, const struct options *defaults);
+
+/* The backend's way of answering clients, which may also draw the sigils. */
+int serve(int listen_fd, const struct options *defaults);
 
 /*
  * Appends the windows which are visible on a display to *windows, which is

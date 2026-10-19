@@ -136,3 +136,8 @@ int list_windows(struct window **windows, size_t *count)
 	XCloseDisplay(dpy);
 	return 0;
 }
+
+int serve(int listen_fd, const struct options *defaults)
+{
+	return serve_clients(listen_fd, defaults);
+}

@@ -267,3 +267,8 @@ done:
 	free_app_titles(apps, napps);
 	return result;
 }
+
+int serve(int listen_fd, const struct options *defaults)
+{
+	return serve_clients(listen_fd, defaults);
+}
