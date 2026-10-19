@@ -14,10 +14,10 @@ while [[ $# -gt 0 ]]; do
     shift
 done
 
-destination="$HOME/src/dotfiles/dogfood"
+destination="$HOME/src/github.com/eraserhd/dotfiles/dogfood"
 case "$repo" in
     *-pluggo)
-        destination="$HOME/src/nix-plugbench/pkg"
+        destination="$HOME/src/github.com/plugbench/nix-plugbench/pkg"
         owner=plugbench
         ;;
 esac

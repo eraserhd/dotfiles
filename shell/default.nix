@@ -17,6 +17,14 @@ in {
       '';
       example = "pkgs.bashInteractive";
     };
+
+    local.dotfilesPath = mkOption {
+      type = types.str;
+      default = "${homeDirectory}/src/github.com/eraserhd/dotfiles";
+      description = ''
+        Path to the flake that `:r` builds.
+      '';
+    };
   };
 
   config = {
@@ -30,17 +38,17 @@ in {
       :r() {
         local readlink_bin="${pkgs.coreutils}/bin/readlink"
         if command -v darwin-rebuild >/dev/null; then
-          pushd ~/src/dotfiles >/dev/null
-          TERM=xterm darwin-rebuild build --flake $HOME/src/dotfiles --show-trace || return $?
+          pushd ${config.local.dotfilesPath} >/dev/null
+          TERM=xterm darwin-rebuild build --flake ${config.local.dotfilesPath} --show-trace || return $?
           if [ "$($readlink_bin -f /run/current-system)" != "$($readlink_bin -f ./result)" ] || [ "$1" = "--force" ]; then
-            TERM=xterm VERBOSE=1 sudo darwin-rebuild switch --flake $HOME/src/dotfiles || return $?
+            TERM=xterm VERBOSE=1 sudo darwin-rebuild switch --flake ${config.local.dotfilesPath} || return $?
           fi
           popd >/dev/null
         elif command -v nixos-rebuild >/dev/null; then
-          pushd ~/src/dotfiles >/dev/null
-          nixos-rebuild build --flake $HOME/src/dotfiles || return $?
+          pushd ${config.local.dotfilesPath} >/dev/null
+          nixos-rebuild build --flake ${config.local.dotfilesPath} || return $?
           if [ "$($readlink_bin -f /run/current-system)" != "$($readlink_bin -f ./result)" ] || [ "$1" = "--force" ]; then
-            nixos-rebuild switch --elevate=sudo --flake $HOME/src/dotfiles || return $?
+            nixos-rebuild switch --elevate=sudo --flake ${config.local.dotfilesPath} || return $?
           fi
           popd >/dev/null
         fi

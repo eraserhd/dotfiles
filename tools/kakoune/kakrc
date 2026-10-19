@@ -411,7 +411,7 @@ hook -group centralpark global WinSetOption filetype=clojure %{
     evaluate-commands %sh{
         printf 'triggered %s\n' "$kak_buffile" >&2
         case "$kak_buffile" in
-            */src/centralpark/*) printf 'centralpark-enable\n';;
+            */src/*/*/centralpark/*) printf 'centralpark-enable\n';;
         esac
     }
 }

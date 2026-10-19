@@ -8,5 +8,6 @@ avoid talking about classes and methods in the test name.  Avoid adjectives
 like "correct" or "expected" or "standard" implying the reader already
 understands the expectation.
 
-Clone new repositories into ~/src/.  Public repos can be forked into my
+Clone new repositories into ~/src/<host>/<owner>/<repo>, e.g.
+~/src/github.com/eraserhd/dotfiles.  Public repos can be forked into my
 personal github.com/eraserhd account to make PRs.

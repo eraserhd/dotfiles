@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-gtypist -i -b ~/src/dotfiles/tools/gtypist/gtypist.typ
+gtypist -i -b ~/src/github.com/eraserhd/dotfiles/tools/gtypist/gtypist.typ

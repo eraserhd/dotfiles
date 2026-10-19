@@ -55,11 +55,7 @@ with lib;
          mkdir -p "${home}/.ssh"
          chmod 700 "${home}/.ssh"
 
-         if [[ -d ${home}/src/public-dotfiles ]]; then
-           cp -apn ${home}/src/public-dotfiles/tools/ssh/files/* ${home}/.ssh/
-         else
-           cp -apn ${home}/src/dotfiles/tools/ssh/files/* ${home}/.ssh/
-         fi
+         cp -apn ${home}/src/github.com/eraserhd/dotfiles/tools/ssh/files/* ${home}/.ssh/
          chmod 600 ${home}/.ssh/id_* ${home}/.ssh/*.pem
          chown -R "${primaryUser}" "${home}/.ssh"
        '';
