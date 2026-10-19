@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "sigil.h"
+#include "sigils.h"
 
 #define MAX_DISPLAYS 16
 #define MIN_SIZE 20
@@ -94,7 +94,7 @@ int list_windows(struct window **windows, size_t *count)
 	uint32_t ndisplays = 0;
 
 	if (CGGetActiveDisplayList(MAX_DISPLAYS, ids, &ndisplays) != kCGErrorSuccess) {
-		fprintf(stderr, "sigil: can't list displays\n");
+		fprintf(stderr, "sigils: can't list displays\n");
 		return -1;
 	}
 	for (uint32_t i = 0; i < ndisplays; i++)
@@ -104,7 +104,7 @@ int list_windows(struct window **windows, size_t *count)
 		kCGWindowListOptionOnScreenOnly | kCGWindowListExcludeDesktopElements,
 		kCGNullWindowID);
 	if (!info) {
-		fprintf(stderr, "sigil: can't list windows\n");
+		fprintf(stderr, "sigils: can't list windows\n");
 		return -1;
 	}
 
@@ -139,7 +139,7 @@ int list_windows(struct window **windows, size_t *count)
 		struct window *grown =
 			realloc(*windows, (*count + 1) * sizeof **windows);
 		if (!grown) {
-			perror("sigil");
+			perror("sigils");
 			CFRelease(info);
 			return -1;
 		}

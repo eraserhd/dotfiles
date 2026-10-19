@@ -1,5 +1,5 @@
-#ifndef SIGIL_H
-#define SIGIL_H
+#ifndef SIGILS_H
+#define SIGILS_H
 
 #include <stddef.h>
 

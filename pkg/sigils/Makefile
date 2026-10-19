@@ -10,14 +10,14 @@ BACKEND = x11.c
 LDLIBS += -lX11
 endif
 
-sigil: sigil.c $(BACKEND) sigil.h
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ sigil.c $(BACKEND) $(LDLIBS)
+sigils: sigils.c $(BACKEND) sigils.h
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ sigils.c $(BACKEND) $(LDLIBS)
 
-install: sigil
+install: sigils
 	install -d $(DESTDIR)$(PREFIX)/bin
-	install -m 755 sigil $(DESTDIR)$(PREFIX)/bin/sigil
+	install -m 755 sigils $(DESTDIR)$(PREFIX)/bin/sigils
 
 clean:
-	rm -f sigil
+	rm -f sigils
 
 .PHONY: install clean

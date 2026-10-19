@@ -6,7 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "sigil.h"
+#include "sigils.h"
 
 #define MIN_SIZE 20
 
@@ -40,7 +40,7 @@ int list_windows(struct window **windows, size_t *count)
 {
 	Display *dpy = XOpenDisplay(NULL);
 	if (!dpy) {
-		fprintf(stderr, "sigil: can't open the display\n");
+		fprintf(stderr, "sigils: can't open the display\n");
 		return -1;
 	}
 	Window root = DefaultRootWindow(dpy);
@@ -54,7 +54,7 @@ int list_windows(struct window **windows, size_t *count)
 	unsigned char *data = NULL;
 	if (XGetWindowProperty(dpy, root, client_list, 0, 65536, False, XA_WINDOW,
 			       &type, &format, &n, &after, &data) != Success || !data) {
-		fprintf(stderr, "sigil: the window manager doesn't list its windows\n");
+		fprintf(stderr, "sigils: the window manager doesn't list its windows\n");
 		XCloseDisplay(dpy);
 		return -1;
 	}
@@ -93,7 +93,7 @@ int list_windows(struct window **windows, size_t *count)
 		struct window *grown =
 			realloc(*windows, (*count + 1) * sizeof **windows);
 		if (!grown) {
-			perror("sigil");
+			perror("sigils");
 			XFree(data);
 			XCloseDisplay(dpy);
 			return -1;

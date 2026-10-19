@@ -1,8 +1,8 @@
 /*
- * sigil - list windows with a one-character name each, or find one by it.
+ * sigils - list windows with a one-character name each, or find one by it.
  *
- *   sigil                 sigil id x y width height app title
- *   sigil <sigil>         the id of the window with that sigil
+ *   sigils                sigil id x y width height app title
+ *   sigils <sigil>        the id of the window with that sigil
  *
  * Sigils are handed out in order of the windows' positions, left to right
  * and then top to bottom, so they stay put while the windows do.
@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "sigil.h"
+#include "sigils.h"
 
 static const char DEFAULT_SIGILS[] = "abcdefgimnopqrstuvwxyz;,/";
 
@@ -32,7 +32,7 @@ static int by_position(const void *a, const void *b)
 
 static void usage(FILE *out)
 {
-	fputs("usage: sigil [-s sigils] [sigil]\n"
+	fputs("usage: sigils [-s sigils] [sigil]\n"
 	      "\n"
 	      "Without an argument, lists the visible windows as\n"
 	      "\n"
@@ -101,7 +101,7 @@ int main(int argc, char **argv)
 				return 0;
 			}
 		}
-		fprintf(stderr, "sigil: no window has the sigil %s\n", argv[opt]);
+		fprintf(stderr, "sigils: no window has the sigil %s\n", argv[opt]);
 		return 1;
 	}
 

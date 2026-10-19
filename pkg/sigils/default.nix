@@ -4,9 +4,9 @@
 }:
 
 stdenv.mkDerivation {
-  name = "sigil";
+  name = "sigils";
   src = ./.;
   buildInputs = lib.optionals stdenv.hostPlatform.isLinux [ libX11 ];
   makeFlags = [ "PREFIX=$(out)" ];
-  meta.mainProgram = "sigil";
+  meta.mainProgram = "sigils";
 }

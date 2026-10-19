@@ -64,7 +64,7 @@ with lib;
     ./tools/R
     ./tools/rlwrap
     ./tools/ssh
-    ./tools/sigil
+    ./tools/sigils
     ./tools/signal
     ./tools/sketchybar
     ./tools/slack
