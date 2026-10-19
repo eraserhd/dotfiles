@@ -2,7 +2,7 @@
  * sigils - list windows with a one-character name each, or find one by it.
  *
  *   sigils                sigil id x y width height app title
- *   sigils <sigil>        the id of the window with that sigil
+ *   sigils <sigil>        the line for the window with that sigil
  *
  * Empty spaces between the windows get sigils too, with id 0 and app "-".
  * Sigils are handed out in order of position, left to right and then top to
@@ -41,8 +41,8 @@ static void usage(FILE *out)
 	      "\n"
 	      "where app is the bundle identifier (macOS) or window class (X),\n"
 	      "and title is the rest of the line.  Empty spaces between windows\n"
-	      "are listed too, with id 0 and app -.  With a sigil, prints just the\n"
-	      "id of its window, and fails if there isn't one.\n"
+	      "are listed too, with id 0 and app -.  With a sigil, prints just its\n"
+	      "line, and fails if there isn't one.\n"
 	      "\n"
 	      "  -s sigils   the characters to use, in order\n"
 	      "              (default: abcdefgimnopqrstuvwxyz;,/)\n"
@@ -96,6 +96,16 @@ static int parse_insets(const char *spec, struct insets *insets)
 	return 0;
 }
 
+static void print_window(const struct window *w)
+{
+	printf("%c %lu %d %d %d %d ", w->sigil, w->id, w->x, w->y, w->width,
+	       w->height);
+	print_clean(w->app, 0);
+	putchar(' ');
+	print_clean(w->title, 1);
+	putchar('\n');
+}
+
 int main(int argc, char **argv)
 {
 	const char *sigils = DEFAULT_SIGILS;
@@ -143,7 +153,7 @@ int main(int argc, char **argv)
 	if (argc - opt == 1) {
 		for (size_t i = 0; i < count; i++) {
 			if (windows[i].sigil == argv[opt][0]) {
-				printf("%lu\n", windows[i].id);
+				print_window(&windows[i]);
 				return 0;
 			}
 		}
@@ -151,15 +161,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	for (size_t i = 0; i < count && windows[i].sigil; i++) {
-		const struct window *w = &windows[i];
-
-		printf("%c %lu %d %d %d %d ", w->sigil, w->id, w->x, w->y,
-		       w->width, w->height);
-		print_clean(w->app, 0);
-		putchar(' ');
-		print_clean(w->title, 1);
-		putchar('\n');
-	}
+	for (size_t i = 0; i < count && windows[i].sigil; i++)
+		print_window(&windows[i]);
 	return 0;
 }
