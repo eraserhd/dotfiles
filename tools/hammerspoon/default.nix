@@ -15,14 +15,7 @@ let
     '';
   };
 
-  spoons = {
-    WindowSigils = pkgs.fetchFromGitHub {
-      owner = "eraserhd";
-      repo = "Spoons";
-      rev = "d545fdec86b56f9c35fffe36316ad9ce332aa610";
-      sha256 = "sha256-029TxRcUpMV1BFTvjP85zhBMX7Rb/lWmpUEI4ylZOjQ=";
-    };
-  };
+  spoons = { };
 
 in {
   config = (if (builtins.hasAttr "hammerspoon" options.services)

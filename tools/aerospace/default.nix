@@ -1,10 +1,88 @@
-{ pkgs, options, lib, ... }:
+{ config, pkgs, options, lib, ... }:
 
 with lib;
+let
+  aerospace = "${config.services.aerospace.package}/bin/aerospace";
+  sigils = "${pkgs.local.sigils}/bin/sigils";
+
+  # The letters tools/xmonad/config/xmonad.hs uses, then ';' and '/'.  None of
+  # the keys bound in the sigils mode below can be one.
+  sigilPool = "abcdegimnopqrstuvwxyz;/";
+  keyNames = { ";" = "semicolon"; "/" = "slash"; };
+  sigilKeys = map (c: { char = c; key = keyNames.${c} or c; }) (stringToCharacters sigilPool);
+
+  # An empty space's sigil does nothing.
+  focusSigil = pkgs.writeShellApplication {
+    name = "focus-sigil";
+    text = ''
+      id=$(${sigils} "$1")
+      [ "$id" != 0 ] && exec ${aerospace} focus --window-id "$id"
+    '';
+  };
+
+  # Like XMonad's greedyView: a workspace showing on another monitor swaps with
+  # the focused monitor's, where 'summon-workspace' alone sends ours somewhere
+  # arbitrary.
+  swapInWorkspace = pkgs.writeShellApplication {
+    name = "swap-in-workspace";
+    text = ''
+      workspace=$1
+      current_workspace=$(${aerospace} list-workspaces --focused)
+      current_monitor=$(${aerospace} list-monitors --focused --format '%{monitor-id}')
+      other_monitor=
+      while read -r name monitor; do
+        if [ "$name" = "$workspace" ] && [ "$monitor" != "$current_monitor" ]; then
+          other_monitor=$monitor
+        fi
+      done < <(${aerospace} list-workspaces --monitor all --visible --format '%{workspace} %{monitor-id}')
+
+      ${aerospace} summon-workspace "$workspace"
+      if [ -n "$other_monitor" ]; then
+        ${aerospace} focus-monitor "$other_monitor"
+        ${aerospace} summon-workspace "$current_workspace"
+        ${aerospace} focus-monitor "$current_monitor"
+      fi
+    '';
+  };
+
+  rerunLastCommand = "/run/current-system/sw/bin/kitty @ --to unix:${config.users.users.jfelice.home}/.run/kitty send-text --match=title:kak_repl_window '\\x10\\x0d'";
+
+  directions = { h = "left"; j = "down"; k = "up"; l = "right"; };
+  workspaces = genAttrs (map toString (range 0 9)) (d: if d == "0" then "10" else d);
+
+  # Each key leaves the mode, as WindowSigils' did.
+  sigilsMode = listToAttrs (map ({ char, key }: nameValuePair key [
+      "mode main"
+      "exec-and-forget ${focusSigil}/bin/focus-sigil '${char}'"
+    ]) sigilKeys)
+    // mapAttrs' (key: direction: nameValuePair key [ "mode main" "focus ${direction}" ]) directions
+    // mapAttrs' (key: direction: nameValuePair "alt-${key}" [
+      "mode main" "swap ${direction}" "move-mouse window-lazy-center"
+    ]) directions
+    // mapAttrs' (key: direction: nameValuePair "ctrl-${key}" [
+      "mode main" "join-with ${direction}" "move-mouse window-lazy-center"
+    ]) directions
+    // mapAttrs' (key: workspace: nameValuePair key [
+      "mode main" "exec-and-forget ${swapInWorkspace}/bin/swap-in-workspace ${workspace}"
+    ]) workspaces
+    // mapAttrs' (key: workspace: nameValuePair "ctrl-${key}" [
+      "mode main" "move-node-to-workspace ${workspace}"
+    ]) workspaces
+    // {
+      esc = "mode main";
+      f = [ "mode main" "fullscreen" ];
+      equal = [ "mode main" "balance-sizes" ];
+      minus = [ "mode main" "layout v_tiles" "move-mouse window-lazy-center" ];
+      shift-backslash = [ "mode main" "layout h_tiles" "move-mouse window-lazy-center" ];
+      backspace = [ "mode main" "close" ];
+      comma = [ "mode main" "exec-and-forget ${rerunLastCommand}" ];
+      # C-w itself, for the application.
+      period = [ "mode main" "exec-and-forget ${pkgs.local.post-keystroke}/bin/post-keystroke ctrl w" ];
+    };
+in
 {
-  # Tiling and workspaces only.  The 'C-w' prefix stays in Hammerspoon's
-  # WindowSigils, which drives these via the 'aerospace' CLI, so almost nothing
-  # is bound globally here.  See tools/hammerspoon/init.lua.
+  # Tiling, workspaces and the 'C-w' sigils mode, with the sigils drawn and
+  # found by `sigils` (see tools/sigils).
   config = (if (builtins.hasAttr "aerospace" options.services)
   then {
     # mkIf rather than folding the check into the 'if' above: gating the shape
@@ -16,7 +94,7 @@ with lib;
         default-root-container-layout = "tiles";
         default-root-container-orientation = "horizontal";
 
-        # i3-style splits, so WindowSigils' '-' and '\' keys mean what they say
+        # i3-style splits, so the sigils mode's '-' and '\' keys mean what they say
         # instead of being normalized away.
         enable-normalization-flatten-containers = false;
         enable-normalization-opposite-orientation-for-nested-containers = false;
@@ -28,6 +106,10 @@ with lib;
           "summon-workspace 1"
           "focus-monitor right"
           "summon-workspace 2"
+          # Started here so that it has AeroSpace's Accessibility, for titles.
+          # SketchyBar isn't a window, so its strip is kept from being an
+          # empty space with a sigil.
+          "exec-and-forget ${sigils} --daemon -s '${sigilPool}' -i top=40"
         ];
 
         on-window-detected = [
@@ -58,7 +140,7 @@ with lib;
         # [ "move-mouse monitor-lazy-center" ].)
         on-focused-monitor-changed = [ ];
 
-        # Keep under WindowSigils' MINIMUM_EMPTY_SIZE of 20, or the gaps get
+        # Keep under the 20 pixels `sigils` leaves out, or the gaps get
         # assigned sigils as if they were empty space.
         gaps = {
           inner.horizontal = 4;
@@ -69,10 +151,12 @@ with lib;
           outer.bottom = 4;
         };
 
-        # A way back in if Hammerspoon dies and takes 'C-w' with it.
         mode.main.binding = {
+          ctrl-w = "mode sigils";
           alt-shift-semicolon = "mode service";
         };
+
+        mode.sigils.binding = sigilsMode;
 
         mode.service.binding = {
           esc = "mode main";
