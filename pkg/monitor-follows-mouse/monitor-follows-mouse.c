@@ -7,7 +7,9 @@
  * second, it looks at which display the pointer is on, and once it has
  * stayed on one it moved to for two looks, which waits out AeroSpace moving
  * it as focus passes between monitors, it focuses that one, if it isn't
- * already.  AeroSpace numbers monitors from the left.
+ * already.  It focuses the window under the pointer, if there is one, so
+ * AeroSpace has no reason to move the pointer to some other window, and
+ * otherwise the monitor, numbered from the left as AeroSpace does.
  */
 #include <CoreGraphics/CoreGraphics.h>
 #include <stdio.h>
@@ -64,13 +66,49 @@ static int focused_monitor(void)
     return atoi(output);
 }
 
-static void focus_monitor(int number)
+/* The frontmost ordinary window under the pointer, or 0. */
+static long window_under_pointer(void)
+{
+    CGEventRef event = CGEventCreate(NULL);
+    long found = 0;
+
+    if (!event)
+        return 0;
+    CGPoint location = CGEventGetLocation(event);
+    CFRelease(event);
+
+    CFArrayRef info = CGWindowListCopyWindowInfo(
+        kCGWindowListOptionOnScreenOnly | kCGWindowListExcludeDesktopElements, kCGNullWindowID);
+    for (CFIndex i = 0; info && !found && i < CFArrayGetCount(info); i++)
+    {
+        CFDictionaryRef window = CFArrayGetValueAtIndex(info, i);
+        long layer = -1, number = 0;
+        CGRect bounds;
+        CFDictionaryRef b = CFDictionaryGetValue(window, kCGWindowBounds);
+
+        CFNumberGetValue(CFDictionaryGetValue(window, kCGWindowLayer), kCFNumberLongType, &layer);
+        CFNumberGetValue(CFDictionaryGetValue(window, kCGWindowNumber), kCFNumberLongType, &number);
+        if (layer == 0 && b && CGRectMakeWithDictionaryRepresentation(b, &bounds) &&
+            CGRectContainsPoint(bounds, location))
+            found = number;
+    }
+    if (info)
+        CFRelease(info);
+    return found;
+}
+
+static void run(const char* format, long argument)
 {
     char command[PATH_MAX + 64];
 
-    snprintf(command, sizeof command, "'%s' focus-monitor %d", aerospace, number);
+    snprintf(command, sizeof command, format, aerospace, argument);
     if (system(command) != 0)
         fprintf(stderr, "monitor-follows-mouse: %s failed\n", command);
+}
+
+static void focus_monitor(int number)
+{
+    run("'%s' focus-monitor %ld", number);
 }
 
 int main(int argc, char* argv[])
@@ -103,7 +141,12 @@ int main(int argc, char* argv[])
             continue;
 
         int number = monitor_number(display);
-        if (number && number != focused_monitor())
+        if (!number || number == focused_monitor())
+            continue;
+        long window = window_under_pointer();
+        if (window)
+            run("'%s' focus --window-id %ld", window);
+        else
             focus_monitor(number);
     }
 }
