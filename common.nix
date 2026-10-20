@@ -42,7 +42,6 @@ with lib;
     ./tools/gnuplot
     ./tools/go
     ./tools/gtypist
-    ./tools/hammerspoon
     ./tools/inkscape
     ./tools/k9s
     ./tools/kakoune
