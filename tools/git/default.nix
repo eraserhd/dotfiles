@@ -1,6 +1,28 @@
 { config, pkgs, ... }:
 
 let
+  privateShPath = config.home-manager.users.jfelice.age.secrets."private.sh".path;
+
+  # Only shells which have sourced private.sh have GITHUB_TOKEN, so this gives
+  # github.com the personal token from it everywhere else, unless something
+  # says otherwise.
+  gh = pkgs.symlinkJoin {
+    name = "gh-with-personal-token";
+    paths = [ pkgs.gh ];
+    postBuild = ''
+      rm $out/bin/gh
+      cat >$out/bin/gh <<'EOF'
+      #!${pkgs.runtimeShell}
+      if [ -z "''${GH_TOKEN:-}''${GITHUB_TOKEN:-}" ] && [ -r "${privateShPath}" ]; then
+        GITHUB_TOKEN=$(. "${privateShPath}" && printf '%s' "''${GITHUB_TOKEN:-}")
+        export GITHUB_TOKEN
+      fi
+      exec ${pkgs.gh}/bin/gh "$@"
+      EOF
+      chmod +x $out/bin/gh
+    '';
+  };
+
   # gh pipes the diff (in colour) to this in gh-dash's full-screen view.
   kakDiffPager = pkgs.writeShellApplication {
     name = "kak-diff-pager";
