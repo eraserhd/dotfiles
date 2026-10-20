@@ -102,6 +102,21 @@ in
   then {
     # mkIf rather than folding the check into the 'if' above: gating the shape
     # of 'config' on 'pkgs' recurses, since 'pkgs' comes from config.nixpkgs.
+    # Moving the pointer to another monitor focuses it.
+    home-manager.users.jfelice.launchd.agents.monitor-follows-mouse =
+      mkIf pkgs.stdenv.hostPlatform.isAarch64 {
+        enable = true;
+        config = {
+          ProgramArguments = [
+            "${pkgs.local.monitor-follows-mouse}/bin/monitor-follows-mouse"
+            aerospace
+          ];
+          KeepAlive = true;
+          RunAtLoad = true;
+          StandardErrorPath = "/tmp/monitor-follows-mouse.log";
+        };
+      };
+
     services.aerospace = mkIf pkgs.stdenv.hostPlatform.isAarch64 {
       enable = true;
 
