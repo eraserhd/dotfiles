@@ -14,6 +14,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <string.h>
 
 struct key
@@ -72,9 +73,10 @@ static bool focused_pid(pid_t* pid)
     return found;
 }
 
-static void post(pid_t pid, CGKeyCode code, CGEventFlags flags, bool down)
+static void post(CGEventSourceRef source, pid_t pid, CGKeyCode code, CGEventFlags flags,
+                 bool down)
 {
-    CGEventRef event = CGEventCreateKeyboardEvent(NULL, code, down);
+    CGEventRef event = CGEventCreateKeyboardEvent(source, code, down);
 
     CGEventSetFlags(event, flags);
     CGEventPostToPid(pid, event);
@@ -137,7 +139,18 @@ int main(int argc, char* argv[])
         printf("%d %d\n", (int)pid, (int)key->code);
         return 0;
     }
-    post(pid, key->code, flags, true);
-    post(pid, key->code, flags, false);
+    /* Without it, macOS drops posted events and says nothing. */
+    if (!AXIsProcessTrusted())
+    {
+        fprintf(stderr, "post-keystroke: not allowed Accessibility (pid %d), so nothing is typed\n",
+                (int)getpid());
+        return 1;
+    }
+    CGEventSourceRef source = CGEventSourceCreate(kCGEventSourceStateHIDSystemState);
+    post(source, pid, key->code, flags, true);
+    usleep(20000);
+    post(source, pid, key->code, flags, false);
+    if (source)
+        CFRelease(source);
     return 0;
 }
