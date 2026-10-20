@@ -5,7 +5,7 @@ let
     broot --print-shell-function ${shell} > $out
   '';
 
-  # Used by the C-w <space> popup (see tools/hammerspoon).  A conf of its own
+  # Used by the C-w <space> popup (see tools/aerospace).  A conf of its own
   # since Enter plumbs and leaves here, but only plumbs in the normal broot.
   popupConf = (pkgs.formats.toml {}).generate "broot-popup.toml" {
     default_flags = "-g";
@@ -21,8 +21,9 @@ let
   };
 
   brootPopup = pkgs.writeShellScriptBin "broot-popup" ''
-    # Hammerspoon's PATH lacks the plan9 tools which 'plumb' needs, and its
-    # environment the token for the NATS server which the plumber is on.
+    # The kitty it opens in may have been started by launchd, whose PATH lacks
+    # the plan9 tools which 'plumb' needs, and whose environment lacks the
+    # token for the NATS server which the plumber is on.
     export PATH=/run/current-system/sw/bin:$PATH
     ${config.plugbench.tokenPrefix}
     export NATS_TOKEN
