@@ -69,29 +69,6 @@ local function broot_popup()
   end)
 end
 
--- The monitors switch to the other machine when this one sleeps; take them
--- back on wake (see tools/monitors).  This runs while the screen is locked,
--- but the monitors may take a while to answer DDC after waking.
-local function monitors_here(attempt)
-  attempt = attempt or 1
-  hs.task.new("/run/current-system/sw/bin/monitors-here", function(code, _, stderr)
-    if code == 0 then
-      return
-    elseif attempt < 6 then
-      hs.timer.doAfter(2, function() monitors_here(attempt + 1) end)
-    else
-      hs.alert.show("monitors-here failed: " .. stderr)
-    end
-  end):start()
-end
-
-monitors_wake_watcher = hs.caffeinate.watcher.new(function(event)
-  if event == hs.caffeinate.watcher.systemDidWake
-      or event == hs.caffeinate.watcher.screensDidWake then
-    hs.timer.doAfter(1, monitors_here)
-  end
-end):start()
-
 -- Moving the mouse to another monitor focuses it, so new windows and the
 -- workspace commands act there.  Wait for the pointer to settle, since
 -- MouseFollowsFocus moves it briefly while focus passes between monitors.

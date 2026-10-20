@@ -15,6 +15,28 @@ let
       exit "$status"
     '';
   };
+
+  # The monitors switch to the other machine when this one sleeps; this takes
+  # them back on wake.  It runs while the screen is locked, but the monitors
+  # may take a while to answer DDC after waking.
+  monitorsHereOnWake = pkgs.writeShellApplication {
+    name = "monitors-here-on-wake";
+    runtimeInputs = [ monitorsHere pkgs.coreutils ];
+    text = ''
+      sleep 1
+      for attempt in 1 2 3 4 5 6; do
+        if error=$(monitors-here 2>&1); then
+          exit 0
+        fi
+        [ "$attempt" -lt 6 ] && sleep 2
+      done
+      printf 'monitors-here failed: %s\n' "$error" >&2
+      /usr/bin/osascript -e 'on run argv' \
+        -e 'display notification (item 1 of argv) with title "monitors-here failed"' \
+        -e 'end run' "$error"
+      exit 1
+    '';
+  };
 in {
   options.local.monitors.inputs = mkOption {
     type = types.attrsOf types.int;
@@ -30,8 +52,22 @@ in {
   };
 
   config = if (builtins.hasAttr "launchd" options)
-  then {
-    environment.systemPackages = mkIf (pkgs.stdenv.hostPlatform.isAarch64 && cfg.inputs != {}) [ monitorsHere ];
+  then mkIf (pkgs.stdenv.hostPlatform.isAarch64 && cfg.inputs != {}) {
+    environment.systemPackages = [ monitorsHere ];
+
+    # On waking, the system or just the displays, which -W both covers.
+    home-manager.users.jfelice.launchd.agents.monitors-here-on-wake = {
+      enable = true;
+      config = {
+        ProgramArguments = [
+          "${pkgs.sleepwatcher}/bin/sleepwatcher"
+          "-W" "${monitorsHereOnWake}/bin/monitors-here-on-wake"
+        ];
+        KeepAlive = true;
+        RunAtLoad = true;
+        StandardErrorPath = "/tmp/monitors-here-on-wake.log";
+      };
+    };
   }
   else {
     # Only declared here so hosts can set it.
