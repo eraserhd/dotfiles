@@ -2,7 +2,7 @@
  * sigils - list windows with a one-character name each, or find one by it.
  *
  *   sigils                sigil id x y width height app title
- *   sigils <sigil>        the line for the window with that sigil
+ *   sigils <sigil>        the id of the window with that sigil
  *
  * Empty spaces between the windows get sigils too, with id 0 and app "-".
  * The answers come from a daemon (see socket.c), so that it can be started
@@ -44,8 +44,8 @@ static void usage(FILE *out)
 	      "\n"
 	      "where app is the bundle identifier (macOS) or window class (X),\n"
 	      "and title is the rest of the line.  Empty spaces between windows\n"
-	      "are listed too, with id 0 and app -.  With a sigil, prints just its\n"
-	      "line, and fails if there isn't one.\n"
+	      "are listed too, with id 0 and app -.  With a sigil, prints just the\n"
+	      "id of its window, and fails if there isn't one.\n"
 	      "\n"
 	      "  -s sigils   the characters to use, in order\n"
 	      "              (default: abcdefgimnopqrstuvwxyz;,/)\n"
@@ -201,7 +201,7 @@ int answer(const struct options *options, FILE *out, FILE *err)
 	if (options->sigil) {
 		for (size_t i = 0; i < count; i++) {
 			if (windows[i].sigil == options->sigil[0]) {
-				print_window(out, &windows[i]);
+				fprintf(out, "%lu\n", windows[i].id);
 				status = 0;
 				goto done;
 			}

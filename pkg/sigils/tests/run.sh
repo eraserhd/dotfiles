@@ -52,8 +52,12 @@ b 12 501 0 499 400 org.example.browser A Page
 c 0 501 401 499 399 - "
 }
 
-looks_up_the_line_of_one_sigil() {
-    expect_eq "$("$sigils" b)" "b 12 501 0 499 400 org.example.browser A Page"
+looks_up_the_window_id_of_one_sigil() {
+    expect_eq "$("$sigils" b)" 12
+}
+
+looks_up_zero_for_an_empty_space() {
+    expect_eq "$("$sigils" c)" 0
 }
 
 fails_for_a_sigil_no_window_has() {
@@ -70,7 +74,7 @@ y 12"
 }
 
 keeps_edges_given_with_i_out_of_empty_spaces() {
-    expect_eq "$("$sigils" -i bottom=100 c)" "c 0 501 401 499 298 - "
+    expect_eq "$("$sigils" -i bottom=100 | grep '^c ')" "c 0 501 401 499 298 - "
 }
 
 rejects_malformed_insets() {
@@ -105,7 +109,7 @@ reuses_a_running_daemon() {
 sees_windows_change_between_queries() {
     "$sigils" >/dev/null
     echo "window 13 501 401 499 399 org.example.term shell" >>"$SIGILS_FAKE_WINDOWS"
-    expect_eq "$("$sigils" c | cut -d' ' -f2)" 13
+    expect_eq "$("$sigils" c)" 13
 }
 
 replaces_a_daemon_which_died() {
@@ -114,7 +118,7 @@ replaces_a_daemon_which_died() {
     first=$(daemon_pid)
     kill -9 "$first"
     while kill -0 "$first" 2>/dev/null; do sleep 0.01; done
-    expect_eq "$("$sigils" a | cut -d' ' -f2)" 11
+    expect_eq "$("$sigils" a)" 11
     [[ $(daemon_pid) != "$first" ]] || fail "the dead daemon's pid is still in the lock"
 }
 
@@ -125,7 +129,7 @@ answers_simultaneous_queries_with_one_daemon() {
     done
     wait
     for i in 1 2 3 4 5 6 7 8; do
-        expect_eq "$(cut -d' ' -f2 "$outputs.$i")" 11
+        expect_eq "$(cat "$outputs.$i")" 11
     done
     kill -0 "$(daemon_pid)" 2>/dev/null || fail "no daemon holds the lock"
 }
