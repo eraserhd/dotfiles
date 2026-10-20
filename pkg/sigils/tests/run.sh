@@ -147,7 +147,10 @@ q 400
 r 298"
 }
 
-puts_the_socket_in_xdg_runtime_dir_by_default() {
+# On macOS, the default is the user's real temporary directory, which a test
+# can't have to itself.
+puts_the_socket_in_xdg_runtime_dir_by_default_off_macos() {
+    [[ $(uname) == Darwin ]] && return
     unset SIGILS_SOCKET
     XDG_RUNTIME_DIR=$dir "$sigils" >/dev/null
     [[ -S $dir/sigils.sock ]] || fail "no socket at $dir/sigils.sock"

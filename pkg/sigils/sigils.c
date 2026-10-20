@@ -54,9 +54,10 @@ static void usage(FILE *out)
 	      "              the edges are top, bottom, left and right\n"
 	      "\n"
 	      "The windows come from a daemon, which is started if it isn't\n"
-	      "running, on the socket $SIGILS_SOCKET, or else sigils.sock in\n"
-	      "$XDG_RUNTIME_DIR or $TMPDIR.  With --daemon, it runs that daemon,\n"
-	      "whose -s and -i are the defaults for queries which don't give them.\n"
+	      "running, on the socket $SIGILS_SOCKET, or else sigils.sock in the\n"
+	      "user's temporary directory (macOS) or $XDG_RUNTIME_DIR (X).\n"
+	      "With --daemon, it runs that daemon, whose -s and -i are the\n"
+	      "defaults for queries which don't give them.\n"
 	      "On macOS, the daemon also draws the sigils over the windows.\n",
 	      out);
 }

@@ -33,21 +33,36 @@
 #define MAX_REQUEST 4096
 #define START_TIMEOUT_MS 5000
 
+/*
+ * The default mustn't depend on the environment, which differs between what
+ * GUI applications and shells are started with, or each would start its own
+ * daemon.  On macOS, that's the per-user temporary directory $TMPDIR is set
+ * from, and elsewhere $XDG_RUNTIME_DIR, which the session sets for everything.
+ */
 static int socket_path(char *path, size_t size)
 {
 	const char *env = getenv("SIGILS_SOCKET");
-	const char *dir;
 	int n;
 
-	if (env && *env)
+	if (env && *env) {
 		n = snprintf(path, size, "%s", env);
-	else if ((dir = getenv("XDG_RUNTIME_DIR")) && *dir)
-		n = snprintf(path, size, "%s/sigils.sock", dir);
-	else if ((dir = getenv("TMPDIR")) && *dir)
-		n = snprintf(path, size, "%s%ssigils.sock", dir,
-			     dir[strlen(dir) - 1] == '/' ? "" : "/");
-	else
-		n = snprintf(path, size, "/tmp/sigils-%ld.sock", (long)getuid());
+	} else {
+#ifdef __APPLE__
+		char dir[PATH_MAX];
+		size_t len = confstr(_CS_DARWIN_USER_TEMP_DIR, dir, sizeof dir);
+		if (len > 0 && len <= sizeof dir)
+			n = snprintf(path, size, "%s%ssigils.sock", dir,
+				     dir[strlen(dir) - 1] == '/' ? "" : "/");
+		else
+			n = snprintf(path, size, "/tmp/sigils-%ld.sock", (long)getuid());
+#else
+		const char *dir = getenv("XDG_RUNTIME_DIR");
+		if (dir && *dir)
+			n = snprintf(path, size, "%s/sigils.sock", dir);
+		else
+			n = snprintf(path, size, "/tmp/sigils-%ld.sock", (long)getuid());
+#endif
+	}
 	if (n < 0 || (size_t)n >= size ||
 	    (size_t)n >= sizeof ((struct sockaddr_un *)0)->sun_path) {
 		fprintf(stderr, "sigils: the socket path %s is too long\n", path);
