@@ -50,8 +50,12 @@ with lib;
           }
         ];
 
-        # MouseFollowsFocus moves the pointer; don't fight it.  (The module
-        # defaults this to [ "move-mouse monitor-lazy-center" ].)
+        # The pointer follows the focused window, unless it's already in it.
+        on-focus-changed = [ "move-mouse window-lazy-center" ];
+
+        # Moving it to a monitor with no windows would fight focusing the
+        # monitor the pointer moves to.  (The module defaults this to
+        # [ "move-mouse monitor-lazy-center" ].)
         on-focused-monitor-changed = [ ];
 
         # Keep under WindowSigils' MINIMUM_EMPTY_SIZE of 20, or the gaps get

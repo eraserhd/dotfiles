@@ -71,7 +71,7 @@ end
 
 -- Moving the mouse to another monitor focuses it, so new windows and the
 -- workspace commands act there.  Wait for the pointer to settle, since
--- MouseFollowsFocus moves it briefly while focus passes between monitors.
+-- AeroSpace moves it briefly while focus passes between monitors.
 local function monitor_position(screen)
   local x = screen:fullFrame().x
   local position = 1
@@ -164,10 +164,6 @@ not_sigils:configure({
 })
 
 not_sigils:start()
-
-mouse_follows_focus = hs.loadSpoon("MouseFollowsFocus")
-mouse_follows_focus:configure({})
-mouse_follows_focus:start()
 
 -- Start kitty if it is not open
 if hs.application.find('net.kovidgoyal.kitty') == nil then
