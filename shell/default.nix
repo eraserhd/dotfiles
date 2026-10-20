@@ -68,6 +68,12 @@ in {
       source_if_exists ~/.nix-profile/etc/profile.d/nix.sh
       source_if_exists ${privateShPath}
 
+      # So nix doesn't hit GitHub's rate limit for anonymous requests.
+      if [ -n "''${GITHUB_TOKEN:-}" ]; then
+        export NIX_CONFIG="''${NIX_CONFIG:+$NIX_CONFIG
+      }access-tokens = github.com=$GITHUB_TOKEN"
+      fi
+
       alias k=kubectl
     '';
 
