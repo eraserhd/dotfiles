@@ -19,8 +19,8 @@ let
     WindowSigils = pkgs.fetchFromGitHub {
       owner = "eraserhd";
       repo = "Spoons";
-      rev = "c22496b2a1c861c3f6c59b797d98bad7c2a3e36f";
-      sha256 = "sha256-MPAs1H2lLOoU5uM6aXjhLC9If/dv5cdaRa9Jw2IA7mg=";
+      rev = "d545fdec86b56f9c35fffe36316ad9ce332aa610";
+      sha256 = "sha256-029TxRcUpMV1BFTvjP85zhBMX7Rb/lWmpUEI4ylZOjQ=";
     };
 
     MouseFollowsFocus = pkgs.fetchFromGitHub {
