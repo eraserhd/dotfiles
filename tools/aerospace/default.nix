@@ -54,6 +54,17 @@ let
     '';
   };
 
+  # AeroSpace knows the focused window's process without Accessibility being
+  # asked of post-keystroke; its errors go to a log, as AeroSpace drops them.
+  passOnCtrlW = pkgs.writeShellApplication {
+    name = "pass-on-ctrl-w";
+    text = ''
+      exec 2>>/tmp/pass-on-ctrl-w.log
+      pid=$(${aerospace} list-windows --focused --format '%{app-pid}')
+      ${pkgs.local.post-keystroke}/bin/post-keystroke -p "$pid" ctrl w
+    '';
+  };
+
   # A floating kitty running broot (see tools/broot), which plumbs the chosen
   # file and goes away.  It opens at its final size, since broot misses
   # resizes which arrive while it is starting and stays small, and `open`
@@ -101,7 +112,7 @@ let
       space = [ "mode main" "exec-and-forget ${brootPopup}" ];
       comma = [ "mode main" "exec-and-forget ${rerunLastCommand}" ];
       # C-w itself, for the application.
-      period = [ "mode main" "exec-and-forget ${pkgs.local.post-keystroke}/bin/post-keystroke ctrl w" ];
+      period = [ "mode main" "exec-and-forget ${passOnCtrlW}/bin/pass-on-ctrl-w" ];
     };
 in
 {
@@ -169,7 +180,12 @@ in
           {
             "if".app-id = "com.cisco.secureclient.gui";
             "if".during-aerospace-startup = true;
-            run = "macos-native-minimize";
+            run = [ "layout floating" "macos-native-minimize" ];
+          }
+          # Its small window would be tiled to half a monitor otherwise.
+          {
+            "if".app-id = "com.cisco.secureclient.gui";
+            run = "layout floating";
           }
         ];
 

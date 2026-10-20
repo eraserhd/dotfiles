@@ -1,17 +1,19 @@
 /*
  * post-keystroke - type a key into the focused application.
  *
- *   post-keystroke [-n] [ctrl] [alt] [shift] [cmd] key
+ *   post-keystroke [-n] [-p pid] [ctrl] [alt] [shift] [cmd] key
  *
  * The key goes straight to the application's process, so global hotkeys,
  * like AeroSpace's, don't see it, and binding a key to pass it on doesn't
  * loop.  The key is a letter, digit or punctuation key of a US keyboard.
- * With -n, it prints the process and key code rather than typing.  Whatever
+ * Without -p, the process is found through the accessibility API.  With -n,
+ * it prints the process and key code rather than typing.  Whatever
  * runs it needs Accessibility.
  */
 #include <ApplicationServices/ApplicationServices.h>
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 struct key
@@ -51,7 +53,7 @@ static const struct modifier MODIFIERS[] =
 
 static void usage(void)
 {
-    fputs("usage: post-keystroke [-n] [ctrl] [alt] [shift] [cmd] key\n", stderr);
+    fputs("usage: post-keystroke [-n] [-p pid] [ctrl] [alt] [shift] [cmd] key\n", stderr);
 }
 
 static bool focused_pid(pid_t* pid)
@@ -83,12 +85,18 @@ int main(int argc, char* argv[])
 {
     bool dry_run = false;
     CGEventFlags flags = 0;
+    pid_t pid = 0;
     int arg = 1;
 
     if (arg < argc && strcmp(argv[arg], "-n") == 0)
     {
         dry_run = true;
         arg++;
+    }
+    if (arg + 1 < argc && strcmp(argv[arg], "-p") == 0)
+    {
+        pid = atoi(argv[arg + 1]);
+        arg += 2;
     }
     for (; arg < argc - 1; arg++)
     {
@@ -119,8 +127,7 @@ int main(int argc, char* argv[])
         return 2;
     }
 
-    pid_t pid;
-    if (!focused_pid(&pid))
+    if (!pid && !focused_pid(&pid))
     {
         fprintf(stderr, "post-keystroke: can't find the focused application\n");
         return 1;
