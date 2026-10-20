@@ -18,6 +18,11 @@ window 12 501 0 499 400 org.example.browser A Page
 WINDOWS
 }
 
+start_daemon() {
+    "$sigils" --daemon "$@" &
+    while [[ ! -S $SIGILS_SOCKET ]]; do sleep 0.01; done
+}
+
 daemon_pid() {
     cat "$SIGILS_SOCKET.lock" 2>/dev/null
 }
@@ -68,21 +73,32 @@ fails_for_a_sigil_no_window_has() {
     expect_eq "$err" "sigils: no window has the sigil z"
 }
 
-hands_out_the_characters_given_with_s() {
-    expect_eq "$("$sigils" -s xy | cut -d' ' -f1,2)" "x 11
+hands_out_the_characters_given_to_the_daemon_with_s() {
+    start_daemon -s xy
+    expect_eq "$("$sigils" | cut -d' ' -f1,2)" "x 11
 y 12"
 }
 
-keeps_edges_given_with_i_out_of_empty_spaces() {
-    expect_eq "$("$sigils" -i bottom=100 | grep '^c ')" "c 0 501 401 499 298 - "
+keeps_edges_given_to_the_daemon_with_i_out_of_empty_spaces() {
+    start_daemon -i bottom=100
+    expect_eq "$("$sigils" | grep '^c ')" "c 0 501 401 499 298 - "
 }
 
 rejects_malformed_insets() {
     local err status
-    err=$("$sigils" -i middle=4 2>&1)
+    err=$("$sigils" --daemon -i middle=4 2>&1)
     status=$?
     expect_eq "$status" 2
     expect_eq "$err" "sigils: bad insets middle=4"
+}
+
+rejects_s_and_i_for_queries() {
+    local err status
+    err=$("$sigils" -s xy 2>&1)
+    status=$?
+    expect_eq "$status" 2
+    expect_eq "$err" "sigils: -s and -i are only for --daemon"
+    [[ -S $SIGILS_SOCKET ]] && fail "a daemon was started"
 }
 
 leaves_out_empty_spaces_smaller_than_twenty_pixels() {
@@ -143,13 +159,6 @@ exits_a_second_daemon_while_one_is_running() {
     expect_eq "$(daemon_pid)" "$first"
 }
 
-takes_defaults_for_queries_from_the_daemon() {
-    "$sigils" --daemon -s pqr -i bottom=100 &
-    while [[ ! -S $SIGILS_SOCKET ]]; do sleep 0.01; done
-    expect_eq "$("$sigils" | cut -d' ' -f1,6)" "p 800
-q 400
-r 298"
-}
 
 # On macOS, the default is the user's real temporary directory, which a test
 # can't have to itself.
@@ -170,7 +179,7 @@ prints_usage_for_an_unknown_option() {
 }
 
 for t in $(declare -F | awk '{print $3}' | grep -v -e '^setup$' -e '^teardown$' \
-        -e '^daemon_pid$' -e '^fail$' -e '^expect_eq$' -e '^run_test$'); do
+        -e '^daemon_pid$' -e '^start_daemon$' -e '^fail$' -e '^expect_eq$' -e '^run_test$'); do
     run_test "$t"
 done
 

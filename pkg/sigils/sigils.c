@@ -35,7 +35,7 @@ static int by_position(const void *a, const void *b)
 
 static void usage(FILE *out)
 {
-	fputs("usage: sigils [-s sigils] [-i edge=pixels,...] [sigil]\n"
+	fputs("usage: sigils [sigil]\n"
 	      "       sigils --daemon [-s sigils] [-i edge=pixels,...]\n"
 	      "\n"
 	      "Without an argument, lists the visible windows as\n"
@@ -47,18 +47,17 @@ static void usage(FILE *out)
 	      "are listed too, with id 0 and app -.  With a sigil, prints just the\n"
 	      "id of its window, and fails if there isn't one.\n"
 	      "\n"
+	      "The windows come from a daemon, which is started if it isn't\n"
+	      "running, on the socket $SIGILS_SOCKET, or else sigils.sock in the\n"
+	      "user's temporary directory (macOS) or $XDG_RUNTIME_DIR (X).\n"
+	      "With --daemon, it runs that daemon, which on macOS also draws the\n"
+	      "sigils over the windows, with\n"
+	      "\n"
 	      "  -s sigils   the characters to use, in order\n"
 	      "              (default: abcdefgimnopqrstuvwxyz;,/)\n"
 	      "  -i insets   strips along the edges of every display which are\n"
 	      "              never empty space, e.g. top=40 for a status bar;\n"
-	      "              the edges are top, bottom, left and right\n"
-	      "\n"
-	      "The windows come from a daemon, which is started if it isn't\n"
-	      "running, on the socket $SIGILS_SOCKET, or else sigils.sock in the\n"
-	      "user's temporary directory (macOS) or $XDG_RUNTIME_DIR (X).\n"
-	      "With --daemon, it runs that daemon, whose -s and -i are the\n"
-	      "defaults for queries which don't give them.\n"
-	      "On macOS, the daemon also draws the sigils over the windows.\n",
+	      "              the edges are top, bottom, left and right\n",
 	      out);
 }
 
@@ -146,6 +145,10 @@ int parse_options(int argc, char **argv, struct options *options, FILE *err)
 	if (argc - opt > 1 || (argc - opt == 1 && strlen(argv[opt]) != 1) ||
 	    (options->daemon && argc - opt == 1)) {
 		usage(err);
+		return 2;
+	}
+	if (!options->daemon && (options->sigils || options->insets)) {
+		fprintf(err, "sigils: -s and -i are only for --daemon\n");
 		return 2;
 	}
 	if (argc - opt == 1)

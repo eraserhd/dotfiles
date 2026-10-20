@@ -1,7 +1,8 @@
 /*
  * The daemon and its clients.  A client sends its arguments, each ending in a
  * NUL, then an empty one, and the daemon answers with "status outlen errlen\n"
- * and then what `sigils` would print to stdout and stderr.
+ * and then what `sigils` would print to stdout and stderr.  The daemon's -s
+ * and -i are the only ones.
  *
  * Only one daemon runs per socket, the one holding a lock on the socket's
  * path with ".lock" added, which also holds its pid.
@@ -167,10 +168,8 @@ void handle_client(int fd, const struct options *defaults)
 		struct options options;
 		status = parse_options(argc, argv, &options, errf);
 		if (status == 0) {
-			if (!options.sigils)
-				options.sigils = defaults->sigils;
-			if (!options.insets)
-				options.reserved = defaults->reserved;
+			options.sigils = defaults->sigils;
+			options.reserved = defaults->reserved;
 			status = answer(&options, outf, errf);
 		}
 	}
@@ -251,26 +250,14 @@ static int executable_path(char *path, size_t size)
 #endif
 }
 
-/* Starts a daemon, detached from this process, with the same defaults. */
-static void start_daemon(const struct options *options)
+/* Starts a daemon, detached from this process, with the default -s and -i. */
+static void start_daemon(void)
 {
 	char exe[PATH_MAX];
-	char *argv[8];
-	int argc = 0;
+	char *argv[] = { exe, "--daemon", NULL };
 
 	if (executable_path(exe, sizeof exe) < 0)
 		return;
-	argv[argc++] = exe;
-	argv[argc++] = "--daemon";
-	if (options->sigils) {
-		argv[argc++] = "-s";
-		argv[argc++] = (char *)options->sigils;
-	}
-	if (options->insets) {
-		argv[argc++] = "-i";
-		argv[argc++] = (char *)options->insets;
-	}
-	argv[argc] = NULL;
 
 	pid_t pid = fork();
 	if (pid == 0) {
@@ -306,13 +293,13 @@ static int connect_to(const char *path)
 	return fd;
 }
 
-static int connect_or_start(const char *path, const struct options *options)
+static int connect_or_start(const char *path)
 {
 	int fd = connect_to(path);
 
 	if (fd >= 0 || (errno != ENOENT && errno != ECONNREFUSED))
 		return fd;
-	start_daemon(options);
+	start_daemon();
 	for (int waited = 0; waited < START_TIMEOUT_MS; waited += 10) {
 		struct timespec ten_ms = { 0, 10 * 1000 * 1000 };
 		if ((fd = connect_to(path)) >= 0)
@@ -332,7 +319,7 @@ int ask_daemon(const struct options *options)
 
 	if (socket_path(path, sizeof path) < 0)
 		return 1;
-	int fd = connect_or_start(path, options);
+	int fd = connect_or_start(path);
 	if (fd < 0) {
 		fprintf(stderr, "sigils: can't reach the daemon at %s: %s\n", path,
 			strerror(errno));
@@ -342,8 +329,6 @@ int ask_daemon(const struct options *options)
 	char request[MAX_REQUEST];
 	size_t len = 0;
 	const char *args[] = {
-		options->sigils ? "-s" : NULL, options->sigils,
-		options->insets ? "-i" : NULL, options->insets,
 		options->sigil ? "--" : NULL, options->sigil,
 	};
 	for (size_t i = 0; i < sizeof args / sizeof args[0]; i += 2) {
