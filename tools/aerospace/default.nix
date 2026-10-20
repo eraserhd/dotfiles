@@ -45,6 +45,15 @@ let
     '';
   };
 
+  # By its bundle, as the nix wrapper renames its process.
+  startKitty = pkgs.writeShellApplication {
+    name = "start-kitty";
+    text = ''
+      running=$(/usr/bin/osascript -e 'application id "net.kovidgoyal.kitty" is running')
+      [ "$running" = true ] || /usr/bin/open -a /run/current-system/Applications/kitty.app
+    '';
+  };
+
   # A floating kitty running broot (see tools/broot), which plumbs the chosen
   # file and goes away.  It opens at its final size, since broot misses
   # resizes which arrive while it is starting and stays small, and `open`
@@ -140,6 +149,7 @@ in
           # SketchyBar isn't a window, so its strip is kept from being an
           # empty space with a sigil.
           "exec-and-forget ${sigils} --daemon -s '${sigilPool}' -i top=40"
+          "exec-and-forget ${startKitty}/bin/start-kitty"
         ];
 
         on-window-detected = [
