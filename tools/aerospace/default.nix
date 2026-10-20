@@ -54,17 +54,6 @@ let
     '';
   };
 
-  # AeroSpace knows the focused window's process without Accessibility being
-  # asked of post-keystroke; its errors go to a log, as AeroSpace drops them.
-  passOnCtrlW = pkgs.writeShellApplication {
-    name = "pass-on-ctrl-w";
-    text = ''
-      exec 2>>/tmp/pass-on-ctrl-w.log
-      pid=$(${aerospace} list-windows --focused --format '%{app-pid}')
-      ${pkgs.local.post-keystroke}/bin/post-keystroke -p "$pid" ctrl w
-    '';
-  };
-
   # A floating kitty running broot (see tools/broot), which plumbs the chosen
   # file and goes away.  It opens at its final size, since broot misses
   # resizes which arrive while it is starting and stays small, and `open`
@@ -111,8 +100,6 @@ let
       backspace = [ "mode main" "close" ];
       space = [ "mode main" "exec-and-forget ${brootPopup}" ];
       comma = [ "mode main" "exec-and-forget ${rerunLastCommand}" ];
-      # C-w itself, for the application.
-      period = [ "mode main" "exec-and-forget ${passOnCtrlW}/bin/pass-on-ctrl-w" ];
     };
 in
 {
