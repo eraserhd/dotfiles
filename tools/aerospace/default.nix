@@ -45,6 +45,20 @@ let
     '';
   };
 
+  # A floating kitty running broot (see tools/broot), which plumbs the chosen
+  # file and goes away.  It opens at its final size, since broot misses
+  # resizes which arrive while it is starting and stays small, and `open`
+  # brings it to the front.
+  brootPopup = concatStringsSep " " [
+    "/usr/bin/open -n -a /run/current-system/Applications/kitty.app --args"
+    "--title=broot-popup"
+    "-o remember_window_size=no"
+    "-o initial_window_width=160c"
+    "-o initial_window_height=45c"
+    "-o confirm_os_window_close=0"
+    "/run/current-system/sw/bin/broot-popup"
+  ];
+
   rerunLastCommand = "/run/current-system/sw/bin/kitty @ --to unix:${config.users.users.jfelice.home}/.run/kitty send-text --match=title:kak_repl_window '\\x10\\x0d'";
 
   directions = { h = "left"; j = "down"; k = "up"; l = "right"; };
@@ -75,6 +89,7 @@ let
       minus = [ "mode main" "layout v_tiles" "move-mouse window-lazy-center" ];
       shift-backslash = [ "mode main" "layout h_tiles" "move-mouse window-lazy-center" ];
       backspace = [ "mode main" "close" ];
+      space = [ "mode main" "exec-and-forget ${brootPopup}" ];
       comma = [ "mode main" "exec-and-forget ${rerunLastCommand}" ];
       # C-w itself, for the application.
       period = [ "mode main" "exec-and-forget ${pkgs.local.post-keystroke}/bin/post-keystroke ctrl w" ];
@@ -113,7 +128,8 @@ in
         ];
 
         on-window-detected = [
-          # Tiled, then floated, the broot popup would be resized under broot.
+          # Tiled, then floated, the broot popup (the sigils mode's space)
+          # would be resized under broot.
           {
             "if".app-id = "net.kovidgoyal.kitty";
             "if".window-title-regex-substring = "^broot-popup$";
