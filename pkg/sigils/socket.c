@@ -5,7 +5,8 @@
  * and -i are the only ones.
  *
  * Only one daemon runs per socket, the one holding a lock on the socket's
- * path with ".lock" added, which also holds its pid.
+ * path with ".lock" added, which also holds its pid.  `sigils --daemon` stops
+ * one which is running, but one which a query starts leaves it be.
  */
 #define _DEFAULT_SOURCE
 #define _DARWIN_C_SOURCE
@@ -33,6 +34,7 @@
 
 #define MAX_REQUEST 4096
 #define START_TIMEOUT_MS 5000
+#define STOP_TIMEOUT_MS 2000
 
 /*
  * The default mustn't depend on the environment, which differs between what
@@ -199,6 +201,28 @@ int serve_clients(int listen_fd, const struct options *defaults)
 	}
 }
 
+/* Stops the daemon holding the lock, and takes the lock, or returns -1. */
+static int stop_daemon(int lock)
+{
+	char pid_text[32] = "";
+	ssize_t n = pread(lock, pid_text, sizeof pid_text - 1, 0);
+	long pid = n > 0 ? strtol(pid_text, NULL, 10) : 0;
+
+	if (pid <= 0 || pid == getpid())
+		return -1;
+	kill((pid_t)pid, SIGTERM);
+	for (int waited = 0; waited < 2 * STOP_TIMEOUT_MS; waited += 10) {
+		struct timespec ten_ms = { 0, 10 * 1000 * 1000 };
+		if (flock(lock, LOCK_EX | LOCK_NB) == 0)
+			return 0;
+		if (waited == STOP_TIMEOUT_MS)
+			kill((pid_t)pid, SIGKILL);
+		nanosleep(&ten_ms, NULL);
+	}
+	fprintf(stderr, "sigils: the daemon %ld wouldn't stop\n", pid);
+	return -1;
+}
+
 int run_daemon(const struct options *defaults)
 {
 	char path[PATH_MAX], lock_path[PATH_MAX + 8];
@@ -213,8 +237,12 @@ int run_daemon(const struct options *defaults)
 		fprintf(stderr, "sigils: can't open %s: %s\n", lock_path, strerror(errno));
 		return 1;
 	}
-	if (flock(lock, LOCK_EX | LOCK_NB) < 0)
-		return errno == EWOULDBLOCK ? 0 : 1;
+	if (flock(lock, LOCK_EX | LOCK_NB) < 0) {
+		if (errno != EWOULDBLOCK)
+			return 1;
+		if (!defaults->replace || stop_daemon(lock) < 0)
+			return 0;
+	}
 	if (ftruncate(lock, 0) == 0)
 		dprintf(lock, "%ld\n", (long)getpid());
 
@@ -254,7 +282,7 @@ static int executable_path(char *path, size_t size)
 static void start_daemon(void)
 {
 	char exe[PATH_MAX];
-	char *argv[] = { exe, "--daemon", NULL };
+	char *argv[] = { exe, "--daemon-unless-running", NULL };
 
 	if (executable_path(exe, sizeof exe) < 0)
 		return;

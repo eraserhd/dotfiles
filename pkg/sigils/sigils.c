@@ -50,8 +50,8 @@ static void usage(FILE *out)
 	      "The windows come from a daemon, which is started if it isn't\n"
 	      "running, on the socket $SIGILS_SOCKET, or else sigils.sock in the\n"
 	      "user's temporary directory (macOS) or $XDG_RUNTIME_DIR (X).\n"
-	      "With --daemon, it runs that daemon, which on macOS also draws the\n"
-	      "sigils over the windows, with\n"
+	      "With --daemon, it runs that daemon, replacing one which is running,\n"
+	      "and on macOS it also draws the sigils over the windows, with\n"
 	      "\n"
 	      "  -s sigils   the characters to use, in order\n"
 	      "              (default: abcdefgimnopqrstuvwxyz;,/)\n"
@@ -134,6 +134,10 @@ int parse_options(int argc, char **argv, struct options *options, FILE *err)
 				return 2;
 			}
 		} else if (strcmp(argv[opt], "--daemon") == 0) {
+			options->daemon = 1;
+			options->replace = 1;
+		} else if (strcmp(argv[opt], "--daemon-unless-running") == 0) {
+			/* How queries start one. */
 			options->daemon = 1;
 		} else if (strcmp(argv[opt], "-h") == 0) {
 			options->help = 1;

@@ -28,6 +28,7 @@ struct options {
 	struct insets reserved;
 	const char *sigil;       /* the one to look up, or NULL to list them all */
 	int daemon;
+	int replace;             /* the daemon replaces one which is running */
 	int help;
 };
 

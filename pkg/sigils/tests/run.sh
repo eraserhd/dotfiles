@@ -150,13 +150,14 @@ answers_simultaneous_queries_with_one_daemon() {
     kill -0 "$(daemon_pid)" 2>/dev/null || fail "no daemon holds the lock"
 }
 
-exits_a_second_daemon_while_one_is_running() {
-    "$sigils" >/dev/null
+replaces_a_running_daemon() {
+    start_daemon -s xy
     local first
     first=$(daemon_pid)
-    "$sigils" --daemon
-    expect_eq "$?" 0
-    expect_eq "$(daemon_pid)" "$first"
+    "$sigils" --daemon -s pq &
+    while [[ $(daemon_pid) == "$first" ]]; do sleep 0.01; done
+    kill -0 "$first" 2>/dev/null && fail "the first daemon is still running"
+    expect_eq "$("$sigils" | cut -d' ' -f1 | head -1)" p
 }
 
 
