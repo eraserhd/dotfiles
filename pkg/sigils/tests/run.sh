@@ -20,11 +20,12 @@ WINDOWS
 
 start_daemon() {
     "$sigils" --daemon "$@" &
+    disown
     while [[ ! -S $SIGILS_SOCKET ]]; do sleep 0.01; done
 }
 
 daemon_pid() {
-    cat "$SIGILS_SOCKET.lock" 2>/dev/null
+    head -1 "$SIGILS_SOCKET.lock" 2>/dev/null
 }
 
 teardown() {
@@ -148,6 +149,16 @@ answers_simultaneous_queries_with_one_daemon() {
         expect_eq "$(cat "$outputs.$i")" 11
     done
     kill -0 "$(daemon_pid)" 2>/dev/null || fail "no daemon holds the lock"
+}
+
+restarts_a_daemon_which_died_with_its_s_and_i() {
+    start_daemon -s xy -i bottom=100
+    local first
+    first=$(daemon_pid)
+    kill -9 "$first"
+    while kill -0 "$first" 2>/dev/null; do sleep 0.01; done
+    expect_eq "$("$sigils" | cut -d' ' -f1,6)" "x 800
+y 400"
 }
 
 replaces_a_running_daemon() {

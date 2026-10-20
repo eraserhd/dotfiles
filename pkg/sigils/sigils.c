@@ -816,7 +816,14 @@ int run_daemon(const struct options* defaults)
             return 0;
     }
     if (ftruncate(lock, 0) == 0)
+    {
         dprintf(lock, "%ld\n", (long)getpid());
+        /* For a daemon which a query starts after this one dies. */
+        if (defaults->sigils)
+            dprintf(lock, "-s\n%s\n", defaults->sigils);
+        if (defaults->insets)
+            dprintf(lock, "-i\n%s\n", defaults->insets);
+    }
 
     /* Holding the lock, any socket left there is from a daemon which died. */
     unlink(path);
@@ -850,14 +857,44 @@ static int executable_path(char* path, size_t size)
 #endif
 }
 
-/* Starts a daemon, detached from this process, with the default -s and -i. */
-static void start_daemon(void)
+/* The -s and -i of the last daemon on this socket, from its lock, after its pid. */
+static int last_daemon_options(const char* path, char* saved, size_t size, char** argv, int max)
+{
+    char lock_path[PATH_MAX + 8];
+    int argc = 0;
+
+    snprintf(lock_path, sizeof lock_path, "%s.lock", path);
+    FILE* lock = fopen(lock_path, "r");
+    if (!lock)
+        return 0;
+    size_t n = fread(saved, 1, size - 1, lock);
+    fclose(lock);
+    saved[n] = '\0';
+
+    char* line = strchr(saved, '\n');
+    char* end;
+    if (!line)
+        return 0;
+    for (line++; argc < max && (end = strchr(line, '\n')); line = end + 1)
+    {
+        *end = '\0';
+        argv[argc++] = line;
+    }
+    return argc;
+}
+
+/* Starts a daemon, detached from this process, with the last one's -s and -i. */
+static void start_daemon(const char* path)
 {
     char exe[PATH_MAX];
-    char* argv[] = { exe, "--daemon-unless-running", NULL };
+    char saved[MAX_REQUEST];
+    char* argv[8] = { exe, "--daemon-unless-running" };
+    int argc = 2;
 
     if (executable_path(exe, sizeof exe) < 0)
         return;
+    argc += last_daemon_options(path, saved, sizeof saved, argv + argc, 4);
+    argv[argc] = NULL;
 
     pid_t pid = fork();
     if (pid == 0)
@@ -902,7 +939,7 @@ static int connect_or_start(const char* path)
 
     if (fd >= 0 || (errno != ENOENT && errno != ECONNREFUSED))
         return fd;
-    start_daemon();
+    start_daemon(path);
     for (int waited = 0; waited < START_TIMEOUT_MS; waited += 10)
     {
         struct timespec ten_ms = { 0, 10 * 1000 * 1000 };
