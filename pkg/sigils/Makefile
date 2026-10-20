@@ -3,19 +3,18 @@ CFLAGS ?= -O2 -Wall -Wextra
 CFLAGS += -std=c99
 
 ifeq ($(shell uname),Darwin)
-BACKEND = darwin.c overlay.c
 CFLAGS += -fblocks
 LDLIBS += -framework AppKit -framework ApplicationServices -framework CoreFoundation -framework CoreGraphics -lobjc
 else
-BACKEND = x11.c
 LDLIBS += -lX11
 endif
 
-sigils: sigils.c socket.c spaces.c $(BACKEND) sigils.h
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ sigils.c socket.c spaces.c $(BACKEND) $(LDLIBS)
+sigils: sigils.c
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ sigils.c $(LDLIBS)
 
-sigils-fake: sigils.c socket.c spaces.c fake.c sigils.h
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ sigils.c socket.c spaces.c fake.c
+# For tests: windows and displays from $SIGILS_FAKE_WINDOWS.
+sigils-fake: sigils.c
+	$(CC) $(CFLAGS) $(LDFLAGS) -DSIGILS_FAKE -o $@ sigils.c
 
 check: sigils-fake
 	./tests/run.sh ./sigils-fake
