@@ -9,6 +9,7 @@
           kak-scrollback-pager = prev.callPackage ./kak-scrollback-pager {};
           monitor-follows-mouse = prev.callPackage ./monitor-follows-mouse {};
           sigils = prev.callPackage ./sigils {};
+          wake-watcher = prev.callPackage ./wake-watcher {};
         };
         bCNC = prev.callPackage ./bCNC {};
       })

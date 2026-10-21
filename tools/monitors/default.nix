@@ -26,6 +26,7 @@ let
       sleep 1
       for attempt in 1 2 3 4 5 6; do
         if error=$(monitors-here 2>&1); then
+          printf 'monitors-here: ok on attempt %s\n' "$attempt" >&2
           exit 0
         fi
         [ "$attempt" -lt 6 ] && sleep 2
@@ -55,13 +56,14 @@ in {
   then mkIf (pkgs.stdenv.hostPlatform.isAarch64 && cfg.inputs != {}) {
     environment.systemPackages = [ monitorsHere ];
 
-    # On waking, the system or just the displays, which -W both covers.
+    # On waking, the system or just the displays.  This Mac only sleeps its
+    # displays, and sleepwatcher can't tell when they wake on Apple silicon.
     home-manager.users.jfelice.launchd.agents.monitors-here-on-wake = {
       enable = true;
       config = {
         ProgramArguments = [
-          "${pkgs.sleepwatcher}/bin/sleepwatcher"
-          "-W" "${monitorsHereOnWake}/bin/monitors-here-on-wake"
+          "${pkgs.local.wake-watcher}/bin/wake-watcher"
+          "${monitorsHereOnWake}/bin/monitors-here-on-wake"
         ];
         KeepAlive = true;
         RunAtLoad = true;
