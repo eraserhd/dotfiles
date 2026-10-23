@@ -91,6 +91,7 @@ in {
         tags
         build-deps
         TAGS
+        /.claude/settings.local.json
       '';
     };
   };
