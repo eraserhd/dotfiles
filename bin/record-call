@@ -13,7 +13,7 @@ set -euo pipefail
 readonly AIRPODS_SINK="bluez_output.90:9C:4A:E6:44:B2"  # PulseAudio compat name
 readonly C920_MIC_PATTERN="HD_Pro_Webcam_C920"           # partial match, resolved at runtime
 
-readonly CALLS_DIR="$HOME/src/ALL/calls"
+readonly CALLS_DIR="$HOME/src/maitria.com/jfelice/ALL/calls"
 readonly BASENAME="${1:-$(date +%Y%m%d-%H%M%S)}"
 readonly OUT_REMOTE="${CALLS_DIR}/${BASENAME}-remote.wav"
 readonly OUT_MIC="${CALLS_DIR}/${BASENAME}-mic.wav"
