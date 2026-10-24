@@ -639,8 +639,12 @@ static int socket_path(char* path, size_t size)
 static struct sockaddr_un address(const char* path)
 {
     struct sockaddr_un addr = { .sun_family = AF_UNIX };
+    size_t len = strlen(path);
 
-    strncpy(addr.sun_path, path, sizeof addr.sun_path - 1);
+    /* socket_path() has already turned away anything this long. */
+    if (len > sizeof addr.sun_path - 1)
+        len = sizeof addr.sun_path - 1;
+    memcpy(addr.sun_path, path, len);
     return addr;
 }
 

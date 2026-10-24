@@ -102,7 +102,7 @@ in {
   } // (if (builtins.hasAttr "defaultUserShell" options.users)
   then {
     users.defaultUserShell = cfg.package;
-    documentation.man.generateCaches = true;
+    documentation.man.cache.enable = true;
   }
   else {
   });
