@@ -22,3 +22,6 @@
     neither works from a tool call, so leave switching to me.
 - Prefer home-manager to nix-darwin/NixOS config where it won't break things, e.g.
   installing packages used for development.
+- Do not set force = true for home-manager overwrites, or choose mutable config
+  changes merely to make the next switch work.  I'd rather deal with the one-time
+  effort.

@@ -60,6 +60,7 @@ struct window
     char* title;
     char sigil;
     int z; /* front to back, among the windows */
+    int chrome; /* a bar or decoration, which covers space but gets no sigil */
 };
 
 struct rect
@@ -116,7 +117,8 @@ int serve(int listen_fd, const struct options* defaults);
 /*
  * Appends the windows which are visible on a display to *windows, which is
  * grown with realloc, and returns 0, or returns -1 after printing why not.
- * Windows are not sorted or given sigils.
+ * Windows are not sorted or given sigils.  Bars and decorations are
+ * included too, as chrome.
  */
 int list_windows(struct window** windows, size_t* count);
 
@@ -132,7 +134,7 @@ int add_empty_spaces(struct window** windows, size_t* count, const struct rect* 
 
 /* --- options and listing ------------------------------------------------ */
 
-static const char DEFAULT_SIGILS[] = "abcdefgimnopqrstuvwxyz;,/";
+static const char DEFAULT_SIGILS[] = "abcdegimnopqrstuvwxyz;/";
 
 static int by_position(const void* a, const void* b)
 {
@@ -168,7 +170,7 @@ static void usage(FILE* out)
           "and on macOS it also draws the sigils over the windows, with\n"
           "\n"
           "  -s sigils   the characters to use, in order\n"
-          "              (default: abcdefgimnopqrstuvwxyz;,/)\n"
+          "              (default: abcdegimnopqrstuvwxyz;/)\n"
           "  -i insets   strips along the edges of every display which are\n"
           "              never empty space, e.g. top=40 for a status bar;\n"
           "              the edges are top, bottom, left and right\n",
@@ -302,6 +304,25 @@ void free_windows(struct window* windows, size_t count)
     free(windows);
 }
 
+static void drop_chrome(struct window* windows, size_t* count)
+{
+    size_t kept = 0;
+
+    for (size_t i = 0; i < *count; i++)
+    {
+        if (windows[i].chrome)
+        {
+            free(windows[i].app);
+            free(windows[i].title);
+        }
+        else
+        {
+            windows[kept++] = windows[i];
+        }
+    }
+    *count = kept;
+}
+
 int sigil_windows(const struct options* options, struct window** windows, size_t* count, FILE* err)
 {
     const char* sigils = options->sigils ? options->sigils : DEFAULT_SIGILS;
@@ -314,6 +335,7 @@ int sigil_windows(const struct options* options, struct window** windows, size_t
     if (list_windows(windows, count) < 0 || list_displays(&displays, &ndisplays) < 0 ||
         add_empty_spaces(windows, count, displays, ndisplays, options->reserved) < 0)
         goto done;
+    drop_chrome(*windows, count);
     qsort(*windows, *count, sizeof(*windows)[0], by_position);
 
     size_t nsigils = strlen(sigils);
@@ -1024,6 +1046,7 @@ int ask_daemon(const struct options* options)
  *
  *   display x y width height
  *   window id x y width height app title...
+ *   chrome x y width height
  */
 
 static FILE* open_fake(void)
@@ -1046,12 +1069,14 @@ int list_windows(struct window** windows, size_t* count)
     while (fgets(line, sizeof line, f))
     {
         struct window w = { 0 };
-        char app[256];
+        char app[256] = "";
         int title = 0;
 
         line[strcspn(line, "\n")] = '\0';
-        if (sscanf(line, "window %lu %d %d %d %d %255s %n", &w.id, &w.x, &w.y, &w.width, &w.height,
-                   app, &title) < 6)
+        if (sscanf(line, "chrome %d %d %d %d", &w.x, &w.y, &w.width, &w.height) == 4)
+            w.chrome = 1;
+        else if (sscanf(line, "window %lu %d %d %d %d %255s %n", &w.id, &w.x, &w.y, &w.width,
+                        &w.height, app, &title) < 6)
             continue;
         w.app = strdup(app);
         w.title = strdup(title ? line + title : "");
@@ -2010,6 +2035,66 @@ int list_displays(struct rect** displays, size_t* count)
     return 0;
 }
 
+static int append_window(struct window** windows, size_t* count, struct window w)
+{
+    struct window* grown = realloc(*windows, (*count + 1) * sizeof **windows);
+    if (!grown)
+    {
+        perror("sigils");
+        return -1;
+    }
+    *windows = grown;
+    grown[(*count)++] = w;
+    return 0;
+}
+
+static int is_client(Window win, const Window* clients, unsigned long nclients)
+{
+    for (unsigned long i = 0; i < nclients; i++)
+        if (clients[i] == win)
+            return 1;
+    return 0;
+}
+
+/* The window manager's bars and decorations are the other windows on the root. */
+static int append_chrome(Display* dpy, Window root, const Window* clients, unsigned long nclients,
+                         struct window** windows, size_t* count)
+{
+    Window parent, *children = NULL;
+    unsigned int n = 0;
+    int result = 0;
+
+    if (!XQueryTree(dpy, root, &root, &parent, &children, &n))
+        return 0;
+    for (unsigned int i = 0; i < n && result == 0; i++)
+    {
+        XWindowAttributes attr;
+
+        if (is_client(children[i], clients, nclients) ||
+            !XGetWindowAttributes(dpy, children[i], &attr) || attr.map_state != IsViewable ||
+            attr.class != InputOutput)
+            continue;
+        struct window w = {
+            .x = attr.x,
+            .y = attr.y,
+            .width = attr.width + 2 * attr.border_width,
+            .height = attr.height + 2 * attr.border_width,
+            .app = strdup(""),
+            .title = strdup(""),
+            .chrome = 1,
+        };
+        if (!w.app || !w.title || append_window(windows, count, w) < 0)
+        {
+            free(w.app);
+            free(w.title);
+            result = -1;
+        }
+    }
+    if (children)
+        XFree(children);
+    return result;
+}
+
 int list_windows(struct window** windows, size_t* count)
 {
     Display* dpy = XOpenDisplay(NULL);
@@ -2036,8 +2121,9 @@ int list_windows(struct window** windows, size_t* count)
         return -1;
     }
     Window* wins = (Window*)data;
+    int result = 0;
 
-    for (unsigned long i = 0; i < n; i++)
+    for (unsigned long i = 0; i < n && result == 0; i++)
     {
         XWindowAttributes attr;
         int x, y;
@@ -2071,29 +2157,28 @@ int list_windows(struct window** windows, size_t* count)
             continue;
         }
 
-        struct window* grown = realloc(*windows, (*count + 1) * sizeof **windows);
-        if (!grown)
-        {
-            perror("sigils");
-            XFree(data);
-            XCloseDisplay(dpy);
-            return -1;
-        }
-        *windows = grown;
-        grown[*count] = (struct window){
+        /* Borders are outside the window's own geometry. */
+        struct window w = {
             .id = wins[i],
-            .x = x,
-            .y = y,
-            .width = attr.width,
-            .height = attr.height,
+            .x = x - attr.border_width,
+            .y = y - attr.border_width,
+            .width = attr.width + 2 * attr.border_width,
+            .height = attr.height + 2 * attr.border_width,
             .app = app,
             .title = title,
         };
-        (*count)++;
+        if (append_window(windows, count, w) < 0)
+        {
+            free(app);
+            free(title);
+            result = -1;
+        }
     }
+    if (result == 0)
+        result = append_chrome(dpy, root, wins, n, windows, count);
     XFree(data);
     XCloseDisplay(dpy);
-    return 0;
+    return result;
 }
 
 int serve(int listen_fd, const struct options* defaults)

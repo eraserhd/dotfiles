@@ -5,8 +5,9 @@ let
     broot --print-shell-function ${shell} > $out
   '';
 
-  # Used by the C-w <space> popup (see tools/aerospace).  A conf of its own
-  # since Enter plumbs and leaves here, but only plumbs in the normal broot.
+  # Used by the C-w <space> popup (see tools/aerospace and tools/xmonad).  A
+  # conf of its own since Enter plumbs and leaves here, but only plumbs in the
+  # normal broot.
   popupConf = (pkgs.formats.toml {}).generate "broot-popup.toml" {
     default_flags = "-g";
     verbs = [

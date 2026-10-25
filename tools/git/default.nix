@@ -83,8 +83,6 @@ in {
         enable = true;
         settings.pager.diff = "${kakDiffPager}/bin/kak-diff-pager";
       };
-      # Replaces the config which gh-dash wrote for itself.
-      xdg.configFile."gh-dash/config.yml".force = true;
 
       home.file.".gitconfig".source = ./gitconfig;
       home.file.".config/git/ignore".text = ''

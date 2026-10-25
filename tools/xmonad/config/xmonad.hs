@@ -1,15 +1,18 @@
 {-# LANGUAGE TypeFamilies #-}
 
+import Control.Monad (when)
 import Data.Char (isSpace)
-import Data.List (find, sortBy)
-import Data.Maybe (fromMaybe, listToMaybe)
+import Data.List (find)
+import Data.Maybe (fromMaybe, listToMaybe, mapMaybe)
 import System.Environment (lookupEnv)
 import System.Exit (exitSuccess)
+import Text.Read (readMaybe)
 import XMonad
 import XMonad.Actions.FocusNth
 import XMonad.Actions.Navigation2D
 import XMonad.Actions.UpdatePointer
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Layout.Decoration hiding (Theme)
 import XMonad.Layout.DecorationEx
@@ -19,43 +22,64 @@ import XMonad.Layout.DecorationEx.Widgets
 import XMonad.Util.EZConfig
 import XMonad.Util.Font
 import XMonad.Util.Paste
+import XMonad.Util.Run (runProcessWithInput)
 import XMonad.Util.SpawnOnce
 import XMonad.Util.Themes
+import qualified Data.Map as M
 import qualified XMonad.StackSet as W
+import qualified XMonad.Util.ExtensibleState as XS
 
-sigils = ["a", "b", "c", "d", "e", "g", "i", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+-- The characters `sigils` hands out (see pkg/sigils), none of which are
+-- otherwise bound after C-w below.
+sigils = map (:[]) "abcdegimnopqrstuvwxyz;/"
 
-sigilMapping :: WindowSet -> [(Window, String)]
-sigilMapping winds =
-  let screens = sortBy (\x y -> compare (W.screen x) (W.screen y)) (W.current winds : W.visible winds)
-      ws = concatMap (W.integrate' . W.stack . W.workspace) screens
-  in zip ws sigils
+newtype WindowSigils = WindowSigils (M.Map Window String) deriving (Eq)
+
+instance ExtensionClass WindowSigils where
+  initialValue = WindowSigils M.empty
+
+-- From lines of "sigil id x y width height app title", where empty spaces
+-- have id 0.
+parseSigils :: String -> M.Map Window String
+parseSigils = M.fromList . mapMaybe parse . lines
+  where
+    parse line = case words line of
+      (sigil : wid : _) | Just w <- readMaybe wid, w /= 0 -> Just (w, sigil)
+      _ -> Nothing
+
+-- `sigils` asks the X server where the windows are, so it has to have seen
+-- the layout first.  Laying out again repaints the decorations.
+updateSigils :: X ()
+updateSigils = do
+  withDisplay $ \dpy -> io $ sync dpy False
+  new <- WindowSigils . parseSigils <$> runProcessWithInput "sigils" [] ""
+  old <- XS.get
+  when (new /= old) $ do
+    XS.put new
+    refresh
 
 windowSigil :: Window -> X String
-windowSigil w = windowSigil' w `fmap` windowset `fmap` get
+windowSigil w = do
+  WindowSigils m <- XS.get
+  return $ fromMaybe "?" (M.lookup w m)
 
-windowSigil' :: Window -> WindowSet -> String
-windowSigil' w = fromMaybe "?" . fmap snd . find ((==w) . fst) . sigilMapping
-
-sigilWindow' :: String -> WindowSet -> Maybe Window
-sigilWindow' sigil = fmap fst . find ((==sigil) . snd) . sigilMapping
+sigilWindow :: String -> X (Maybe Window)
+sigilWindow sigil = do
+  WindowSigils m <- XS.get
+  return $ fst <$> find ((== sigil) . snd) (M.toList m)
 
 focusSigil :: String -> X ()
-focusSigil sigil = do
-  ws <- windowset `fmap` get
-  case fmap fst $ find ((== sigil) . snd) (sigilMapping ws) of
-    Just w  -> windows $ W.focusWindow w
-    Nothing -> return ()
+focusSigil sigil = sigilWindow sigil >>= flip whenJust (windows . W.focusWindow)
 
 swapSigil :: String -> X ()
-swapSigil sigil = windows $ swapSigil' sigil
+swapSigil sigil = sigilWindow sigil >>= flip whenJust (windows . swapWith)
 
-swapSigil' :: String -> WindowSet -> WindowSet
-swapSigil' sigil winSet =
-  case (W.peek winSet, sigilWindow' sigil winSet) of
-    (Just currentWin, Just sigilWin) -> W.focusWindow currentWin $
-                                        mapWindows (swapWin currentWin sigilWin) winSet
-    _ -> winSet
+swapWith :: Window -> WindowSet -> WindowSet
+swapWith sigilWin winSet =
+  case W.peek winSet of
+    Just currentWin -> W.focusWindow currentWin $
+                       mapWindows (swapWin currentWin sigilWin) winSet
+    Nothing -> winSet
   where
     mapWindows f = W.mapWorkspace (mapWindows' f)
     mapWindows' f ws@W.Workspace{ W.stack = s } = ws { W.stack = mapWindows'' f <$> s }
@@ -164,6 +188,21 @@ repeatLastREPLCommand = do
     sendKeyWindow 0 xK_Up replWindow
     sendKeyWindow 0 xK_Return replWindow
 
+-- A floating kitty running broot (see tools/broot), which plumbs the chosen
+-- file and goes away.
+brootPopup :: String
+brootPopup = unwords
+  [ "kitty --class=broot-popup"
+  , "-o remember_window_size=no"
+  , "-o initial_window_width=160c"
+  , "-o initial_window_height=45c"
+  , "-o confirm_os_window_close=0"
+  , "broot-popup"
+  ]
+
+brootPopupHook :: ManageHook
+brootPopupHook = className =? "broot-popup" --> doCenterFloat
+
 ------------------------------------------------------------------------------
 -- Theme
 ------------------------------------------------------------------------------
@@ -202,9 +241,11 @@ main = do
     , focusedBorderColor = myDarkYellow
     , terminal           = "kitty --single-instance"
     , layoutHook         = avoidStruts myLayout
-    , logHook            = updatePointer (0.5, 0.5) (0, 0)
-    , manageHook         = manageDocks <+> manageSpawn <> manageHook def
+    , logHook            = updatePointer (0.5, 0.5) (0, 0) >> updateSigils
+    , manageHook         = manageDocks <+> manageSpawn <> brootPopupHook <> manageHook def
     , startupHook        =
+        -- Replacing the daemon picks up a new `sigils`.
+        spawn "sigils --daemon" >>
         if host == "cnc.eraserhead.net"
         then do
           spawnOnOnce "1" "bCNC"
@@ -234,6 +275,7 @@ main = do
      , ("C-w M1-l", windowSwap R False)
      , ("C-w ,", repeatLastREPLCommand)
      , ("C-w <Backspace>", kill)
+     , ("C-w <Space>", spawn brootPopup)
      , ("C-w \\", io exitSuccess)
 
      -- ("C-w .", pasteChar controlMask 'W') -- doesn't work

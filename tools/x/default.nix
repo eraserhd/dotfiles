@@ -14,6 +14,16 @@ in {
       flameshot
       playerctl
     ];
+
+    # flameshot otherwise screenshots through xdg-desktop-portal, which
+    # nothing provides under a bare window manager.
+    home-manager.users.jfelice.xdg.configFile."flameshot/flameshot.ini".text =
+      generators.toINI {} {
+        General = {
+          useX11LegacyScreenshot = true;
+          savePath = config.users.users.jfelice.home;
+        };
+      };
   } // (if (builtins.hasAttr "xserver" options.services)
   then {
     services.xserver = {

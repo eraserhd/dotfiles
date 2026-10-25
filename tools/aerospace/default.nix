@@ -5,8 +5,8 @@ let
   aerospace = "${config.services.aerospace.package}/bin/aerospace";
   sigils = "${pkgs.local.sigils}/bin/sigils";
 
-  # The letters tools/xmonad/config/xmonad.hs uses, then ';' and '/'.  None of
-  # the keys bound in the sigils mode below can be one.
+  # The same as tools/xmonad/config/xmonad.hs and sigils' default.  None of the
+  # keys bound in the sigils mode below can be one.
   sigilPool = "abcdegimnopqrstuvwxyz;/";
   keyNames = { ";" = "semicolon"; "/" = "slash"; };
   sigilKeys = map (c: { char = c; key = keyNames.${c} or c; }) (stringToCharacters sigilPool);

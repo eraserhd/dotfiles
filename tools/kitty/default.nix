@@ -57,6 +57,9 @@ in {
           bold_font = "mononoki-Bold";
           italic_font = "mononoki-Italic";
           bold_italic_font = "mononoki-BoldItalic";
+          # The prompt's triangle.  Otherwise it falls back to a bitmap
+          # font, which can't be scaled to fit, so it's clipped.
+          symbol_map = mkIf (!isMacOS) "U+1405 DejaVu Sans";
 
           allow_remote_control = true;
           listen_on = "unix:\${XDG_RUNTIME_DIR}/kitty";

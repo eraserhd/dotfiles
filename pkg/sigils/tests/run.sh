@@ -109,6 +109,12 @@ leaves_out_empty_spaces_smaller_than_twenty_pixels() {
 13"
 }
 
+gives_no_sigils_to_bars_and_decorations_or_the_space_they_cover() {
+    echo "chrome 501 401 499 399" >>"$SIGILS_FAKE_WINDOWS"
+    expect_eq "$("$sigils" | cut -d' ' -f2)" "11
+12"
+}
+
 starts_a_daemon_when_none_is_running() {
     "$sigils" >/dev/null
     [[ -S $SIGILS_SOCKET ]] || fail "no socket at $SIGILS_SOCKET"
