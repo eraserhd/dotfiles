@@ -68,7 +68,24 @@ let
     "/run/current-system/sw/bin/broot-popup"
   ];
 
-  rerunLastCommand = "/run/current-system/sw/bin/kitty @ --to unix:${config.users.users.jfelice.home}/.run/kitty send-text --match=title:kak_repl_window '\\x10\\x0d'";
+  # The popup is the focused window once it opens, so what to open in is found
+  # before it does.
+  brootPopupRoot = pkgs.writeShellApplication {
+    name = "broot-popup-root";
+    runtimeInputs = [ pkgs.coreutils pkgs.git pkgs.jq ];
+    text = builtins.readFile ./broot-popup-root.bash;
+  };
+
+  brootPopupOpen = pkgs.writeShellApplication {
+    name = "broot-popup-open";
+    runtimeInputs = [ brootPopupRoot ];
+    text = ''
+      root=$(broot-popup-root)
+      exec ${brootPopup} ''${root:+"$root"}
+    '';
+  };
+
+  rerunLastCommand ="/run/current-system/sw/bin/kitty @ --to unix:${config.users.users.jfelice.home}/.run/kitty send-text --match=title:kak_repl_window '\\x10\\x0d'";
 
   directions = { h = "left"; j = "down"; k = "up"; l = "right"; };
   workspaces = genAttrs (map toString (range 0 9)) (d: if d == "0" then "10" else d);
@@ -98,7 +115,7 @@ let
       minus = [ "mode main" "layout v_tiles" "move-mouse window-lazy-center" ];
       shift-backslash = [ "mode main" "layout h_tiles" "move-mouse window-lazy-center" ];
       backspace = [ "mode main" "close" ];
-      space = [ "mode main" "exec-and-forget ${brootPopup}" ];
+      space = [ "mode main" "exec-and-forget ${brootPopupOpen}/bin/broot-popup-open" ];
       comma = [ "mode main" "exec-and-forget ${rerunLastCommand}" ];
     };
 in
