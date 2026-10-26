@@ -12,12 +12,7 @@
     reload them.  You might not be able to use the
     shell function, but you can emulate it.  It is defined in `shell/default.nix`.
   - `:r` builds the work dotfiles, whose `public-dotfiles` input is
-    `github:eraserhd/dotfiles` pinned in its `flake.lock`, so local edits here
-    are invisible to it.  To build uncommitted work, override the input:
-
-        cd ~/src/git.drwholdings.com/jfelice/dotfiles && darwin-rebuild build --flake . --show-trace \
-          --override-input public-dotfiles path:$HOME/src/github.com/eraserhd/dotfiles
-
+    `github:eraserhd/dotfiles` pinned in its `flake.lock`.
   - Stop at `build`.  The switch needs `sudo` and `:r`'s last line is `exec zsh -l`;
     neither works from a tool call, so leave switching to me.
 - Prefer home-manager to nix-darwin/NixOS config where it won't break things, e.g.
@@ -25,3 +20,20 @@
 - Do not set force = true for home-manager overwrites, or choose mutable config
   changes merely to make the next switch work.  I'd rather deal with the one-time
   effort.
+
+## Building and Updating Local Machine Config
+
+When you commit here, modify `flake.lock` in `~/src/git.drwholdings.com/jfelice/dotfiles`
+by commands, so that `:r` gets the commits:
+
+- It is OK to update a dirty worktree or a modified `flake.lock`.
+- Run `nix flake lock --override-input <input> <url>` to point to forks or local copies
+  for anything not yet accepted.  Prefer forks to local copies when available.
+- Check remotes and PRs, and undo any local pins of inputs that are available
+  in the remotes.
+- Leave `flake.lock` uncommitted.
+- Build the config when you are done.
+
+When you are done working, report any local overrides and what we need to do or are waiting for.
+e.g. "DO NOT COMMIT AFTER TESTING, we are still waiting for:" and a list or,
+"It is OK to commit after testing."
