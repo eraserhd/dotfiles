@@ -1766,6 +1766,24 @@ static void refresh(void)
     objc_autoreleasePoolPop(pool);
 }
 
+/*
+ * A closed window can stay in the window list for a moment after the event which announced it,
+ * and nothing else says it has gone, so draw once more when things have settled.
+ */
+static void settle_refresh(void)
+{
+    static int pending;
+
+    if (pending)
+        return;
+    pending = 1;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 150 * NSEC_PER_MSEC),
+                   dispatch_get_main_queue(), ^{
+                       pending = 0;
+                       refresh();
+                   });
+}
+
 /* Windows change in bursts, so all the changes in one turn of the run loop are drawn once. */
 static void schedule_refresh(void)
 {
@@ -1777,6 +1795,7 @@ static void schedule_refresh(void)
     dispatch_async(dispatch_get_main_queue(), ^{
         pending = 0;
         refresh();
+        settle_refresh();
     });
 }
 
