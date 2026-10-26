@@ -532,6 +532,18 @@ hook -once global ModuleLoaded diff %{
     define-command -override diff-jump -params .. plumb-click-diff
 }
 
+# `buffer` (9 plumb -i) shows its input in a *show* buffer, which has no
+# filetype.  Once the text is in, make it a diff if it is one, so clicking on
+# lines plumbs them.  A plain `diff` has only ---/+++ lines to go by.
+hook -group show-diff global BufCreate \*show(-\d+)?\* %{
+    hook -once buffer NormalIdle .* %{
+        try %{
+            evaluate-commands -draft %{ execute-keys '%s^(diff --git [^\n]+\n|--- [^\n]+\n\+\+\+ )<ret>' }
+            set-option buffer filetype diff
+        }
+    }
+}
+
 # Jumpclient
 # ‾‾‾‾‾‾‾‾‾‾
 
