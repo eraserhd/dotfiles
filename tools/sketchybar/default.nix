@@ -11,7 +11,7 @@ let
     fi
   '';
 
-  aerospace = "${config.services.aerospace.package}/bin/aerospace";
+  aerospace = "${config.home-manager.users.jfelice.programs.aerospace.package}/bin/aerospace";
 
   # Each monitor's bar shows the workspace on that monitor, highlighted when
   # the monitor is focused.  The item is named for the monitor's position from
@@ -99,7 +99,7 @@ in {
         XDG_RUNTIME_DIR = "${config.users.users.${config.system.primaryUser}.home}/.run";
       };
 
-    services.aerospace.settings = let
+    home-manager.users.jfelice.programs.aerospace.settings = let
       sketchybar = "${config.services.sketchybar.package}/bin/sketchybar";
     in {
       # An argv to run, unlike the callbacks below, which take AeroSpace commands.

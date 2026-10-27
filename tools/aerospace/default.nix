@@ -2,7 +2,8 @@
 
 with lib;
 let
-  aerospace = "${config.services.aerospace.package}/bin/aerospace";
+  aerospacePackage = config.home-manager.users.jfelice.programs.aerospace.package;
+  aerospace = "${aerospacePackage}/bin/aerospace";
   sigils = "${pkgs.local.sigils}/bin/sigils";
 
   # The same as tools/xmonad/config/xmonad.hs and sigils' default.  None of the
@@ -133,7 +134,7 @@ in
 {
   # Tiling, workspaces and the 'C-w' sigils mode, with the sigils drawn and
   # found by `sigils` (see tools/sigils).
-  config = (if (builtins.hasAttr "aerospace" options.services)
+  config = (if (builtins.hasAttr "launchd" options)
   then {
     # mkIf rather than folding the check into the 'if' above: gating the shape
     # of 'config' on 'pkgs' recurses, since 'pkgs' comes from config.nixpkgs.
@@ -152,8 +153,14 @@ in
         };
       };
 
-    services.aerospace = mkIf pkgs.stdenv.hostPlatform.isAarch64 {
+    environment.systemPackages = mkIf pkgs.stdenv.hostPlatform.isAarch64 [ aerospacePackage ];
+
+    # Home-manager's rather than nix-darwin's, whose launchd agent has the
+    # config's store path in it.  Changing the config then restarted AeroSpace,
+    # which loses the layout.  This one reads ~/.config and reloads it.
+    home-manager.users.jfelice.programs.aerospace = mkIf pkgs.stdenv.hostPlatform.isAarch64 {
       enable = true;
+      launchd.enable = true;
 
       settings = {
         default-root-container-layout = "tiles";
