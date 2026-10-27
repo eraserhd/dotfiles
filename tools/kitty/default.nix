@@ -30,10 +30,32 @@ let
 
   # hacky
   isMacOS =  builtins.hasAttr "launchd" options;
+
+  # kitty-popup NAME COMMAND [ARG...] runs COMMAND in a new window of the
+  # running kitty, for the window manager to float by NAME (AeroSpace matches
+  # the title, xmonad the class, which macOS has none of).  It opens at its
+  # final size, since programs like broot miss resizes which arrive while they
+  # are starting, and kitty brings it to the front.
+  kittyPopup = pkgs.writeShellApplication {
+    name = "kitty-popup";
+    text = ''
+      name=$1
+      shift
+      exec ${pkgs.kitty}/bin/kitty --single-instance ${optionalString (!isMacOS) "--class=\"$name\""} --title="$name" \
+        -o remember_window_size=no \
+        -o initial_window_width=160c \
+        -o initial_window_height=45c \
+        -o confirm_os_window_close=0 \
+        "$@"
+    '';
+  };
 in {
   config = {
+    local.terminalPopupCommand = "${kittyPopup}/bin/kitty-popup";
+
     environment.systemPackages = with pkgs; [
       kitty
+      kittyPopup
       local.kak-scrollback-pager
     ];
 

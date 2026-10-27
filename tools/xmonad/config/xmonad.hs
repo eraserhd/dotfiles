@@ -188,20 +188,13 @@ repeatLastREPLCommand = do
     sendKeyWindow 0 xK_Up replWindow
     sendKeyWindow 0 xK_Return replWindow
 
--- A floating kitty running broot (see tools/broot), which plumbs the chosen
--- file and goes away.
-brootPopup :: String
-brootPopup = unwords
-  [ "kitty --class=broot-popup"
-  , "-o remember_window_size=no"
-  , "-o initial_window_width=160c"
-  , "-o initial_window_height=45c"
-  , "-o confirm_os_window_close=0"
-  , "broot-popup"
-  ]
+-- The popup in which to pick a file to open (see modules/fuzzy-open), floated
+-- by its class.
+fuzzyOpen :: String
+fuzzyOpen = "@fuzzyOpenCommand@"
 
-brootPopupHook :: ManageHook
-brootPopupHook = className =? "broot-popup" --> doCenterFloat
+fuzzyOpenHook :: ManageHook
+fuzzyOpenHook = className =? "fuzzy-open" --> doCenterFloat
 
 ------------------------------------------------------------------------------
 -- Theme
@@ -242,7 +235,7 @@ main = do
     , terminal           = "kitty --single-instance"
     , layoutHook         = avoidStruts myLayout
     , logHook            = updatePointer (0.5, 0.5) (0, 0) >> updateSigils
-    , manageHook         = manageDocks <+> manageSpawn <> brootPopupHook <> manageHook def
+    , manageHook         = manageDocks <+> manageSpawn <> fuzzyOpenHook <> manageHook def
     , startupHook        =
         -- Replacing the daemon picks up a new `sigils`.
         spawn "sigils --daemon" >>
@@ -275,7 +268,7 @@ main = do
      , ("C-w M1-l", windowSwap R False)
      , ("C-w ,", repeatLastREPLCommand)
      , ("C-w <Backspace>", kill)
-     , ("C-w <Space>", spawn brootPopup)
+     , ("C-w <Space>", spawn fuzzyOpen)
      , ("C-w \\", io exitSuccess)
 
      -- ("C-w .", pasteChar controlMask 'W') -- doesn't work

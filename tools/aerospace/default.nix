@@ -66,37 +66,6 @@ let
     '';
   };
 
-  # A floating kitty running broot (see tools/broot), which plumbs the chosen
-  # file and goes away.  It opens at its final size, since broot misses
-  # resizes which arrive while it is starting and stays small, and `open`
-  # brings it to the front.
-  brootPopup = concatStringsSep " " [
-    "/usr/bin/open -n -a /run/current-system/Applications/kitty.app --args"
-    "--title=broot-popup"
-    "-o remember_window_size=no"
-    "-o initial_window_width=160c"
-    "-o initial_window_height=45c"
-    "-o confirm_os_window_close=0"
-    "/run/current-system/sw/bin/broot-popup"
-  ];
-
-  # The popup is the focused window once it opens, so what to open in is found
-  # before it does.
-  brootPopupRoot = pkgs.writeShellApplication {
-    name = "broot-popup-root";
-    runtimeInputs = [ pkgs.coreutils pkgs.git pkgs.jq ];
-    text = builtins.readFile ./broot-popup-root.bash;
-  };
-
-  brootPopupOpen = pkgs.writeShellApplication {
-    name = "broot-popup-open";
-    runtimeInputs = [ brootPopupRoot ];
-    text = ''
-      root=$(broot-popup-root)
-      exec ${brootPopup} ''${root:+"$root"}
-    '';
-  };
-
   rerunLastCommand ="/run/current-system/sw/bin/kitty @ --to unix:${config.users.users.jfelice.home}/.run/kitty send-text --match=title:kak_repl_window '\\x10\\x0d'";
 
   directions = { h = "left"; j = "down"; k = "up"; l = "right"; };
@@ -127,7 +96,7 @@ let
       minus = [ "mode main" "layout v_tiles" "move-mouse window-lazy-center" ];
       shift-backslash = [ "mode main" "layout h_tiles" "move-mouse window-lazy-center" ];
       backspace = [ "mode main" "close" ];
-      space = [ "mode main" "exec-and-forget ${brootPopupOpen}/bin/broot-popup-open" ];
+      space = [ "mode main" "exec-and-forget ${config.local.fuzzyOpenCommand}" ];
       comma = [ "mode main" "exec-and-forget ${rerunLastCommand}" ];
     };
 in
@@ -186,11 +155,11 @@ in
         ];
 
         on-window-detected = [
-          # Tiled, then floated, the broot popup (the sigils mode's space)
-          # would be resized under broot.
+          # Tiled, then floated, the fuzzy-open popup (the sigils mode's space)
+          # would be resized under the program in it.
           {
             "if".app-id = "net.kovidgoyal.kitty";
-            "if".window-title-regex-substring = "^broot-popup$";
+            "if".window-title-regex-substring = "^fuzzy-open$";
             run = "layout floating";
           }
           # AeroSpace restarting brings these windows back up.

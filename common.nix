@@ -16,6 +16,8 @@ with lib;
     ./kits/workstation
     ./modules/bubbles
     ./modules/environment/xdg
+    ./modules/fuzzy-open
+    ./modules/terminal
     ./networking
     ./networking/ses-email
     ./networking/update-dns

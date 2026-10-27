@@ -1,13 +1,17 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, ... }:
 
 let
+  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
+
+  # What window managers float the popup by (see modules/fuzzy-open).
+  popupName = "fuzzy-open";
+
   shellFunction = shell: pkgs.runCommand "br.${shell}" { nativeBuildInputs = [ pkgs.broot ]; } ''
     broot --print-shell-function ${shell} > $out
   '';
 
-  # Used by the C-w <space> popup (see tools/aerospace and tools/xmonad).  A
-  # conf of its own since Enter plumbs and leaves here, but only plumbs in the
-  # normal broot.
+  # Used by the popup.  A conf of its own since Enter plumbs and leaves here,
+  # but only plumbs in the normal broot.
   popupConf = (pkgs.formats.toml {}).generate "broot-popup.toml" {
     default_flags = "-g";
     verbs = [
@@ -21,18 +25,44 @@ let
     ];
   };
 
-  brootPopup = pkgs.writeShellScriptBin "broot-popup" ''
-    # The kitty it opens in may have been started by launchd, whose PATH lacks
-    # the plan9 tools which 'plumb' needs, and whose environment lacks the
-    # token for the NATS server which the plumber is on.
+  # What runs in the popup's window.
+  brootPopupWindow = pkgs.writeShellScript "broot-popup-window" ''
+    # The terminal it opens in may have been started by launchd, whose PATH
+    # lacks the plan9 tools which 'plumb' needs, and whose environment lacks
+    # the token for the NATS server which the plumber is on.
     export PATH=/run/current-system/sw/bin:$PATH
     ${config.plugbench.tokenPrefix}
     export NATS_TOKEN
     cd "$HOME/src"
     exec ${pkgs.broot}/bin/broot --conf ${popupConf} "$@"
   '';
+
+  # The popup is the focused window once it opens, so what to open in is found
+  # before it does.  Only done on macOS, where it is found through AeroSpace.
+  popupRoot = pkgs.writeShellApplication {
+    name = "broot-popup-root";
+    runtimeInputs = [ pkgs.coreutils pkgs.git pkgs.jq ];
+    text = builtins.readFile ./broot-popup-root.bash;
+  };
+
+  # Opens the popup, in the directory given if any.
+  brootPopup = pkgs.writeShellApplication {
+    name = "broot-popup";
+    runtimeInputs = lib.optional isDarwin popupRoot;
+    text = ''
+      ${lib.optionalString isDarwin ''
+        if [ $# -eq 0 ]; then
+          root=$(broot-popup-root)
+          [ -z "$root" ] || set -- "$root"
+        fi
+      ''}
+      exec ${config.local.terminalPopupCommand} ${popupName} ${brootPopupWindow} "$@"
+    '';
+  };
 in {
   config = {
+    local.fuzzyOpenCommand = "${brootPopup}/bin/broot-popup";
+
     environment.systemPackages = [ brootPopup ];
 
     # home-manager's integration does zsh, but our bash is the system's.

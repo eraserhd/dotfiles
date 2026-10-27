@@ -1,4 +1,4 @@
-{ pkgs, options, ... }:
+{ pkgs, options, config, ... }:
 
 {
   config =
@@ -15,7 +15,9 @@
        ];
 
        home-manager.users.jfelice = { pkgs, ... }: {
-         home.file.".config/xmonad/xmonad.hs".text = builtins.readFile ./config/xmonad.hs;
+         home.file.".config/xmonad/xmonad.hs".text =
+           builtins.replaceStrings [ "@fuzzyOpenCommand@" ] [ config.local.fuzzyOpenCommand ]
+             (builtins.readFile ./config/xmonad.hs);
        };
      });
 }
