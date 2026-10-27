@@ -5,6 +5,8 @@
 - `kits/` - bundles of tools for a topic (e.g. CNC, 3D printing).
 - `shell/` - utils, functions, and shell config.
 - `hosts/` - public and personal hosts.
+- `pkg/` - small packages that are meant to go into the path.  Not for scripts
+  that can be called through a derivation reference to automate things.
 - `~/src/git.drwholdings.com/jfelice/dotfiles/` - on my Mac work laptop
   (`chlmp-jfelice1`), is private dotfiles for work, which uses this flake.
   - Other systems build this flake directly; the work dotfiles point
@@ -20,6 +22,7 @@
 - Do not set force = true for home-manager overwrites, or choose mutable config
   changes merely to make the next switch work.  I'd rather deal with the one-time
   effort.
+- Bash and babashka (bb, Clojure) are preferred for scripting.
 
 ## Building and Updating Local Machine Config
 

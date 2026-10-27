@@ -20,6 +20,17 @@ let
     '';
   };
 
+  # balance-sizes can only balance the whole workspace.  This balances the
+  # container of the focused window, which is the same thing for a window
+  # which fills a column.
+  balanceContainer = pkgs.writeShellApplication {
+    name = "balance-container";
+    text = ''
+      export BALANCE_AEROSPACE=${aerospace} BALANCE_SIGILS=${sigils}
+      exec ${pkgs.babashka}/bin/bb ${./balance-container.clj}
+    '';
+  };
+
   # Like XMonad's greedyView: a workspace showing on another monitor swaps with
   # the focused monitor's, where 'summon-workspace' alone sends ours somewhere
   # arbitrary.
@@ -111,7 +122,7 @@ let
     // {
       esc = "mode main";
       f = [ "mode main" "fullscreen" ];
-      equal = [ "mode main" "balance-sizes" ];
+      equal = [ "mode main" "exec-and-forget ${balanceContainer}/bin/balance-container" ];
       minus = [ "mode main" "layout v_tiles" "move-mouse window-lazy-center" ];
       shift-backslash = [ "mode main" "layout h_tiles" "move-mouse window-lazy-center" ];
       backspace = [ "mode main" "close" ];
