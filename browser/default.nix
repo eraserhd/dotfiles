@@ -8,7 +8,7 @@ let
 
   listenCommand = schema: ''
     NATS_TOKEN="$(${pkgs.coreutils}/bin/cat ${escapeShellArg tokenFile})" \
-      nats reply cmd.show.url.${schema} --command "/bin/sh -c '${config.local.browser.command} \"\$NATS_REQUEST_BODY\"'"
+      nats reply cmd.show.url.${schema} --command "/bin/sh -c '${config.local.browser.command} \"\$NATS_REQUEST_BODY\" && printf ok'"
   '';
 
   launchdConfig = schema: {

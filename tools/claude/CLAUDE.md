@@ -11,3 +11,10 @@ understands the expectation.
 Clone new repositories into ~/src/<host>/<owner>/<repo>, e.g.
 ~/src/github.com/eraserhd/dotfiles.  Public repos can be forked into my
 personal github.com/eraserhd account to make PRs.
+
+`cd $D; 9 plumb $URL` will open $URL the way I want to see it, either in my
+browser or editor.  $URL may be a full URL, absolute path, or path relative
+to $D.  Choose $D so that relative paths in $URL's content will resolve.
+
+`cd $D; 9 plumb -i` will read stdin into a scratch buffer in my editor.  It
+is my preferred method of reviewing diffs.
