@@ -24,7 +24,8 @@
           bindkey '\eb' emacs-backward-word
 
           setopt auto_cd
-          cdpath=(~/src ~/src/*.*/*(N/))
+          typeset -U cdpath
+          cdpath=(~/src/github.com/eraserhd ~/src/git.drwholdings.com/up-risk ~/src ~/src/*.*/*(N/))
 
           setopt nonomatch
 
