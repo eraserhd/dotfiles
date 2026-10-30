@@ -9,6 +9,7 @@ let
   system = user ++ builtins.attrValues (import ./hosts/keys.nix);
 in {
   "shell/private.sh.age".publicKeys = user;
+  "tools/anki/sync-key.age".publicKeys = user;
   "tools/aws/boto.age".publicKeys = user;
   "tools/aws/credentials.age".publicKeys = user;
   "tools/clojure/profiles.clj.age".publicKeys = user;
