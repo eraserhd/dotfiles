@@ -12,5 +12,6 @@ with lib;
     plugbench.clipboard.enable = true;
     plugbench.kakoune.enable = true;
     plugbench.plumber.client = true;
+    plugbench.fre.client = true;
   };
 }

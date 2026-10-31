@@ -245,4 +245,5 @@ with lib;
   local.claudeDesktop.enable = true;
 
   plugbench.plumber.enable = true;
+  plugbench.fre.enable = true;
 }

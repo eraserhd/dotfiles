@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   config = {
@@ -28,6 +28,12 @@
           cdpath=(~/src/github.com/eraserhd ~/src/git.drwholdings.com/up-risk ~/src ~/src/*.*/*(N/))
 
           setopt nonomatch
+
+          # Directories changed to are visits, for the frecency store.
+          fre_pluggo_chpwd() {
+            ${config.plugbench.tokenPrefix} fre-pluggo add "$PWD" &>/dev/null &!
+          }
+          chpwd_functions+=(fre_pluggo_chpwd)
 
           eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
 
