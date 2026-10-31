@@ -4,7 +4,7 @@ with lib;
 {
   options.local.fuzzyOpenCommand = mkOption {
     type = types.str;
-    example = "broot-popup";
+    example = "fuzzy-open";
     description = ''
       A command line which opens a popup window in which to pick a file to
       open.  The window is called `fuzzy-open`, which is its title, and its

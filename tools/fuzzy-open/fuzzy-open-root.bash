@@ -1,4 +1,4 @@
-# Prints the directory the broot popup should open in, from the focused window:
+# Prints the directory the fuzzy-open popup should open in, from the focused window:
 # the root of the repository containing the file which the focused Kakoune
 # client is showing, or else the working directory of the focused kitty
 # window's foreground process.  Prints nothing, to leave it to the popup, when

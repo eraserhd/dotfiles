@@ -39,6 +39,7 @@ with lib;
     ./tools/elixir
     ./tools/firefox
     ./tools/freecad
+    ./tools/fuzzy-open
     ./tools/git
     ./tools/gnupg
     ./tools/gnuplot
