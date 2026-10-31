@@ -4,7 +4,7 @@ with lib;
 let
   aerospacePackage = config.home-manager.users.jfelice.programs.aerospace.package;
   aerospace = "${aerospacePackage}/bin/aerospace";
-  sigils = "${pkgs.local.sigils}/bin/sigils";
+  sigils = "${config.plugbench.sigils.package}/bin/sigils";
 
   # The same as tools/xmonad/config/xmonad.hs and sigils' default.  None of the
   # keys bound in the sigils mode below can be one.

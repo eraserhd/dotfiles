@@ -29,8 +29,8 @@ import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 import qualified XMonad.Util.ExtensibleState as XS
 
--- The characters `sigils` hands out (see pkg/sigils), none of which are
--- otherwise bound after C-w below.
+-- The characters `sigils` hands out (see plugbench/sigils-pluggo), none of
+-- which are otherwise bound after C-w below.
 sigils = map (:[]) "abcdegimnopqrstuvwxyz;/"
 
 newtype WindowSigils = WindowSigils (M.Map Window String) deriving (Eq)
