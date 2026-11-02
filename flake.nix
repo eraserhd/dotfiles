@@ -18,6 +18,8 @@
     kak-ansi.inputs.nixpkgs.follows = "nixpkgs";
     kak-babashka.url = "github:eraserhd/kak-babashka";
     kak-babashka.inputs.nixpkgs.follows = "nixpkgs";
+    mattpocock-skills.url = "github:mattpocock/skills";
+    mattpocock-skills.flake = false;
     nixpkgs.url = "github:NixOS/nixpkgs/master";
     parinfer-rust.url = "github:eraserhd/parinfer-rust";
     parinfer-rust.inputs.nixpkgs.follows = "nixpkgs";
@@ -37,6 +39,7 @@
   , home-manager
   , kak-ansi
   , kak-babashka
+  , mattpocock-skills
   , nixpkgs
   , parinfer-rust
   , plugbench
@@ -54,6 +57,10 @@
       ];
     };
 
+    moduleArgs = {
+      _module.args = { inherit mattpocock-skills; };
+    };
+
     darwinModules = rec {
       dotfiles = ({ pkgs, ... }: {
         imports = [
@@ -61,6 +68,7 @@
           ./common.nix
           home-manager.darwinModules.home-manager
           overlays
+          moduleArgs
           plugbench.darwinModules.default
           agenix.darwinModules.default
         ];
@@ -79,6 +87,7 @@
           ./common.nix
           home-manager.nixosModules.home-manager
           overlays
+          moduleArgs
           plugbench.nixosModules.default
           agenix.nixosModules.default
         ];

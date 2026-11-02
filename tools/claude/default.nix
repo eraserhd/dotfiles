@@ -1,8 +1,9 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, mattpocock-skills, ... }:
 
 with lib;
 let
   cfg = config.local.claudeDesktop;
+  pocockSkill = path: "${mattpocock-skills}/skills/${path}";
 in {
   options = {
     local.claudeDesktop.enable = mkEnableOption "Claude Desktop";
@@ -25,6 +26,15 @@ in {
           autoUpdatesChannel = "stable";
           # Commands are written for bash's word splitting, not zsh's.
           env.CLAUDE_CODE_SHELL = "${pkgs.bashInteractive}/bin/bash";
+        };
+        skills = {
+          grill-me = pocockSkill "productivity/grill-me";
+          improve-codebase-architecture = pocockSkill "engineering/improve-codebase-architecture";
+
+          # Called by the two above.
+          codebase-design = pocockSkill "engineering/codebase-design";
+          domain-modeling = pocockSkill "engineering/domain-modeling";
+          grilling = pocockSkill "productivity/grilling";
         };
       };
     }
