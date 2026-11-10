@@ -1,0 +1,320 @@
+#!/usr/bin/env bb
+;; show-pr [PR]: a pull request as plain text, to read and to annotate.
+;;
+;; PR is a URL, a number or a branch, or omitted for the current branch's.
+;; `show-pr --kakoune-config` prints Kakoune commands which highlight what is
+;; described here, for the `diff` filetype.
+;;
+;; The text is `gh pr view`, its comments, a diffstat, then the diff, with
+;; review threads after the diff line they are on:
+;;
+;;   #show-pr 1 <url>
+;;   #section view | comments | diffstat | diff | unplaced
+;;
+;; The view is `gh pr view`, and the comments are `gh pr view --comments`,
+;; which are left out if there are none.  They and the diffstat are indented
+;; four spaces, so that diff highlighting leaves them alone.  Review threads are lines starting with #, which no diff
+;; line does:
+;;
+;;   #thread id=<id> status=open|resolved [resolved_by=<login>] [outdated=yes]
+;;       side=LEFT|RIGHT [line=<n>] [start_line=<n>] [original_line=<n>] path=<path>
+;;   #comment id=<id> author=<login> at=<time> [reply_to=<id>]
+;;   # <body line>                                (a bare # for a blank one)
+;;
+;; (The #thread header is one line.)  Threads which have no line in the diff,
+;; as outdated ones do not, are in the `unplaced` section.  Lines starting with
+;; "> " are for the reader's own feedback: after a thread, a reply to it, and
+;; after any other diff line, a new thread on that line.
+(ns show-pr
+  (:require [babashka.process :as p]
+            [cheshire.core :as json]
+            [clojure.string :as str]))
+
+(def format-version 1)
+
+(def usage "usage: show-pr [PR | --kakoune-config]")
+
+(def kakoune-config
+  (str "add-highlighter shared/diff/show-pr-markers regex "
+       "'^#(show-pr|section|thread|comment) [^\\n]*' 0:keyword\n"
+       "add-highlighter shared/diff/show-pr-resolved regex "
+       "'^#thread [^\\n]* status=resolved[^\\n]*' 0:comment\n"))
+
+;; The diff
+
+(defn- header-path [line marker]
+  (let [path (subs line (count marker))]
+    (when-not (= path "/dev/null")
+      (str/replace path #"^[ab]/" ""))))
+
+(defn classify-diff
+  "Each line of a diff, as a map of its :text, its :kind, the :file it is in and,
+  for lines which are in a hunk, the :old and :new line numbers they are at."
+  [lines]
+  (:out
+   (reduce
+    (fn [st line]
+      (let [emit (fn [st kind & {:as extra}]
+                   (update st :out conj
+                           (merge {:text line :kind kind :file (:file st) :old-file (:old-file st)}
+                                  extra)))]
+        (cond
+          (str/starts-with? line "diff --git ")
+          (let [[_ old-file file] (re-find #"^diff --git a/(.*) b/(.*)$" line)]
+            (emit (assoc st :hunk? false :old-file old-file :file file) :file-header))
+
+          (and (not (:hunk? st)) (str/starts-with? line "--- "))
+          (emit (assoc st :old-file (or (header-path line "--- ") (:old-file st))) :header)
+
+          (and (not (:hunk? st)) (str/starts-with? line "+++ "))
+          (emit (assoc st :file (or (header-path line "+++ ") (:file st))) :header)
+
+          (str/starts-with? line "@@ ")
+          (if-let [[_ old new] (re-find #"^@@ -(\d+)(?:,\d+)? \+(\d+)(?:,\d+)? @@" line)]
+            (emit (assoc st :hunk? true :old (parse-long old) :new (parse-long new)) :hunk-header)
+            (emit st :header))
+
+          (:hunk? st)
+          (case (first line)
+            \+ (-> st (emit :add :new (:new st)) (update :new inc))
+            \- (-> st (emit :del :old (:old st)) (update :old inc))
+            \\ (emit st :meta)
+            (-> st
+                (emit :context :old (:old st) :new (:new st))
+                (update :old inc)
+                (update :new inc)))
+
+          :else (emit st :header))))
+    {:out [] :hunk? false :file nil :old-file nil :old 0 :new 0}
+    lines)))
+
+;; The diffstat
+
+(defn- update-last [v f & args]
+  (conj (pop v) (apply f (peek v) args)))
+
+(defn diffstat-files
+  "What each file in the classified diff added and deleted."
+  [entries]
+  (reduce
+   (fn [files {:keys [kind text file]}]
+     (cond
+       (= kind :file-header) (conj files {:name file :adds 0 :dels 0})
+       (empty? files) files
+       (= kind :add) (update-last files update :adds inc)
+       (= kind :del) (update-last files update :dels inc)
+       (or (str/starts-with? text "Binary files ") (= text "GIT binary patch"))
+       (update-last files assoc :binary? true)
+       (str/starts-with? text "rename from ")
+       (update-last files assoc :renamed-from (subs text (count "rename from ")))
+       :else files))
+   []
+   entries))
+
+(defn- plural [n singular]
+  (str n " " singular (when (not= 1 n) "s")))
+
+(defn- pad-right [s width] (str s (str/join (repeat (- width (count s)) \space))))
+(defn- pad-left [s width] (str (str/join (repeat (- width (count s)) \space)) s))
+
+(defn render-diffstat [files]
+  (if (empty? files)
+    []
+    (let [name-of (fn [{:keys [name renamed-from]}]
+                    (if renamed-from (str renamed-from " => " name) name))
+          name-width (apply max (map (comp count name-of) files))
+          changes (fn [{:keys [adds dels]}] (+ adds dels))
+          count-width (apply max (map (comp count str changes) files))
+          peak (apply max 1 (map changes (remove :binary? files)))
+          scale (if (> peak 40) (/ 40.0 peak) 1.0)
+          bar (fn [n ch] (str/join (repeat (if (zero? n) 0 (max 1 (Math/round (* n scale)))) ch)))
+          line (fn [{:keys [adds dels binary?] :as file}]
+                 (str (pad-right (name-of file) name-width) " | "
+                      (if binary?
+                        "Bin"
+                        (str (pad-left (str (changes file)) count-width) " "
+                             (bar adds \+) (bar dels \-)))))
+          adds (reduce + (map :adds files))
+          dels (reduce + (map :dels files))]
+      (-> (mapv line files)
+          (conj (str (plural (count files) "file") " changed"
+                     (when (pos? adds) (str ", " (plural adds "insertion") "(+)"))
+                     (when (pos? dels) (str ", " (plural dels "deletion") "(-)"))))))))
+
+;; Review threads
+
+(defn thread-from-graphql [{:keys [id isResolved isOutdated resolvedBy path line startLine
+                                   originalLine diffSide comments]}]
+  {:id id
+   :resolved? isResolved
+   :resolved-by (:login resolvedBy)
+   :outdated? isOutdated
+   :path path
+   :line line
+   :start-line startLine
+   :original-line originalLine
+   :side (or diffSide "RIGHT")
+   :comments (mapv (fn [{:keys [databaseId author createdAt body replyTo]}]
+                     {:id databaseId
+                      :author (:login author)
+                      :at createdAt
+                      :body body
+                      :reply-to (:databaseId replyTo)})
+                   (:nodes comments))})
+
+(defn- body-lines [body]
+  (->> (str/split (or body "") #"\r?\n" -1)
+       (map str/trimr)
+       reverse
+       (drop-while str/blank?)
+       reverse))
+
+(defn- comment-lines [{:keys [id author at reply-to body]}]
+  (into [(str "#comment id=" id " author=" (or author "ghost") " at=" at
+              (when reply-to (str " reply_to=" reply-to)))]
+        (map #(if (str/blank? %) "#" (str "# " %)) (body-lines body))))
+
+(defn thread-lines [{:keys [id resolved? resolved-by outdated? side line start-line
+                            original-line path comments]}]
+  (into [(str "#thread id=" id
+              " status=" (if resolved? "resolved" "open")
+              (when resolved-by (str " resolved_by=" resolved-by))
+              (when outdated? " outdated=yes")
+              " side=" side
+              (when line (str " line=" line))
+              (when start-line (str " start_line=" start-line))
+              (when (and outdated? original-line) (str " original_line=" original-line))
+              " path=" path)]
+        (mapcat comment-lines comments)))
+
+(defn- started-at [thread]
+  (-> thread :comments first :at))
+
+(defn- entry-keys
+  "Where threads would be if they were on this line of the diff."
+  [{:keys [kind file old-file old new]}]
+  (case kind
+    :add [[file "RIGHT" new]]
+    :del [[old-file "LEFT" old] [file "LEFT" old]]
+    :context [[file "RIGHT" new] [old-file "LEFT" old] [file "LEFT" old]]
+    []))
+
+(defn annotate
+  "The classified diff's lines, with each thread after its line, and the threads
+  which have no line in it."
+  [entries threads]
+  (let [index (group-by (juxt :path :side :line) (remove :outdated? threads))
+        {:keys [lines placed]}
+        (reduce
+         (fn [acc entry]
+           (let [found (distinct (mapcat index (entry-keys entry)))]
+             (-> acc
+                 (update :lines conj (:text entry))
+                 (update :lines into (mapcat thread-lines found))
+                 (update :placed into (map :id found)))))
+         {:lines [] :placed #{}}
+         entries)]
+    {:lines lines
+     :unplaced (remove (comp placed :id) threads)}))
+
+;; The text
+
+(defn- indent [lines]
+  (->> lines
+       reverse
+       (drop-while str/blank?)
+       reverse
+       (map #(if (str/blank? %) "" (str "    " %)))))
+
+(defn render [{:keys [url view comments diff threads]}]
+  (let [entries (classify-diff (str/split-lines diff))
+        {:keys [lines unplaced]} (annotate entries (sort-by started-at threads))]
+    (str (str/join "\n"
+                   (concat [(str "#show-pr " format-version " " url)
+                            "#section view"]
+                           (indent (str/split-lines view))
+                           (when-not (str/blank? comments)
+                             (cons "#section comments" (indent (str/split-lines comments))))
+                           ["#section diffstat"]
+                           (indent (render-diffstat (diffstat-files entries)))
+                           ["#section diff"]
+                           lines
+                           (when (seq unplaced)
+                             (cons "#section unplaced" (mapcat thread-lines unplaced)))))
+         "\n")))
+
+;; Talking to GitHub
+
+(defn- die [& message]
+  (binding [*out* *err*]
+    (println (apply str "show-pr: " message)))
+  (System/exit 1))
+
+(defn- gh [& args]
+  (let [{:keys [exit out err]} (apply p/shell {:out :string :err :string :continue true} "gh" args)]
+    (when-not (zero? exit)
+      (binding [*out* *err*] (print err) (flush))
+      (System/exit exit))
+    out))
+
+(defn- resolve-pr [arg]
+  (let [url (str/trim (apply gh "pr" "view" (concat (when arg [arg]) ["--json" "url" "--jq" ".url"])))
+        [_ host owner repo number] (re-find #"^https?://([^/]+)/([^/]+)/([^/]+)/pull/(\d+)" url)]
+    (when-not host (die "cannot tell what pull request " url " is"))
+    {:url url :host host :owner owner :repo repo :number number}))
+
+(def threads-query
+  "query($owner: String!, $repo: String!, $number: Int!, $cursor: String) {
+     repository(owner: $owner, name: $repo) {
+       pullRequest(number: $number) {
+         reviewThreads(first: 100, after: $cursor) {
+           pageInfo { hasNextPage endCursor }
+           nodes {
+             id isResolved isOutdated
+             resolvedBy { login }
+             path line startLine originalLine diffSide
+             comments(first: 100) {
+               totalCount
+               nodes { databaseId author { login } createdAt body replyTo { databaseId } }
+             }
+           }
+         }
+       }
+     }
+   }")
+
+(defn- fetch-threads [{:keys [host owner repo number]}]
+  (loop [cursor nil threads []]
+    (let [result (-> (apply gh "api" "--hostname" host "graphql"
+                            "-f" (str "query=" threads-query)
+                            "-f" (str "owner=" owner)
+                            "-f" (str "repo=" repo)
+                            "-F" (str "number=" number)
+                            (when cursor ["-f" (str "cursor=" cursor)]))
+                     (json/parse-string true)
+                     (get-in [:data :repository :pullRequest :reviewThreads]))
+          threads (into threads (map thread-from-graphql) (:nodes result))]
+      (doseq [node (:nodes result)
+              :when (> (get-in node [:comments :totalCount]) (count (get-in node [:comments :nodes])))]
+        (binding [*out* *err*]
+          (println "show-pr: thread" (:id node) "has more comments than were fetched")))
+      (if (get-in result [:pageInfo :hasNextPage])
+        (recur (get-in result [:pageInfo :endCursor]) threads)
+        threads))))
+
+(defn -main [& args]
+  (cond
+    (= args ["--kakoune-config"]) (print kakoune-config)
+    (contains? #{"-h" "--help"} (first args)) (println usage)
+    (> (count args) 1) (die usage)
+    :else (let [pr (resolve-pr (first args))
+                view (future (gh "pr" "view" (:url pr)))
+                comments (future (gh "pr" "view" (:url pr) "--comments"))
+                diff (future (gh "pr" "diff" (:url pr) "--color=never"))
+                threads (future (fetch-threads pr))]
+            (print (render {:url (:url pr) :view @view :comments @comments
+                            :diff @diff :threads @threads}))))
+  (flush))
+
+(when (= *file* (System/getProperty "babashka.file"))
+  (apply -main *command-line-args*))
