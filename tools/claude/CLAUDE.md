@@ -18,5 +18,8 @@ personal github.com/eraserhd account to make PRs.
 browser or editor.  URL may be fully qualified, an absolute path, or path
 relative to $D.  Choose $D to make links in the content resolve.
 
-`cd $D; 9 plumb -i` reads stdin into a Kakoune scratch buffer.  It
-is my preferred method of reviewing diffs.
+`cd $D; 9 plumb -i` reads stdin into a Kakoune scratch buffer.  It is my
+preferred method of reviewing diffs.
+
+Use `cd $D; show-pr $PR |9 plumb -i` to show a github PR.  This shows
+description, comments, diff, and code comments.
