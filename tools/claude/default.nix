@@ -26,6 +26,8 @@ in {
           autoUpdatesChannel = "stable";
           # Commands are written for bash's word splitting, not zsh's.
           env.CLAUDE_CODE_SHELL = "${pkgs.bashInteractive}/bin/bash";
+          # `show-pr $PR |9 plumb -i`, which is checked a command at a time.
+          permissions.allow = [ "Bash(show-pr *)" "Bash(9 plumb *)" ];
         };
         skills = {
           grill-me = pocockSkill "productivity/grill-me";
