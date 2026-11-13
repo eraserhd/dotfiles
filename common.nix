@@ -34,7 +34,6 @@ with lib;
     ./tools/broot
     ./tools/claude
     ./tools/clojure
-    ./tools/cue
     ./tools/discord
     ./tools/elixir
     ./tools/firefox
