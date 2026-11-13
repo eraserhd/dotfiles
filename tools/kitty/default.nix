@@ -146,7 +146,9 @@ in {
         '';
         keybindings = {
           "shift+ctrl+g" = "launch --stdin-add-formatting --stdin-source=@screen_scrollback --cwd=current --type=overlay ${pkgs.local.kak-scrollback-pager}/bin/kak-scrollback-pager @scrolled-by @cursor-x @cursor-y @line-count";
-          "shift+ctrl+h" = "launch --stdin-add-formatting --stdin-source=@last_cmd_output --cwd=current --type=overlay ${pkgs.local.kak-scrollback-pager}/bin/kak-scrollback-pager @scrolled-by @cursor-x @cursor-y @line-count";
+          "shift+ctrl+h" = "previous_tab";
+          "shift+ctrl+l" = "next_tab";
+          "shift+ctrl+o" = "launch --stdin-add-formatting --stdin-source=@last_cmd_output --cwd=current --type=overlay ${pkgs.local.kak-scrollback-pager}/bin/kak-scrollback-pager @scrolled-by @cursor-x @cursor-y @line-count";
         };
         environment = environment "jfelice";
       } // (if pkgs.stdenv.hostPlatform.isDarwin
