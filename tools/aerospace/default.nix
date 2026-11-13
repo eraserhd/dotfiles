@@ -57,14 +57,15 @@ let
     '';
   };
 
-  # Shows a workspace on a monitor without moving focus off the monitor it was on.
-  showWorkspaceOnMonitor = pkgs.writeShellApplication {
-    name = "show-workspace-on-monitor";
+  # Shows a workspace on the left monitor without moving focus off the monitor
+  # it was on.
+  showWorkspaceOnLeftMonitor = pkgs.writeShellApplication {
+    name = "show-workspace-on-left-monitor";
     text = ''
-      monitor=$1
-      workspace=$2
+      workspace=$1
       current_monitor=$(${aerospace} list-monitors --focused --format '%{monitor-id}')
-      ${aerospace} focus-monitor "$monitor"
+      # Fails when we are already on the left monitor.
+      ${aerospace} focus-monitor left || true
       ${swapInWorkspace}/bin/swap-in-workspace "$workspace"
       ${aerospace} focus-monitor "$current_monitor"
     '';
@@ -179,7 +180,7 @@ in
             "if".app-id = "us.zoom.xos";
             run = [
               "move-node-to-workspace 4"
-              "exec-and-forget ${showWorkspaceOnMonitor}/bin/show-workspace-on-monitor 1 4"
+              "exec-and-forget ${showWorkspaceOnLeftMonitor}/bin/show-workspace-on-left-monitor 4"
             ];
           }
           # AeroSpace restarting brings these windows back up.
