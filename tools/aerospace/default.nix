@@ -57,6 +57,19 @@ let
     '';
   };
 
+  # Shows a workspace on a monitor without moving focus off the monitor it was on.
+  showWorkspaceOnMonitor = pkgs.writeShellApplication {
+    name = "show-workspace-on-monitor";
+    text = ''
+      monitor=$1
+      workspace=$2
+      current_monitor=$(${aerospace} list-monitors --focused --format '%{monitor-id}')
+      ${aerospace} focus-monitor "$monitor"
+      ${swapInWorkspace}/bin/swap-in-workspace "$workspace"
+      ${aerospace} focus-monitor "$current_monitor"
+    '';
+  };
+
   # By its bundle, as the nix wrapper renames its process.
   startKitty = pkgs.writeShellApplication {
     name = "start-kitty";
@@ -161,6 +174,13 @@ in
             "if".app-id = "net.kovidgoyal.kitty";
             "if".window-title-regex-substring = "^fuzzy-open$";
             run = "layout floating";
+          }
+          {
+            "if".app-id = "us.zoom.xos";
+            run = [
+              "move-node-to-workspace 4"
+              "exec-and-forget ${showWorkspaceOnMonitor}/bin/show-workspace-on-monitor 1 4"
+            ];
           }
           # AeroSpace restarting brings these windows back up.
           {
