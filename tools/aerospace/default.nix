@@ -183,12 +183,7 @@ in
               "exec-and-forget ${showWorkspaceOnLeftMonitor}/bin/show-workspace-on-left-monitor 4"
             ];
           }
-          # AeroSpace restarting brings these windows back up.
-          {
-            "if".app-id = "com.electron.dockerdesktop";
-            "if".during-aerospace-startup = true;
-            run = "macos-native-minimize";
-          }
+          # AeroSpace restarting brings this window back up.
           {
             "if".app-id = "com.cisco.secureclient.gui";
             "if".during-aerospace-startup = true;
