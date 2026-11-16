@@ -16,4 +16,9 @@ case "$command" in
     ;;
 esac
 
+if [[ $(uname) == Darwin ]]; then
+    right_monitor=$(aerospace list-monitors --count)
+    exec display-mode "$right_monitor" "$mode"
+fi
+
 exec xrandr --output DP-0 --mode "$mode" --right-of HDMI-0

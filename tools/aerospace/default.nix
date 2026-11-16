@@ -136,7 +136,11 @@ in
         };
       };
 
-    environment.systemPackages = mkIf pkgs.stdenv.hostPlatform.isAarch64 [ aerospacePackage ];
+    # display-mode is for bin/pair.
+    environment.systemPackages = mkIf pkgs.stdenv.hostPlatform.isAarch64 [
+      aerospacePackage
+      pkgs.local.display-mode
+    ];
 
     # Home-manager's rather than nix-darwin's, whose launchd agent has the
     # config's store path in it.  Changing the config then restarted AeroSpace,

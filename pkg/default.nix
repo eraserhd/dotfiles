@@ -5,6 +5,7 @@
     nixpkgs.overlays = [
       (final: prev: {
         local = (prev.local or {}) // {
+          display-mode = prev.callPackage ./display-mode {};
           git-scripts = prev.callPackage ./git-scripts {};
           kak-scrollback-pager = prev.callPackage ./kak-scrollback-pager {};
           monitor-follows-mouse = prev.callPackage ./monitor-follows-mouse {};
