@@ -80,15 +80,17 @@ in {
           --set front_app script=${frontApp} \
           --subscribe front_app front_app_switched
 
-        sketchybar --add item clock right \
-          --set clock update_freq=30 script=${clock}
+        # Centered, as macOS shows notifications at the top right of the main
+        # display.
+        sketchybar --add item tomat center \
+          --set tomat update_freq=1 script=${tomat}
 
-        sketchybar --add item battery right \
+        sketchybar --add item battery center \
           --set battery update_freq=120 script=${battery} \
           --subscribe battery power_source_change system_woke
 
-        sketchybar --add item tomat right \
-          --set tomat update_freq=1 script=${tomat}
+        sketchybar --add item clock center \
+          --set clock update_freq=30 script=${clock}
 
         sketchybar --update
       '';
