@@ -187,6 +187,18 @@ in
               "exec-and-forget ${showWorkspaceOnLeftMonitor}/bin/show-workspace-on-left-monitor 4"
             ];
           }
+          {
+            "if".app-id = "org.mozilla.firefox";
+            run = "move-node-to-workspace 1";
+          }
+          {
+            "if".app-id = "com.tinyspeck.slackmacgap";
+            run = "move-node-to-workspace 2";
+          }
+          {
+            "if".app-id = "com.microsoft.Outlook";
+            run = "move-node-to-workspace 2";
+          }
           # AeroSpace restarting brings this window back up.
           {
             "if".app-id = "com.cisco.secureclient.gui";
