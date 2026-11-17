@@ -31,7 +31,7 @@
 
           # Directories changed to are visits, for the frecency store.
           fre_pluggo_chpwd() {
-            ${config.plugbench.tokenPrefix} fre-pluggo add "$PWD" &>/dev/null &!
+            fre-pluggo add "$PWD" &>/dev/null &!
           }
           chpwd_functions+=(fre_pluggo_chpwd)
 

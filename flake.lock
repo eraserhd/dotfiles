@@ -561,11 +561,11 @@
         "sigils-pluggo": "sigils-pluggo"
       },
       "locked": {
-        "lastModified": 1794425238,
-        "narHash": "sha256-/2Z8po7kE74U4FUK5XBD5Ne7NloNVCikm4H7ID7yQwc=",
+        "lastModified": 1794939052,
+        "narHash": "sha256-JnegME2+0U+lwrKoL7TqD2YDCSeX7+mBEtSYTbekCIs=",
         "owner": "plugbench",
         "repo": "nix-plugbench",
-        "rev": "fdd81fbb603c3a4886dd311b095db2552a9b43d1",
+        "rev": "2079880a0bf97471efd86b954a2469c127c20b82",
         "type": "github"
       },
       "original": {

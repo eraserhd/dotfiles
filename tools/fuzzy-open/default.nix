@@ -15,11 +15,8 @@ let
   # What runs in the popup's window.
   windowCommand = pkgs.writeShellScript "fuzzy-open-window" ''
     # The terminal it opens in may have been started by launchd, whose PATH
-    # lacks the plan9 tools which 'plumb' needs, and whose environment lacks
-    # the token for the NATS server which the plumber is on.
+    # lacks the plan9 tools which 'plumb' needs.
     export PATH=/run/current-system/sw/bin:$PATH
-    ${config.plugbench.tokenPrefix}
-    export NATS_TOKEN
     exec ${window}/bin/fuzzy-open-window "$@"
   '';
 
