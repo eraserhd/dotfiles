@@ -23,3 +23,6 @@ preferred method of reviewing diffs.
 
 Use `cd $D; show-pr $PR |9 plumb -i` to show a github PR.  This shows
 description, comments, diff, and code comments.
+
+Flashcards are stored in Anki's "Default" deck.  Access with AnkiConnect.
+Start Anki if necessary.
