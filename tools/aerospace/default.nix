@@ -199,6 +199,12 @@ in
             "if".app-id = "com.microsoft.Outlook";
             run = "move-node-to-workspace 2";
           }
+          # Nix's Anki isn't an app bundle, so it has no app-id.
+          {
+            "if".app-name-regex-substring = "^python$";
+            "if".window-title-regex-substring = "Anki$";
+            run = "move-node-to-workspace 5";
+          }
           # AeroSpace restarting brings this window back up.
           {
             "if".app-id = "com.cisco.secureclient.gui";
