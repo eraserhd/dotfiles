@@ -1,14 +1,12 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, config, ... }:
 
 let
-  isDarwin = pkgs.stdenv.hostPlatform.isDarwin;
-
   # What window managers float the popup by (see modules/fuzzy-open).
   popupName = "fuzzy-open";
 
   window = pkgs.writeShellApplication {
     name = "fuzzy-open-window";
-    runtimeInputs = with pkgs; [ coreutils fre-pluggo fzf gawk git gnused ripgrep ];
+    runtimeInputs = with pkgs; [ coreutils fre-pluggo fzf gawk ripgrep ];
     text = builtins.readFile ./fuzzy-open-window.bash;
   };
 
@@ -17,31 +15,12 @@ let
     # The terminal it opens in may have been started by launchd, whose PATH
     # lacks the plan9 tools which 'plumb' needs.
     export PATH=/run/current-system/sw/bin:$PATH
-    exec ${window}/bin/fuzzy-open-window "$@"
+    exec ${window}/bin/fuzzy-open-window
   '';
 
-  # The popup is the focused window once it opens, so what to open in is found
-  # before it does.  Only done on macOS, where it is found through AeroSpace.
-  popupRoot = pkgs.writeShellApplication {
-    name = "fuzzy-open-root";
-    runtimeInputs = [ pkgs.coreutils pkgs.git pkgs.jq ];
-    text = builtins.readFile ./fuzzy-open-root.bash;
-  };
-
-  # Opens the popup, in the directory given if any.
-  popup = pkgs.writeShellApplication {
-    name = "fuzzy-open";
-    runtimeInputs = lib.optional isDarwin popupRoot;
-    text = ''
-      ${lib.optionalString isDarwin ''
-        if [ $# -eq 0 ]; then
-          root=$(fuzzy-open-root)
-          [ -z "$root" ] || set -- "$root"
-        fi
-      ''}
-      exec ${config.local.terminalPopupCommand} ${popupName} ${windowCommand} "$@"
-    '';
-  };
+  popup = pkgs.writeShellScriptBin "fuzzy-open" ''
+    exec ${config.local.terminalPopupCommand} ${popupName} ${windowCommand}
+  '';
 in {
   config = {
     local.fuzzyOpenCommand = "${popup}/bin/fuzzy-open";
