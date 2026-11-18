@@ -205,12 +205,6 @@ in
             "if".window-title-regex-substring = "Anki$";
             run = "move-node-to-workspace 5";
           }
-          # AeroSpace restarting brings this window back up.
-          {
-            "if".app-id = "com.cisco.secureclient.gui";
-            "if".during-aerospace-startup = true;
-            run = [ "layout floating" "macos-native-minimize" ];
-          }
           # Its small window would be tiled to half a monitor otherwise.
           {
             "if".app-id = "com.cisco.secureclient.gui";
