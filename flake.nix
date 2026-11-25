@@ -12,7 +12,8 @@
     claude-desktop.inputs.nixpkgs.follows = "nixpkgs";
     darwin.url = "github:LnL7/nix-darwin/master";
     darwin.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager/master";
+    # Until nix-community/home-manager takes the plugin-copy fix.
+    home-manager.url = "github:eraserhd/home-manager/claude-code-plugin-copy";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     kak-ansi.url = "github:eraserhd/kak-ansi";
     kak-ansi.inputs.nixpkgs.follows = "nixpkgs";
