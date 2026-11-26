@@ -19,6 +19,7 @@ import XMonad.Layout.DecorationEx
 import XMonad.Layout.DecorationEx.Common
 import XMonad.Layout.DecorationEx.Engine
 import XMonad.Layout.DecorationEx.Widgets
+import XMonad.Layout.ToggleLayouts
 import XMonad.Util.EZConfig
 import XMonad.Util.Font
 import XMonad.Util.Paste
@@ -222,7 +223,7 @@ myTheme = def { fontName            = "xft:mononoki-10"
 myThemeEx :: GenericTheme SimpleStyle SigilWidget
 myThemeEx = (themeEx myTheme) { exWidgetsLeft = [SigilWidget]
                               }
-myLayout = sigilDecoration shrinkText myThemeEx (DevLayout ||| Full)
+myLayout = sigilDecoration shrinkText myThemeEx (toggleLayouts Full DevLayout)
 
 main :: IO ()
 main = do
@@ -266,6 +267,7 @@ main = do
      , ("C-w M1-j", windowSwap D False)
      , ("C-w M1-k", windowSwap U False)
      , ("C-w M1-l", windowSwap R False)
+     , ("C-w f", sendMessage ToggleLayout)
      , ("C-w ,", repeatLastREPLCommand)
      , ("C-w <Backspace>", kill)
      , ("C-w <Space>", spawn fuzzyOpen)
