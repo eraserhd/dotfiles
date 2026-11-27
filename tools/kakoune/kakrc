@@ -470,7 +470,74 @@ hook -group clojure-objects global WinSetOption filetype=clojure %{
 # ‾‾‾
 
 evaluate-commands %sh{kak-lsp --kakoune -s $kak_session}
-hook global WinSetOption filetype=(go|typescript) lsp-enable-window
+
+# kak-lsp spawns all servers with its own environment, so run each one
+# inside its project's direnv environment instead.
+declare-option -hidden str lsp_elixir_root
+remove-hooks global lsp-filetype-elixir
+hook -group lsp-filetype-elixir global BufSetOption filetype=(?:elixir|eex) %{
+    set-option buffer lsp_elixir_root %sh{
+        dir=$(dirname "$kak_buffile")
+        root=$dir
+        while [ "$root" != / ] && [ ! -e "$root/mix.exs" ]; do
+            root=$(dirname "$root")
+        done
+        [ -e "$root/mix.exs" ] || root=$dir
+        printf %s "$root"
+    }
+    # Expert hangs unless it can write .expert/ in its working directory.
+    # With SHELL set, Expert finds elixir via a login shell, which loses
+    # direnv's PATH.
+    set-option buffer lsp_servers %exp{
+        [expert]
+        root = "%opt{lsp_elixir_root}"
+        command = "env"
+        single_instance = false
+        args = ["-C", "%opt{lsp_elixir_root}", "-u", "SHELL", "direnv", "exec", ".", "expert", "--stdio"]
+    }
+}
+remove-hooks global lsp-filetype-go
+hook -group lsp-filetype-go global BufSetOption filetype=go %{
+    set-option buffer lsp_servers %exp{
+        [gopls]
+        root_globs = ["Gopkg.toml", "go.mod", ".git", ".hg"]
+        command = "direnv"
+        single_instance = false
+        args = ["exec", "%sh{dirname "$kak_buffile"}", "gopls"]
+        [gopls.settings.gopls]
+        hints.assignVariableTypes = true
+        hints.compositeLiteralFields = true
+        hints.compositeLiteralTypes = true
+        hints.constantValues = true
+        hints.functionTypeParameters = true
+        hints.parameterNames = true
+        hints.rangeVariableTypes = true
+        usePlaceholders = true
+    }
+}
+remove-hooks global lsp-filetype-javascript
+hook -group lsp-filetype-javascript global BufSetOption filetype=(?:javascript|typescript) %{
+    set-option buffer lsp_servers %exp{
+        [typescript-language-server]
+        root_globs = ["package.json", "tsconfig.json", "jsconfig.json", ".git", ".hg"]
+        command = "direnv"
+        single_instance = false
+        args = ["exec", "%sh{dirname "$kak_buffile"}", "typescript-language-server", "--stdio"]
+        settings_section = "_"
+        [typescript-language-server.settings._]
+    }
+}
+remove-hooks global lsp-filetype-python
+hook -group lsp-filetype-python global BufSetOption filetype=python %{
+    set-option buffer lsp_servers %exp{
+        [basedpyright]
+        root_globs = ["pyproject.toml", "setup.py", "poetry.lock", "pyrightconfig.json", ".git", ".hg"]
+        command = "direnv"
+        single_instance = false
+        args = ["exec", "%sh{dirname "$kak_buffile"}", "basedpyright-langserver", "--stdio"]
+    }
+}
+hook global WinSetOption filetype=(elixir|eex|go|python|typescript) lsp-enable-window
 map global user l ': enter-user-mode lsp<ret>'
 
 # Allow goto to be plumbed with the right dir

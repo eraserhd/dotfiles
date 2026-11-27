@@ -1,5 +1,9 @@
-{ pkgs, ... }:
+{ ... }:
 
 {
-  environment.systemPackages = [ pkgs.beam27Packages.elixir-ls ];
+  config = {
+    home-manager.users.jfelice = { pkgs, ... }: {
+      home.packages = [ pkgs.beamPackages.expert ];
+    };
+  };
 }

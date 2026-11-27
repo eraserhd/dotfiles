@@ -61,6 +61,7 @@ with lib;
     ./tools/polybar
     ./tools/postgres
     ./tools/prusa-slicer
+    ./tools/python
     ./tools/qemu
     ./tools/R
     ./tools/rlwrap
@@ -72,6 +73,7 @@ with lib;
     ./tools/tex
     ./tools/tmux
     ./tools/tomat
+    ./tools/typescript
     ./tools/x
     ./tools/xmonad
     ./tools/zoom
