@@ -49,7 +49,10 @@ set-face global Prompt        rgb:c792ea,default
 set-face global PrimarySelection default,rgb:8700af+g
 set-face global SecondarySelection default,rgb:5f0087+g
 
-set-option global ui_options terminal_assistant=none terminal_status_on_top=true terminal_set_title=false
+set-option global ui_options terminal_assistant=none terminal_status_on_top=true
+hook global WinCreate .* %{
+    set-option -add window ui_options "terminal_title=%val{bufname}"
+}
 
 set-face global LineNumbersWrapped black
 add-highlighter global/matching show-matching
